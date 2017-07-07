@@ -7,33 +7,33 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const User = ({ location, dispatch, user, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = user
+const StoreUser = ({ location, dispatch, storeUser, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = storeUser
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['user/update'],
+    confirmLoading: loading.effects['storeUser/update'],
     title: `${modalType === 'create' ? '创建用户' : '更新用户'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `user/${modalType}`,
+        type: `storeUser/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'user/hideModal',
+        type: 'storeUser/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['user/query'],
+    loading: loading.effects['storeUser/query'],
     pagination,
     location,
     isMotion,
@@ -50,13 +50,13 @@ const User = ({ location, dispatch, user, loading }) => {
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'user/delete',
+        type: 'storeUser/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'user/showModal',
+        type: 'storeUser/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -67,7 +67,7 @@ const User = ({ location, dispatch, user, loading }) => {
       selectedRowKeys,
       onChange: (keys) => {
         dispatch({
-          type: 'user/updateState',
+          type: 'storeUser/updateState',
           payload: {
             selectedRowKeys: keys,
           },
@@ -93,31 +93,31 @@ const User = ({ location, dispatch, user, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/user',
+        pathname: '/storeUser',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/user',
+        pathname: '/storeUser',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'user/showModal',
+        type: 'storeUser/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'user/switchIsMotion' })
+      dispatch({ type: 'storeUser/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'user/multiDelete',
+      type: 'storeUser/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -144,11 +144,11 @@ const User = ({ location, dispatch, user, loading }) => {
   )
 }
 
-User.propTypes = {
-  user: PropTypes.object,
+StoreUser.propTypes = {
+  storeUser: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ user, loading }) => ({ user, loading }))(User)
+export default connect(({ storeUser, loading }) => ({ storeUser, loading }))(StoreUser)

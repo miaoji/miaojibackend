@@ -3,55 +3,43 @@ const Mock = require('mockjs')
 const config = require('../utils/config')
 const { apiPrefix } = config
 
-let usersListData = Mock.mock({
+let storeUsersListData = Mock.mock({
   'data|80-100': [
     {
       id: '@id',
-      name: '@name',
-      nickName: '@last',
-      phone: /^1[34578]\d{9}$/,
-      'age|11-99': 1,
-      address: '@county(true)',
-      isMale: '@boolean',
-      email: '@email',  
+      accounts: /^1[34578]\d{9}$/,
+      name: '@cname',
+      storename: '@cname',
+      'level|0-1': 1,
+      status: '@boolean',
       createTime: '@datetime',
+      detail: {
+        info: '@csentence(3, 10)',
+        address: '@county(true)',
+        superior: '@cname',
+        officehours: '@datetime',
+        consultPhone: /^1[34578]\d{9}$/,
+        businessLicenseImg () {
+          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.info.substr(0, 1))
+        },
+        doorImg () {
+          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.info.substr(0, 1))
+        },
+        serviceBarImg () {
+          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.info.substr(0, 1))
+        },
+        shelfImg () {
+          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '货')
+        },
+      },
       avatar () {
-        return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))
+        return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.name.substr(0, 1))
       },
     },
   ],
 })
 
-let database = usersListData.data
-
-const userPermission = {
-  DEFAULT: [
-    'dashboard', 'chart',
-  ],
-  ADMIN: [
-    'dashboard', 'users', 'UIElement', 'UIElementIconfont', 'chart',
-  ],
-  DEVELOPER: ['dashboard', 'users', 'UIElement', 'UIElementIconfont', 'chart'],
-}
-
-const adminUsers = [
-  {
-    id: 0,
-    username: 'admin',
-    password: 'admin',
-    permissions: userPermission.ADMIN,
-  }, {
-    id: 1,
-    username: 'guest',
-    password: 'guest',
-    permissions: userPermission.DEFAULT,
-  }, {
-    id: 2,
-    username: '吴彦祖',
-    password: '123456',
-    permissions: userPermission.DEVELOPER,
-  },
-]
+let database = storeUsersListData.data
 
 const queryArray = (array, key, keyAlias = 'key') => {
   if (!(array instanceof Array)) {
@@ -79,54 +67,7 @@ const NOTFOUND = {
 
 module.exports = {
 
-  [`POST ${apiPrefix}/user/login`] (req, res) {
-    const { username, password } = req.body
-    const user = adminUsers.filter((item) => item.username === username)
-
-    if (user.length > 0 && user[0].password === password) {
-      const now = new Date()
-      now.setDate(now.getDate() + 1)
-      res.cookie('token', JSON.stringify({ id: user[0].id, deadline: now.getTime() }), {
-        maxAge: 900000,
-        httpOnly: true,
-      })
-      res.json({ success: true, message: 'Ok' })
-    } else {
-      res.status(400).end()
-    }
-  },
-
-  [`GET ${apiPrefix}/user/logout`] (req, res) {
-    res.clearCookie('token')
-    res.status(200).end()
-  },
-
-  [`GET ${apiPrefix}/user`] (req, res) {
-    const cookie = req.headers.cookie || ''
-    const cookies = qs.parse(cookie.replace(/\s/g, ''), { delimiter: ';' })
-    const response = {}
-    const user = {}
-    if (!cookies.token) {
-      res.status(200).send({ message: 'Not Login' })
-      return
-    }
-    const token = JSON.parse(cookies.token)
-    if (token) {
-      response.success = token.deadline > new Date().getTime()
-    }
-    if (response.success) {
-      const userItem = adminUsers.filter(_ => _.id === token.id)
-      if (userItem.length > 0) {
-        user.permissions = userItem[0].permissions
-        user.username = userItem[0].username
-        user.id = userItem[0].id
-      }
-    }
-    response.user = user
-    res.json(response)
-  },
-
-  [`GET ${apiPrefix}/users`] (req, res) {
+  [`GET ${apiPrefix}/storeusers`] (req, res) {
     const { query } = req
     let { pageSize, page, ...other } = query
     pageSize = pageSize || 10
@@ -162,13 +103,7 @@ module.exports = {
     })
   },
 
-  [`DELETE ${apiPrefix}/users`] (req, res) {
-    const { ids } = req.body
-    database = database.filter((item) => !ids.some(_ => _ === item.id))
-    res.status(204).end()
-  },
-
-  [`POST ${apiPrefix}/user`] (req, res) {
+  [`POST ${apiPrefix}/storeuser`] (req, res) {
     const newData = req.body
     newData.createTime = Mock.mock('@now')
     newData.avatar = newData.avatar || Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', newData.nickName.substr(0, 1))
@@ -179,7 +114,7 @@ module.exports = {
     res.status(200).end()
   },
 
-  [`GET ${apiPrefix}/user/:id`] (req, res) {
+  [`GET ${apiPrefix}/storeuser/:id`] (req, res) {
     const { id } = req.params
     const data = queryArray(database, id, 'id')
     if (data) {
@@ -189,7 +124,7 @@ module.exports = {
     }
   },
 
-  [`DELETE ${apiPrefix}/user/:id`] (req, res) {
+  [`DELETE ${apiPrefix}/storeuser/:id`] (req, res) {
     const { id } = req.params
     const data = queryArray(database, id, 'id')
     if (data) {
@@ -200,7 +135,7 @@ module.exports = {
     }
   },
 
-  [`PATCH ${apiPrefix}/user/:id`] (req, res) {
+  [`PATCH ${apiPrefix}/storeuser/:id`] (req, res) {
     const { id } = req.params
     const editItem = req.body
     let isExist = false

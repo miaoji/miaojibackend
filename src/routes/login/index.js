@@ -27,41 +27,41 @@ const Login = ({
   }
 
   return (
-    <div className={styles.form}>
-      <div className={styles.logo}>
-        <img alt={'logo'} src={config.logo} />
-        <span>{config.name}</span>
+    <div>
+      <canvas id='background'></canvas>
+      <div className={styles.form}>
+        <div className={styles.logo}>
+          <img alt={'logo'} src={config.logo} />
+          <span>{config.name}</span>
+        </div>
+        <form>
+          <FormItem hasFeedback>
+            {getFieldDecorator('username', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入用户名',
+                },
+              ],
+            })(<Input size="large" onPressEnter={handleOk} placeholder="用户名" />)}
+          </FormItem>
+          <FormItem hasFeedback>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: '请输入密码',
+                },
+              ],
+            })(<Input size="large" type="password" onPressEnter={handleOk} placeholder="密码" />)}
+          </FormItem>
+          <Row>
+            <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
+              登录
+            </Button>
+          </Row>
+        </form>
       </div>
-      <form>
-        <FormItem hasFeedback>
-          {getFieldDecorator('username', {
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Input size="large" onPressEnter={handleOk} placeholder="Username" />)}
-        </FormItem>
-        <FormItem hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Input size="large" type="password" onPressEnter={handleOk} placeholder="Password" />)}
-        </FormItem>
-        <Row>
-          <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
-            Sign in
-          </Button>
-          <p>
-            <span>Username：guest</span>
-            <span>Password：guest</span>
-          </p>
-        </Row>
-
-      </form>
     </div>
   )
 }

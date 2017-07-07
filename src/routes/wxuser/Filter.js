@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Menu, Dropdown } from 'antd'
 import city from '../../utils/city'
 
 const Search = Input.Search
@@ -68,7 +68,8 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name, address } = filter
+
+  const { wxName, address } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -81,7 +82,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('wxName', { initialValue: wxName })(<Search placeholder="按微信名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('address', { initialValue: address })(
@@ -89,7 +90,7 @@ const Filter = ({
             size="large"
             style={{ width: '100%' }}
             options={city}
-            placeholder="请挑选地址"
+            placeholder="地理所属门店"
             onChange={handleChange.bind(null, 'address')}
           />)}
       </Col>
@@ -105,10 +106,6 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
-          </div>
-          <div>
-            <Switch style={{ marginRight: 16 }} size="large" defaultChecked={isMotion} onChange={switchIsMotion} checkedChildren={'移动'} unCheckedChildren={'移动'} />
-            <Button size="large" type="ghost" onClick={onAdd}>创建</Button>
           </div>
         </div>
       </Col>

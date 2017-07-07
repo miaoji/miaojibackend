@@ -7,33 +7,33 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const User = ({ location, dispatch, user, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = user
+const WxUser = ({ location, dispatch, wxUser, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = wxUser
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['user/update'],
-    title: `${modalType === 'create' ? '创建用户' : '更新用户'}`,
+    confirmLoading: loading.effects['wxUser/update'],
+    title: `${modalType === 'create' ? '创建微信用户' : '更新微信用户--'}${currentItem.wxName}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `user/${modalType}`,
+        type: `wxUser/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'user/hideModal',
+        type: 'wxUser/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['user/query'],
+    loading: loading.effects['wxUser/query'],
     pagination,
     location,
     isMotion,
@@ -48,15 +48,21 @@ const User = ({ location, dispatch, user, loading }) => {
         },
       }))
     },
+    onMarkItem (id) {
+      dispatch({
+        type: 'wxUser/markBlackList',
+        payload: id
+      })
+    },
     onDeleteItem (id) {
       dispatch({
-        type: 'user/delete',
+        type: 'wxUser/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'user/showModal',
+        type: 'wxUser/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -67,7 +73,7 @@ const User = ({ location, dispatch, user, loading }) => {
       selectedRowKeys,
       onChange: (keys) => {
         dispatch({
-          type: 'user/updateState',
+          type: 'wxUser/updateState',
           payload: {
             selectedRowKeys: keys,
           },
@@ -93,31 +99,31 @@ const User = ({ location, dispatch, user, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/user',
+        pathname: '/wxUser',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/user',
+        pathname: '/wxUser',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'user/showModal',
+        type: 'wxUser/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'user/switchIsMotion' })
+      dispatch({ type: 'wxUser/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'user/multiDelete',
+      type: 'wxUser/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -131,9 +137,9 @@ const User = ({ location, dispatch, user, loading }) => {
          selectedRowKeys.length > 0 &&
            <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
              <Col>
-               {`Selected ${selectedRowKeys.length} items `}
-               <Popconfirm title={'确定要删除吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
+               {`选中 ${selectedRowKeys.length} 个微信用户 `}
+               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
+                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
                </Popconfirm>
              </Col>
            </Row>
@@ -144,11 +150,11 @@ const User = ({ location, dispatch, user, loading }) => {
   )
 }
 
-User.propTypes = {
-  user: PropTypes.object,
+WxUser.propTypes = {
+  wxuser: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ user, loading }) => ({ user, loading }))(User)
+export default connect(({ wxUser, loading }) => ({ wxUser, loading }))(WxUser)

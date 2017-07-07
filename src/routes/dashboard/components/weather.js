@@ -12,7 +12,7 @@ function Weather ({ city, icon, dateTime, temperature, name }) {
     </div>
     <div className={styles.right}>
       <h1 className={styles.temperature}>{`${temperature}°`}</h1>
-      <p className={styles.description}>{city},{dateTime}</p>
+      <p className={styles.description}>{city}, {dateTime}</p>
     </div>
   </div>)
 }
