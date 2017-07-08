@@ -25,48 +25,52 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '头像',
-      dataIndex: 'avatar',
-      key: 'avatar',
-      width: 64,
-      className: styles.avatar,
-      render: (text) => <img alt={'avatar'} width={24} src={text} />,
+      title: '帐号',
+      dataIndex: 'accounts',
+      key: 'accounts',
+      render: (text, record) => <Link to={`storeuser/${record.id}`}>{text}</Link>,
     }, {
-      title: '姓名',
+      title: '经营者姓名',
       dataIndex: 'name',
       key: 'name',
-      render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
     }, {
-      title: '昵称',
-      dataIndex: 'nickName',
-      key: 'nickName',
+      title: '店铺名称',
+      dataIndex: 'storename',
+      key: 'storename',
     }, {
-      title: '年龄',
-      dataIndex: 'age',
-      key: 'age',
+      title: '店铺级别',
+      dataIndex: 'level',
+      key: 'level',
+      render: (text) => <span>{text === 0
+            ? '主张号'
+            : '子帐号'}</span>,
     }, {
-      title: '性别',
-      dataIndex: 'isMale',
-      key: 'isMale',
-      render: (text) => <span>{text
-            ? 'Male'
-            : 'Female'}</span>,
-    }, {
-      title: '手机',
-      dataIndex: 'phone',
-      key: 'phone',
-    }, {
-      title: '邮箱',
-      dataIndex: 'email',
-      key: 'email',
-    }, {
-      title: '地址',
-      dataIndex: 'address',
-      key: 'address',
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      render: (text) => <span>{text === 0
+            ? '禁用'
+            : '启用'}</span>,
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+    }, {
+      title: '是否黑名单',
+      dataIndex: 'blacklist',
+      key: 'blacklist',
+      filters: [
+        { text: '否', value: '0' },
+        { text: '是', value: '1' }
+      ],
+      onFilter: (value, record) => record.blacklist === value,
+      render: (text) => {
+        const realtext = {
+          '0': '否',
+          '1': '是',
+        }
+        return <span>{realtext[text]}</span>
+      }
     }, {
       title: '操作',
       key: 'operation',

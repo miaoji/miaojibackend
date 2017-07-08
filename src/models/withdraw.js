@@ -1,19 +1,16 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/storeuser'
-import * as storeusersService from '../services/storeusers'
+import * as withdrawsService from '../services/withdraws'
 import { pageModel } from './common'
 import { config } from '../utils'
 
-const { query } = storeusersService
+const { query } = withdrawsService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
-  namespace: 'storeUser',
+  namespace: 'withdraw',
 
   state: {
     currentItem: {},
-    modalVisible: false,
-    modalType: 'create',
     selectedRowKeys: [],
     isMotion: false,
   },
@@ -23,7 +20,7 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
 
       history.listen(location => {
-        if (location.pathname === '/storeuser') {
+        if (location.pathname === '/withdraws') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -109,14 +106,6 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
-
-    showModal (state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
-    },
-
-    hideModal (state) {
-      return { ...state, modalVisible: false }
-    },
 
     switchIsMotion (state) {
       localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)

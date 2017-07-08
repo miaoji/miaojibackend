@@ -3,6 +3,16 @@ const Mock = require('mockjs')
 const config = require('../utils/config')
 const { apiPrefix } = config
 
+/*
+ * @mock data
+ * accounts 帐号/手机号, name 经营人姓名, storename 店铺名称, level 店铺级别(0 = 门店主帐号/ 1 = 门店子帐号)
+ * status 状态( 1 =启用/ 0 = 禁用), createTime 注册时间, blacklist 黑名单 (0 是黑名单 1 不是)
+ * detail 详情：info 用户列表中信息, address 地址(省、市、区),
+ *              superior 所属上级, officehours 营业时间, consultPhone 咨询电话, 
+ *              applicantIDCardNum 申请人身份证号, businessLicenseImg 营业执照照片, 
+ *              doorImg 门头照片, serviceBarImg 服务台照片, shelfImg 货架照片
+ */
+
 let storeUsersListData = Mock.mock({
   'data|80-100': [
     {
@@ -13,33 +23,37 @@ let storeUsersListData = Mock.mock({
       'level|0-1': 1,
       status: '@boolean',
       createTime: '@datetime',
+      'blacklist|0-1': 1,
       detail: {
         info: '@csentence(3, 10)',
         address: '@county(true)',
         superior: '@cname',
         officehours: '@datetime',
         consultPhone: /^1[34578]\d{9}$/,
+        applicantIDCardNum: /^320351[34578]\d{9}$/,
         businessLicenseImg () {
-          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.info.substr(0, 1))
+          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '证')
         },
         doorImg () {
-          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.info.substr(0, 1))
+          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '门')
         },
         serviceBarImg () {
-          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.info.substr(0, 1))
+          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '服')
         },
         shelfImg () {
           return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '货')
         },
-      },
-      avatar () {
-        return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.name.substr(0, 1))
       },
     },
   ],
 })
 
 let database = storeUsersListData.data
+
+/*
+ * @type function
+ * 从数组中查找 key value === 输入的key值的 数据
+ */
 
 const queryArray = (array, key, keyAlias = 'key') => {
   if (!(array instanceof Array)) {

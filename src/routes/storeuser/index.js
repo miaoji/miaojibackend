@@ -16,7 +16,7 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['storeUser/update'],
-    title: `${modalType === 'create' ? '创建用户' : '更新用户'}`,
+    title: `${modalType === 'create' ? '创建门店' : '更新门店'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
@@ -47,6 +47,12 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
           pageSize: page.pageSize,
         },
       }))
+    },
+    onMarkItem (id) {
+      dispatch({
+        type: 'storeUser/markBlackList',
+        payload: id
+      })
     },
     onDeleteItem (id) {
       dispatch({
@@ -131,9 +137,9 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
          selectedRowKeys.length > 0 &&
            <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
              <Col>
-               {`Selected ${selectedRowKeys.length} items `}
-               <Popconfirm title={'确定要删除吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
+               {`选中 ${selectedRowKeys.length} 个微信用户 `}
+               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
+                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
                </Popconfirm>
              </Col>
            </Row>

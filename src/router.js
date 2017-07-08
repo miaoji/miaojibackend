@@ -62,6 +62,38 @@ const Routers = function ({ history, app }) {
             }, 'wxuser-detail')
           },
         }, {
+          path: 'storeuser',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/storeuser'))
+              cb(null, require('./routes/storeuser/'))
+            }, 'storeuser')
+          },
+        }, {
+          path: 'storeuser/:id',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/storeuser/detail'))
+              cb(null, require('./routes/storeuser/detail/'))
+            }, 'storeuser-detail')
+          },
+        }, {
+          path: 'topups',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/topup'))
+              cb(null, require('./routes/wallet/topup'))
+            }, 'topups')
+          }
+        }, {
+          path: 'withdraws',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/withdraw'))
+              cb(null, require('./routes/wallet/withdraw'))
+            }, 'withdraws')
+          }
+        }, {
           path: 'login',
           getComponent (nextState, cb) {
             require.ensure([], require => {

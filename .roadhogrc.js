@@ -8,6 +8,7 @@ const svgSpriteDirs = [
 export default {
   entry: 'src/index.js',
   svgSpriteLoaderDirs: svgSpriteDirs,
+  "publicPath": "./",
   "theme": "./theme.config.js",
   // 接口代理示例
   // "proxy": {

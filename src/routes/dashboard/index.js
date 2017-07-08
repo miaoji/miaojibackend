@@ -23,10 +23,8 @@ function Dashboard ({ dashboard }) {
     <Row gutter={24}>
       {numberCards}
       <Col lg={18} md={24}>
-        <Card bordered={false} bodyStyle={{
-          padding: '24px 36px 24px 0',
-        }}>
-          <Sales data={sales} />
+        <Card bordered={false} bodyStyle={{ ...bodyStyle.bodyStyle, padding: 0 }}>
+          <User {...user} />
         </Card>
       </Col>
       <Col lg={6} md={24}>
@@ -50,38 +48,6 @@ function Dashboard ({ dashboard }) {
             </Card>
           </Col>
         </Row>
-      </Col>
-      <Col lg={12} md={24}>
-        <Card bordered={false} {...bodyStyle}>
-          <RecentSales data={recentSales} />
-        </Card>
-      </Col>
-      <Col lg={12} md={24}>
-        <Card bordered={false} {...bodyStyle}>
-          <Comments data={comments} />
-        </Card>
-      </Col>
-      <Col lg={24} md={24}>
-        <Card bordered={false} bodyStyle={{
-          padding: '24px 36px 24px 0',
-        }}>
-          <Completed data={completed} />
-        </Card>
-      </Col>
-      <Col lg={8} md={24}>
-        <Card bordered={false} {...bodyStyle}>
-          <Browser data={browser} />
-        </Card>
-      </Col>
-      <Col lg={8} md={24}>
-        <Card bordered={false} {...bodyStyle}>
-          <Cpu {...cpu} />
-        </Card>
-      </Col>
-      <Col lg={8} md={24}>
-        <Card bordered={false} bodyStyle={{ ...bodyStyle.bodyStyle, padding: 0 }}>
-          <User {...user} />
-        </Card>
       </Col>
     </Row>
   )
