@@ -71,6 +71,13 @@ module.exports = [
     router: '/message',
   },
   {
+    id: 51,
+    mpid: -1,
+    bpid: 5,
+    name: '消息详细',
+    router: '/message/:id'
+  },
+  {
     id: 6,
     bpid: 1,
     name: '钱包管理',

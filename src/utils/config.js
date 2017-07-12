@@ -21,6 +21,8 @@ module.exports = {
     wxusers: `${APIV1}/wxusers`,
     storeuser: `${APIV1}/storeuser/:id`,
     storeusers: `${APIV1}/storeusers`,
+    message: `${APIV1}/message/:id`,
+    messages: `${APIV1}/messages`,
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,
     dashboard: `${APIV1}/dashboard`,

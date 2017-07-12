@@ -1,14 +1,14 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/wxuser'
-import * as wxusersService from '../services/wxusers'
+import { create, remove, update, markBlack } from '../services/message'
+import * as storeusersService from '../services/messages'
 import { pageModel } from './common'
 import { config } from '../utils'
 
-const { query } = wxusersService
+const { query } = storeusersService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
-  namespace: 'wxUser',
+  namespace: 'message',
 
   state: {
     currentItem: {},
@@ -19,9 +19,11 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
+
     setup ({ dispatch, history }) {
+
       history.listen(location => {
-        if (location.pathname === '/wxuser') {
+        if (location.pathname === '/message') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -62,7 +64,7 @@ export default modelExtend(pageModel, {
     },
 
     *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(wxusersService.remove, payload)
+      const data = yield call(storeusersService.remove, payload)
       if (data.success) {
         yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
         yield put({ type: 'query' })
@@ -72,8 +74,8 @@ export default modelExtend(pageModel, {
     },
 
     *'markBlackList' ({ payload }, { call, put, select }) {
-      const newWxUser = payload
-      const data = yield call(update, newWxUser)
+      const newUser = { status: 2, id: payload }
+      const data = yield call(update, newUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
@@ -93,9 +95,9 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxUser }) => wxUser.currentItem.id)
-      const newWxUser = { ...payload, id }
-      const data = yield call(update, newWxUser)
+      const id = yield select(({ storeUser }) => storeUser.currentItem.id)
+      const newUser = { ...payload, id }
+      const data = yield call(update, newUser)
       if (data.success) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })

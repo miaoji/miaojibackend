@@ -9,12 +9,17 @@ import { queryArray } from '../../utils'
 const Bread = ({ menu }) => {
   // 匹配当前路由
   let pathArray = []
+  let pathname = location.pathname
   let current
   for (let index in menu) {
-    if (menu[index].router && pathToRegexp(menu[index].router).exec(location.pathname)) {
+    if (menu[index].router && pathToRegexp(menu[index].router).exec(pathname)) {
       current = menu[index]
       break
     }
+  }
+
+  if (!current && pathname == '/') {
+    current = menu[0]
   }
 
   const getPathArray = (item) => {
@@ -24,7 +29,7 @@ const Bread = ({ menu }) => {
     }
   }
 
-  if (!current) {
+  if (!current && location.pathname !== '/') {
     pathArray.push(menu[0])
     pathArray.push({
       id: 404,

@@ -46,73 +46,77 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="姓名" hasFeedback {...formItemLayout}>
+        <FormItem label="帐号" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('accounts', {
+            initialValue: item.accounts,
+            rules: [
+              {
+                required: true,
+                pattern: /^1[34578]\d{9}$/,
+                message: '请输入帐号!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="密码" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('pwd', {
+            initialValue: item.pwd,
+            rules: [
+              {
+                required: true,
+                pattern: /^1[34578]\d{9}$/,
+                message: '请输入密码!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
+        <FormItem label="经营者姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
             initialValue: item.name,
             rules: [
               {
                 required: true,
+                message: '请输入经营者姓名!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="昵称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('nickName', {
-            initialValue: item.nickName,
+        <FormItem label="店铺名称" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('storename', {
+            initialValue: item.storename,
             rules: [
               {
                 required: true,
+                message: '请输入店铺名称!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="性别" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('isMale', {
-            initialValue: item.isMale,
-            rules: [
-              {
-                required: true,
-                type: 'boolean',
-              },
-            ],
-          })(
-            <Radio.Group>
-              <Radio value>男</Radio>
-              <Radio value={false}>女</Radio>
-            </Radio.Group>
-          )}
-        </FormItem>
-        <FormItem label="年龄" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('age', {
-            initialValue: item.age,
+        <FormItem label="店铺级别" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('level', {
+            initialValue: item.level,
             rules: [
               {
                 required: true,
                 type: 'number',
+                message: '请选择店铺级别!',
               },
             ],
-          })(<InputNumber min={16} max={100} />)}
+          })(
+            <Radio.Group>
+              <Radio value={1}>主张号</Radio>
+              <Radio value={0}>子帐号</Radio>
+            </Radio.Group>
+          )}
         </FormItem>
-        <FormItem label="手机" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('phone', {
-            initialValue: item.phone,
+        <FormItem label="所属上级" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('superior', {
+            initialValue: item.superior,
             rules: [
               {
-                required: true,
+                required: (Number(item.superior) === 1),
                 pattern: /^1[34578]\d{9}$/,
-                message: '请输入手机号!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="邮箱" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('email', {
-            initialValue: item.email,
-            rules: [
-              {
-                required: true,
-                pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
-                message: '请输入邮箱!',
+                message: '请输入所属上级!',
               },
             ],
           })(<Input />)}
@@ -129,7 +133,7 @@ const modal = ({
             size="large"
             style={{ width: '100%' }}
             options={city}
-            placeholder="Pick an address"
+            placeholder="选择一个地址"
           />)}
         </FormItem>
       </Form>

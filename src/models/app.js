@@ -45,7 +45,7 @@ export default {
       } else {
         if (config.openPages && config.openPages.indexOf(location.pathname) < 0) {
           let from = location.pathname
-          window.location = `${location.origin}/#/login?from=${from}`
+          window.location = `${location.origin}/login?from=${from}`
         }
       }
     },

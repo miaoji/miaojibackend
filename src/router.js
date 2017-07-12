@@ -78,6 +78,22 @@ const Routers = function ({ history, app }) {
             }, 'storeuser-detail')
           },
         }, {
+          path: 'message',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/message'))
+              cb(null, require('./routes/message/'))
+            }, 'message')
+          },
+        }, {
+          path: 'message/:id',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/message/detail'))
+              cb(null, require('./routes/message/detail/'))
+            }, 'message-detail')
+          },
+        }, {
           path: 'topups',
           getComponent (nextState, cb) {
             require.ensure([], require => {

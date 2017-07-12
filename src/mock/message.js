@@ -1,55 +1,35 @@
-const qs = require('qs')
 const Mock = require('mockjs')
 const config = require('../utils/config')
 const { apiPrefix } = config
 
 /*
  * @mock data
- * accounts 帐号/手机号, name 经营人姓名, storename 店铺名称, level 店铺级别(0 = 门店主帐号/ 1 = 门店子帐号)
- * status 状态( 1 =启用/ 0 = 禁用), createTime 注册时间, blacklist 黑名单 (0 是黑名单 1 不是), pwd app登录密码
- * detail 详情：info 用户列表中信息, address 地址(省、市、区),
- *              superior 所属上级, officehours 营业时间, consultPhone 咨询电话, 
- *              applicantIDCardNum 申请人身份证号, businessLicenseImg 营业执照照片, 
- *              doorImg 门头照片, serviceBarImg 服务台照片, shelfImg 货架照片
+ * title 消息标题, content 消息内容, image 图片, type 消息类型 (0 = 短信/1 = 微信), status 消息状态( true =启用/ false = 禁用), 
+ * createTime 发布时间, people 消息受众
  */
 
-let storeUsersListData = Mock.mock({
+let messageListData = Mock.mock({
   'data|80-100': [
     {
       id: '@id',
-      accounts: /^1[34578]\d{9}$/,
-      name: '@cname',
-      storename: '@cname',
-      'level|0-1': 1,
+      title: '@csentence(5)',
+      content: '@csentence',
+      image () {
+        return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', 'M')
+      },
+      'type|0-1': 1,
       status: '@boolean',
       createTime: '@datetime',
-      'blacklist|0-1': 1,
-      pwd: /^1[3457]\d{9}$/,
-      detail: {
-        info: '@csentence(3, 10)',
+      people: {
+        store: '@boolean',
+        customer: '@boolean',
         address: '@county(true)',
-        superior: '@cname',
-        officehours: '@datetime',
-        consultPhone: /^1[34578]\d{9}$/,
-        applicantIDCardNum: /^320351[34578]\d{9}$/,
-        businessLicenseImg () {
-          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '证')
-        },
-        doorImg () {
-          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '门')
-        },
-        serviceBarImg () {
-          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '服')
-        },
-        shelfImg () {
-          return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', '货')
-        },
       },
     },
   ],
 })
 
-let database = storeUsersListData.data
+let database = messageListData.data
 
 /*
  * @type function
@@ -82,7 +62,7 @@ const NOTFOUND = {
 
 module.exports = {
 
-  [`GET ${apiPrefix}/storeusers`] (req, res) {
+  [`GET ${apiPrefix}/messages`] (req, res) {
     const { query } = req
     let { pageSize, page, ...other } = query
     pageSize = pageSize || 10
@@ -118,7 +98,7 @@ module.exports = {
     })
   },
 
-  [`POST ${apiPrefix}/storeuser`] (req, res) {
+  [`POST ${apiPrefix}/message`] (req, res) {
     const newData = req.body
     newData.createTime = Mock.mock('@now')
     newData.avatar = newData.avatar || Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', newData.nickName.substr(0, 1))
@@ -129,7 +109,7 @@ module.exports = {
     res.status(200).end()
   },
 
-  [`GET ${apiPrefix}/storeuser/:id`] (req, res) {
+  [`GET ${apiPrefix}/message/:id`] (req, res) {
     const { id } = req.params
     const data = queryArray(database, id, 'id')
     if (data) {
@@ -139,7 +119,7 @@ module.exports = {
     }
   },
 
-  [`DELETE ${apiPrefix}/storeuser/:id`] (req, res) {
+  [`DELETE ${apiPrefix}/message/:id`] (req, res) {
     const { id } = req.params
     const data = queryArray(database, id, 'id')
     if (data) {
@@ -150,7 +130,7 @@ module.exports = {
     }
   },
 
-  [`PATCH ${apiPrefix}/storeuser/:id`] (req, res) {
+  [`PATCH ${apiPrefix}/message/:id`] (req, res) {
     const { id } = req.params
     const editItem = req.body
     let isExist = false

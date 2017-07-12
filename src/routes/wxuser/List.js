@@ -60,10 +60,10 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       dataIndex: 'status',
       key: 'status',
       filters: [
-        { text: '关注', value: '0' },
-        { text: '取消关注', value: '1' }
+        { text: '关注', value: '1' },
+        { text: '取消关注', value: '0' }
       ],
-      onFilter: (value, record) => record.blacklist === value,
+      onFilter: (value, record) => Number(record.status) === Number(value),
       render: (text) => {
         const realtext = {
           '0': '取消关注',
@@ -79,7 +79,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         { text: '否', value: '0' },
         { text: '是', value: '1' }
       ],
-      onFilter: (value, record) => record.blacklist === value,
+      onFilter: (value, record) => Number(record.blacklist) === Number(value),
       render: (text) => {
         const realtext = {
           '0': '否',

@@ -31,6 +31,7 @@ const modal = ({
       }
       const data = {
         ...getFieldsValue(),
+        id: item.id,
         key: item.key,
       }
       onOk(data)

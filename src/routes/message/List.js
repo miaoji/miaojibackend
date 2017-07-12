@@ -25,52 +25,35 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '帐号',
-      dataIndex: 'accounts',
-      key: 'accounts',
-      render: (text, record) => <Link to={`storeuser/${record.id}`}>{text}</Link>,
+      title: '标题',
+      dataIndex: 'title',
+      key: 'title',
+      render: (text, record) => <Link to={`message/${record.id}`}>{text}</Link>,
     }, {
-      title: '经营者姓名',
-      dataIndex: 'name',
-      key: 'name',
+      title: '图片',
+      dataIndex: 'image',
+      key: 'image',
+      width: 64,
+      className: styles.avatar,
+      render: (text) => <img alt={'avatar'} width={24} src={text} />,
     }, {
-      title: '店铺名称',
-      dataIndex: 'storename',
-      key: 'storename',
-    }, {
-      title: '店铺级别',
-      dataIndex: 'level',
-      key: 'level',
+      title: '消息类型',
+      dataIndex: 'type',
+      key: 'type',
       render: (text) => <span>{text === 0
-            ? '主张号'
-            : '子帐号'}</span>,
+            ? '短信'
+            : '短信'}</span>,
     }, {
-      title: '状态',
+      title: '消息状态',
       dataIndex: 'status',
       key: 'status',
-      render: (text) => <span>{text === 0
-            ? '禁用'
-            : '启用'}</span>,
+      render: (text) => <span>{text
+            ? '启用'
+            : '禁用'}</span>,
     }, {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-    }, {
-      title: '是否黑名单',
-      dataIndex: 'blacklist',
-      key: 'blacklist',
-      filters: [
-        { text: '否', value: '0' },
-        { text: '是', value: '1' }
-      ],
-      onFilter: (value, record) => Number(record.blacklist) === Number(value),
-      render: (text) => {
-        const realtext = {
-          '0': '否',
-          '1': '是',
-        }
-        return <span>{realtext[text]}</span>
-      }
+      title: '内容',
+      dataIndex: 'content',
+      key: 'content',
     }, {
       title: '操作',
       key: 'operation',

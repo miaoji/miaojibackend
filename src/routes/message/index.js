@@ -7,33 +7,33 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const WxUser = ({ location, dispatch, wxUser, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = wxUser
+const Message = ({ location, dispatch, message, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = message
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['wxUser/update'],
-    title: `${modalType === 'create' ? '创建微信用户' : '更新微信用户--'}${currentItem.wxName}`,
+    confirmLoading: loading.effects['storeUser/update'],
+    title: `${modalType === 'create' ? '创建门店' : '更新门店'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: 'wxUser/markBlackList',
+        type: `message/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'wxUser/hideModal',
+        type: 'message/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['wxUser/query'],
+    loading: loading.effects['message/query'],
     pagination,
     location,
     isMotion,
@@ -50,24 +50,35 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
     },
     onMarkItem (id) {
       dispatch({
-        type: 'wxUser/markBlackList',
-        payload: { id, blacklist: 1}
+        type: 'message/markBlackList',
+        payload: id
       })
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'wxUser/delete',
+        type: 'message/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'wxUser/showModal',
+        type: 'message/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
       })
+    },
+    rowSelection: {
+      selectedRowKeys,
+      onChange: (keys) => {
+        dispatch({
+          type: 'message/updateState',
+          payload: {
+            selectedRowKeys: keys,
+          },
+        })
+      },
     },
   }
 
@@ -88,31 +99,31 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/wxUser',
+        pathname: '/message',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/wxUser',
+        pathname: '/message',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'wxUser/showModal',
+        type: 'message/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'wxUser/switchIsMotion' })
+      dispatch({ type: 'message/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'wxUser/multiDelete',
+      type: 'message/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -122,17 +133,28 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
+      {
+         selectedRowKeys.length > 0 &&
+           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+             <Col>
+               {`选中 ${selectedRowKeys.length} 个消息 `}
+               <Popconfirm title={'确定将这些消息删除吗?'} placement="left" onConfirm={handleDeleteItems}>
+                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>删除</Button>
+               </Popconfirm>
+             </Col>
+           </Row>
+      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
-WxUser.propTypes = {
-  wxUser: PropTypes.object,
+Message.propTypes = {
+  message: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ wxUser, loading }) => ({ wxUser, loading }))(WxUser)
+export default connect(({ message, loading }) => ({ message, loading }))(Message)

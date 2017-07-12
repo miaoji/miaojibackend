@@ -69,17 +69,17 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         },
       })
     },
-    rowSelection: {
-      selectedRowKeys,
-      onChange: (keys) => {
-        dispatch({
-          type: 'storeUser/updateState',
-          payload: {
-            selectedRowKeys: keys,
-          },
-        })
-      },
-    },
+    // rowSelection: {
+    //   selectedRowKeys,
+    //   onChange: (keys) => {
+    //     dispatch({
+    //       type: 'storeUser/updateState',
+    //       payload: {
+    //         selectedRowKeys: keys,
+    //       },
+    //     })
+    //   },
+    // },
   }
 
   const filterProps = {
