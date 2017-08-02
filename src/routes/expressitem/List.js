@@ -18,7 +18,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'subject'
     },
     {
-      title: '到付件',
+      title: '普通件',
       children: [{
         title: '上架数',
         dataIndex: 'normal.storesNum',
@@ -37,7 +37,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         key: 'normalerrNum'
       }]
     }, {
-      title: '到付',
+      title: '到付件',
       children: [{
         title: '到付件数',
         dataIndex: 'collect.collectNum',
@@ -60,7 +60,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         key: 'collecterrNum'
       }]
     }, {
-      title: '代收',
+      title: '代收件',
       children: [{
         title: '上架数',
         dataIndex: 'collection.storesNum',
