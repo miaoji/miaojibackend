@@ -45,7 +45,7 @@ module.exports = [
     mpid: 4,
     icon: 'export',
     name: '快件操作数据',
-    router: '/statistics/expressitem',
+    router: '/expressitem',
   },
   {
     id: 42,
@@ -53,7 +53,7 @@ module.exports = [
     mpid: 4,
     icon: 'pay-circle',
     name: '收支数据',
-    router: '/statistics/checkbook',
+    router: '/checkbook',
   },
   {
     id: 43,
@@ -61,7 +61,7 @@ module.exports = [
     mpid: 4,
     icon: 'mobile',
     name: '通讯数据',
-    router: '/statistics/communicate',
+    router: '/communication',
   },
   {
     id: 5,

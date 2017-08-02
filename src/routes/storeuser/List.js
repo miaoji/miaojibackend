@@ -28,7 +28,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '帐号',
       dataIndex: 'accounts',
       key: 'accounts',
-      render: (text, record) => <Link to={`storeuser/${record.id}`}>{text}</Link>,
+      render: (text, record) => {
+        const str = text.toString()
+        let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
+        return <Link to={`storeuser/${record.id}`}>{encryptNum}</Link>
+      }
     }, {
       title: '经营者姓名',
       dataIndex: 'name',

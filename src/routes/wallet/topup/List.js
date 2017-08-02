@@ -49,7 +49,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         { text: '失败', value: '0' },
         { text: '成功', value: '1' }
       ],
-      onFilter: (value, record) => record.status === value,
+      onFilter: (value, record) => Number(record.status) === Number(value),
       render: (text) => <span>{text === 0
             ? '失败'
             : '成功'}</span>,
