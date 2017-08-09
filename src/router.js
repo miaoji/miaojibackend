@@ -101,23 +101,74 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/communication/'))
             }, 'communication')
           },
-        }, {
-          path: 'checkbook',
+        }, 
+//      {
+//        path: 'checkbook',
+//        getComponent (nextState, cb) {
+//          require.ensure([], require => {
+//            registerModel(app, require('./models/checkbook'))
+//            cb(null, require('./routes/checkbook'))
+//          }, 'checkbook')
+//        }
+//      }, 
+        {
+          path: 'income',
           getComponent (nextState, cb) {
             require.ensure([], require => {
-              registerModel(app, require('./models/checkbook'))
-              cb(null, require('./routes/checkbook'))
-            }, 'checkbook')
+              registerModel(app, require('./models/income'))
+              cb(null, require('./routes/income'))
+            }, 'income')
           }
-        }, {
-          path: 'expressitem',
+        },
+        {
+          path: 'expend',
           getComponent (nextState, cb) {
             require.ensure([], require => {
-              registerModel(app, require('./models/expressitem'))
-              cb(null, require('./routes/expressitem'))
-            }, 'expressitem')
+              registerModel(app, require('./models/expend'))
+              cb(null, require('./routes/expend'))
+            }, 'expend')
           }
-        }, {
+        },
+//      {
+//        path: 'expressitem',
+//        getComponent (nextState, cb) {
+//          require.ensure([], require => {
+//            registerModel(app, require('./models/expressitem'))
+//            cb(null, require('./routes/expressitem'))
+//          }, 'expressitem')
+//        }
+//      }, 
+        {
+          path: 'normal',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/normal'))
+              cb(null, require('./routes/normal'))
+            }, 'normal')
+          }
+        }, 
+        {
+          path: 'collect',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/collect'))
+              cb(null, require('./routes/collect'))
+            }, 'collect')
+          }
+        }, 
+        {
+          path: 'collection',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/collection'))
+              cb(null, require('./routes/collection'))
+            }, 'collection')
+          }
+        }, 
+        
+        
+        
+        {
           path: 'topups',
           getComponent (nextState, cb) {
             require.ensure([], require => {

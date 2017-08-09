@@ -1,13 +1,11 @@
 import { request, config } from '../utils'
 const { api } = config
-const { withdraws } = api
+const { income } = api
 
 export async function query (params) {
-  console.log('params', params)
   return request({
-    url: withdraws,
+    url: income,
     method: 'get',
-    fetchType: 'CORS',
-    data: params
+    data: params,
   })
 }

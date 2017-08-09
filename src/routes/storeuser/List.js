@@ -26,8 +26,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '帐号',
-      dataIndex: 'accounts',
-      key: 'accounts',
+      dataIndex: 'mobile',
+      key: 'mobile',
       render: (text, record) => {
         const str = text.toString()
         let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
@@ -35,30 +35,30 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       }
     }, {
       title: '经营者姓名',
+      dataIndex: 'null',
+      key: 'null',
+    }, {
+      title: '店铺名称',
       dataIndex: 'name',
       key: 'name',
     }, {
-      title: '店铺名称',
-      dataIndex: 'storename',
-      key: 'storename',
-    }, {
       title: '店铺级别',
-      dataIndex: 'level',
-      key: 'level',
+      dataIndex: 'type',
+      key: 'type',
       render: (text) => <span>{text === 0
             ? '主张号'
             : '子帐号'}</span>,
     }, {
       title: '状态',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'isdelete',
+      key: 'isdelete',
       render: (text) => <span>{text === 0
             ? '禁用'
             : '启用'}</span>,
     }, {
       title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'createtime',
+      key: 'createtime',
     }, {
       title: '是否黑名单',
       dataIndex: 'blacklist',

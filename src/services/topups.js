@@ -6,6 +6,7 @@ export async function query (params) {
   return request({
     url: topups,
     method: 'get',
-    data: params,
+    fetchType: 'CORS',
+    data: params
   })
 }

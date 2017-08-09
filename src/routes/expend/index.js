@@ -6,13 +6,13 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 
-const TopUp = ({ location, dispatch, topup, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = topup
+const Expend = ({ location, dispatch, expend, loading }) => {
+  const { list, pagination, currentItem, isMotion, selectedRowKeys } = expend
   const { pageSize } = pagination
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['topup/query'],
+    loading: loading.effects['expend/query'],
     pagination,
     location,
     isMotion,
@@ -22,26 +22,26 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
         pathname,
         query: {
           ...query,
-          pagination: page.current,
-          rownum: page.pageSize,
+          page: page.current,
+          pageSize: page.pageSize,
         },
       }))
     },
     onMarkItem (id) {
       dispatch({
-        type: 'topup/markBlackList',
+        type: 'expend/markBlackList',
         payload: id
       })
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'topup/delete',
+        type: 'expend/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'topup/showModal',
+        type: 'expend/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -60,68 +60,48 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          pagination: 1,
-          rownum,
+          page: 1,
+          pageSize,
         },
       }))
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/topup',
+        pathname: '/expend',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/topup',
+        pathname: '/expend',
       }))
     },
     onAdd () {
       dispatch({
-        type: 'topup/showModal',
+        type: 'expend/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'topup/switchIsMotion' })
+      dispatch({ type: 'expend/switchIsMotion' })
     },
-  }
-
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'topup/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
   }
 
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
     </div>
   )
 }
 
-TopUp.propTypes = {
-  topup: PropTypes.object,
+Expend.propTypes = {
+  expend: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ topup, loading }) => ({ topup, loading }))(TopUp)
+export default connect(({ expend, loading }) => ({ expend, loading }))(Expend)

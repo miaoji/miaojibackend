@@ -6,13 +6,13 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 
-const WithDraw = ({ location, dispatch, withdraw, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = withdraw
+const Normal = ({ location, dispatch, normal, loading }) => {
+  const { list, pagination, currentItem, isMotion, selectedRowKeys } = normal
   const { pageSize } = pagination
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['withdraw/query'],
+    loading: loading.effects['normal/query'],
     pagination,
     location,
     isMotion,
@@ -22,8 +22,8 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
         pathname,
         query: {
           ...query,
-          pagination: page.current,
-          rownum: page.pageSize,
+          page: page.current,
+          pageSize: page.pageSize,
         },
       }))
     }
@@ -39,57 +39,40 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          pagination: 1,
-          rownum,
+          page: 1,
+          pageSize,
         },
       }))
     },
     onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/withdraw',
+        pathname: '/normal',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/withdraw',
+        pathname: '/normal',
       }))
-    }
-  }
-
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'withdraw/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
+    },
+    switchIsMotion () {
+      dispatch({ type: 'normal/switchIsMotion' })
+    },
   }
 
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
     </div>
   )
 }
 
-WithDraw.propTypes = {
-  withdraw: PropTypes.object,
+Normal.propTypes = {
+  normal: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ withdraw, loading }) => ({ withdraw, loading }))(WithDraw)
+export default connect(({ normal, loading }) => ({ normal, loading }))(Normal)

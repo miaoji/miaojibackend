@@ -24,9 +24,16 @@ export default modelExtend(pageModel, {
 
       history.listen(location => {
         if (location.pathname === '/storeuser') {
+        	let query=location.query
+        	if(!query.pagination){
+        		query={
+        			pagination:1,
+        			rownum:10
+        		}
+        	}
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: query,
           })
         }
       })
@@ -36,16 +43,27 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
+      let data = yield call(query, payload)
       if (data) {
+//    	delete data.success
+//    	delete data.message
+//    	delete data.statusCode
+      	let list = []
+//    	for (let item in data) {
+//    		list.push(data[item])
+//    	}
+      	Object.keys(data).forEach(key => {
+      		list.push(data[key])
+      	})
+      	console.log(list[0]["createtime"])
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
+              total: 60,
             },
           },
         })

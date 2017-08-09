@@ -53,7 +53,7 @@ module.exports = [
     mpid: 4,
     icon: 'pay-circle',
     name: '收支数据',
-    router: '/checkbook',
+//  router: '/checkbook',
   },
   {
     id: 43,
@@ -63,6 +63,43 @@ module.exports = [
     name: '通讯数据',
     router: '/communication',
   },
+  {
+    id: 44,
+    bpid: 4,
+    mpid: 41,
+    icon: 'tag',
+    name: '普通件',
+    router: '/normal',
+  },{
+    id: 45,
+    bpid: 4,
+    mpid: 41,
+    icon: 'tag-o',
+    name: '到付件',
+    router: '/collect',
+  },{
+    id: 46,
+    bpid: 4,
+    mpid: 41,
+    icon: 'tags',
+    name: '代收件',
+    router: '/collection',
+  },{
+    id: 47,
+    bpid: 4,
+    mpid: 42,
+    icon: 'download',
+    name: '收入',
+    router: '/income',
+  },{
+    id: 48,
+    bpid: 4,
+    mpid: 42,
+    icon: 'upload',
+    name: '支出',
+    router: '/expend',
+  },
+  
   {
     id: 5,
     bpid: 1,

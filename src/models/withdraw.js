@@ -20,10 +20,17 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
 
       history.listen(location => {
+      	let query = location.query;
+          if (!query.pagination) {
+            query = {
+              pagination: 1,
+              rownum: 10
+            } 
+          };
         if (location.pathname === '/withdraws') {
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: query,
           })
         }
       })
@@ -33,16 +40,23 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
+      let data = yield call(query, payload)
       if (data) {
+      	delete data.success
+      	delete data.message
+      	delete data.statusCode
+      	let list = []
+      	for (let item in data) {
+      		list.push(data[item])
+      	}
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
+              total: 60
             },
           },
         })

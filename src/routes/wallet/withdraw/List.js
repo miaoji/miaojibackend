@@ -14,28 +14,30 @@ const List = ({ isMotion, location, ...tableProps }) => {
   const columns = [
     {
       title: '提现人',
-      dataIndex: 'withdrawPerson',
-      key: 'withdrawPerson',
+      dataIndex: 'name',
+      key: 'name',
     }, {
       title: '提现金额',
-      dataIndex: 'money',
-      key: 'money',
+      dataIndex: 'price',
+      key: 'price',
       render: (text) => <span>￥{text}</span>,
-    }, {
-      title: '帐号类型',
-      dataIndex: 'accountType',
-      key: 'accountType',
-      render: (text) => <span>{text === 0
-            ? '门店主账号'
-            : '门店子帐号'}</span>,
-    }, {
+    },
+//  {
+//    title: '帐号类型',
+//    dataIndex: 'accountType',
+//    key: 'accountType',
+//    render: (text) => <span>{text === 0
+//          ? '门店主账号'
+//          : '门店子帐号'}</span>,
+//  }, 
+    {
       title: '帐号',
-      dataIndex: 'account',
-      key: 'account',
+      dataIndex: 'alipayaccount',
+      key: 'alipayaccount',
     }, {
       title: '提现时间',
-      dataIndex: 'time',
-      key: 'time',
+      dataIndex: 'cteatetime',
+      key: 'cteatetime',
     }, {
       title: '提现状态',
       dataIndex: 'status',

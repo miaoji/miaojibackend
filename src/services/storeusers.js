@@ -6,7 +6,8 @@ export async function query (params) {
   return request({
     url: storeusers,
     method: 'get',
-    data: params,
+    fetchType:'CORS',
+    data:params
   })
 }
 

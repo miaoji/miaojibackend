@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { Table, Modal } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
-import AnimTableBody from '../../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../../components'
+import AnimTableBody from '../../components/DataTable/AnimTableBody'
+import { DropOption } from '../../components'
 import { Link } from 'dva/router'
 
 const confirm = Modal.confirm
@@ -25,35 +25,41 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '流水号',
-      dataIndex: 'orderId',
-      key: 'OrderId',
-    }, {
-      title: '金额',
-      dataIndex: 'price',
-      key: 'price',
-      render: (text) => <span>￥{text}</span>,
-    }, {
-      title: '时间',
-      dataIndex: 'createtime',
-      key: 'createtime',
-    }, {
-      title: '充值人',
-      dataIndex: 'name',
-      key: 'name',
-    }, {
-      title: '充值状态',
-      dataIndex: 'status',
-      key: 'status',
-      filters: [
-        { text: '失败', value: '0' },
-        { text: '成功', value: '1' }
-      ],
-      onFilter: (value, record) => Number(record.status) === Number(value),
-      render: (text) => <span>{text === 0
-            ? '失败'
-            : '成功'}</span>,
-    },
+      title: '主体',
+      dataIndex: 'subject',
+      key: 'subject'
+    },{
+        title: '派送费',
+        dataIndex: 'deliveryCharges',
+        key: 'deliveryCharges',
+        render: (text) => <span>{'￥' + text}</span>,
+      }, {
+        title: '寄件费',
+        dataIndex: 'SendCharges',
+        key: 'SendCharges',
+        render: (text) => <span>{'￥' + text}</span>,
+      }, {
+        title: '到付',
+        dataIndex: 'collectCharges',
+        key: 'collectCharges',
+        render: (text) => <span>{'￥' + text}</span>,
+      }, {
+        title: '代收',
+        dataIndex: 'collection',
+        key: 'collection',
+        render: (text) => <span>{'￥' + text}</span>,
+      }, {
+        title: '其他',
+        dataIndex: 'others',
+        key: 'incomeothers',
+        render: (text) => <span>{'￥' + text}</span>,
+      }, 
+//    {
+//    title: '余额',
+//    dataIndex: 'balance',
+//    key: 'balance',
+//    render: (text) => <span>{'￥' + text}</span>,
+//  }
   ]
 
   const getBodyWrapperProps = {
