@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend'
 import * as topupService from '../services/topups'
 import { pageModel } from './common'
 import { config } from '../utils'
+import { gettimes } from '../utils/time'
 
 const { query } = topupService
 const { prefix } = config
@@ -47,13 +48,14 @@ export default modelExtend(pageModel, {
       	delete data.message
       	delete data.statusCode
       	let list = []
-//    	for (let item in data) {
-//    		list.push(data[item])
-//    	}
+				gettimes('createtime',data) //将13位的时间戳转换成常见时间格式    		
+      	for (let item in data) {
+      		list.push(data[item])
+      	}
       	Object.keys(data).forEach(key => {
       		list.push(data[key])
       	})
-      	console.log('data', list)
+      	
         yield put({
           type: 'querySuccess',
           payload: {

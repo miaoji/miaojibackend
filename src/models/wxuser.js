@@ -3,6 +3,7 @@ import { create, remove, update, markBlack } from '../services/wxuser'
 import * as wxusersService from '../services/wxusers'
 import { pageModel } from './common'
 import { config } from '../utils'
+import { gettimes } from '../utils/time'
 
 const { query } = wxusersService
 const { prefix } = config
@@ -21,10 +22,17 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
+      	let query = location.query;
+      	if(!query.pagination){
+      		query={
+      			pagination:1,
+      			rownum:10
+      		}
+      	};
         if (location.pathname === '/wxuser') {
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: query,
           })
         }
       })
@@ -34,16 +42,24 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
+      let data = yield call(query, payload)
       if (data) {
+      	delete data.success
+      	delete data.message
+      	delete data.statusCode
+      	let list=[]
+				gettimes("subscribeTime",data) //将13位的时间戳转换成常见时间格式    	
+      	Object.keys(data).forEach(key=>{
+      		list.push(data[key])
+      	})
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
+              total: 60,
             },
           },
         })

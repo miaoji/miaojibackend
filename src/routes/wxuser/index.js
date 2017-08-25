@@ -43,8 +43,8 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
         pathname,
         query: {
           ...query,
-          page: page.current,
-          pageSize: page.pageSize,
+          pagination: page.current,
+          rownum: page.pageSize,
         },
       }))
     },
@@ -81,8 +81,8 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
+          pagination: 1,
+          rownum,
         },
       }))
     },

@@ -36,8 +36,8 @@ const List = ({ isMotion, location, ...tableProps }) => {
       key: 'alipayaccount',
     }, {
       title: '提现时间',
-      dataIndex: 'cteatetime',
-      key: 'cteatetime',
+      dataIndex: 'createtime',
+      key: 'createtime',
     }, {
       title: '提现状态',
       dataIndex: 'status',

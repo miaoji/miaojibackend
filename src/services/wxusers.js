@@ -6,6 +6,7 @@ export async function query (params) {
   return request({
     url: wxusers,
     method: 'get',
-    data: params,
+    fetchType: 'CORS',
+    data: params
   })
 }

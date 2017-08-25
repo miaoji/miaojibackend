@@ -3,6 +3,7 @@ import { create, remove, update, markBlack } from '../services/storeuser'
 import * as storeusersService from '../services/storeusers'
 import { pageModel } from './common'
 import { config } from '../utils'
+import { gettimes } from '../utils/time' //转换时间戳的函数
 
 const { query } = storeusersService
 const { prefix } = config
@@ -43,15 +44,14 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+    	console.log('data')
       let data = yield call(query, payload)
       if (data) {
-//    	delete data.success
-//    	delete data.message
-//    	delete data.statusCode
-      	let list = []
-//    	for (let item in data) {
-//    		list.push(data[item])
-//    	}
+      	delete data.success
+      	delete data.message
+      	delete data.statusCode
+      	let list = [];
+				gettimes('createtime',data) //将13位的时间戳转换成常见时间格式
       	Object.keys(data).forEach(key => {
       		list.push(data[key])
       	})

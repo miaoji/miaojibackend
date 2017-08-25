@@ -3,7 +3,6 @@ const { api } = config
 const { withdraws } = api
 
 export async function query (params) {
-  console.log('params', params)
   return request({
     url: withdraws,
     method: 'get',

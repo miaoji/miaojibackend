@@ -26,39 +26,45 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
   const columns = [
     {
       title: '微信名',
-      dataIndex: 'wxName',
-      key: 'wxName',
+      dataIndex: 'nickname',
+      key: 'nickname',
       render: (text, record) => <Link to={`wxuser/${record.id}`}>{text}</Link>,
     }, {
       title: '手机',
-      dataIndex: 'phone',
-      key: 'phone',
+      dataIndex: 'mobile',
+      key: 'mobile',
       render: (text) => {
         const str = text.toString()
         let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
         return <span>{encryptNum}</span>
       }
+    }, 
+//  {
+//    title: '地理所属店铺',
+//    dataIndex: 'belongStore',
+//    key: 'belongStore'
+//  }, 
+    {
+      title: '寄出数量',
+      dataIndex: 'senduId',
+      key: 'senduId',
     }, {
-      title: '地理所属店铺',
-      dataIndex: 'belongStore',
-      key: 'belongStore'
-    }, {
-      title: '寄件次数',
-      dataIndex: 'sendCount',
-      key: 'sendCount',
-    }, {
-      title: '收件次数',
-      dataIndex: 'pickupCount',
-      key: 'pickupCount',
+      title: '收件数量',
+      dataIndex: 'receiveId',
+      key: 'receiveId',
     }, {
       title: '消费金额',
-      dataIndex: 'consume',
-      key: 'consume',
+      dataIndex: 'price',
+      key: 'price',
       render: text => <span>￥{text}</span>
+    },{
+      title: '创建时间',
+      dataIndex: 'subscribeTime',
+      key: 'subscribeTime',
     }, {
       title: '关注状态',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'subscribe',
+      key: 'subscribe',
       filters: [
         { text: '关注', value: '1' },
         { text: '取消关注', value: '0' }

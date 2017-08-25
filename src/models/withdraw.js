@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend'
 import * as withdrawsService from '../services/withdraws'
 import { pageModel } from './common'
 import { config } from '../utils'
+import { gettimes } from "../utils/time"
 
 const { query } = withdrawsService
 const { prefix } = config
@@ -46,6 +47,7 @@ export default modelExtend(pageModel, {
       	delete data.message
       	delete data.statusCode
       	let list = []
+				gettimes('createtime',data) //将13位的时间戳转换成常见的时间格式
       	for (let item in data) {
       		list.push(data[item])
       	}
