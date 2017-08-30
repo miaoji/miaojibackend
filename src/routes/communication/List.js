@@ -26,68 +26,68 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '主体',
-      dataIndex: 'subject',
-      key: 'subject'
+      dataIndex: 'name',
+      key: 'name'
     },
     {
       title: '短信数',
-      dataIndex: 'noteCount',
-      key: 'noteCount',
+      dataIndex: 'countId',
+      key: 'countId',
       render: (text) => <span>{text + '次'}</span>,
     }, {
       title: '短信金额',
-      dataIndex: 'noteMoney',
-      key: 'noteMoney',
+      dataIndex: 'countIdPrice',
+      key: 'countIdPrice',
       render: (text) => <span>{'￥' + text}</span>,
     }, {
       title: '语音数量',
       dataIndex: 'voiceCount',
       key: 'voiceCount',
-      render: (text) => <span>{text + '次'}</span>,
+      render: (text) => <span></span>,
     }, {
       title: '语音通知金额',
       dataIndex: 'voiceMoney',
       key: 'voiceMoney',
-      render: (text) => <span>{'￥' + text}</span>,
+      render: (text) => <span></span>,
     }, {
       title: '微信通知数量',
-      dataIndex: 'wxCount',
-      key: 'wxCount',
+      dataIndex: 'wechatQuantity',
+      key: 'wechatQuantity',
       render: (text) => <span>{text + '次'}</span>,
     }, {
       title: '直拨电话数量',
       dataIndex: 'callCount',
       key: 'callCount',
-      render: (text) => <span>{text + '次'}</span>,
+      render: (text) => <span></span>,
     }, {
       title: '直拨时长',
       dataIndex: 'callTime',
       key: 'callTime',
-      render: (text) => <span>{text + '分'}</span>,
+      render: (text) => <span></span>,
     }, {
       title: '直拨金额',
       dataIndex: 'callMoney',
       key: 'callMoney',
-      render: (text) => <span>{'￥' + text}</span>,
+      render: (text) => <span></span>,
     }, {
       title: '回拨次数',
-      dataIndex: 'callbackCount',
-      key: 'callbackCount',
+      dataIndex: 'numberOfCalls',
+      key: 'numberOfCalls',
       render: (text) => <span>{text + '次'}</span>,
     }, {
       title: '回拨金额',
-      dataIndex: 'callbackMoney',
-      key: 'callbackMoney',
+      dataIndex: 'callbackAmout',
+      key: 'callbackAmout',
       render: (text) => <span>{'￥' + text}</span>,
     }, {
       title: '回拨时长',
-      dataIndex: 'callbackTime',
-      key: 'callbackTime',
+      dataIndex: 'callbackDuration',
+      key: 'callbackDuration',
       render: (text) => <span>{text + '分'}</span>,
     }, {
       title: '总金额',
-      dataIndex: 'totalMoney',
-      key: 'totalMoney',
+      dataIndex: 'totalAmount',
+      key: 'totalAmount',
       render: (text) => <span>{'￥' + text}</span>,
     }, {
       title: '时间',

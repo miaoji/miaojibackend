@@ -1,6 +1,6 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-const APIV3 = 'http://192.168.0.169:8080/quandiExpressSiteManager'
+const APIV3 = 'http://192.168.0.111:8080/quandiExpressSiteManager'
 
 module.exports = {
   name: '妙寄后台管理系统',
@@ -21,20 +21,26 @@ module.exports = {
     wxuser: `${APIV1}/wxuser/:id`,
     
     // wxusers: `${APIV1}/wxusers`,
- wxusers: `${APIV3}/wechatuser`,//微信用户
+    wxusers: `${APIV3}/wechatuser`,//微信用户
     
     storeuser: `${APIV1}/storeuser/:id`,
     
     // storeusers: `${APIV1}/storeusers`,
- storeusers: `${APIV3}/storebean`,//门店用户
+    storeusers: `${APIV3}/storebean`,//门店用户
     
     message: `${APIV1}/message/:id`,
     messages: `${APIV1}/messages`,
-    communications: `${APIV1}/communications`,
+
+    //通信数据
+    // communications: `${APIV1}/communications`,
+    communications: `${APIV3}/communicationdata`,
     
     checkbooks: `${APIV1}/checkbooks`,
     income: `${APIV1}/income`,
-    expend: `${APIV1}/expend`,
+
+    //支出
+    // expend: `${APIV1}/expend`,
+    expend: `${APIV3}/expenditure`,
     
     expressitems: `${APIV1}/expressitems`,
     normal: `${APIV1}/normal`,

@@ -26,28 +26,28 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '主体',
-      dataIndex: 'subject',
-      key: 'subject'
+      dataIndex: 'name',
+      key: 'name'
     },{
         title: '通讯费',
-        dataIndex: 'communicateCharges',
-        key: 'communicateCharges',
+        dataIndex: 'communicate',
+        key: 'communicate',
         render: (text) => <span>{'￥' + text}</span>,
       }, {
         title: '提现费用',
-        dataIndex: 'withdrawCharges',
-        key: 'withdrawCharges',
+        dataIndex: 'withdrawalAmount',
+        key: 'withdrawalAmount',
         render: (text) => <span>{'￥' + text}</span>,
       }, {
         title: '其他',
-        dataIndex: 'others',
-        key: 'expendothers',
+        dataIndex: 'otheramount',
+        key: 'otheramount',
         render: (text) => <span>{'￥' + text}</span>,
       }, {
       title: '余额',
       dataIndex: 'balance',
       key: 'balance',
-      render: (text) => <span>{'￥' + text}</span>,
+      render: (text) => <span></span>,
     }
   ]
 

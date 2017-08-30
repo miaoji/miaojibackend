@@ -33,15 +33,25 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
+      console.log('data',data)
       if (data) {
+        delete data.success
+        delete data.message
+        delete data.statusCode
+        let list=[]
+        // gettimes("subscribeTime",data) //将13位的时间戳转换成常见时间格式      
+        Object.keys(data).forEach(key=>{
+          list.push(data[key])
+        })
+        console.log('datalist',list)
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
+              total: 60,
             },
           },
         })
