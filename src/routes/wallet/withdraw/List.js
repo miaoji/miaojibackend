@@ -17,6 +17,7 @@ const List = ({ isMotion, location, ...tableProps }) => {
       title: '提现人',
       dataIndex: 'name',
       key: 'name',
+      render:(text)=><span>{text?text:"空"}</span>,
     }, {
       title: '提现金额',
       dataIndex: 'price',
@@ -33,6 +34,7 @@ const List = ({ isMotion, location, ...tableProps }) => {
       title: '帐号',
       dataIndex: 'alipayaccount',
       key: 'alipayaccount',
+      render:(text)=><span>{text?text:"空"}</span>,
     }, {
       title: '提现时间',
       dataIndex: 'createtime',

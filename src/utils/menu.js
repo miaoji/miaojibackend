@@ -136,12 +136,12 @@ module.exports = [
     name: '提现记录',
     router: '/withdraws',
   },
-  {
+  /*{
     id: 63,
     bpid: 6,
     mpid: 6,
     icon: 'check-square-o',
     name: '提现审核',
     router: '/withdraws/check',
-  }
+  }*/
 ]
