@@ -26,21 +26,21 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '主体',
-      dataIndex: 'subject',
+      dataIndex: 'name',
       key: 'subject'
     },{
         title: '派送费',
-        dataIndex: 'deliveryCharges',
+        dataIndex: 'deliveryAmount',
         key: 'deliveryCharges',
         render: (text) => <span>{'￥' + text}</span>,
       }, {
         title: '寄件费',
-        dataIndex: 'SendCharges',
+        dataIndex: 'sendTheAmount',
         key: 'SendCharges',
         render: (text) => <span>{'￥' + text}</span>,
       }, {
         title: '到付',
-        dataIndex: 'collectCharges',
+        dataIndex: 'toPay',
         key: 'collectCharges',
         render: (text) => <span>{'￥' + text}</span>,
       }, {
@@ -50,7 +50,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         render: (text) => <span>{'￥' + text}</span>,
       }, {
         title: '其他',
-        dataIndex: 'others',
+        dataIndex: 'otheramount',
         key: 'incomeothers',
         render: (text) => <span>{'￥' + text}</span>,
       }, 

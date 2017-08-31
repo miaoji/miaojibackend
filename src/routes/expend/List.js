@@ -27,7 +27,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     {
       title: '主体',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      render:(text)=><span>{text?text:"空"}</span>,
     },{
         title: '通讯费',
         dataIndex: 'communicate',
@@ -43,12 +44,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         dataIndex: 'otheramount',
         key: 'otheramount',
         render: (text) => <span>{'￥' + text}</span>,
-      }, {
-      title: '余额',
-      dataIndex: 'balance',
-      key: 'balance',
-      render: (text) => <span></span>,
-    }
+      }, 
+    //   {
+    //   title: '余额',
+    //   dataIndex: 'balance',
+    //   key: 'balance',
+    //   render: (text) => <span></span>,
+    // }
   ]
 
   const getBodyWrapperProps = {

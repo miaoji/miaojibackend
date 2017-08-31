@@ -36,7 +36,10 @@ module.exports = {
     communications: `${APIV3}/communicationdata`,
     
     checkbooks: `${APIV1}/checkbooks`,
-    income: `${APIV1}/income`,
+
+    //收入
+    // income: `${APIV1}/income`,
+    income: `${APIV3}/income`,
 
     //支出
     // expend: `${APIV1}/expend`,
