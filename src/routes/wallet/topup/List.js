@@ -29,6 +29,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '流水号',
       dataIndex: 'orderId',
       key: 'OrderId',
+      render:(text)=><span>{text?text:"空"}</span>
     }, {
       title: '金额',
       dataIndex: 'price',
@@ -46,6 +47,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '充值人',
       dataIndex: 'name',
       key: 'name',
+      render:(text)=><span>{text?text:"空"}</span>
     }, {
       title: '充值状态',
       dataIndex: 'status',

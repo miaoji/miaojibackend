@@ -40,11 +40,12 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         return <span>{encryptNum}</span>
       }
     }, 
-//  {
-//    title: '地理所属店铺',
-//    dataIndex: 'belongStore',
-//    key: 'belongStore'
-//  }, 
+     {
+       title: '地理所属店铺',
+       dataIndex: 'belongStore',
+       key: 'belongStore',
+       render:(text)=><span>{text?text:"暂无"}</span>
+     }, 
     {
       title: '寄出数量',
       dataIndex: 'senduId',
@@ -96,7 +97,8 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
           '0': '否',
           '1': '是',
         }
-        return <span>{realtext[text]}</span>
+        const newtext = text?text:0
+        return <span>{realtext[newtext]}</span>
       }
     }, {
       title: '操作',

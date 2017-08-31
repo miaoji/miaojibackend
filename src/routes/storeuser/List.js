@@ -38,6 +38,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '经营者姓名',
       dataIndex: 'null',
       key: 'null',
+      render:(text)=><span>{text?text:"暂无经营者姓名"}</span>
     }, {
       title: '店铺名称',
       dataIndex: 'name',
@@ -78,7 +79,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           '0': '否',
           '1': '是',
         }
-        return <span>{realtext[text]}</span>
+        const newtext = text?text:0
+        return <span>{realtext[newtext]}</span>
       }
     }, {
       title: '操作',
