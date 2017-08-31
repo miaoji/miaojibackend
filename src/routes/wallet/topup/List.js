@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
 import { Link } from 'dva/router'
+import { time } from '../../../utils'
 
 const confirm = Modal.confirm
 
@@ -37,6 +38,10 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '时间',
       dataIndex: 'createtime',
       key: 'createtime',
+      render:(text)=>{
+        const createtime = time.formatTime(text)
+        return <span>{createtime}</span>
+      }
     }, {
       title: '充值人',
       dataIndex: 'name',

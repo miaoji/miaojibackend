@@ -21,17 +21,10 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
 
       history.listen(location => {
-      	let query = location.query;
-          if (!query.pagination) {
-            query = {
-              pagination: 1,
-              rownum: 10
-            } 
-          };
         if (location.pathname === '/withdraws') {
           dispatch({
             type: 'query',
-            payload: query,
+            payload: location.query,
           })
         }
       })
@@ -43,22 +36,14 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       let data = yield call(query, payload)
       if (data) {
-      	delete data.success
-      	delete data.message
-      	delete data.statusCode
-      	let list = []
-				gettimes('createtime',data) //将13位的时间戳转换成常见的时间格式
-      	for (let item in data) {
-      		list.push(data[item])
-      	}
         yield put({
           type: 'querySuccess',
           payload: {
-            list,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: 60
+              total: data.total,
             },
           },
         })

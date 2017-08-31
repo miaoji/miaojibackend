@@ -22,17 +22,10 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-      	let query = location.query;
-      	if(!query.pagination){
-      		query={
-      			pagination:1,
-      			rownum:10
-      		}
-      	};
         if (location.pathname === '/wxuser') {
           dispatch({
             type: 'query',
-            payload: query,
+            payload: location.query,
           })
         }
       })
@@ -44,22 +37,14 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       let data = yield call(query, payload)
       if (data) {
-      	delete data.success
-      	delete data.message
-      	delete data.statusCode
-      	let list=[]
-				gettimes("subscribeTime",data) //将13位的时间戳转换成常见时间格式    	
-      	Object.keys(data).forEach(key=>{
-      		list.push(data[key])
-      	})
         yield put({
           type: 'querySuccess',
           payload: {
-            list,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: 60,
+              total: data.total,
             },
           },
         })

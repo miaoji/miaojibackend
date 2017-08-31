@@ -4,6 +4,7 @@ import request from './request'
 import classnames from 'classnames'
 import { color } from './theme'
 import lodash from 'lodash'
+import * as time from './time'
 
 // 连字符转驼峰
 String.prototype.hyphenToHump = function () {
@@ -125,4 +126,5 @@ module.exports = {
   queryArray,
   arrayToTree,
   pageParams,
+  time,
 }

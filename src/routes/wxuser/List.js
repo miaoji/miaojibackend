@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import { Link } from 'dva/router'
+import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -61,6 +62,10 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       title: '创建时间',
       dataIndex: 'subscribeTime',
       key: 'subscribeTime',
+      render: (text)=>{
+        const createtime = time.formatTime(text)
+        return <span>{createtime}</span>
+      }
     }, {
       title: '关注状态',
       dataIndex: 'subscribe',

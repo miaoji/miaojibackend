@@ -43,8 +43,8 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         pathname,
         query: {
           ...query,
-          pagination: page.current,
-          rownum: page.pageSize,
+          page: page.current,
+          pageSize: page.pageSize,
         },
       }))
     },
@@ -92,8 +92,8 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          pagination: 1,
-          rownum,
+          page: 1,
+          pageSize,
         },
       }))
     },

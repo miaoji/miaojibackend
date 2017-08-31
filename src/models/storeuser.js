@@ -25,16 +25,9 @@ export default modelExtend(pageModel, {
 
       history.listen(location => {
         if (location.pathname === '/storeuser') {
-        	let query=location.query
-        	if(!query.pagination){
-        		query={
-        			pagination:1,
-        			rownum:10
-        		}
-        	}
           dispatch({
             type: 'query',
-            payload: query,
+            payload: location.query,
           })
         }
       })
@@ -47,23 +40,14 @@ export default modelExtend(pageModel, {
     	console.log('data')
       let data = yield call(query, payload)
       if (data) {
-      	delete data.success
-      	delete data.message
-      	delete data.statusCode
-      	let list = [];
-				gettimes('createtime',data) //将13位的时间戳转换成常见时间格式
-      	Object.keys(data).forEach(key => {
-      		list.push(data[key])
-      	})
-      	console.log(list[0]["createtime"])
         yield put({
           type: 'querySuccess',
           payload: {
-            list,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: 60,
+              total: data.total,
             },
           },
         })

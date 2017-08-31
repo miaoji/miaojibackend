@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
 import { Link } from 'dva/router'
+import { time } from '../../../utils'
 
 const confirm = Modal.confirm
 
@@ -21,16 +22,14 @@ const List = ({ isMotion, location, ...tableProps }) => {
       dataIndex: 'price',
       key: 'price',
       render: (text) => <span>￥{text}</span>,
-    },
-//  {
-//    title: '帐号类型',
-//    dataIndex: 'accountType',
-//    key: 'accountType',
-//    render: (text) => <span>{text === 0
-//          ? '门店主账号'
-//          : '门店子帐号'}</span>,
-//  }, 
-    {
+    },{
+      title: '帐号类型',
+      dataIndex: 'accountType',
+      key: 'accountType',
+      render: (text) => <span>{text === 0
+             ? '门店主账号'
+             : '门店子帐号'}</span>,
+    },{
       title: '帐号',
       dataIndex: 'alipayaccount',
       key: 'alipayaccount',
@@ -38,6 +37,10 @@ const List = ({ isMotion, location, ...tableProps }) => {
       title: '提现时间',
       dataIndex: 'createtime',
       key: 'createtime',
+      render: (text) => {
+        const createtime =time.formatTime(text)
+        return <span>{createtime}</span>
+      }
     }, {
       title: '提现状态',
       dataIndex: 'status',
