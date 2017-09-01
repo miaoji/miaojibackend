@@ -6,6 +6,7 @@ import { color } from './theme'
 import lodash from 'lodash'
 import * as time from './time'
 
+const localStorage = window.localStorage
 const { localPrefix } = config
 
 // 连字符转驼峰
