@@ -1,7 +1,7 @@
 import { query, logout } from '../services/app'
 import { routerRedux } from 'dva/router'
 import { parse } from 'qs'
-import { config } from '../utils'
+import { config, storage } from '../utils'
 const { prefix } = config
 
 export default {
@@ -33,11 +33,13 @@ export default {
     *query ({
       payload,
     }, { call, put }) {
-      const data = yield call(query, parse(payload))
-      if (data.success && data.user) {
+      const token = storage({key: 'token'})
+      if (token && token.length > 0) {
+        let user = storage({key: 'user'})
+        user = typeof user === 'string' && JSON.parse(user)
         yield put({
           type: 'querySuccess',
-          payload: data.user,
+          payload: user,
         })
         if (location.pathname === '/login') {
           yield put(routerRedux.push('/dashboard'))
@@ -52,13 +54,9 @@ export default {
 
     *logout ({
       payload,
-    }, { call, put }) {
-      const data = yield call(logout, parse(payload))
-      if (data.success) {
-        yield put({ type: 'query' })
-      } else {
-        throw (data)
-      }
+    }, { put }) {
+      storage({type: 'clear'})
+      yield put({ type: 'query' })
     },
 
     *changeNavbar ({

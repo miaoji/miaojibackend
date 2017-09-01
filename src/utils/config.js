@@ -1,11 +1,12 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-const APIV3 = 'http://192.168.0.113:8080/quandiExpressSiteManager'
+const APIV3 = 'http://192.168.0.111:8080/quandiExpressSiteManager'
 
 module.exports = {
   name: '妙寄后台管理系统',
   prefix: '妙寄后台',
   footerText: '妙寄 后台 © 2017 圈嘀科技',
+  localPrefix: 'maiojipc_',
   logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
@@ -14,7 +15,8 @@ module.exports = {
   openPages: ['/login'],
   apiPrefix: '/api/v1',
   api: {
-    userLogin: `${APIV1}/user/login`,
+    // userLogin: `${APIV1}/user/login`,
+    userLogin: `${APIV3}/signIn`,
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
@@ -45,10 +47,16 @@ module.exports = {
     // expend: `${APIV1}/expend`,
     expend: `${APIV3}/expenditure`,
     
-    expressitems: `${APIV1}/expressitems`,
-    normal: `${APIV1}/normal`,
-    collect: `${APIV1}/collect`,
-    collection: `${APIV1}/collection`,
+    // expressitems: `${APIV1}/expressitems`,
+    //普通件
+    // normal: `${APIV1}/normal`,
+    normal: `${APIV3}/regularMail?expresstype=0`,
+    //到付件
+    // collect: `${APIV1}/collect`,
+    collect: `${APIV3}/regularMail?expresstype=1`,
+    //代收件
+    // collection: `${APIV1}/collection`,
+    collection: `${APIV3}/regularMail?expresstype=2`,
     
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,

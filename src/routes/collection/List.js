@@ -13,23 +13,23 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [{
       title: '主体',
-      dataIndex: 'subject',
+      dataIndex: 'name',
       key: 'subject'
     },{
         title: '上架数',
-        dataIndex: 'storesNum',
+        dataIndex: 'numberOfShelves',
         key: 'collectionstoresNum'
       }, {
         title: '签收数',
-        dataIndex: 'signNum',
+        dataIndex: 'numberOfReceipts',
         key: 'collectionsignNum'
       }, {
         title: '退回数',
-        dataIndex: 'backNum',
+        dataIndex: 'numberOfItemsReturned',
         key: 'collectionbackNum'
       }, {
         title: '问题件数',
-        dataIndex: 'errNum',
+        dataIndex: 'numberOfQuestions',
         key: 'collectionerrNum'
       }]
 
