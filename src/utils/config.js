@@ -1,12 +1,14 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-const APIV3 = 'http://192.168.0.111:8080/quandiExpressSiteManager'
+// const APIV3 = 'http://192.168.0.114:8080/quandiExpressSiteManager'
+//线上
+const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
 
 module.exports = {
   name: '妙寄后台管理系统',
   prefix: '妙寄后台',
   footerText: '妙寄 后台 © 2017 圈嘀科技',
-  localPrefix: 'maiojipc_',
+  localPrefix: 'miaojipc_',
   logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
@@ -16,8 +18,11 @@ module.exports = {
   apiPrefix: '/api/v1',
   api: {
     // userLogin: `${APIV1}/user/login`,
+    //登陆
     userLogin: `${APIV3}/signIn`,
+    //登出
     userLogout: `${APIV1}/user/logout`,
+    
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
     wxuser: `${APIV1}/wxuser/:id`,
@@ -49,11 +54,14 @@ module.exports = {
     
     // expressitems: `${APIV1}/expressitems`,
     //普通件
+
     // normal: `${APIV1}/normal`,
     normal: `${APIV3}/regularMail?expresstype=0`,
+
     //到付件
     // collect: `${APIV1}/collect`,
     collect: `${APIV3}/regularMail?expresstype=1`,
+
     //代收件
     // collection: `${APIV1}/collection`,
     collection: `${APIV3}/regularMail?expresstype=2`,

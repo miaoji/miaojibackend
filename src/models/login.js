@@ -1,6 +1,6 @@
 import { login } from '../services/login'
 import { routerRedux } from 'dva/router'
-import { queryURL } from '../utils'
+import { queryURL, storage } from '../utils'
 
 export default {
   namespace: 'login',
@@ -16,12 +16,20 @@ export default {
       const data = yield call(login, payload)
       yield put({ type: 'hideLoginLoading' })
       if (data.code === 200) {
-        window.localStorage.setItem('miaojipc_token', data.obj[0].userId)
+        storage({
+          key: 'token',
+          val: data.obj[0].userId,
+          type: 'set'
+        })
         let userList={}
         userList.trueName=data.obj[0].accounts
         userList.userId=data.obj[0].userId
         userList.userName=data.obj[0].name
-        window.localStorage.setItem('miaojipc_user', JSON.stringify(userList))   
+        storage({
+          key: 'user',
+          val: JSON.stringify(userList),
+          type: 'set'
+        })
         const from = queryURL('from')
         yield put({ type: 'app/query' })
         if (from) {
