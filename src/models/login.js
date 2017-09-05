@@ -1,6 +1,7 @@
 import { login } from '../services/login'
 import { routerRedux } from 'dva/router'
 import { queryURL, storage } from '../utils'
+import md5 from 'js-md5'
 
 export default {
   namespace: 'login',
@@ -13,6 +14,7 @@ export default {
       payload,
     }, { put, call }) {
       yield put({ type: 'showLoginLoading' })
+      // payload.password = md5(payload.password)
       const data = yield call(login, payload)
       yield put({ type: 'hideLoginLoading' })
       if (data.code === 200) {
@@ -38,7 +40,7 @@ export default {
           yield put(routerRedux.push('/dashboard'))
         }
       } else {
-        throw data.mess || '网络不行了!!'
+        throw data.mess || '网络不行了!!!'
       }
     },
   },
