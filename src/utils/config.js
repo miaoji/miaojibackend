@@ -1,8 +1,8 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-// const APIV3 = 'http://192.168.0.114:8080/quandiExpressSiteManager'
+const APIV3 = 'http://192.168.0.113:8080/quandiExpressSiteManager'
 //线上
-const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+// const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
 
 module.exports = {
   name: '妙寄后台管理系统',

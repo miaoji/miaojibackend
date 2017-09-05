@@ -38,7 +38,7 @@ export default {
           yield put(routerRedux.push('/dashboard'))
         }
       } else {
-        throw data
+        throw data.mess || '网络不行了!!'
       }
     },
   },
