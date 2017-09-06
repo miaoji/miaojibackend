@@ -26,6 +26,10 @@ const Detail = ({ wxUserDetail }) => {
         <div>用户名 : </div>
         <div>{user.username}</div>
       </div>
+      <div className={styles.item}>
+        <div>手 机 : </div>
+        <div>{user.usermobile}</div>
+      </div>
       {content}
     </div>
   </div>)

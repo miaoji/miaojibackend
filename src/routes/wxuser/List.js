@@ -25,7 +25,9 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
   }
 
   const handleUserClick = (record, e) => {
-    window.open(`/wxuserdetail?userId=${record.userId}&username=${record.nickname}`)
+    const str = record.mobile.toString()
+    let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
+    window.open(`/wxuserdetail?userId=${record.userId}&username=${record.nickname}&usermobile=${encryptNum}`)
   }
 
   const columns = [

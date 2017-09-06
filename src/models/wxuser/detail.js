@@ -17,11 +17,12 @@ export default {
         if (location.pathname === '/wxuserdetail') {
           const userId = queryURL('userId')
           const username = queryURL('username')
-          console.log('userId', userId)
-          console.log('username', username)
+          const usermobile = queryURL('usermobile')
+          // console.log('userId', userId)
+          // console.log('usermobile', usermobile)
           if (userId) {
             dispatch({ type: 'query', payload: { userId } })
-            dispatch({ type: 'setUser', payload: { user: { username } } })
+            dispatch({ type: 'setUser', payload: { user: { username,usermobile } } })
           }
         }
       })
@@ -35,6 +36,7 @@ export default {
       const data = yield call(query, payload)
       const { success, message, status, ...other } = data
       delete other.obj.userId
+      console.log("other.obj",other.obj)
       if (success) {
         yield put({
           type: 'querySuccess',
@@ -59,7 +61,7 @@ export default {
 
     setUser (state, { payload }) {
       const { user } = payload
-      console.log('user', user)
+      // console.log('user', user)
       return {
         ...state,
         user
