@@ -16,7 +16,7 @@ module.exports = [
     id: 21,
     bpid: 2,
     mpid: -1,
-    name: '微信用户详细',
+    name: '寄件收件信息',
     router: '/wxuserdetail'
   },
   {

@@ -14,7 +14,6 @@ export default {
       history.listen(() => {
         if (location.pathname === '/wxuserdetail') {
           const match = location.search.split('?userId=')
-          console.log('match',match)
           if (match[1]) {
             dispatch({ type: 'query', payload: { userId: match[1] } })
           }
@@ -29,7 +28,6 @@ export default {
     }, { call, put }) {
       const data = yield call(query, payload)
       const { success, message, status, ...other } = data
-      console.log("other-obj",other.obj)
       delete other.obj.userId
       if (success) {
         yield put({
