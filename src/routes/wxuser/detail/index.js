@@ -10,7 +10,7 @@ const detailCN = {
 }
 
 const Detail = ({ wxUserDetail }) => {
-  const { data } = wxUserDetail
+  const { data, user } = wxUserDetail
   const content = []
   for (let key in data) {
     if ({}.hasOwnProperty.call(data, key)) {
@@ -22,6 +22,10 @@ const Detail = ({ wxUserDetail }) => {
   }
   return (<div className="content-inner">
     <div className={styles.content}>
+      <div className={styles.item}>
+        <div>用户名 : </div>
+        <div>{user.username}</div>
+      </div>
       {content}
     </div>
   </div>)

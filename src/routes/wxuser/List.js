@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -24,13 +24,18 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
     }
   }
 
+  const handleUserClick = (record, e) => {
+    window.open(`/wxuserdetail?userId=${record.userId}&username=${record.nickname}`)
+  }
+
   const columns = [
     {
       title: '微信名',
       dataIndex: 'nickname',
       key: 'nickname',
+      width: 64,
       render: (text, record) => {
-       return <Link to={`wxuserdetail?userId=${record.userId}`}>{text}</Link>
+       return <Button type="primary" size="default" ghost onClick={e => handleUserClick(record, e)}>{text}</Button>
       }
     }, {
       title: '手机',

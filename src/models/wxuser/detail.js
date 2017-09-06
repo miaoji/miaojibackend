@@ -1,21 +1,27 @@
 import pathToRegexp from 'path-to-regexp'
 import { query } from '../../services/wxuser'
+import { queryURL } from '../../utils'
 
 export default {
 
   namespace: 'wxUserDetail',
 
   state: {
-    data: {},
+    user: {},
+    data: {}
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
         if (location.pathname === '/wxuserdetail') {
-          const match = location.search.split('?userId=')
-          if (match[1]) {
-            dispatch({ type: 'query', payload: { userId: match[1] } })
+          const userId = queryURL('userId')
+          const username = queryURL('username')
+          console.log('userId', userId)
+          console.log('username', username)
+          if (userId) {
+            dispatch({ type: 'query', payload: { userId } })
+            dispatch({ type: 'setUser', payload: { user: { username } } })
           }
         }
       })
@@ -39,7 +45,7 @@ export default {
       } else {
         throw data.mess||'网络不行了!!!'
       }
-    },
+    }
   },
 
   reducers: {
@@ -50,5 +56,15 @@ export default {
         data,
       }
     },
-  },
+
+    setUser (state, { payload }) {
+      const { user } = payload
+      console.log('user', user)
+      return {
+        ...state,
+        user
+      }
+    }
+
+  }
 }
