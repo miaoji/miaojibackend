@@ -11,7 +11,6 @@ const detailCN = {
 
 const Detail = ({ wxUserDetail }) => {
   const { data } = wxUserDetail
-  console.log("data",data)
   const content = []
   for (let key in data) {
     if ({}.hasOwnProperty.call(data, key)) {

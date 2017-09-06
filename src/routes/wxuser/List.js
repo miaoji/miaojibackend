@@ -30,7 +30,6 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       dataIndex: 'nickname',
       key: 'nickname',
       render: (text, record) => {
-        // console.log('record',record)
        return <Link to={`wxuserdetail?userId=${record.userId}`}>{text}</Link>
       }
     }, {
@@ -43,12 +42,12 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         return <span>{encryptNum}</span>
       }
     }, 
-     {
+     /*{
        title: '地理所属店铺',
        dataIndex: 'belongStore',
        key: 'belongStore',
        render:(text)=><span>{text?text:"暂无"}</span>
-     }, 
+     },*/ 
      {
       title: '创建时间',
       dataIndex: 'subscribeTime',
