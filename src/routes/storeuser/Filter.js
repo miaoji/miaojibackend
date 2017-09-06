@@ -106,9 +106,6 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div>
-            <Button size="large" type="ghost" onClick={onAdd}>创建</Button>
-          </div>
         </div>
       </Col>
     </Row>

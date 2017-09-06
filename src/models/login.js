@@ -14,7 +14,7 @@ export default {
       payload,
     }, { put, call }) {
       yield put({ type: 'showLoginLoading' })
-      // payload.password = md5(payload.password)
+      payload.password = md5(payload.password)
       const data = yield call(login, payload)
       yield put({ type: 'hideLoginLoading' })
       if (data.code === 200) {

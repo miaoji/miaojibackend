@@ -1,8 +1,8 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-// const APIV3 = 'http://192.168.0.113:8080/quandiExpressSiteManager'
+const APIV3 = 'http://192.168.0.173:8080/quandiExpressSiteManager'
 //线上
-const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+// const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
 
 module.exports = {
   name: '妙寄后台管理系统',
@@ -17,63 +17,35 @@ module.exports = {
   openPages: ['/login'],
   apiPrefix: '/api/v1',
   api: {
-    // userLogin: `${APIV1}/user/login`,
-    //登陆
-    userLogin: `${APIV3}/signIn`,
-    //登出
-    userLogout: `${APIV1}/user/logout`,
+    userLogin: `${APIV3}/signIn`,//登陆
+    userLogout: `${APIV1}/user/logout`,//登出
     
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
-    wxuser: `${APIV1}/wxuser/:id`,
-    
-    // wxusers: `${APIV1}/wxusers`,
+
+    wxuser: `${APIV3}/received`,//微信用户明细
     wxusers: `${APIV3}/wechatuser`,//微信用户
     
-    storeuser: `${APIV1}/storeuser/:id`,
-    
-    // storeusers: `${APIV1}/storeusers`,
+    storeuser: `${APIV1}/storeuser/:id`,//门店用户明细
     storeusers: `${APIV3}/storebean`,//门店用户
     
     message: `${APIV1}/message/:id`,
     messages: `${APIV1}/messages`,
-
-    //通信数据
-    // communications: `${APIV1}/communications`,
-    communications: `${APIV3}/communicationdata`,
+    communications: `${APIV3}/communicationdata`,//通信数据
     
     checkbooks: `${APIV1}/checkbooks`,
 
-    //收入
-    // income: `${APIV1}/income`,
-    income: `${APIV3}/income`,
-
-    //支出
-    // expend: `${APIV1}/expend`,
-    expend: `${APIV3}/expenditure`,
-    
-    // expressitems: `${APIV1}/expressitems`,
-    //普通件
-
-    // normal: `${APIV1}/normal`,
-    normal: `${APIV3}/regularMail?expresstype=0`,
-
-    //到付件
-    // collect: `${APIV1}/collect`,
-    collect: `${APIV3}/regularMail?expresstype=1`,
-
-    //代收件
-    // collection: `${APIV1}/collection`,
-    collection: `${APIV3}/regularMail?expresstype=2`,
+    income: `${APIV3}/income`,//收入
+    expend: `${APIV3}/expenditure`,//支出
+    normal: `${APIV3}/regularMail?expresstype=0`,//普通件
+    collect: `${APIV3}/regularMail?expresstype=1`,//到付件
+    collection: `${APIV3}/regularMail?expresstype=2`,//代收件
     
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,
     dashboard: `${APIV1}/dashboard`,
     
-//  topups: `${APIV1}/topups`,
     topups: `${APIV3}/rechargeRecord`,//充值记录
-    
-//  withdraws: `${APIV1}/withdraws`,
     withdraws: `${APIV3}/extractionamount`,//提现记录
     
     v1test: `${APIV1}/test`,

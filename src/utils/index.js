@@ -133,7 +133,6 @@ export const storage = function ({key, val, prefix = true, type = 'get'}) {
   if (prefix) {
     key = localPrefix + key
   }
-  console.log('localPrefix', localPrefix)
   let res = ''
   switch (type) {
     case 'get':

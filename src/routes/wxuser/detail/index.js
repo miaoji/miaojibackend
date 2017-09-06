@@ -3,6 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import styles from './index.less'
 
+const detailCN = {
+  price: '寄出数量',
+  receiveId: '收件数量',
+  status: '消费金额',
+}
+
 const Detail = ({ wxUserDetail }) => {
   const { data } = wxUserDetail
   const content = []

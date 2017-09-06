@@ -12,9 +12,10 @@ export default {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(() => {
-        const match = pathToRegexp('/wxuser/:id').exec(location.pathname)
+        const match = location.search.split('?userId=')
+        console.log('match',match)
         if (match) {
-          dispatch({ type: 'query', payload: { id: match[1] } })
+          dispatch({ type: 'query', payload: { userId: match[1] } })
         }
       })
     },
@@ -26,15 +27,16 @@ export default {
     }, { call, put }) {
       const data = yield call(query, payload)
       const { success, message, status, ...other } = data
+      console.log("other-obj",other.obj)
       if (success) {
         yield put({
           type: 'querySuccess',
           payload: {
-            data: other,
+            data: other.obj,
           },
         })
       } else {
-        throw data
+        throw data.mess||'网络不行了!!!'
       }
     },
   },

@@ -29,7 +29,10 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       title: '微信名',
       dataIndex: 'nickname',
       key: 'nickname',
-      render: (text, record) => <Link to={`wxuser/${record.id}`}>{text}</Link>,
+      render: (text, record) => {
+        // console.log('record',record)
+       return <Link to={`wxuserdetail?userId=${record.nickname}`}>{text}</Link>
+      }
     }, {
       title: '手机',
       dataIndex: 'mobile',
@@ -46,20 +49,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
        key: 'belongStore',
        render:(text)=><span>{text?text:"暂无"}</span>
      }, 
-    {
-      title: '寄出数量',
-      dataIndex: 'senduId',
-      key: 'senduId',
-    }, {
-      title: '收件数量',
-      dataIndex: 'receiveId',
-      key: 'receiveId',
-    }, {
-      title: '消费金额',
-      dataIndex: 'price',
-      key: 'price',
-      render: text => <span>￥{text}</span>
-    },{
+     {
       title: '创建时间',
       dataIndex: 'subscribeTime',
       key: 'subscribeTime',
@@ -100,14 +90,14 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         const newtext = text?text:0
         return <span>{realtext[newtext]}</span>
       }
-    }, {
+    }, /*{
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '标记' }]} />
       },
-    },
+    },*/
   ]
 
   const getBodyWrapperProps = {

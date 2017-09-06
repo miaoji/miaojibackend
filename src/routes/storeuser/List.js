@@ -29,11 +29,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '帐号',
       dataIndex: 'mobile',
       key: 'mobile',
-      render: (text, record) => {
-        const str = text.toString()
-        let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
-        return <Link to={`storeuser/${record.id}`}>{encryptNum}</Link>
-      }
     }, {
       title: '经营者姓名',
       dataIndex: 'null',
@@ -82,14 +77,15 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         const newtext = text?text:0
         return <span>{realtext[newtext]}</span>
       }
-    }, {
-      title: '操作',
-      key: 'operation',
-      width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
-      },
-    },
+    }, 
+    // {
+    //   title: '操作',
+    //   key: 'operation',
+    //   width: 100,
+    //   render: (text, record) => {
+    //     return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
+    //   },
+    // },
   ]
 
   const getBodyWrapperProps = {

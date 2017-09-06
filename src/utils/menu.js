@@ -17,7 +17,7 @@ module.exports = [
     bpid: 2,
     mpid: -1,
     name: '微信用户详细',
-    router: '/wxuser/:id'
+    router: '/wxuserdetail'
   },
   {
     id: 3,

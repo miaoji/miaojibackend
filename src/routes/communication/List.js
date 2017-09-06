@@ -39,7 +39,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'countIdPrice',
       key: 'countIdPrice',
       render: (text) => <span>{'￥' + text}</span>,
-    }, {
+    },/* {
       title: '语音数量',
       dataIndex: 'voiceCount',
       key: 'voiceCount',
@@ -49,12 +49,12 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'voiceMoney',
       key: 'voiceMoney',
       render: (text) => <span></span>,
-    }, {
+    },*/ {
       title: '微信通知数量',
       dataIndex: 'wechatQuantity',
       key: 'wechatQuantity',
       render: (text) => <span>{text + '次'}</span>,
-    }, {
+    }, /*{
       title: '直拨电话数量',
       dataIndex: 'callCount',
       key: 'callCount',
@@ -69,7 +69,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'callMoney',
       key: 'callMoney',
       render: (text) => <span></span>,
-    }, {
+    },*/ {
       title: '回拨次数',
       dataIndex: 'numberOfCalls',
       key: 'numberOfCalls',
@@ -89,11 +89,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'totalAmount',
       key: 'totalAmount',
       render: (text) => <span>{'￥' + text}</span>,
-    }, {
+    }, /*{
       title: '时间',
       dataIndex: 'createTime',
       key: 'createTime',
-    },
+    },*/
 
   ]
 

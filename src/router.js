@@ -54,7 +54,7 @@ const Routers = function ({ history, app }) {
             }, 'wxuser')
           },
         }, {
-          path: 'wxuser/:id',
+          path: 'wxuserdetail',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/wxuser/detail'))

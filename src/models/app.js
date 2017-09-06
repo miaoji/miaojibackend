@@ -34,10 +34,8 @@ export default {
       payload,
     }, { call, put }) {
       const token = storage({key: 'token'})
-      console.log('token', token)
       if (token && token.length > 0) {
         let user = storage({key: 'user'})
-        console.log('asd', user)
         user = typeof user === 'string' && JSON.parse(user)
         yield put({
           type: 'querySuccess',
