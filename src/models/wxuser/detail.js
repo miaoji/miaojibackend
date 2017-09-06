@@ -61,7 +61,6 @@ export default {
 
     setUser (state, { payload }) {
       const { user } = payload
-      // console.log('user', user)
       return {
         ...state,
         user
