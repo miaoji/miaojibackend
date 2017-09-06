@@ -6,16 +6,17 @@ import styles from './index.less'
 const detailCN = {
   price: '寄出数量',
   receiveId: '收件数量',
-  status: '消费金额',
+  senduId: '消费金额',
 }
 
 const Detail = ({ wxUserDetail }) => {
   const { data } = wxUserDetail
+  console.log("data",data)
   const content = []
   for (let key in data) {
     if ({}.hasOwnProperty.call(data, key)) {
       content.push(<div key={key} className={styles.item}>
-        <div>{key}</div>
+        <div>{detailCN[key]} : </div>
         <div>{String(data[key])}</div>
       </div>)
     }

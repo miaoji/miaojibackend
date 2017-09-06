@@ -31,7 +31,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       key: 'nickname',
       render: (text, record) => {
         // console.log('record',record)
-       return <Link to={`wxuserdetail?userId=${record.nickname}`}>{text}</Link>
+       return <Link to={`wxuserdetail?userId=${record.userId}`}>{text}</Link>
       }
     }, {
       title: '手机',
