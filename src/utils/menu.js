@@ -144,4 +144,11 @@ module.exports = [
     name: '提现审核',
     router: '/withdraws/check',
   }*/
+  {
+    id: 7,
+    bpid: 1,
+    name: '运单管理',
+    icon: 'export',
+    router: '/order',
+  },
 ]

@@ -110,15 +110,14 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
  * @return  {params} Object
  */
 const pageParams = function (params) {
-      params = params ? params : {
-        pagination: 1,
-        rownum: 10
-      }
-      params.pagination = params.page || 1
-      params.rownum = params.pageSize || 10
-      return params
+  params = params ? params : {
+    pagination: 1,
+    rownum: 10
+  }
+  params.pagination = params.page || 1
+  params.rownum = params.pageSize || 10
+  return params
 }
-
 
 /**
  * [对localStorage操作进行封装]

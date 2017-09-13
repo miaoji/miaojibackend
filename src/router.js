@@ -110,7 +110,7 @@ const Routers = function ({ history, app }) {
 //            cb(null, require('./routes/checkbook'))
 //          }, 'checkbook')
 //        }
-//      }, 
+//      },
         {
           path: 'income',
           getComponent (nextState, cb) {
@@ -137,7 +137,7 @@ const Routers = function ({ history, app }) {
 //            cb(null, require('./routes/expressitem'))
 //          }, 'expressitem')
 //        }
-//      }, 
+//      },
         {
           path: 'normal',
           getComponent (nextState, cb) {
@@ -165,9 +165,6 @@ const Routers = function ({ history, app }) {
             }, 'collection')
           }
         }, 
-        
-        
-        
         {
           path: 'topups',
           getComponent (nextState, cb) {
@@ -183,6 +180,14 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/withdraw'))
               cb(null, require('./routes/wallet/withdraw'))
             }, 'withdraws')
+          }
+        }, {
+          path: 'order',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app , require('./models/order'))
+              cb(null, require('./routes/order/'))
+            }, 'order')
           }
         }, {
           path: 'login',
