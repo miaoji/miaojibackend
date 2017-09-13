@@ -63,6 +63,13 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
       }
+    },{
+      title: '消费金额',
+      dataIndex: 'price',
+      key: 'price',
+      render: (text)=>{
+        return <span>{text}</span>
+      }
     }, {
       title: '关注状态',
       dataIndex: 'subscribe',
@@ -71,7 +78,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         { text: '关注', value: '1' },
         { text: '取消关注', value: '0' }
       ],
-      onFilter: (value, record) => Number(record.status) === Number(value),
+      onFilter: (value, record) => Number(record.subscribe) === Number(value),
       render: (text) => {
         const realtext = {
           '0': '取消关注',
@@ -79,7 +86,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         }
         return <span>{realtext[text]}</span>
       }
-    }, {
+    },/*{
       title: '是否黑名单',
       dataIndex: 'blacklist',
       key: 'blacklist',
@@ -96,7 +103,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         const newtext = text?text:0
         return <span>{realtext[newtext]}</span>
       }
-    }, /*{
+    },{
       title: '操作',
       key: 'operation',
       width: 100,
