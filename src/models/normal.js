@@ -45,6 +45,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || '网络不行了!!!'
       }
     },
 
