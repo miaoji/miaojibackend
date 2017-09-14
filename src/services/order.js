@@ -1,10 +1,10 @@
 import { request, config } from '../utils'
 const { api } = config
-const { storeuser } = api
+const { order } = api
 
 export async function query (params) {
   return request({
-    url: storeuser,
+    url: order,
     method: 'get',
     data: params,
   })
@@ -12,7 +12,7 @@ export async function query (params) {
 
 export async function create (params) {
   return request({
-    url: storeuser.replace('/:id', ''),
+    url: order.replace('/:id', ''),
     method: 'post',
     data: params,
   })
@@ -20,7 +20,7 @@ export async function create (params) {
 
 export async function remove (params) {
   return request({
-    url: storeuser,
+    url: order,
     method: 'delete',
     data: params,
   })
@@ -28,7 +28,7 @@ export async function remove (params) {
 
 export async function update (params) {
   return request({
-    url: storeuser,
+    url: order,
     method: 'patch',
     data: params,
   })

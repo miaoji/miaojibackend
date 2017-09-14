@@ -26,66 +26,66 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '帐号',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      title: '单号',
+      dataIndex: 'serialNumber',
+      key: 'serialNumber',
+      render: (text)=>{
+        return <span>{ text?text:'单号暂无' }</span>
+      }
     }, {
-      title: '经营者姓名',
-      dataIndex: 'null',
-      key: 'null',
-      render:(text)=><span>{text?text:"暂无经营者姓名"}</span>
-    }, {
-      title: '店铺名称',
+      title: '站点名',
       dataIndex: 'name',
       key: 'name',
     }, {
-      title: '店铺级别',
-      dataIndex: 'type',
-      key: 'type',
-      render: (text) => <span>{text === 0
-            ? '主张号'
-            : '子帐号'}</span>,
+      title: '品牌',
+      dataIndex: 'brand',
+      key: 'brand',
     }, {
-      title: '状态',
-      dataIndex: 'isdelete',
-      key: 'isdelete',
-      render: (text) => <span>{text === 0
-            ? '禁用'
-            : '启用'}</span>,
-    }, {
-      title: '创建时间',
-      dataIndex: 'createtime',
-      key: 'createtime',
-      render:(text)=>{
-        const createtime = time.formatTime(text)
-        return <span>{createtime}</span>
+      title: '手机号',
+      dataIndex: 'mobile',
+      key: 'mobile',
+      render: (text)=>{
+        return <span>{ text?text:'手机号暂无' }</span>
       }
     }, {
-      title: '是否黑名单',
-      dataIndex: 'blacklist',
-      key: 'blacklist',
-      filters: [
-        { text: '否', value: '0' },
-        { text: '是', value: '1' }
-      ],
-      onFilter: (value, record) => Number(record.blacklist) === Number(value),
-      render: (text) => {
-        const realtext = {
-          '0': '否',
-          '1': '是',
+      title: '快递类型',
+      dataIndex: 'iswrong',
+      key: 'iswrong',
+      render: (text)=>{
+        const newtext={
+          '0':'正常件',
+          '1':'问题件'
         }
-        const newtext = text?text:0
-        return <span>{realtext[newtext]}</span>
+        return <span>{ newtext[text] }</span>
+      }
+    }, {
+      title: '快递状态',
+      dataIndex: 'expresStype',
+      key: 'expresStype',
+      render: (text)=>{
+        const newtext={
+          '0':'普通件',
+          '1':'到付件',
+          '2':'代收件',
+        }
+        return <span>{ newtext[text] }</span>
+      }
+    }, {
+      title: '时间',
+      dataIndex: 'time',
+      key: 'time',
+      render: (text)=>{
+        const createTime = time.formatTime(text)
+        return <span>{createTime}</span>
+      }
+    }, {
+      title: '原因',
+      dataIndex: 'reason',
+      key: 'reason',
+      render: (text)=>{
+        return <span>{ text?text:'暂无' }</span>
       }
     }, 
-    // {
-    //   title: '操作',
-    //   key: 'operation',
-    //   width: 100,
-    //   render: (text, record) => {
-    //     return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
-    //   },
-    // },
   ]
 
   const getBodyWrapperProps = {

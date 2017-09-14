@@ -1,6 +1,6 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-const APIV3 = 'http://192.168.1.104:8080/quandiExpressSiteManager'
+const APIV3 = 'http://192.168.1.101:8080/quandiExpressSiteManager'
 //线上
 // const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
 
@@ -48,6 +48,9 @@ module.exports = {
     topups: `${APIV3}/rechargeRecord`,//充值记录
     withdraws: `${APIV3}/extractionamount`,//提现记录
     
+    orders: `${APIV3}/expressStatus`,//
+    order: `${APIV3}/expressStatus`,
+
     v1test: `${APIV1}/test`,
     v2test: `${APIV2}/test`,
   },

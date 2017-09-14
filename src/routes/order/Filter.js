@@ -36,7 +36,7 @@ const Filter = ({
   const handleFields = (fields) => {
     const { createTime } = fields
     if (createTime.length) {
-      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+      fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
     }
     return fields
   }
@@ -44,6 +44,9 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
+    fields.head = fields.createTime[0]
+    fields.foot = fields.createTime[1]
+    delete fields.createTime
     onFilterChange(fields)
   }
 
@@ -66,25 +69,28 @@ const Filter = ({
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
+    fields.head = fields.createTime[0]
+    fields.foot = fields.createTime[1]
+    delete fields.createTime
     onFilterChange(fields)
   }
-  const { name, orderSn } = filter
+  const { name, serialNumber } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = moment(filter.createTime[0])
+    initialCreateTime[0] = filter.createTime[0]
   }
   if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = moment(filter.createTime[1])
+    initialCreateTime[1] = filter.createTime[1]
   }
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('orderSn', { initialValue: orderSn })(<Search placeholder="按运单号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('serialNumber', { initialValue: serialNumber })(<Search placeholder="按运单号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="创建时间">

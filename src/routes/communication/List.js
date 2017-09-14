@@ -33,43 +33,50 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '短信数',
       dataIndex: 'countId',
       key: 'countId',
-      render: (text) => <span>{text + '次'}</span>,
+      render: (text) => {
+        let newtext = text?text:0
+        return <span>{newtext + '次'}</span>
+      }
     }, {
       title: '短信金额',
       dataIndex: 'countIdPrice',
       key: 'countIdPrice',
-      render: (text) => <span>{'￥' + text}</span>,
-    },/* {
-      title: '语音数量',
-      dataIndex: 'voiceCount',
-      key: 'voiceCount',
-      render: (text) => <span></span>,
-    }, {
-      title: '语音通知金额',
-      dataIndex: 'voiceMoney',
-      key: 'voiceMoney',
-      render: (text) => <span></span>,
-    },*/ {
+      render: (text) => <span>{'￥' + text}</span>
+    },
+    // {
+    //   title: '语音数量',
+    //   dataIndex: 'voiceCount',
+    //   key: 'voiceCount',
+    //   render: (text) => <span></span>,
+    // }, {
+    //   title: '语音通知金额',
+    //   dataIndex: 'voiceMoney',
+    //   key: 'voiceMoney',
+    //   render: (text) => <span></span>,
+    // }, 
+    {
       title: '微信通知数量',
       dataIndex: 'wechatQuantity',
       key: 'wechatQuantity',
       render: (text) => <span>{text + '次'}</span>,
-    }, /*{
-      title: '直拨电话数量',
-      dataIndex: 'callCount',
-      key: 'callCount',
-      render: (text) => <span></span>,
-    }, {
-      title: '直拨时长',
-      dataIndex: 'callTime',
-      key: 'callTime',
-      render: (text) => <span></span>,
-    }, {
-      title: '直拨金额',
-      dataIndex: 'callMoney',
-      key: 'callMoney',
-      render: (text) => <span></span>,
-    },*/ {
+    },
+    // {
+    //   title: '直拨电话数量',
+    //   dataIndex: 'callCount',
+    //   key: 'callCount',
+    //   render: (text) => <span></span>
+    // }, {
+    //   title: '直拨时长',
+    //   dataIndex: 'callTime',
+    //   key: 'callTime',
+    //   render: (text) => <span></span>,
+    // }, {
+    //   title: '直拨金额',
+    //   dataIndex: 'callMoney',
+    //   key: 'callMoney',
+    //   render: (text) => <span></span>,
+    // },
+    {
       title: '回拨次数',
       dataIndex: 'numberOfCalls',
       key: 'numberOfCalls',
@@ -89,12 +96,12 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'totalAmount',
       key: 'totalAmount',
       render: (text) => <span>{'￥' + text}</span>,
-    }, /*{
-      title: '时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-    },*/
-
+    },
+    //  {
+    //   title: '时间',
+    //   dataIndex: 'createTime',
+    //   key: 'createTime',
+    // },
   ]
 
   const getBodyWrapperProps = {

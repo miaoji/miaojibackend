@@ -29,12 +29,12 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '帐号',
       dataIndex: 'mobile',
       key: 'mobile',
-    }, {
+    }, /*{
       title: '经营者姓名',
       dataIndex: 'null',
       key: 'null',
       render:(text)=><span>{text?text:"暂无经营者姓名"}</span>
-    }, {
+    },*/ {
       title: '店铺名称',
       dataIndex: 'name',
       key: 'name',
@@ -51,7 +51,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'isdelete',
       render: (text) => <span>{text === 0
             ? '禁用'
-            : '启用'}</span>,
+            : '启用'}</span>
     }, {
       title: '创建时间',
       dataIndex: 'createtime',
@@ -60,24 +60,25 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
       }
-    }, {
-      title: '是否黑名单',
-      dataIndex: 'blacklist',
-      key: 'blacklist',
-      filters: [
-        { text: '否', value: '0' },
-        { text: '是', value: '1' }
-      ],
-      onFilter: (value, record) => Number(record.blacklist) === Number(value),
-      render: (text) => {
-        const realtext = {
-          '0': '否',
-          '1': '是',
-        }
-        const newtext = text?text:0
-        return <span>{realtext[newtext]}</span>
-      }
     }, 
+    // {
+    //   title: '是否黑名单',
+    //   dataIndex: 'blacklist',
+    //   key: 'blacklist',
+    //   filters: [
+    //     { text: '否', value: '0' },
+    //     { text: '是', value: '1' }
+    //   ],
+    //   onFilter: (value, record) => Number(record.blacklist) === Number(value),
+    //   render: (text) => {
+    //     const realtext = {
+    //       '0': '否',
+    //       '1': '是',
+    //     }
+    //     const newtext = text?text:0
+    //     return <span>{realtext[newtext]}</span>
+    //   }
+    // }, 
     // {
     //   title: '操作',
     //   key: 'operation',
