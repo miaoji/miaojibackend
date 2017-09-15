@@ -35,7 +35,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       let data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
