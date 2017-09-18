@@ -1,8 +1,16 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-const APIV3 = 'http://192.168.1.101:8080/quandiExpressSiteManager'
+let APIV3
+
+// 本地测试
+APIV3 = 'http://192.168.1.101:8080/quandiExpressSiteManager'
 //线上
-// const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+// APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+
+// 生产环境时api固定为线上url
+if (process.env.NODE_ENV !== 'development') {
+  APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+}
 
 module.exports = {
   name: '妙寄后台管理系统',
