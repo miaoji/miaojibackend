@@ -33,6 +33,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         return <span>{ text?text:'单号暂无' }</span>
       }
     }, {
+      title: '货架号',
+      dataIndex: 'code',
+      key: 'code',
+      render: (text)=>{
+        return <span>{ text?text:'暂无' }</span>
+      }
+    }, {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
@@ -103,6 +110,22 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           '0':'普通件',
           '1':'到付件',
           '2':'代收件',
+        }
+        return <span>{ newtext[text] }</span>
+      }
+    }, {
+      title: '操作状态',
+      dataIndex: 'state',
+      key: 'state',
+      render: (text)=>{
+        const newtext={
+          '101':'到件',
+          '102':'上架',
+          '103':'分派',
+          '201':'问题件',
+          '202':'移库',
+          '301':'签收',
+          '302':'退回',
         }
         return <span>{ newtext[text] }</span>
       }
