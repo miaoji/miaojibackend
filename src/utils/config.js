@@ -1,6 +1,6 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-// const APIV3 = 'http://192.168.1.101:8080/quandiExpressSiteManager'
+// const APIV3 = 'http://192.168.1.106:8080/quandiExpressSiteManager'
 //线上
 const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
 
