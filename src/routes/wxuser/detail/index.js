@@ -4,9 +4,9 @@ import { connect } from 'dva'
 import styles from './index.less'
 
 const detailCN = {
-  price: '寄出数量',
-  receiveId: '收件数量',
-  senduId: '消费金额',
+  sendQuantity: '寄出数量',
+  numberOfReceipts: '收件数量',
+  price: '消费金额',
 }
 
 const Detail = ({ wxUserDetail }) => {

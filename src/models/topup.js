@@ -43,7 +43,7 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       let data = yield call(query, payload)
       
-      if (data) {
+      if (data.code === 200) {
     //   	delete data.success
     //   	delete data.message
     //   	delete data.statusCode
@@ -67,6 +67,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || '网络不行了!!!'
       }
     },
 

@@ -27,14 +27,14 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
   const handleUserClick = (record, e) => {
     const str = record.mobile.toString()
     let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
-    window.open(`/wxuserdetail?userId=${record.userId}&username=${record.nickname}&usermobile=${encryptNum}`)
+    window.open(`/wxuserdetail?userId=${record.userId}&username=${record.name}&usermobile=${encryptNum}`)
   }
 
   const columns = [
     {
       title: '微信名',
-      dataIndex: 'nickname',
-      key: 'nickname',
+      dataIndex: 'name',
+      key: 'name',
       width: 64,
       render: (text, record) => {
        return <Button type="primary" size="default" ghost onClick={e => handleUserClick(record, e)}>{text}</Button>

@@ -3,9 +3,9 @@ const APIV2 = '/api/v2'
 let APIV3
 
 // 本地测试
-APIV3 = 'http://192.168.1.101:8080/quandiExpressSiteManager'
+// APIV3 = 'http://192.168.1.101:8080/quandiExpressSiteManager'
 //线上
-// APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -56,7 +56,7 @@ module.exports = {
     topups: `${APIV3}/rechargeRecord`,//充值记录
     withdraws: `${APIV3}/extractionamount`,//提现记录
     
-    orders: `${APIV3}/expressStatus`,//
+    orders: `${APIV3}/expressStatus`,//运单管理
     order: `${APIV3}/expressStatus`,
 
     v1test: `${APIV1}/test`,

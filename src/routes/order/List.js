@@ -33,6 +33,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         return <span>{ text?text:'单号暂无' }</span>
       }
     }, {
+      title: '货架号',
+      dataIndex: 'code',
+      key: 'code',
+      render: (text)=>{
+        return <span>{ text?text:'暂无' }</span>
+      }
+    }, {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
@@ -40,6 +47,42 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '品牌',
       dataIndex: 'brand',
       key: 'brand',
+      render: (text)=>{
+        const newtext={
+          '0': '品牌未选择',
+          '1': '品牌未选择',
+          '2': '优速',
+          '3': '龙邦',
+          '4': '速尔',
+          '5': '快捷',
+          '6': '全峰',
+          '7': '百世快递',
+          '8': '天天',
+          '9': '中通',
+          '11': '申通',
+          '12': '圆通',
+          '14': 'EMS',
+          '15': '国通',
+          '16': '蚂蚁帮',
+          '17': '邮政小包',
+          '18': '宅急送',
+          '19': '跨越',
+          '20': '京东',
+          '21': '达达',
+          '22': '万象',
+          '23': '妙寄',
+          '24': '中铁',
+          '27': '品骏',
+          '26': '安能',
+          '28': '日日顺',
+          '29': '如风达',
+          '10': '韵达',
+          '13': '顺丰',
+          '71': '高铁快运'
+        }
+        text = text?text:'0'
+        return <span>{ newtext[text] }</span>
+      }
     }, {
       title: '手机号',
       dataIndex: 'mobile',
@@ -67,6 +110,22 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           '0':'普通件',
           '1':'到付件',
           '2':'代收件',
+        }
+        return <span>{ newtext[text] }</span>
+      }
+    }, {
+      title: '操作状态',
+      dataIndex: 'state',
+      key: 'state',
+      render: (text)=>{
+        const newtext={
+          '101':'到件',
+          '102':'上架',
+          '103':'分派',
+          '201':'问题件',
+          '202':'移库',
+          '301':'签收',
+          '302':'退回',
         }
         return <span>{ newtext[text] }</span>
       }
