@@ -38,7 +38,7 @@ const Login = ({
             </div>
             <form>
               <FormItem hasFeedback>
-                {getFieldDecorator('username', {
+                {getFieldDecorator('accounts', {
                   rules: [
                     {
                       required: true,

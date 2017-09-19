@@ -47,6 +47,13 @@ const Filter = ({
     fields.head = fields.createTime[0]
     fields.foot = fields.createTime[1]
     delete fields.createTime
+    // 判断搜索提交的内容是否为空
+    // 为空则等于undefined
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
     onFilterChange(fields)
   }
 
@@ -72,6 +79,12 @@ const Filter = ({
     fields.head = fields.createTime[0]
     fields.foot = fields.createTime[1]
     delete fields.createTime
+    // 判空
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
     onFilterChange(fields)
   }
   const { name, serialNumber } = filter

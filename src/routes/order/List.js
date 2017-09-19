@@ -114,7 +114,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         return <span>{ newtext[text] }</span>
       }
     }, {
-      title: '操作状态',
+      title: '快件状态',
       dataIndex: 'state',
       key: 'state',
       render: (text)=>{
@@ -138,7 +138,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         return <span>{createTime}</span>
       }
     }, {
-      title: '原因',
+      title: '问题件原因',
       dataIndex: 'reason',
       key: 'reason',
       render: (text)=>{

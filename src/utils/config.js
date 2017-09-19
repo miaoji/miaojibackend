@@ -1,6 +1,6 @@
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
-const APIV3 = 'http://192.168.1.109:8080/quandiExpressSiteManager'
+const APIV3 = 'http://192.168.1.101:8080/quandiExpressSiteManager'
 //线上
 // const APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
 
@@ -26,15 +26,10 @@ module.exports = {
     wxuser: `${APIV3}/received`,//微信用户明细
     wxusers: `${APIV3}/wechatuser`,//微信用户
     
-    storeuser: `${APIV1}/storeuser/:id`,//门店用户明细
-    storeusers: `${APIV3}/storebean`,//门店用户
+    storeusers: `${APIV3}/store`,//门店用户
     
-    message: `${APIV1}/message/:id`,
-    messages: `${APIV1}/messages`,
     communications: `${APIV3}/communicationdata`,//通信数据
     
-    checkbooks: `${APIV1}/checkbooks`,
-
     income: `${APIV3}/income`,//收入
     expend: `${APIV3}/expenditure`,//支出
     normal: `${APIV3}/regularMail?expresstype=0`,//普通件
