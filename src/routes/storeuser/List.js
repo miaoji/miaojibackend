@@ -42,7 +42,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '店铺级别',
       dataIndex: 'type',
       key: 'type',
-      render: (text) => <span>{text === 0
+      render: (text) => <span>{text === '0'
             ? '主张号'
             : '子帐号'}</span>,
     }, {
