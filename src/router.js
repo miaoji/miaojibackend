@@ -190,6 +190,22 @@ const Routers = function ({ history, app }) {
             }, 'order')
           }
         }, {
+          path: 'qr',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/qr'))
+              cb(null, require('./routes/qr/'))
+            }, 'qr')
+          }
+        },{
+          path: 'qrdetail',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/qr/detail'))
+              cb(null, require('./routes/qr/detail'))
+            }, 'qr-detail')
+          }
+        },{
           path: 'login',
           getComponent (nextState, cb) {
             require.ensure([], require => {

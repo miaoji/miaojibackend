@@ -2,7 +2,7 @@
 
 export const formatTime = function (val) {
   if (val == null || val == '' || val.length!=13) {
-        return '未知时间'
+    return '未知时间'
   } else {
     let date = new Date(parseInt(val))
     let y = date.getFullYear()

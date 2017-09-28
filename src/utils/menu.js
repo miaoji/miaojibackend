@@ -150,5 +150,17 @@ module.exports = [
     name: '运单管理',
     icon: 'export',
     router: '/order',
+  }, {
+    id: 8,
+    bpid: 1,
+    name: '推广管理',
+    icon: 'global',
+    router: '/qr',
+  }, {
+    id: 81,
+    bpid: 8,
+    mpid: -1,
+    name: '二维码图片',
+    router: '/qrdetail',
   },
 ]
