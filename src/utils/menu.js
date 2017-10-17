@@ -162,5 +162,11 @@ module.exports = [
     mpid: -1,
     name: '二维码图片',
     router: '/qrdetail',
-  },
+  },{
+    id: 9,
+    bpid: 1,
+    name: '充值消费',
+    icon: 'global',
+    router: '/consume',
+  }, 
 ]

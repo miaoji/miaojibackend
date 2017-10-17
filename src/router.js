@@ -190,6 +190,14 @@ const Routers = function ({ history, app }) {
             }, 'order')
           }
         }, {
+          path: 'consume',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app , require('./models/consume'))
+              cb(null, require('./routes/consume/'))
+            }, 'consume')
+          }
+        }, {
           path: 'qr',
           getComponent (nextState, cb) {
             require.ensure([], require => {

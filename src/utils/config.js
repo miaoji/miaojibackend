@@ -65,6 +65,10 @@ module.exports = {
       show: `${APIV4}/api/selectQrById`,
       update: `${APIV4}/api/qr/modWxQrById`,
       del: `${APIV4}/api/delQrById`
+    },
+    // 充值消费接口
+    consume: {
+      all: `${APIV4}/`,
     }
   },
 }
