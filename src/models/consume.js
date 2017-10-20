@@ -1,11 +1,10 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/order'
-import * as ordersService from '../services/orders'
+import { create, remove, update, markBlack } from '../services/consumes'
+import { query } from '../services/consumes'
 import { pageModel } from './common'
 import { config } from '../utils'
 import { gettimes } from '../utils/time' //转换时间戳的函数
 
-const { query } = ordersService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
@@ -37,7 +36,25 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      let data = yield call(query, payload)
+      console.log('提交请求的数据---',payload)
+      const newPayload = {
+        ...payload,
+        transactionType:JSON.stringify(payload.transactionType)||null,
+        status:JSON.stringify(payload.status)||null,
+        paymentMethod:JSON.stringify(payload.paymentMethod)||null
+      }
+      if (!payload.transactionType) {
+        delete newPayload.transactionType
+      }
+      if (!payload.status) {
+        delete newPayload.status
+      }
+      if (!payload.paymentMethod) {
+        delete newPayload.paymentMethod
+      }
+      // console.log('newPayload',JSON.stringify(newPayload))
+      // const realPayload = JSON.stringify(newPayload)
+      let data = yield call(query, newPayload)
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -51,7 +68,7 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
-        throw data.mess || '网络不行了!!!'
+        throw data.msg || '网络不行了!!!'
       }
     },
 

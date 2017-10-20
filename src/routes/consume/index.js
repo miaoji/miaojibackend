@@ -33,6 +33,9 @@ const Consume = ({ location, dispatch, consume, loading }) => {
 
   const listProps = {
     dataSource: list,
+    filter: {
+      ...location.query,
+    },
     loading: loading.effects['storeUser/query'],
     pagination,
     location,
@@ -69,17 +72,21 @@ const Consume = ({ location, dispatch, consume, loading }) => {
         },
       })
     },
-    // rowSelection: {
-    //   selectedRowKeys,
-    //   onChange: (keys) => {
-    //     dispatch({
-    //       type: 'storeUser/updateState',
-    //       payload: {
-    //         selectedRowKeys: keys,
-    //       },
-    //     })
-    //   },
-    // },
+    onFilterStatus (value) {
+      console.log('index接收的---',value)
+      console.log('...value转换的数据---', {...value})
+      console.log('location',location.pathname)
+      dispatch(routerRedux.push({
+        pathname: location.pathname,
+        query: {
+          ...value,
+        },
+      }))
+      // dispatch({
+      //   type: 'consume/query',
+      //   payload:value
+      // })
+    },
   }
 
   const filterProps = {
@@ -92,8 +99,6 @@ const Consume = ({ location, dispatch, consume, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
         },
       }))
     },

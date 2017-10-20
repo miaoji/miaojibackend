@@ -166,7 +166,7 @@ module.exports = [
     id: 9,
     bpid: 1,
     name: '充值消费',
-    icon: 'global',
+    icon: 'shop',
     router: '/consume',
   }, 
 ]

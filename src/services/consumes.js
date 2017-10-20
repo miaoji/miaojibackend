@@ -1,8 +1,13 @@
-import { request, config } from '../utils'
+import { request, config, pageParams, } from '../utils'
 const { api } = config
 const { consume } = api
 
 export async function query (params) {
+  params = pageParams(params)
+  params = {aa:JSON.stringify(params)}
+
+  console.log('params',params)
+  // return
   return request({
     url: consume.all,
     method: 'get',
