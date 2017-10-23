@@ -3,7 +3,7 @@ const APIV2 = '/api/v2'
 
 let APIV3
 // 本地测试
-APIV3 = 'http://192.168.1.103:8080/quandiExpressSiteManager'
+APIV3 = 'http://192.168.1.106:8080/quandiExpressSiteManager'
 // 仝舟本地测试
 // APIV3 = 'http://192.168.1.112:8080'
 //线上

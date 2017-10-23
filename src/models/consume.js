@@ -37,24 +37,21 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       console.log('提交请求的数据---',payload)
-      const newPayload = {
-        ...payload,
-        transactionType:JSON.stringify(payload.transactionType)||null,
-        status:JSON.stringify(payload.status)||null,
-        paymentMethod:JSON.stringify(payload.paymentMethod)||null
+      // 转换提交的交易类型的数据
+      if (typeof(payload.transactionType)==='string') {
+        payload.transactionType = [payload.transactionType]
       }
-      if (!payload.transactionType) {
-        delete newPayload.transactionType
+      // 转换提交的订单状态的数据
+      if (typeof(payload.status)==='string') {
+        payload.status = [payload.status]
       }
-      if (!payload.status) {
-        delete newPayload.status
+      // 转换提交的支付方式的数据
+      if (typeof(payload.paymentMethod)==='string') {
+        payload.paymentMethod = [payload.paymentMethod]
       }
-      if (!payload.paymentMethod) {
-        delete newPayload.paymentMethod
-      }
-      // console.log('newPayload',JSON.stringify(newPayload))
-      // const realPayload = JSON.stringify(newPayload)
-      let data = yield call(query, newPayload)
+      console.log('payload',payload)
+      // return
+      let data = yield call(query, payload)
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',

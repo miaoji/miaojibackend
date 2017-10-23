@@ -4,10 +4,9 @@ const { consume } = api
 
 export async function query (params) {
   params = pageParams(params)
-  params = {aa:JSON.stringify(params)}
+  params = {param:JSON.stringify(params)}
 
   console.log('params',params)
-  // return
   return request({
     url: consume.all,
     method: 'get',
