@@ -3,14 +3,14 @@ const { api } = config
 const { consume } = api
 
 export async function query (params) {
-  params = pageParams(params)
   params = {param:JSON.stringify(params)}
+  params = pageParams(params)
 
   console.log('params',params)
   return request({
-    url: consume.all,
-    method: 'get',
-    data: params,
+    url: consume.query,
+    method: 'post',
+    params,
   })
 }
 

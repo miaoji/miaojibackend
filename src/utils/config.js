@@ -3,7 +3,7 @@ const APIV2 = '/api/v2'
 
 let APIV3
 // 本地测试
-APIV3 = 'http://192.168.1.106:8080/quandiExpressSiteManager'
+APIV3 = 'http://192.168.1.109:8080/quandiExpressSiteManager'
 // 仝舟本地测试
 // APIV3 = 'http://192.168.1.112:8080'
 //线上
@@ -68,7 +68,7 @@ module.exports = {
     },
     // 充值消费接口
     consume: {
-      all: `${APIV3}/paymentOrder`,// 分页查询
+      query: `${APIV3}/paymentOrder`,// 分页查询
     }
   },
 }

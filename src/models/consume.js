@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/consumes'
+// import { create, remove, update, markBlack } from '../services/consumes'
 import { query } from '../services/consumes'
 import { pageModel } from './common'
 import { config } from '../utils'
@@ -49,7 +49,7 @@ export default modelExtend(pageModel, {
       if (typeof(payload.paymentMethod)==='string') {
         payload.paymentMethod = [payload.paymentMethod]
       }
-      console.log('payload',payload)
+      console.log('payload111111',payload)
       // return
       let data = yield call(query, payload)
       if (data.code === 200) {
