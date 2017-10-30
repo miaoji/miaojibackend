@@ -52,12 +52,6 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
     }
   }
 
-  const handleTableChange = (pagination, filters, sorter) => {
-    let newfilter = { ...filter,...filters }
-    console.log('newfilter',newfilter)
-    onFilterStatus(newfilter)
-  }
-
   const columns = [
     {
       title: '名称',
@@ -156,7 +150,6 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
         simple
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
-        onChange={handleTableChange}
       />
     </div>
   )

@@ -39,15 +39,16 @@ const Filter = ({
     if (createTime.length) {
       fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
     }
+    fields.startTime = fields.createTime[0]
+    fields.endTime = fields.createTime[1]
+    delete fields.createTime
     return fields
   }
 
   const handleSubmit = () => {
+    console.log('filterdemo',filter)
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    fields.head = fields.createTime[0]
-    fields.foot = fields.createTime[1]
-    delete fields.createTime
     // 判断搜索提交的内容是否为空
     // 为空则等于undefined
     for (let item in fields) {
@@ -55,7 +56,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange(fields)
+    onFilterChange({...filter,...fields})
   }
 
   const handleReset = () => {
@@ -77,16 +78,12 @@ const Filter = ({
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
-    fields.head = fields.createTime[0]
-    fields.foot = fields.createTime[1]
-    delete fields.createTime
-    // 判空
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
         fields[item] = undefined
       }
     }
-    onFilterChange(fields)
+    onFilterChange({...filter,...fields})
   }
   const { name, mobile } = filter
 
