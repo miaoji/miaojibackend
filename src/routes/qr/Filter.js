@@ -4,6 +4,7 @@ import moment from 'moment'
 import { FilterItem } from '../../components'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
 import city from '../../utils/city'
+import { time } from '../../utils'
 
 const Search = Input.Search
 const { RangePicker } = DatePicker
@@ -34,10 +35,11 @@ const Filter = ({
   const handleFields = (fields) => {
     const { createTime } = fields
     if (createTime.length) {
-      fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
+      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
+      const repairTime = time.repairTime(fields.createTime)
+      fields.startTime = repairTime.startTime
+      fields.endTime = repairTime.endTime
     }
-    fields.startTime = fields.createTime[0]
-    fields.endTime = fields.createTime[1]
     delete fields.createTime
     return fields
   }

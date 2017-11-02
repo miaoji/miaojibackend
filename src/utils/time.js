@@ -19,3 +19,30 @@ export const formatTime = function (val) {
     return (y+"/"+m+"/"+d+" "+h+":"+mm+":"+s)
   }
 }
+
+
+// 弥补创建时间控件获取的时间戳是带当前时间的问题
+
+// @val  [type:number] 13的时间戳
+// @type [type:string] 要转换的时间是开始时间还是结束时间
+
+export const repairTime = function (val,type) {
+    const date = new Date(val[0]._d)
+    const h = date.getHours()
+    const m = date.getMinutes()
+    const s = date.getSeconds()
+    const ms = date.getMilliseconds()
+    
+    const times = (h*60*60*1000)+(m*60*1000)+(s*1000)+ms
+    if (type==='start') {
+        return (val - times)
+    }else if(type==='end'){
+        return (val - times + 86400000)
+    }
+    const startTime = new Date(val[0]._d).getTime() - times
+    const endTime = new Date(val[1]._d).getTime() - times + 86400000-1
+    return {
+        startTime,
+        endTime
+    }
+}
