@@ -1,5 +1,6 @@
 import DataTable from './DataTable'
 import DropOption from './DropOption'
+import DateRange from './DateRange'
 import Iconfont from './Iconfont'
 import Search from './Search'
 import Editor from './Editor'
@@ -12,6 +13,7 @@ export {
   Layout,
   DataTable,
   DropOption,
+  DateRange,
   Iconfont,
   Search,
   Editor,

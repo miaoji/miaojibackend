@@ -4,6 +4,7 @@ import moment from 'moment'
 import { FilterItem } from '../../components'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
 import city from '../../utils/city'
+import { DateRange } from '../../components'
 import { time } from '../../utils'
 
 const Search = Input.Search
@@ -64,6 +65,10 @@ const Filter = ({
       }
     }
     setFieldsValue(fields)
+    filter.endTime = undefined
+    filter.startTime = undefined
+    filter.page = undefined
+    filter.pageSize = undefined
     handleSubmit()
   }
 
@@ -98,14 +103,12 @@ const Filter = ({
             onChange={handleChange.bind(null, 'address')}
           />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        <FilterItem label="创建时间">
+      <Col {...ColProps} xl={{ span: 8 }} lg={{ span:8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span:24 }}>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}
-        </FilterItem>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>

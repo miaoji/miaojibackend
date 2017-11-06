@@ -4,6 +4,8 @@ import moment from 'moment'
 import { FilterItem } from '../../components'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Select } from 'antd'
 import city from '../../utils/city'
+import { DateRange } from '../../components'
+import { time } from '../../utils'
 
 const Search = Input.Search
 const Option = Select.Option
@@ -36,11 +38,13 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length) {
-      fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
+    console.log('createTime',createTime)
+    if (createTime.length===2) {
+      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
+      const repairTime = time.repairTime(fields.createTime)
+      fields.startTime = repairTime.startTime
+      fields.endTime = repairTime.endTime
     }
-    fields.startTime = fields.createTime[0]
-    fields.endTime = fields.createTime[1]
     delete fields.createTime
     return fields
   }
@@ -60,20 +64,27 @@ const Filter = ({
   }
 
   const handleReset = () => {
+    console.log('我点击了刷新按钮...')
     const fields = getFieldsValue()
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
           fields[item] = []
         } else {
+          console.log('item',item)
           fields[item] = undefined
         }
       }
     }
     setFieldsValue(fields)
+    filter.endTime = undefined
+    filter.startTime = undefined
+    filter.page = undefined
+    filter.pageSize = undefined
     handleSubmit()
   }
 
+  // 时间选择器change事件
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
@@ -85,6 +96,7 @@ const Filter = ({
     }
     onFilterChange({...filter,...fields})
   }
+
   const { name, mobile } = filter
 
   let initialCreateTime = []
@@ -103,14 +115,12 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号码搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        <FilterItem label="创建时间">
+      <Col {...ColProps} xl={{ span: 8 }} lg={{ span:8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span:24 }}>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}
-        </FilterItem>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>

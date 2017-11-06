@@ -96,7 +96,6 @@ const Consume = ({ location, dispatch, consume, loading }) => {
       ...location.query,
     },
     onFilterChange (value) {
-      console.log(23234)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -104,17 +103,6 @@ const Consume = ({ location, dispatch, consume, loading }) => {
         },
       }))
     },
-    // onSearch (fieldsValue) {
-    //   fieldsValue.keyword.length ? dispatch(routerRedux.push({
-    //     pathname: '/storeUser',
-    //     query: {
-    //       field: fieldsValue.field,
-    //       keyword: fieldsValue.keyword,
-    //     },
-    //   })) : dispatch(routerRedux.push({
-    //     pathname: '/storeUser',
-    //   }))
-    // },
     onAdd () {
       dispatch({
         type: 'storeUser/showModal',

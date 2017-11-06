@@ -85,7 +85,6 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
         { text: '保价费', value: '11' },
         { text: '寄件付款', value: '13' },
       ],
-      // filterMultiple: false,
       render: (text) => {
         return <span>{ realTransactionType[text] }</span>
       }
@@ -103,7 +102,6 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
         { text: '交易取消', value: 'cancel' },
         { text: '交易关闭', value: 'close' },
       ],
-      // filterMultiple: false,
       render: (text)=>{
         return <span>{ realStatus[text] }</span>
       }
@@ -117,7 +115,6 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
         { text: '余额支付', value: '3' },
         { text: '线下现金支付', value: '4' },
       ],
-      // filterMultiple: false,
       render: (text) => {
         return <span>{ realPaymentMethod[text] }</span>
       }
