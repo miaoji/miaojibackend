@@ -1,13 +1,13 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove } from '../services/qr'
-import * as bootsService from '../services/qrs'
+// import { create, update, remove } from '../services/blacklist'
+import * as bootsService from '../services/blacklists'
 import { pageModel } from './common'
 
 const { query } = bootsService
 
 export default modelExtend(pageModel, {
-  namespace: 'qr',
+  namespace: 'blacklist',
 
   state: {
     currentItem: {},
@@ -18,7 +18,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/qr') {
+        if (location.pathname === '/blacklist') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -32,7 +32,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      console.log('dadfafa',data)
+      console.log('data',data.obj)
       if (data) {  
         yield put({
           type: 'querySuccess',
@@ -49,12 +49,12 @@ export default modelExtend(pageModel, {
     },
 
     *create ({ payload }, { call, put }) {
-      const newQr = {
+      const newblacklist = {
         param: payload.parameter,
         name: payload.name,
         remark: payload.remark
       }
-      const data = yield call(create, newQr)
+      const data = yield call(create, newblacklist)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -65,13 +65,13 @@ export default modelExtend(pageModel, {
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ qr }) => qr.currentItem.id)
-      const newQr = {
+      const id = yield select(({ blacklist }) => blacklist.currentItem.id)
+      const newblacklist = {
         name: payload.name,
         remark: payload.remark,
         id
       }
-      const data = yield call(update, newQr)
+      const data = yield call(update, newblacklist)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

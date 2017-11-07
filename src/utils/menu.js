@@ -168,5 +168,11 @@ module.exports = [
     name: '充值消费',
     icon: 'shop',
     router: '/consume',
+  }, {
+    id: 10,
+    bpid: 1,
+    name: '黑名单',
+    icon: 'shop',
+    router: '/blacklist',
   }, 
 ]

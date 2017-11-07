@@ -50,6 +50,7 @@ class DateRange extends React.Component {
 
   onEndChange = (value) => {
     this.onChange('endValue', value);
+    console.log('我修改了结束时间的值')
   }
 
   handleStartOpenChange = (open) => {

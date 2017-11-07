@@ -102,15 +102,6 @@ const Routers = function ({ history, app }) {
             }, 'communication')
           },
         }, 
-//      {
-//        path: 'checkbook',
-//        getComponent (nextState, cb) {
-//          require.ensure([], require => {
-//            registerModel(app, require('./models/checkbook'))
-//            cb(null, require('./routes/checkbook'))
-//          }, 'checkbook')
-//        }
-//      },
         {
           path: 'income',
           getComponent (nextState, cb) {
@@ -129,15 +120,6 @@ const Routers = function ({ history, app }) {
             }, 'expend')
           }
         },
-//      {
-//        path: 'expressitem',
-//        getComponent (nextState, cb) {
-//          require.ensure([], require => {
-//            registerModel(app, require('./models/expressitem'))
-//            cb(null, require('./routes/expressitem'))
-//          }, 'expressitem')
-//        }
-//      },
         {
           path: 'normal',
           getComponent (nextState, cb) {
@@ -221,6 +203,14 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/login/'))
             }, 'login')
           },
+        }, {
+          path: 'blacklist',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/blacklist'))
+              cb(null, require('./routes/blacklist/'))
+            }, 'blacklist')
+          }
         }, {
           path: '*',
           getComponent (nextState, cb) {
