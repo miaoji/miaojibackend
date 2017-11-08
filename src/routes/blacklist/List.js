@@ -47,23 +47,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'parameter',
       key: 'parameter',
     },{
-      title: '二维码图片',
-      dataIndex: 'ticket',
-      key: 'ticket',
-      render: (text, record) => {
-        const href = '/qrdetail?ticket=' + text + '&name=' + record.name + '&parameter=' + record.parameter + '&remark=' + record.remark
-        return <a href={href} target="_blank">点击查看</a>
-      }
-    },{
       title: '复制图片路径',
+      dataIndex: 'copy',
       key: 'copy',
-      render: (text, record) => {
-        return <Button type="primary" size="large" onClick={e => copyUrl(record, e)}>复制到剪切板</Button>
-      },
-    },{
-      title: '备注',
-      dataIndex: 'remark',
-      key: 'remark'
+      render: (text)=>{
+        return <span>图片路径暂无</span>
+      }
+
     },{
       title: '创建时间',
       dataIndex: 'createTime',
@@ -71,6 +61,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text) => {
         const createTime = time.formatTime(text.toString())
         return <span>{createTime}</span>
+      }
+    },{
+      title: '备注',
+      dataIndex: 'remark',
+      key: 'remark',
+      render: (text)=>{
+        return <span>数据仅用于测试,不具备真实性</span>
       }
     },{
       title: '操作',

@@ -38,7 +38,15 @@ class DateRange extends React.Component {
     this.setState({
       [field]: value,
     })
-    
+
+    // 当用户清空了单个时间控件的值的时候同时清空两个控件的值,并发起一次页面请求
+    if (value == null) {
+      this.setState({startValue:null,endValue:null})
+      this.props.onChange([null,null],'createTime')
+      return
+    }
+
+    // 当用户进行了结束时间的选择的时候,发起一次页面请求
     if (field == 'endValue') {
       this.props.onChange([this.state.startValue,value],'createTime')
     }
@@ -50,7 +58,6 @@ class DateRange extends React.Component {
 
   onEndChange = (value) => {
     this.onChange('endValue', value);
-    console.log('我修改了结束时间的值')
   }
 
   handleStartOpenChange = (open) => {

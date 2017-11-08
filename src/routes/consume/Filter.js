@@ -50,7 +50,6 @@ const Filter = ({
   }
 
   const handleSubmit = () => {
-    console.log('filterdemo',filter)
     let fields = getFieldsValue()
     fields = handleFields(fields)
     // 判断搜索提交的内容是否为空
@@ -64,14 +63,12 @@ const Filter = ({
   }
 
   const handleReset = () => {
-    console.log('我点击了刷新按钮...')
     const fields = getFieldsValue()
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
           fields[item] = []
         } else {
-          console.log('item',item)
           fields[item] = undefined
         }
       }

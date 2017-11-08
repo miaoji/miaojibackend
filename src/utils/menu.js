@@ -99,14 +99,6 @@ module.exports = [
     name: '支出',
     router: '/expend',
   },
-  
-  /*{
-    id: 5,
-    bpid: 1,
-    name: '消息管理',
-    icon: 'mail',
-    router: '/message',
-  },*/
   {
     id: 51,
     mpid: -1,
@@ -172,7 +164,7 @@ module.exports = [
     id: 10,
     bpid: 1,
     name: '黑名单',
-    icon: 'shop',
+    icon: 'user-delete',
     router: '/blacklist',
   }, 
 ]
