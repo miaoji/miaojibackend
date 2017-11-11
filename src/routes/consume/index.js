@@ -15,18 +15,18 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['storeUser/update'],
+    confirmLoading: loading.effects['consume/update'],
     title: `${modalType === 'create' ? '创建门店' : '更新门店'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `storeUser/${modalType}`,
+        type: `consume/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'storeUser/hideModal',
+        type: 'consume/hideModal',
       })
     },
   }
@@ -36,7 +36,7 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     filter: {
       ...location.query,
     },
-    loading: loading.effects['storeUser/query'],
+    loading: loading.effects['consume/query'],
     pagination,
     location,
     isMotion,
@@ -54,19 +54,19 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     },
     onMarkItem (id) {
       dispatch({
-        type: 'storeUser/markBlackList',
+        type: 'consume/markBlackList',
         payload: id
       })
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'storeUser/delete',
+        type: 'consume/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'storeUser/showModal',
+        type: 'consume/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -105,20 +105,20 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     },
     onAdd () {
       dispatch({
-        type: 'storeUser/showModal',
+        type: 'consume/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'storeUser/switchIsMotion' })
+      dispatch({ type: 'consume/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'storeUser/multiDelete',
+      type: 'consume/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },

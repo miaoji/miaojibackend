@@ -35,39 +35,28 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
-      title: '门店姓名',
-      dataIndex: 'name',
-      key: 'name',
+      title: '用户ID',
+      dataIndex: 'idUser',
+      key: 'idUser',
     }, {
-      title: '扫描关注人数',
-      dataIndex: 'sourceCount',
-      key: 'sourceCount',
-    }, {
-      title: '二维码参数',
-      dataIndex: 'parameter',
-      key: 'parameter',
+      title: '手机',
+      dataIndex: 'modile',
+      key: 'modile',
     },{
-      title: '复制图片路径',
-      dataIndex: 'copy',
-      key: 'copy',
+      title: '理由',
+      dataIndex: 'note',
+      key: 'note',
       render: (text)=>{
         return <span>图片路径暂无</span>
       }
 
     },{
-      title: '创建时间',
+      title: '时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
         const createTime = time.formatTime(text.toString())
         return <span>{createTime}</span>
-      }
-    },{
-      title: '备注',
-      dataIndex: 'remark',
-      key: 'remark',
-      render: (text)=>{
-        return <span>数据仅用于测试,不具备真实性</span>
       }
     },{
       title: '操作',

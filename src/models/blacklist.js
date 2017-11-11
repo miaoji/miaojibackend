@@ -32,7 +32,8 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      console.log('data',data.obj)
+      console.log('data',data)
+      
       if (data) {  
         yield put({
           type: 'querySuccess',
@@ -54,7 +55,7 @@ export default modelExtend(pageModel, {
         name: payload.name,
         remark: payload.remark
       }
-      const data = yield call(create, newblacklist)
+      const data = yield call(create, {state:1,...newblacklist})
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -71,7 +72,7 @@ export default modelExtend(pageModel, {
         remark: payload.remark,
         id
       }
-      const data = yield call(update, newblacklist)
+      const data = yield call(update, {state:2,...newblacklist})
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

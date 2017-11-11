@@ -4,6 +4,7 @@ import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
+const { TextArea } = Input
 
 const formItemLayout = {
   labelCol: {
@@ -48,41 +49,41 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="门店姓名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+        <FormItem label="用户ID" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('idUser', {
+            initialValue: item.idUser,
             rules: [
               {
                 required: true,
-                message: '请输入门店名!',
+                message: '请输入黑名单用户Id!',
                 max: 100
               }
             ],
-          })(<Input type="text" placeholder="请输入门店名" />)}
+          })(<Input type="text" placeholder="请输入黑名单用户Id" />)}
         </FormItem>
-        <FormItem label="二维码参数" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('parameter', {
-            initialValue: item.parameter,
+        <FormItem label="手机号" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('mobile', {
+            initialValue: item.mobile,
             rules: [
               {
                 required: true,
                 pattern: /^[A-Za-z0-9]{0,}$/,
-                message: '请输入二维码参数!'
+                message: '请输入手机号!'
               }
             ],
           })(<Input disabled={paramDisabled} />)}
         </FormItem>
-        <FormItem label="备注" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('remark', {
-            initialValue: item.remark,
+        <FormItem label="理由" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('note', {
+            initialValue: item.note,
             rules: [
               {
-                required: false,
+                required: true,
                 message: '备注字数不能超过100!',
                 max: 100
               }
             ]
-          })(<Input />)}
+          })(<TextArea style={{height:'50',width:'100%'}}/>)}
         </FormItem>
       </Form>
     </Modal>

@@ -16,7 +16,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增二维码' : '修改二维码'}`,
+    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
@@ -97,18 +97,6 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
         },
       })
     },
-    switchIsMotion () {
-      dispatch({ type: 'blacklist/switchIsMotion' })
-    },
-  }
-
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'blacklist/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
   }
 
   return (

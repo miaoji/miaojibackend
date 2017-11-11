@@ -4,6 +4,7 @@ import moment from 'moment'
 import { FilterItem } from '../../components'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
 import city from '../../utils/city'
+import { DateRange } from '../../components'
 import { time } from '../../utils'
 
 const Search = Input.Search
@@ -34,7 +35,8 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime) {
+    console.log('createTime',createTime)
+    if (createTime.length===2) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
@@ -47,7 +49,14 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    onFilterChange(fields)
+    // 判断搜索提交的内容是否为空
+    // 为空则等于undefined
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
+    onFilterChange({...filter,...fields})
   }
 
   const handleReset = () => {
@@ -62,29 +71,46 @@ const Filter = ({
       }
     }
     setFieldsValue(fields)
+    filter.endTime = undefined
+    filter.startTime = undefined
+    filter.page = undefined
+    filter.pageSize = undefined
     handleSubmit()
   }
 
+  // 时间选择器change事件
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
-    onFilterChange(fields)
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
+    onFilterChange({...filter,...fields})
   }
-  const { name, address } = filter
+
+  const { name, mobile } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = moment(filter.createTime[0])
+    initialCreateTime[0] = filter.createTime[0]
   }
   if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = moment(filter.createTime[1])
+    initialCreateTime[1] = filter.createTime[1]
   }
+
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按推广人姓名搜索" size="large" onSearch={handleSubmit} />)}
+      </Col>
+      <Col {...ColProps} xl={{ span: 8 }} lg={{ span:8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span:24 }}>
+          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
