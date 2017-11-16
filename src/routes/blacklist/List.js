@@ -40,16 +40,12 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'idUser',
     }, {
       title: '手机',
-      dataIndex: 'modile',
-      key: 'modile',
+      dataIndex: 'mobile',
+      key: 'mobile',
     },{
       title: '理由',
       dataIndex: 'note',
       key: 'note',
-      render: (text)=>{
-        return <span>图片路径暂无</span>
-      }
-
     },{
       title: '时间',
       dataIndex: 'createTime',

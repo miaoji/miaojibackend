@@ -54,24 +54,23 @@ const modal = ({
             initialValue: item.idUser,
             rules: [
               {
-                required: true,
-                message: '请输入黑名单用户Id!',
-                max: 100
+                required: !paramDisabled,
+                message: '请输入用户Id!',
               }
             ],
-          })(<Input type="text" placeholder="请输入黑名单用户Id" />)}
+          })(<Input placeholder="请输入用户Id!" disabled={paramDisabled}/>)}
         </FormItem>
         <FormItem label="手机号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('mobile', {
             initialValue: item.mobile,
             rules: [
               {
-                required: true,
-                pattern: /^[A-Za-z0-9]{0,}$/,
-                message: '请输入手机号!'
+                required: !paramDisabled,
+                // pattern: /^[0-9]{11}$/,
+                message: '请输入手机号码!'
               }
             ],
-          })(<Input disabled={paramDisabled} />)}
+          })(<Input placeholder="请输入手机号码!" disabled={paramDisabled} />)}
         </FormItem>
         <FormItem label="理由" hasFeedback {...formItemLayout}>
           {getFieldDecorator('note', {
@@ -79,11 +78,11 @@ const modal = ({
             rules: [
               {
                 required: true,
-                message: '备注字数不能超过100!',
+                message: '理由字数不能超过100!',
                 max: 100
               }
             ]
-          })(<TextArea style={{height:'50',width:'100%'}}/>)}
+          })(<TextArea placeholder="请输入设置理由!" style={{height:'50',width:'100%'}}/>)}
         </FormItem>
       </Form>
     </Modal>

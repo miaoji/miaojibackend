@@ -1,10 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-// import { create, update, remove } from '../services/blacklist'
-import * as bootsService from '../services/blacklists'
+import { query, create, update, remove } from '../services/blacklists'
 import { pageModel } from './common'
-
-const { query } = bootsService
 
 export default modelExtend(pageModel, {
   namespace: 'blacklist',
@@ -33,16 +30,15 @@ export default modelExtend(pageModel, {
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       console.log('data',data)
-      
       if (data) {  
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj.obj,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: data.obj.total,
+              total: data.total,
             },
           },
         })
@@ -51,9 +47,10 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       const newblacklist = {
-        param: payload.parameter,
-        name: payload.name,
-        remark: payload.remark
+        idUser: payload.idUser,
+        mobile: payload.mobile,
+        note: payload.note,
+        state: 1
       }
       const data = yield call(create, {state:1,...newblacklist})
       if (data.success && data.code === 200) {
@@ -61,18 +58,18 @@ export default modelExtend(pageModel, {
         message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.mess=="id或手机号已存在"?'您输入的用户ID不存在或者输入的手机号已存在':data.mess || data
       }
     },
 
     *update ({ payload }, { select, call, put }) {
       const id = yield select(({ blacklist }) => blacklist.currentItem.id)
       const newblacklist = {
-        name: payload.name,
-        remark: payload.remark,
+        note: payload.note,
+        state: 1,
         id
       }
-      const data = yield call(update, {state:2,...newblacklist})
+      const data = yield call(update, newblacklist)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -83,12 +80,12 @@ export default modelExtend(pageModel, {
     },
 
     *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
+      const data = yield call(remove, { id: payload, state:2 })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.mess=="id或手机号已存在"?'您输入的idUser不存在或者输入的手机号已存在':data.mess || data
       }
     },
 
