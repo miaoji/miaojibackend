@@ -35,7 +35,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
-      title: '用户ID',
+      title: '站点ID',
       dataIndex: 'idUser',
       key: 'idUser',
     }, {
