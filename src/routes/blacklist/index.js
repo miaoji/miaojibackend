@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Blacklist = ({ location, dispatch, blacklist, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = blacklist
+  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = blacklist
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,6 +18,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
     confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
+    selectSiteName: selectSiteName,
     onOk (data) {
       dispatch({
         type: `blacklist/${modalType}`,
@@ -61,6 +62,9 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
           currentItem: item,
         },
       })
+      dispatch({
+        type: 'blacklist/getSiteName'
+      })
     }
   }
 
@@ -95,6 +99,9 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
         payload: {
           modalType: 'create',
         },
+      })
+      dispatch({
+        type: 'blacklist/getSiteName'
       })
     },
   }

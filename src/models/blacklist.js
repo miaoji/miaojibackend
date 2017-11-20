@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, create, update, remove } from '../services/blacklists'
+import { query, create, update, remove, showSiteName } from '../services/blacklists'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -47,7 +47,7 @@ export default modelExtend(pageModel, {
 
     *create ({ payload }, { call, put }) {
       const newblacklist = {
-        idUser: payload.idUser,
+        idUser: payload.idUser.split('/-/')[1],
         mobile: payload.mobile,
         note: payload.note,
         state: 1
@@ -58,7 +58,7 @@ export default modelExtend(pageModel, {
         message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data.mess=="id或手机号已存在"?'您输入的用户ID不存在或者输入的手机号已存在':data.mess || data
+        throw data.mess=="id或手机号已存在"?'您输入输入的手机号已存在':data.mess || data
       }
     },
 
@@ -66,7 +66,6 @@ export default modelExtend(pageModel, {
       const id = yield select(({ blacklist }) => blacklist.currentItem.id)
       const newblacklist = {
         note: payload.note,
-        state: 1,
         id
       }
       const data = yield call(update, newblacklist)
@@ -89,9 +88,33 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *getSiteName ({}, { call, put }) {
+      const data = yield call(showSiteName)
+      console.log('data', data)
+      if (data.code === 200 && data.obj) {
+        let children = []
+        for (let i= 0; i < data.obj.length; i++) {
+          let item = data.obj[i]
+          children.push(<Option key={item.name+'/-/'+item.idUser}>{item.name}</Option>)
+        }
+        yield put({
+          type: 'setSiteName',
+          payload: {
+            selectSiteName: children
+          }
+        })
+      } else {
+        throw data.mess || '无法跟服务器建立有效连接' 
+      }
+    }
+
   },
 
   reducers: {
+
+    setSiteName (state, { payload }) {
+      return { ...state, ...payload }
+    },
 
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

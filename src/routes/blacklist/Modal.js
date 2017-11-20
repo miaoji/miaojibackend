@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
+import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
 import city from '../../utils/city'
 
 const FormItem = Form.Item
+const Option = Select.Option
 const { TextArea } = Input
 
 const formItemLayout = {
@@ -18,6 +19,7 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  selectSiteName,
   form: {
     getFieldDecorator,
     validateFields,
@@ -55,10 +57,10 @@ const modal = ({
             rules: [
               {
                 required: !paramDisabled,
-                message: '请输入用户Id!',
+                message: '选择站点!',
               }
             ],
-          })(<Input placeholder="请输入用户Id!" disabled={paramDisabled}/>)}
+          })(<Select showSearch disabled={paramDisabled} placeholder='输入站点名称或者IdUser可搜索' defaultValue="" style={{ width: 286 }}>{ selectSiteName }</Select>)}
         </FormItem>
         <FormItem label="手机号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('mobile', {
@@ -66,7 +68,7 @@ const modal = ({
             rules: [
               {
                 required: !paramDisabled,
-                // pattern: /^[0-9]{11}$/,
+                pattern: /^[0-9]{11}$/,
                 message: '请输入手机号码!'
               }
             ],
