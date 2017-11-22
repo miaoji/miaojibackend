@@ -33,9 +33,9 @@ export default {
     *query ({
       payload,
     }, { call, put }) {
-      const token = storage({key: 'token'})
+      const token = storage({ key: 'token' })
       if (token && token.length > 0) {
-        let user = storage({key: 'user'})
+        let user = storage({ key: 'user' })
         user = typeof user === 'string' && JSON.parse(user)
         yield put({
           type: 'querySuccess',
@@ -55,7 +55,7 @@ export default {
     *logout ({
       payload,
     }, { put }) {
-      storage({type: 'clear'})
+      storage({ type: 'clear' })
       yield put({ type: 'query' })
     },
 

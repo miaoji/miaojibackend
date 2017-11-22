@@ -38,8 +38,8 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    console.log('createTime',createTime)
-    if (createTime.length===2) {
+    console.log('createTime', createTime)
+    if (createTime.length === 2) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
@@ -59,7 +59,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({...filter,...fields})
+    onFilterChange({ ...filter, ...fields })
   }
 
   const handleReset = () => {
@@ -91,7 +91,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({...filter,...fields})
+    onFilterChange({ ...filter, ...fields })
   }
 
   const { name, mobile } = filter
@@ -112,7 +112,7 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号码搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 8 }} lg={{ span:8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span:24 }}>
+      <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
             <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}

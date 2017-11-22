@@ -1,4 +1,4 @@
-import { request, config, pageParams, } from '../utils'
+import { request, config, pageParams } from '../utils'
 const { api } = config
 const { withdraws } = api
 
@@ -8,6 +8,6 @@ export async function query (params) {
     url: withdraws,
     method: 'get',
     fetchType: 'CORS',
-    data: params
+    data: params,
   })
 }

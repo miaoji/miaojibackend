@@ -51,16 +51,16 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="用户ID" hasFeedback {...formItemLayout}>
+        <FormItem label="站点名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('idUser', {
             initialValue: item.idUser,
             rules: [
               {
                 required: !paramDisabled,
                 message: '选择站点!',
-              }
+              },
             ],
-          })(<Select showSearch disabled={paramDisabled} placeholder='输入站点名称或者IdUser可搜索' defaultValue="" style={{ width: 286 }}>{ selectSiteName }</Select>)}
+          })(<Select showSearch disabled={paramDisabled} placeholder="输入站点名称或者IdUser可搜索" defaultValue="" style={{ width: 286 }}>{selectSiteName}</Select>)}
         </FormItem>
         <FormItem label="手机号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('mobile', {
@@ -69,8 +69,8 @@ const modal = ({
               {
                 required: !paramDisabled,
                 pattern: /^[0-9]{11}$/,
-                message: '请输入手机号码!'
-              }
+                message: '请输入手机号码!',
+              },
             ],
           })(<Input placeholder="请输入手机号码!" disabled={paramDisabled} />)}
         </FormItem>
@@ -81,10 +81,10 @@ const modal = ({
               {
                 required: true,
                 message: '理由字数不能超过100!',
-                max: 100
-              }
-            ]
-          })(<TextArea placeholder="请输入设置理由!" style={{height:'50',width:'100%'}}/>)}
+                max: 100,
+              },
+            ],
+          })(<TextArea placeholder="请输入设置理由!" style={{ height: '50', width: '100%' }} />)}
         </FormItem>
       </Form>
     </Modal>

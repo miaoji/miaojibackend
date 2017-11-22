@@ -40,7 +40,7 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page,filter) {
+    onChange (page, filter) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -55,7 +55,7 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'consume/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {
@@ -74,9 +74,9 @@ const Consume = ({ location, dispatch, consume, loading }) => {
       })
     },
     onFilterStatus (value) {
-      console.log('index接收的---',value)
-      console.log('...value转换的数据---', {...value})
-      console.log('location',location.pathname)
+      console.log('index接收的---', value)
+      console.log('...value转换的数据---', { ...value })
+      console.log('location', location.pathname)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {

@@ -1,4 +1,4 @@
-import { request, config, pageParams, } from '../utils'
+import { request, config, pageParams } from '../utils'
 const { api } = config
 const { storeusers } = api
 
@@ -7,8 +7,8 @@ export async function query (params) {
   return request({
     url: storeusers,
     method: 'get',
-    fetchType:'CORS',
-    data:params
+    fetchType: 'CORS',
+    data: params,
   })
 }
 

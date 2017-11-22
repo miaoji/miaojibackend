@@ -4,7 +4,7 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 /*
- * @mock data 提现记录 
+ * @mock data 提现记录
  * withdrawPerson 提现人, money 提现金额, accountType 帐号类型, account 帐号
  * time 提现时间, status 提现状态
  */
@@ -18,7 +18,7 @@ let withdrawData = Mock.mock({
       'accountType|0-1': 1,
       account: /^6[34578]\d{9}$/,
       time: '@datetime',
-      'status|0-1': 1
+      'status|0-1': 1,
     },
   ],
 })

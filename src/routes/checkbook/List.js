@@ -27,7 +27,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     {
       title: '主体',
       dataIndex: 'subject',
-      key: 'subject'
+      key: 'subject',
     },
     {
       title: '收入',
@@ -35,52 +35,52 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         title: '派送费',
         dataIndex: 'income.deliveryCharges',
         key: 'deliveryCharges',
-        render: (text) => <span>{'￥' + text}</span>,
+        render: (text) => <span>{`￥${text}`}</span>,
       }, {
         title: '寄件费',
         dataIndex: 'income.SendCharges',
         key: 'SendCharges',
-        render: (text) => <span>{'￥' + text}</span>,
+        render: (text) => <span>{`￥${text}`}</span>,
       }, {
         title: '到付',
         dataIndex: 'income.collectCharges',
         key: 'collectCharges',
-        render: (text) => <span>{'￥' + text}</span>,
+        render: (text) => <span>{`￥${text}`}</span>,
       }, {
         title: '代收',
         dataIndex: 'income.collection',
         key: 'collection',
-        render: (text) => <span>{'￥' + text}</span>,
+        render: (text) => <span>{`￥${text}`}</span>,
       }, {
         title: '其他',
         dataIndex: 'income.others',
         key: 'incomeothers',
-        render: (text) => <span>{'￥' + text}</span>,
-      }]
+        render: (text) => <span>{`￥${text}`}</span>,
+      }],
     }, {
       title: '支出',
       children: [{
         title: '通讯费',
         dataIndex: 'expend.communicateCharges',
         key: 'communicateCharges',
-        render: (text) => <span>{'￥' + text}</span>,
+        render: (text) => <span>{`￥${text}`}</span>,
       }, {
         title: '提现费用',
         dataIndex: 'expend.withdrawCharges',
         key: 'withdrawCharges',
-        render: (text) => <span>{'￥' + text}</span>,
+        render: (text) => <span>{`￥${text}`}</span>,
       }, {
         title: '其他',
         dataIndex: 'expend.others',
         key: 'expendothers',
-        render: (text) => <span>{'￥' + text}</span>,
-      }]
+        render: (text) => <span>{`￥${text}`}</span>,
+      }],
     }, {
       title: '余额',
       dataIndex: 'balance',
       key: 'balance',
-      render: (text) => <span>{'￥' + text}</span>,
-    }
+      render: (text) => <span>{`￥${text}`}</span>,
+    },
   ]
 
   const getBodyWrapperProps = {

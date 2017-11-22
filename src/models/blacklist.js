@@ -9,7 +9,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -29,8 +29,8 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      console.log('data',data)
-      if (data) {  
+      console.log('data', data)
+      if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -50,15 +50,15 @@ export default modelExtend(pageModel, {
         idUser: payload.idUser.split('/-/')[1],
         mobile: payload.mobile,
         note: payload.note,
-        state: 1
+        state: 1,
       }
-      const data = yield call(create, {state:1,...newblacklist})
+      const data = yield call(create, { state: 1, ...newblacklist })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data.mess=="id或手机号已存在"?'您输入输入的手机号已存在':data.mess || data
+        throw data.mess == 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
       }
     },
 
@@ -66,7 +66,7 @@ export default modelExtend(pageModel, {
       const id = yield select(({ blacklist }) => blacklist.currentItem.id)
       const newblacklist = {
         note: payload.note,
-        id
+        id,
       }
       const data = yield call(update, newblacklist)
       if (data.code === 200) {
@@ -79,12 +79,12 @@ export default modelExtend(pageModel, {
     },
 
     *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload, state:2 })
+      const data = yield call(remove, { id: payload, state: 2 })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess=="id或手机号已存在"?'您输入的idUser不存在或者输入的手机号已存在':data.mess || data
+        throw data.mess == 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
       }
     },
 
@@ -93,20 +93,20 @@ export default modelExtend(pageModel, {
       console.log('data', data)
       if (data.code === 200 && data.obj) {
         let children = []
-        for (let i= 0; i < data.obj.length; i++) {
+        for (let i = 0; i < data.obj.length; i++) {
           let item = data.obj[i]
-          children.push(<Option key={item.name+'/-/'+item.idUser}>{item.name}</Option>)
+          children.push(<Option key={`${item.name}/-/${item.idUser}`}>{item.name}</Option>)
         }
         yield put({
           type: 'setSiteName',
           payload: {
-            selectSiteName: children
-          }
+            selectSiteName: children,
+          },
         })
       } else {
-        throw data.mess || '无法跟服务器建立有效连接' 
+        throw data.mess || '无法跟服务器建立有效连接'
       }
-    }
+    },
 
   },
 
@@ -122,7 +122,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

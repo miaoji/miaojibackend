@@ -110,9 +110,9 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
  * @return  {params} Object
  */
 const pageParams = function (params) {
-  params = params ? params : {
+  params = params || {
     pagination: 1,
-    rownum: 10
+    rownum: 10,
   }
   params.pagination = params.page || 1
   params.rownum = params.pageSize || 10
@@ -127,7 +127,7 @@ const pageParams = function (params) {
  * @param  {String}  type   [localStorage的操作方式 get、set、remove、clear]
  * @return {String} res     [localStorage.getItem(key)时返回的值]
  */
-export const storage = function ({key, val, prefix = true, type = 'get'}) {
+export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   let typeCheck = type === 'get'
   if (prefix) {
     key = localPrefix + key

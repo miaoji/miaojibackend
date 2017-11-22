@@ -30,7 +30,7 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'topup/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {

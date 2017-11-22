@@ -67,7 +67,7 @@ const fetch = (options) => {
         url,
         method: 'post',
         params,
-        data: cloneData
+        data: cloneData,
       })
     case 'put':
       return axios.put(url, cloneData)

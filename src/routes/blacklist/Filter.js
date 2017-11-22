@@ -35,8 +35,8 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    console.log('createTime',createTime)
-    if (createTime.length===2) {
+    console.log('createTime', createTime)
+    if (createTime.length === 2) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
@@ -56,7 +56,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({...filter,...fields})
+    onFilterChange({ ...filter, ...fields })
   }
 
   const handleReset = () => {
@@ -88,7 +88,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({...filter,...fields})
+    onFilterChange({ ...filter, ...fields })
   }
 
   const { name, mobile } = filter
@@ -104,15 +104,18 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 8 }} lg={{ span:8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span:24 }}>
+      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
+      </Col>
+      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
             <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>

@@ -3,7 +3,7 @@ import modelExtend from 'dva-model-extend'
 import { query } from '../services/consumes'
 import { pageModel } from './common'
 import { config } from '../utils'
-import { gettimes } from '../utils/time' //转换时间戳的函数
+import { gettimes } from '../utils/time' // 转换时间戳的函数
 
 const { prefix } = config
 
@@ -21,7 +21,6 @@ export default modelExtend(pageModel, {
   subscriptions: {
 
     setup ({ dispatch, history }) {
-
       history.listen(location => {
         if (location.pathname === '/consume') {
           dispatch({
@@ -36,20 +35,20 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      console.log('提交请求的数据---',payload)
+      console.log('提交请求的数据---', payload)
       // 转换提交的交易类型的数据
-      if (typeof(payload.transactionType)==='string') {
+      if (typeof(payload.transactionType) === 'string') {
         payload.transactionType = [payload.transactionType]
       }
       // 转换提交的订单状态的数据
-      if (typeof(payload.status)==='string') {
+      if (typeof(payload.status) === 'string') {
         payload.status = [payload.status]
       }
       // 转换提交的支付方式的数据
-      if (typeof(payload.paymentMethod)==='string') {
+      if (typeof(payload.paymentMethod) === 'string') {
         payload.paymentMethod = [payload.paymentMethod]
       }
-      console.log('payload111111',payload)
+      console.log('payload111111', payload)
       // return
       let data = yield call(query, payload)
       if (data.code === 200) {

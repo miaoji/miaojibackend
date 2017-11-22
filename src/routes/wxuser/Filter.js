@@ -102,7 +102,7 @@ const Filter = ({
             onChange={handleChange.bind(null, 'address')}
           />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 8 }} lg={{ span:8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span:24 }}>
+      <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
             <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}

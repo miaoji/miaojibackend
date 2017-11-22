@@ -61,7 +61,7 @@ const Qr = ({ location, dispatch, qr, loading }) => {
           currentItem: item,
         },
       })
-    }
+    },
   }
 
   const filterProps = {

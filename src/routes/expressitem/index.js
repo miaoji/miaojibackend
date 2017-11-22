@@ -26,7 +26,7 @@ const Expressitem = ({ location, dispatch, expressitem, loading }) => {
           pageSize: page.pageSize,
         },
       }))
-    }
+    },
   }
 
   const filterProps = {

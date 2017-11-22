@@ -8,7 +8,7 @@ export default {
 
   state: {
     user: {},
-    data: {}
+    data: {},
   },
 
   subscriptions: {
@@ -22,7 +22,7 @@ export default {
           // console.log('usermobile', usermobile)
           if (userId) {
             dispatch({ type: 'query', payload: { userId } })
-            dispatch({ type: 'setUser', payload: { user: { username,usermobile } } })
+            dispatch({ type: 'setUser', payload: { user: { username, usermobile } } })
           }
         }
       })
@@ -36,7 +36,7 @@ export default {
       const data = yield call(query, payload)
       const { success, message, status, ...other } = data
       delete other.obj.userId
-      console.log("other.obj",other.obj)
+      console.log('other.obj', other.obj)
       if (success) {
         yield put({
           type: 'querySuccess',
@@ -45,9 +45,9 @@ export default {
           },
         })
       } else {
-        throw data.mess||'网络不行了!!!'
+        throw data.mess || '网络不行了!!!'
       }
-    }
+    },
   },
 
   reducers: {
@@ -63,9 +63,9 @@ export default {
       const { user } = payload
       return {
         ...state,
-        user
+        user,
       }
-    }
+    },
 
-  }
+  },
 }

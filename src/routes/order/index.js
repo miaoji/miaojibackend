@@ -51,7 +51,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'storeUser/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {

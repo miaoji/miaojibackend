@@ -55,8 +55,8 @@ const modal = ({
               {
                 required: true,
                 message: '请输入门店名!',
-                max: 100
-              }
+                max: 100,
+              },
             ],
           })(<Input type="text" placeholder="请输入门店名" />)}
         </FormItem>
@@ -67,8 +67,8 @@ const modal = ({
               {
                 required: true,
                 pattern: /^[A-Za-z0-9]{0,}$/,
-                message: '请输入二维码参数!'
-              }
+                message: '请输入二维码参数!',
+              },
             ],
           })(<Input disabled={paramDisabled} />)}
         </FormItem>
@@ -79,9 +79,9 @@ const modal = ({
               {
                 required: false,
                 message: '备注字数不能超过100!',
-                max: 100
-              }
-            ]
+                max: 100,
+              },
+            ],
           })(<Input />)}
         </FormItem>
       </Form>

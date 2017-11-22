@@ -20,7 +20,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           title: '确定要删除吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -29,7 +29,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://miaoji.didalive.net/qrdetail?ticket=' + record.ticket + '&name=' + record.name + '&parameter=' + record.parameter
+    const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
     window.prompt('请使用Ctrl+C复制到剪切板', href)
   }
 
@@ -39,27 +39,31 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'idUser',
       key: 'idUser',
     }, {
-      title: '手机',
+      title: '站点名称',
+      dataIndex: 'name',
+      key: 'name',
+    }, {
+      title: '黑名单手机号',
       dataIndex: 'mobile',
       key: 'mobile',
-    },{
+    }, {
       title: '理由',
       dataIndex: 'note',
       key: 'note',
-    },{
+    }, {
       title: '时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
         const createTime = time.formatTime(text.toString())
         return <span>{createTime}</span>
-      }
-    },{
+      },
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' },{ key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -75,7 +79,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true})}
+        className={classnames({ [styles.table]: true })}
         bordered
         scroll={{ x: 1250 }}
         columns={columns}

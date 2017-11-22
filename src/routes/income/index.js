@@ -30,7 +30,7 @@ const Income = ({ location, dispatch, income, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'income/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {

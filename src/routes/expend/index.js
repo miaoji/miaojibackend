@@ -30,7 +30,7 @@ const Expend = ({ location, dispatch, expend, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'expend/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {

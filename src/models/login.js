@@ -21,16 +21,16 @@ export default {
         storage({
           key: 'token',
           val: data.obj[0].userId,
-          type: 'set'
+          type: 'set',
         })
-        let userList={}
-        userList.trueName=data.obj[0].accounts
-        userList.userId=data.obj[0].userId
-        userList.userName=data.obj[0].name
+        let userList = {}
+        userList.trueName = data.obj[0].accounts
+        userList.userId = data.obj[0].userId
+        userList.userName = data.obj[0].name
         storage({
           key: 'user',
           val: JSON.stringify(userList),
-          type: 'set'
+          type: 'set',
         })
         const from = queryURL('from')
         yield put({ type: 'app/query' })

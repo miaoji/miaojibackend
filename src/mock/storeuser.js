@@ -8,8 +8,8 @@ const { apiPrefix } = config
  * accounts 帐号/手机号, name 经营人姓名, storename 店铺名称, level 店铺级别(0 = 门店主帐号/ 1 = 门店子帐号)
  * status 状态( 1 =启用/ 0 = 禁用), createTime 注册时间, blacklist 黑名单 (0 是黑名单 1 不是), pwd app登录密码
  * detail 详情：info 用户列表中信息, address 地址(省、市、区),
- *              superior 所属上级, officehours 营业时间, consultPhone 咨询电话, 
- *              applicantIDCardNum 申请人身份证号, businessLicenseImg 营业执照照片, 
+ *              superior 所属上级, officehours 营业时间, consultPhone 咨询电话,
+ *              applicantIDCardNum 申请人身份证号, businessLicenseImg 营业执照照片,
  *              doorImg 门头照片, serviceBarImg 服务台照片, shelfImg 货架照片
  */
 

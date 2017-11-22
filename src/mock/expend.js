@@ -126,7 +126,7 @@ let checkbookData = Mock.mock({
         '青岛德顺诚药业连锁有限公司中岔河药店',
         '青岛德顺诚药业连锁有限公司第六十六分店',
         '青岛德顺诚药业连锁有限公司第六十九分店',
-                    ],
+      ],
 //    income: {
 //      'deliveryCharges|0-999': 1,
 //      'SendCharges|0-999': 1,
@@ -135,12 +135,12 @@ let checkbookData = Mock.mock({
 //      'others|0-999': 1,
 //    },
 //    expend: {
-        'communicateCharges|0-999': 1,
-        'withdrawCharges|0-999': 1,
-        'others|0-999': 1,
+      'communicateCharges|0-999': 1,
+      'withdrawCharges|0-999': 1,
+      'others|0-999': 1,
 //    },
       'balance|0-999': 1,
-      createTime: '@datetime'
+      createTime: '@datetime',
     },
   ],
 })

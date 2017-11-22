@@ -26,7 +26,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
 
   const handleUserClick = (record, e) => {
     const str = record.mobile.toString()
-    let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
+    let encryptNum = `${str.substr(0, 5)}****${str.substr(9, 10)}`
     window.open(`/wxuserdetail?userId=${record.userId}&username=${record.name}&usermobile=${encryptNum}`)
   }
 
@@ -37,56 +37,56 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       key: 'name',
       width: 64,
       render: (text, record) => {
-       return <Button type="primary" size="default" ghost onClick={e => handleUserClick(record, e)}>{text}</Button>
-      }
+        return <Button type="primary" size="default" ghost onClick={e => handleUserClick(record, e)}>{text}</Button>
+      },
     }, {
       title: '手机',
       dataIndex: 'mobile',
       key: 'mobile',
       render: (text) => {
         const str = text.toString()
-        let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
+        let encryptNum = `${str.substr(0, 5)}****${str.substr(9, 10)}`
         return <span>{encryptNum}</span>
-      }
-    }, 
-     /*{
+      },
+    },
+     /* {
        title: '地理所属店铺',
        dataIndex: 'belongStore',
        key: 'belongStore',
        render:(text)=><span>{text?text:"暂无"}</span>
-     },*/ 
-     {
+     },*/
+    {
       title: '创建时间',
       dataIndex: 'subscribeTime',
       key: 'subscribeTime',
-      render: (text)=>{
+      render: (text) => {
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
-      }
-    },{
+      },
+    }, {
       title: '消费金额',
       dataIndex: 'price',
       key: 'price',
-      render: (text)=>{
+      render: (text) => {
         return <span>{text}</span>
-      }
+      },
     }, {
       title: '关注状态',
       dataIndex: 'subscribe',
       key: 'subscribe',
       filters: [
         { text: '关注', value: '1' },
-        { text: '取消关注', value: '0' }
+        { text: '取消关注', value: '0' },
       ],
       onFilter: (value, record) => Number(record.subscribe) === Number(value),
       render: (text) => {
         const realtext = {
-          '0': '取消关注',
-          '1': '关注',
+          0: '取消关注',
+          1: '关注',
         }
         return <span>{realtext[text]}</span>
-      }
-    },/*{
+      },
+    }, /*{
       title: '是否黑名单',
       dataIndex: 'blacklist',
       key: 'blacklist',

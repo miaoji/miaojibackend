@@ -51,7 +51,7 @@ const Message = ({ location, dispatch, message, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'message/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {

@@ -17,7 +17,7 @@ module.exports = [
     bpid: 2,
     mpid: -1,
     name: '寄件收件信息',
-    router: '/wxuserdetail'
+    router: '/wxuserdetail',
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ module.exports = [
     id: 4,
     bpid: 1,
     name: '数据统计',
-    icon: 'eye-o'
+    icon: 'eye-o',
   },
   {
     id: 41,
@@ -70,28 +70,28 @@ module.exports = [
     icon: 'tag',
     name: '普通件',
     router: '/normal',
-  },{
+  }, {
     id: 45,
     bpid: 4,
     mpid: 41,
     icon: 'tag-o',
     name: '到付件',
     router: '/collect',
-  },{
+  }, {
     id: 46,
     bpid: 4,
     mpid: 41,
     icon: 'tags',
     name: '代收件',
     router: '/collection',
-  },{
+  }, {
     id: 47,
     bpid: 4,
     mpid: 42,
     icon: 'download',
     name: '收入',
     router: '/income',
-  },{
+  }, {
     id: 48,
     bpid: 4,
     mpid: 42,
@@ -104,13 +104,13 @@ module.exports = [
     mpid: -1,
     bpid: 5,
     name: '消息详细',
-    router: '/message/:id'
+    router: '/message/:id',
   },
   {
     id: 6,
     bpid: 1,
     name: '钱包管理',
-    icon: 'wallet'
+    icon: 'wallet',
   },
   {
     id: 61,
@@ -128,7 +128,7 @@ module.exports = [
     name: '提现记录',
     router: '/withdraws',
   },
-  /*{
+  /* {
     id: 63,
     bpid: 6,
     mpid: 6,
@@ -154,7 +154,7 @@ module.exports = [
     mpid: -1,
     name: '二维码图片',
     router: '/qrdetail',
-  },{
+  }, {
     id: 9,
     bpid: 1,
     name: '充值消费',
@@ -166,5 +166,5 @@ module.exports = [
     name: '黑名单',
     icon: 'user-delete',
     router: '/blacklist',
-  }, 
+  },
 ]

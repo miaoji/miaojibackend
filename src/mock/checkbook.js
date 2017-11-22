@@ -28,7 +28,7 @@ let checkbookData = Mock.mock({
         'others|0-999': 1,
       },
       'balance|0-999': 1,
-      createTime: '@datetime'
+      createTime: '@datetime',
     },
   ],
 })

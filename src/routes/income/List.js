@@ -27,33 +27,33 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     {
       title: '主体',
       dataIndex: 'name',
-      key: 'subject'
-    },{
-        title: '派送费',
-        dataIndex: 'deliveryAmount',
-        key: 'deliveryCharges',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '寄件费',
-        dataIndex: 'sendTheAmount',
-        key: 'SendCharges',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '到付',
-        dataIndex: 'toPay',
-        key: 'collectCharges',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '代收',
-        dataIndex: 'collection',
-        key: 'collection',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '其他',
-        dataIndex: 'otheramount',
-        key: 'incomeothers',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, 
+      key: 'subject',
+    }, {
+      title: '派送费',
+      dataIndex: 'deliveryAmount',
+      key: 'deliveryCharges',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '寄件费',
+      dataIndex: 'sendTheAmount',
+      key: 'SendCharges',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '到付',
+      dataIndex: 'toPay',
+      key: 'collectCharges',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '代收',
+      dataIndex: 'collection',
+      key: 'collection',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '其他',
+      dataIndex: 'otheramount',
+      key: 'incomeothers',
+      render: (text) => <span>{`￥${text}`}</span>,
+    },
 //    {
 //    title: '余额',
 //    dataIndex: 'balance',

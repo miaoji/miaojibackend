@@ -4,7 +4,7 @@ const { apiPrefix } = config
 
 /*
  * @mock data
- * title 消息标题, content 消息内容, image 图片, type 消息类型 (0 = 短信/1 = 微信), status 消息状态( true =启用/ false = 禁用), 
+ * title 消息标题, content 消息内容, image 图片, type 消息类型 (0 = 短信/1 = 微信), status 消息状态( true =启用/ false = 禁用),
  * createTime 发布时间, people 消息受众
  */
 

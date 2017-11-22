@@ -6,7 +6,7 @@ const { apiPrefix } = config
  * @mock data
  * subject 主体;
  * noteCount 短信数, noteMoney 短信金额, voiceCount 语音数量, voiceMoney 语音通知金额, wxCount 微信通知数量,
- * callCount 直拨电话数量, callTime 直拨时长, callMoney 直拨电话金额, callbackCount 回拨次数, 
+ * callCount 直拨电话数量, callTime 直拨时长, callMoney 直拨电话金额, callbackCount 回拨次数,
  * callbackMoney 回拨金额, callbackTime 回拨时长, totalMoney 总金额
  */
 
@@ -27,7 +27,7 @@ let communicationData = Mock.mock({
       'callbackMoney|0-999': 1,
       'callbackTime|0-999': 1,
       'totalMoney|0-999': 1,
-      createTime: '@datetime'
+      createTime: '@datetime',
     },
   ],
 })

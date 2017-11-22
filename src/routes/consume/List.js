@@ -14,28 +14,28 @@ const realStatus = {
   success: '成功',
   wait: '等待',
   cancel: '交易取消',
-  close: '交易关闭'
+  close: '交易关闭',
 }
 const realTransactionType = {
-  '1': '活动奖励',
-  '2': '红包',
-  '3': '快递费',
-  '4': '购买通讯费',
-  '5': '提现',
-  '6': '赠送通讯费',
-  '7': '寄件费',
-  '8': '代收货费',
-  '9': '到付费',
-  '10': '派件费',
-  '11': '保价费',
-  '12': '购买余额',
-  '13': '寄件付款'
+  1: '活动奖励',
+  2: '红包',
+  3: '快递费',
+  4: '购买通讯费',
+  5: '提现',
+  6: '赠送通讯费',
+  7: '寄件费',
+  8: '代收货费',
+  9: '到付费',
+  10: '派件费',
+  11: '保价费',
+  12: '购买余额',
+  13: '寄件付款',
 }
 const realPaymentMethod = {
-  '1': '支付宝支付',
-  '2': '微信支付',
-  '3': '余额支付',
-  '4': '线下现金支付'
+  1: '支付宝支付',
+  2: '微信支付',
+  3: '余额支付',
+  4: '线下现金支付',
 }
 
 const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
@@ -57,16 +57,16 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
       title: '名称',
       dataIndex: 'name',
       key: 'name',
-      render: (text)=>{
-        return <span>{ text?text:'暂无' }</span>
-      }
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      },
     }, {
       title: '手机',
       dataIndex: 'mobile',
       key: 'mobile',
-      render: (text)=>{
-        return <span>{ text?text:'暂无' }</span>
-      }
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      },
     }, {
       title: '交易号',
       dataIndex: 'transactionNumber',
@@ -86,8 +86,8 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
         { text: '寄件付款', value: '13' },
       ],
       render: (text) => {
-        return <span>{ realTransactionType[text] }</span>
-      }
+        return <span>{realTransactionType[text]}</span>
+      },
     }, {
       title: '交易金额',
       dataIndex: 'transactionAmount',
@@ -102,10 +102,10 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
         { text: '交易取消', value: 'cancel' },
         { text: '交易关闭', value: 'close' },
       ],
-      render: (text)=>{
-        return <span>{ realStatus[text] }</span>
-      }
-    },{
+      render: (text) => {
+        return <span>{realStatus[text]}</span>
+      },
+    }, {
       title: '支付方式',
       dataIndex: 'paymentMethod',
       key: 'paymentMethod',
@@ -116,17 +116,17 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
         { text: '线下现金支付', value: '4' },
       ],
       render: (text) => {
-        return <span>{ realPaymentMethod[text] }</span>
-      }
-    },{
+        return <span>{realPaymentMethod[text]}</span>
+      },
+    }, {
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',
-      render: (text)=>{
+      render: (text) => {
         const createTime = time.formatTime(text)
-        return <span>{ createTime }</span>
-      }
-    }
+        return <span>{createTime}</span>
+      },
+    },
   ]
 
   const getBodyWrapperProps = {

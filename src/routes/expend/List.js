@@ -28,23 +28,23 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '主体',
       dataIndex: 'name',
       key: 'name',
-      render:(text)=><span>{text?text:"空"}</span>,
-    },{
-        title: '通讯费',
-        dataIndex: 'communicate',
-        key: 'communicate',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '提现费用',
-        dataIndex: 'withdrawalAmount',
-        key: 'withdrawalAmount',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '其他',
-        dataIndex: 'otheramount',
-        key: 'otheramount',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, 
+      render: (text) => <span>{text || '空'}</span>,
+    }, {
+      title: '通讯费',
+      dataIndex: 'communicate',
+      key: 'communicate',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '提现费用',
+      dataIndex: 'withdrawalAmount',
+      key: 'withdrawalAmount',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '其他',
+      dataIndex: 'otheramount',
+      key: 'otheramount',
+      render: (text) => <span>{`￥${text}`}</span>,
+    },
     //   {
     //   title: '余额',
     //   dataIndex: 'balance',

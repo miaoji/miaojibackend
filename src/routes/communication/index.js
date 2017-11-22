@@ -30,7 +30,7 @@ const Communication = ({ location, dispatch, communication, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'communication/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {

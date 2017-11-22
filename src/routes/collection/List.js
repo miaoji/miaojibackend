@@ -10,28 +10,27 @@ import { Link } from 'dva/router'
 const confirm = Modal.confirm
 
 const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
-
   const columns = [{
-      title: '主体',
-      dataIndex: 'name',
-      key: 'subject'
-    },{
-        title: '上架数',
-        dataIndex: 'numberOfShelves',
-        key: 'collectionstoresNum'
-      }, {
-        title: '签收数',
-        dataIndex: 'numberOfReceipts',
-        key: 'collectionsignNum'
-      }, {
-        title: '退回数',
-        dataIndex: 'numberOfItemsReturned',
-        key: 'collectionbackNum'
-      }, {
-        title: '问题件数',
-        dataIndex: 'numberOfQuestions',
-        key: 'collectionerrNum'
-      }]
+    title: '主体',
+    dataIndex: 'name',
+    key: 'subject',
+  }, {
+    title: '上架数',
+    dataIndex: 'numberOfShelves',
+    key: 'collectionstoresNum',
+  }, {
+    title: '签收数',
+    dataIndex: 'numberOfReceipts',
+    key: 'collectionsignNum',
+  }, {
+    title: '退回数',
+    dataIndex: 'numberOfItemsReturned',
+    key: 'collectionbackNum',
+  }, {
+    title: '问题件数',
+    dataIndex: 'numberOfQuestions',
+    key: 'collectionerrNum',
+  }]
 
   const getBodyWrapperProps = {
     page: location.query.page,

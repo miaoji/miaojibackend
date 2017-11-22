@@ -13,7 +13,7 @@ export async function create (params) {
   return request({
     url: qr.create,
     method: 'post',
-    params
+    params,
   })
 }
 

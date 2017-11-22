@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Menu, Dropdown} from 'antd'
+import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Menu, Dropdown } from 'antd'
 import city from '../../utils/city'
 import { itme } from '../../utils'
 

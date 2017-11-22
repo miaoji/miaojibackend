@@ -29,7 +29,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '帐号',
       dataIndex: 'mobile',
       key: 'mobile',
-    }, /*{
+    }, /* {
       title: '经营者姓名',
       dataIndex: 'null',
       key: 'null',
@@ -51,16 +51,16 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'isdelete',
       render: (text) => <span>{text === 0
             ? '禁用'
-            : '启用'}</span>
+            : '启用'}</span>,
     }, {
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',
-      render:(text)=>{
+      render: (text) => {
         const createtime = time.formatTime(text)
         return <span>{createtime}</span>
-      }
-    }, 
+      },
+    },
     // {
     //   title: '是否黑名单',
     //   dataIndex: 'blacklist',
@@ -78,7 +78,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     //     const newtext = text?text:0
     //     return <span>{realtext[newtext]}</span>
     //   }
-    // }, 
+    // },
     // {
     //   title: '操作',
     //   key: 'operation',

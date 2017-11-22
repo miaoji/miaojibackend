@@ -26,7 +26,7 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
           pageSize: page.pageSize,
         },
       }))
-    }
+    },
   }
 
   const filterProps = {
@@ -54,7 +54,7 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
       })) : dispatch(routerRedux.push({
         pathname: '/withdraw',
       }))
-    }
+    },
   }
 
   const handleDeleteItems = () => {

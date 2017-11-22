@@ -3,7 +3,7 @@ import { create, remove, update, markBlack } from '../services/order'
 import * as ordersService from '../services/orders'
 import { pageModel } from './common'
 import { config } from '../utils'
-import { gettimes } from '../utils/time' //转换时间戳的函数
+import { gettimes } from '../utils/time' // 转换时间戳的函数
 
 const { query } = ordersService
 const { prefix } = config
@@ -22,7 +22,6 @@ export default modelExtend(pageModel, {
   subscriptions: {
 
     setup ({ dispatch, history }) {
-
       history.listen(location => {
         if (location.pathname === '/order') {
           dispatch({

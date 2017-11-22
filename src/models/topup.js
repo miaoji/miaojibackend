@@ -19,7 +19,6 @@ export default modelExtend(pageModel, {
   subscriptions: {
 
     setup ({ dispatch, history }) {
-
       history.listen(location => {
         if (location.pathname === '/topups') {
         	// let query = location.query
@@ -27,7 +26,7 @@ export default modelExtend(pageModel, {
          //    query = {
          //      pagination: 1,
          //      rownum: 10
-         //    } 
+         //    }
          //  }
           dispatch({
             type: 'query',
@@ -42,20 +41,20 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       let data = yield call(query, payload)
-      
+
       if (data.code === 200) {
     //   	delete data.success
     //   	delete data.message
     //   	delete data.statusCode
     //   	let list = []
-				// gettimes('createtime',data) //将13位的时间戳转换成常见时间格式    		
+				// gettimes('createtime',data) //将13位的时间戳转换成常见时间格式
     //   	for (let item in data) {
     //   		list.push(data[item])
     //   	}
     //   	Object.keys(data).forEach(key => {
     //   		list.push(data[key])
     //   	})
-      	
+
         yield put({
           type: 'querySuccess',
           payload: {

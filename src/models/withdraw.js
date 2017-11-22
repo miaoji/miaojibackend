@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import * as withdrawsService from '../services/withdraws'
 import { pageModel } from './common'
 import { config } from '../utils'
-import { gettimes } from "../utils/time"
+import { gettimes } from '../utils/time'
 
 const { query } = withdrawsService
 const { prefix } = config
@@ -19,7 +19,6 @@ export default modelExtend(pageModel, {
   subscriptions: {
 
     setup ({ dispatch, history }) {
-
       history.listen(location => {
         if (location.pathname === '/withdraws') {
           dispatch({

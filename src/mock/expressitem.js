@@ -34,7 +34,7 @@ let expressitemData = Mock.mock({
         'backNum|0-999': 1,
         'errNum|0-999': 1,
       },
-      createTime: '@datetime'
+      createTime: '@datetime',
     },
   ],
 })

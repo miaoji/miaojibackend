@@ -21,7 +21,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           title: '确定要删除吗?',
           onOk () {
             onDeleteItem(record.id)
-          }
+          },
         })
         break
       default:
@@ -30,7 +30,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record, e) => {
-    const href = 'http://miaoji.didalive.net/qrdetail?ticket=' + record.ticket + '&name=' + record.name + '&parameter=' + record.parameter
+    const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
     window.prompt('请使用Ctrl+C复制到剪切板', href)
   }
 
@@ -47,33 +47,33 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '二维码参数',
       dataIndex: 'parameter',
       key: 'parameter',
-    },{
+    }, {
       title: '二维码图片',
       dataIndex: 'ticket',
       key: 'ticket',
       render: (text, record) => {
-        const href = '/qrdetail?ticket=' + text + '&name=' + record.name + '&parameter=' + record.parameter + '&remark=' + record.remark
+        const href = `/qrdetail?ticket=${text}&name=${record.name}&parameter=${record.parameter}&remark=${record.remark}`
         return <a href={href} target="_blank">点击查看</a>
-      }
-    },{
+      },
+    }, {
       title: '复制图片路径',
       key: 'copy',
       render: (text, record) => {
         return <Button type="primary" size="large" onClick={e => copyUrl(record, e)}>复制到剪切板</Button>
       },
-    },{
+    }, {
       title: '备注',
       dataIndex: 'remark',
-      key: 'remark'
-    },{
+      key: 'remark',
+    }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
         const createTime = time.formatTime(text.toString())
         return <span>{createTime}</span>
-      }
-    },{
+      },
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,
@@ -94,7 +94,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true})}
+        className={classnames({ [styles.table]: true })}
         bordered
         scroll={{ x: 1250 }}
         columns={columns}

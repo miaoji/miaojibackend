@@ -11,51 +11,50 @@ import { time } from '../../../utils'
 const confirm = Modal.confirm
 
 const List = ({ isMotion, location, ...tableProps }) => {
-  
   const columns = [
     {
       title: '提现人',
       dataIndex: 'name',
       key: 'name',
-      render:(text)=><span>{text?text:"空"}</span>,
+      render: (text) => <span>{text || '空'}</span>,
     }, {
       title: '提现金额',
       dataIndex: 'price',
       key: 'price',
       render: (text) => <span>￥{text}</span>,
-    },{
+    }, {
       title: '帐号类型',
       dataIndex: 'accountType',
       key: 'accountType',
       render: (text) => <span>{text === 0
              ? '门店主账号'
              : '门店子帐号'}</span>,
-    },{
+    }, {
       title: '帐号',
       dataIndex: 'alipayaccount',
       key: 'alipayaccount',
-      render:(text)=><span>{text?text:"空"}</span>,
+      render: (text) => <span>{text || '空'}</span>,
     }, {
       title: '提现时间',
       dataIndex: 'createtime',
       key: 'createtime',
       render: (text) => {
-        const createtime =time.formatTime(text)
+        const createtime = time.formatTime(text)
         return <span>{createtime}</span>
-      }
+      },
     }, {
       title: '提现状态',
       dataIndex: 'status',
       key: 'status',
       filters: [
         { text: '失败', value: '0' },
-        { text: '成功', value: '1' }
+        { text: '成功', value: '1' },
       ],
       onFilter: (value, record) => record.status === value,
       render: (text) => <span>{text === 0
             ? '失败'
             : '成功'}</span>,
-    }, 
+    },
   ]
 
   const getBodyWrapperProps = {

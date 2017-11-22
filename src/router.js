@@ -101,7 +101,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/communication/'))
             }, 'communication')
           },
-        }, 
+        },
         {
           path: 'income',
           getComponent (nextState, cb) {
@@ -109,7 +109,7 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/income'))
               cb(null, require('./routes/income'))
             }, 'income')
-          }
+          },
         },
         {
           path: 'expend',
@@ -118,7 +118,7 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/expend'))
               cb(null, require('./routes/expend'))
             }, 'expend')
-          }
+          },
         },
         {
           path: 'normal',
@@ -127,8 +127,8 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/normal'))
               cb(null, require('./routes/normal'))
             }, 'normal')
-          }
-        }, 
+          },
+        },
         {
           path: 'collect',
           getComponent (nextState, cb) {
@@ -136,8 +136,8 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/collect'))
               cb(null, require('./routes/collect'))
             }, 'collect')
-          }
-        }, 
+          },
+        },
         {
           path: 'collection',
           getComponent (nextState, cb) {
@@ -145,8 +145,8 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/collection'))
               cb(null, require('./routes/collection'))
             }, 'collection')
-          }
-        }, 
+          },
+        },
         {
           path: 'topups',
           getComponent (nextState, cb) {
@@ -154,7 +154,7 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/topup'))
               cb(null, require('./routes/wallet/topup'))
             }, 'topups')
-          }
+          },
         }, {
           path: 'withdraws',
           getComponent (nextState, cb) {
@@ -162,23 +162,23 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/withdraw'))
               cb(null, require('./routes/wallet/withdraw'))
             }, 'withdraws')
-          }
+          },
         }, {
           path: 'order',
           getComponent (nextState, cb) {
             require.ensure([], require => {
-              registerModel(app , require('./models/order'))
+              registerModel(app, require('./models/order'))
               cb(null, require('./routes/order/'))
             }, 'order')
-          }
+          },
         }, {
           path: 'consume',
           getComponent (nextState, cb) {
             require.ensure([], require => {
-              registerModel(app , require('./models/consume'))
+              registerModel(app, require('./models/consume'))
               cb(null, require('./routes/consume/'))
             }, 'consume')
-          }
+          },
         }, {
           path: 'qr',
           getComponent (nextState, cb) {
@@ -186,16 +186,16 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/qr'))
               cb(null, require('./routes/qr/'))
             }, 'qr')
-          }
-        },{
+          },
+        }, {
           path: 'qrdetail',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/qr/detail'))
               cb(null, require('./routes/qr/detail'))
             }, 'qr-detail')
-          }
-        },{
+          },
+        }, {
           path: 'login',
           getComponent (nextState, cb) {
             require.ensure([], require => {
@@ -210,7 +210,7 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/blacklist'))
               cb(null, require('./routes/blacklist/'))
             }, 'blacklist')
-          }
+          },
         }, {
           path: '*',
           getComponent (nextState, cb) {

@@ -26,7 +26,7 @@ const Collection = ({ location, dispatch, collection, loading }) => {
           pageSize: page.pageSize,
         },
       }))
-    }
+    },
   }
 
   const filterProps = {

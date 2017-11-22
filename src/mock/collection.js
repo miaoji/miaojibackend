@@ -126,14 +126,14 @@ let expressitemData = Mock.mock({
         '青岛德顺诚药业连锁有限公司中岔河药店',
         '青岛德顺诚药业连锁有限公司第六十六分店',
         '青岛德顺诚药业连锁有限公司第六十九分店',
-                    ],
+      ],
 //    collection: {
-        'storesNum|0-999': 1,
-        'signNum|0-999': 1,
-        'backNum|0-30': 1,
-        'errNum|5-20': 1,
+      'storesNum|0-999': 1,
+      'signNum|0-999': 1,
+      'backNum|0-30': 1,
+      'errNum|5-20': 1,
 //    },
-      createTime: '@datetime'
+      createTime: '@datetime',
     },
   ],
 })

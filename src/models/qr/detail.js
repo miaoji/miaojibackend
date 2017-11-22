@@ -9,7 +9,7 @@ export default {
     name: '',
     ticket: '',
     parameter: '',
-    remark: ''
+    remark: '',
   },
 
   subscriptions: {
@@ -20,12 +20,12 @@ export default {
           const ticket = queryURL('ticket')
           const parameter = queryURL('parameter')
           const remark = queryURL('remark')
-          dispatch({ type: 'querySuccess', payload: { 
+          dispatch({ type: 'querySuccess', payload: {
             name,
             ticket,
             parameter,
-            remark
-          }})
+            remark,
+          } })
         }
       })
     },

@@ -12,7 +12,7 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -32,8 +32,8 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      console.log('dadfafa',data)
-      if (data) {  
+      console.log('dadfafa', data)
+      if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -52,7 +52,7 @@ export default modelExtend(pageModel, {
       const newQr = {
         param: payload.parameter,
         name: payload.name,
-        remark: payload.remark
+        remark: payload.remark,
       }
       const data = yield call(create, newQr)
       if (data.success && data.code === 200) {
@@ -69,7 +69,7 @@ export default modelExtend(pageModel, {
       const newQr = {
         name: payload.name,
         remark: payload.remark,
-        id
+        id,
       }
       const data = yield call(update, newQr)
       if (data.code === 200) {
@@ -101,7 +101,7 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    }
+    },
 
   },
 })

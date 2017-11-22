@@ -18,7 +18,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
     confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
-    selectSiteName: selectSiteName,
+    selectSiteName,
     onOk (data) {
       dispatch({
         type: `blacklist/${modalType}`,
@@ -63,9 +63,9 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
         },
       })
       dispatch({
-        type: 'blacklist/getSiteName'
+        type: 'blacklist/getSiteName',
       })
-    }
+    },
   }
 
   const filterProps = {
@@ -101,7 +101,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
         },
       })
       dispatch({
-        type: 'blacklist/getSiteName'
+        type: 'blacklist/getSiteName',
       })
     },
   }

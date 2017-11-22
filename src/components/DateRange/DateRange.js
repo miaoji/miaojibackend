@@ -1,37 +1,32 @@
+import React from 'react'
 import { DatePicker, Form } from 'antd'
+import PropTypes from 'prop-types'
 
 class DateRange extends React.Component {
-  constructor(props){
+  constructor (props) {
     super(props)
     this.state = {
       startValue: props.startValue,
       endValue: props.endValue,
       endOpen: false,
-      size:props.size
+      size: props.size,
     }
   }
-  componentWillReceiveProps(props){
-    if (props.value.length != 2) {
+  componentWillReceiveProps (props) {
+    if (props.value.length !== 2) {
       this.setState({
-        startValue:null,
-        endValue:null
+        startValue: null,
+        endValue: null,
       })
     }
   }
-  disabledStartDate = (startValue) => {
-    const endValue = this.state.endValue;
-    if (!startValue || !endValue) {
-      return false;
-    }
-    return startValue.valueOf() > endValue.valueOf();
+
+  onStartChange = (value) => {
+    this.onChange('startValue', value)
   }
 
-  disabledEndDate = (endValue) => {
-    const startValue = this.state.startValue;
-    if (!endValue || !startValue) {
-      return false;
-    }
-    return endValue.valueOf() <= startValue.valueOf();
+  onEndChange = (value) => {
+    this.onChange('endValue', value)
   }
 
   onChange = (field, value) => {
@@ -40,38 +35,46 @@ class DateRange extends React.Component {
     })
 
     // 当用户清空了单个时间控件的值的时候同时清空两个控件的值,并发起一次页面请求
-    if (value == null) {
-      this.setState({startValue:null,endValue:null})
-      this.props.onChange([null,null],'createTime')
+    if (value === null) {
+      this.setState({ startValue: null, endValue: null })
+      this.props.onChange([null, null], 'createTime')
       return
     }
 
     // 当用户进行了结束时间的选择的时候,发起一次页面请求
-    if (field == 'endValue') {
-      this.props.onChange([this.state.startValue,value],'createTime')
+    if (field === 'endValue') {
+      this.props.onChange([this.state.startValue, value], 'createTime')
     }
   }
 
-  onStartChange = (value) => {
-    this.onChange('startValue', value);
+  disabledStartDate = (startValue) => {
+    const endValue = this.state.endValue
+    if (!startValue || !endValue) {
+      return false
+    }
+    return startValue.valueOf() > endValue.valueOf()
   }
 
-  onEndChange = (value) => {
-    this.onChange('endValue', value);
+  disabledEndDate = (endValue) => {
+    const startValue = this.state.startValue
+    if (!endValue || !startValue) {
+      return false
+    }
+    return endValue.valueOf() <= startValue.valueOf()
   }
 
   handleStartOpenChange = (open) => {
     if (!open) {
-      this.setState({ endOpen: true });
+      this.setState({ endOpen: true })
     }
   }
 
   handleEndOpenChange = (open) => {
-    this.setState({ endOpen: open });
+    this.setState({ endOpen: open })
   }
 
-  render() {
-    const { startValue, endValue, endOpen } = this.state;
+  render () {
+    const { startValue, endValue, endOpen } = this.state
     return (
       <div>
         <DatePicker
@@ -85,7 +88,7 @@ class DateRange extends React.Component {
           onOpenChange={this.handleStartOpenChange}
         />
         &nbsp;&nbsp;&nbsp;
-          <DatePicker
+        <DatePicker
           disabledDate={this.disabledEndDate}
           showToday={false}
           format="YYYY-MM-DD"
@@ -99,6 +102,13 @@ class DateRange extends React.Component {
       </div>
     )
   }
+}
+
+DateRange.propTypes = {
+  onChange: PropTypes.func,
+  startValue: PropTypes.string,
+  endValue: PropTypes.string,
+  size: PropTypes.string,
 }
 
 export default Form.create()(DateRange)

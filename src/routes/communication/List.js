@@ -27,21 +27,21 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     {
       title: '主体',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
     },
     {
       title: '短信数',
       dataIndex: 'countId',
       key: 'countId',
       render: (text) => {
-        let newtext = text?text:0
-        return <span>{newtext + '次'}</span>
-      }
+        let newtext = text || 0
+        return <span>{`${newtext}次`}</span>
+      },
     }, {
       title: '短信金额',
       dataIndex: 'countIdPrice',
       key: 'countIdPrice',
-      render: (text) => <span>{'￥' + text}</span>
+      render: (text) => <span>{`￥${text}`}</span>,
     },
     // {
     //   title: '语音数量',
@@ -53,12 +53,12 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     //   dataIndex: 'voiceMoney',
     //   key: 'voiceMoney',
     //   render: (text) => <span></span>,
-    // }, 
+    // },
     {
       title: '微信通知数量',
       dataIndex: 'wechatQuantity',
       key: 'wechatQuantity',
-      render: (text) => <span>{text + '次'}</span>,
+      render: (text) => <span>{`${text}次`}</span>,
     },
     // {
     //   title: '直拨电话数量',
@@ -80,22 +80,22 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '回拨次数',
       dataIndex: 'numberOfCalls',
       key: 'numberOfCalls',
-      render: (text) => <span>{text + '次'}</span>,
+      render: (text) => <span>{`${text}次`}</span>,
     }, {
       title: '回拨金额',
       dataIndex: 'callbackAmout',
       key: 'callbackAmout',
-      render: (text) => <span>{'￥' + text}</span>,
+      render: (text) => <span>{`￥${text}`}</span>,
     }, {
       title: '回拨时长',
       dataIndex: 'callbackDuration',
       key: 'callbackDuration',
-      render: (text) => <span>{text + '分'}</span>,
+      render: (text) => <span>{`${text}分`}</span>,
     }, {
       title: '总金额',
       dataIndex: 'totalAmount',
       key: 'totalAmount',
-      render: (text) => <span>{'￥' + text}</span>,
+      render: (text) => <span>{`￥${text}`}</span>,
     },
     //  {
     //   title: '时间',

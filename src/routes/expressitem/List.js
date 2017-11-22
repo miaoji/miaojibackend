@@ -10,75 +10,74 @@ import { Link } from 'dva/router'
 const confirm = Modal.confirm
 
 const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
-
   const columns = [
     {
       title: '主体',
       dataIndex: 'subject',
-      key: 'subject'
+      key: 'subject',
     },
     {
       title: '普通件',
       children: [{
         title: '上架数',
         dataIndex: 'normal.storesNum',
-        key: 'normalstoresNum'
+        key: 'normalstoresNum',
       }, {
         title: '签收数',
         dataIndex: 'normal.signNum',
-        key: 'normalsignNum'
+        key: 'normalsignNum',
       }, {
         title: '退回数',
         dataIndex: 'normal.backNum',
-        key: 'normalbackNum'
+        key: 'normalbackNum',
       }, {
         title: '问题件数',
         dataIndex: 'normal.errNum',
-        key: 'normalerrNum'
-      }]
+        key: 'normalerrNum',
+      }],
     }, {
       title: '到付件',
       children: [{
         title: '到付件数',
         dataIndex: 'collect.collectNum',
-        key: 'collectcollectNum'
+        key: 'collectcollectNum',
       }, {
         title: '上架数',
         dataIndex: 'collect.storesNum',
-        key: 'collectstoresNum'
+        key: 'collectstoresNum',
       }, {
         title: '签收数',
         dataIndex: 'collect.signNum',
-        key: 'collectsignNum'
+        key: 'collectsignNum',
       }, {
         title: '退回数',
         dataIndex: 'collect.backNum',
-        key: 'collectbackNum'
+        key: 'collectbackNum',
       }, {
         title: '问题件数',
         dataIndex: 'collect.errNum',
-        key: 'collecterrNum'
-      }]
+        key: 'collecterrNum',
+      }],
     }, {
       title: '代收件',
       children: [{
         title: '上架数',
         dataIndex: 'collection.storesNum',
-        key: 'collectionstoresNum'
+        key: 'collectionstoresNum',
       }, {
         title: '签收数',
         dataIndex: 'collection.signNum',
-        key: 'collectionsignNum'
+        key: 'collectionsignNum',
       }, {
         title: '退回数',
         dataIndex: 'collection.backNum',
-        key: 'collectionbackNum'
+        key: 'collectionbackNum',
       }, {
         title: '问题件数',
         dataIndex: 'collection.errNum',
-        key: 'collectionerrNum'
-      }]
-    }
+        key: 'collectionerrNum',
+      }],
+    },
   ]
 
   const getBodyWrapperProps = {
