@@ -26,18 +26,23 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
+      title: '站点ID',
+      dataIndex: 'id',
+      key: 'id',
+      render: (text) => {
+        return <span>{ text?text:'暂无' }</span>
+      }
+    }, {
       title: '帐号',
       dataIndex: 'mobile',
       key: 'mobile',
-    }, /* {
-      title: '经营者姓名',
-      dataIndex: 'null',
-      key: 'null',
-      render:(text)=><span>{text?text:"暂无经营者姓名"}</span>
-    },*/ {
+    }, {
       title: '店铺名称',
       dataIndex: 'name',
       key: 'name',
+      render: (text) => {
+        return <span>{ text?text:'暂无'}</span>
+      }
     }, {
       title: '店铺级别',
       dataIndex: 'type',
