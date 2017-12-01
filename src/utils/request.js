@@ -55,19 +55,26 @@ const fetch = (options) => {
 
   switch (method.toLowerCase()) {
     case 'get':
-      return axios.get(url, {
-        params: cloneData,
+      return axios({
+        url,
+        method: 'get',
+        params: cloneData || params,
+        timeout: 5000,
       })
     case 'delete':
-      return axios.delete(url, {
-        data: cloneData,
+      return axios({
+        url,
+        method: 'delete',
+        params: cloneData || params,
+        timeout: 5000,
       })
     case 'post':
       return axios({
         url,
         method: 'post',
-        params,
         data: cloneData,
+        params,
+        timeout: 5000,
       })
     case 'put':
       return axios.put(url, cloneData)
