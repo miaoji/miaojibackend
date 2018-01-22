@@ -1,9 +1,9 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/wxuser'
+import { create, remove, update } from '../services/wxuser'
 import * as wxusersService from '../services/wxusers'
 import { pageModel } from './common'
 import { config } from '../utils'
-import { gettimes } from '../utils/time'
+// import { gettimes } from '../utils/time'
 
 const { query } = wxusersService
 const { prefix } = config
@@ -74,7 +74,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       const newWxUser = payload
       const data = yield call(update, newWxUser)
       if (data.success) {

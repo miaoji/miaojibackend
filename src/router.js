@@ -212,6 +212,22 @@ const Routers = function ({ history, app }) {
             }, 'blacklist')
           },
         }, {
+          path: 'mailprice',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/mailprice'))
+              cb(null, require('./routes/mailprice/'))
+            }, 'mailprice')
+          },
+        }, {
+          path: 'storeordertotal',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/storeordertotal'))
+              cb(null, require('./routes/storeordertotal/'))
+            }, 'storeordertotal')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {

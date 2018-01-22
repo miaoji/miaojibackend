@@ -166,5 +166,38 @@ module.exports = [
     name: '黑名单',
     icon: 'user-delete',
     router: '/blacklist',
+  }, {
+    id: 11,
+    bpid: 1,
+    name: '门店管理',
+    icon: 'user-delete'
+  }, {
+    id: 111,
+    bpid: 1,
+    mpid: 11,
+    name: '寄件及金额',
+    icon: 'user-delete',
+    router: '/mailprice',
+  }, {
+    id: 112,
+    bpid: 1,
+    mpid: 11,
+    name: '门店单号总量',
+    icon: 'user-delete',
+    router: '/storeordertotal',
+  }, {
+    id: 113,
+    bpid: 1,
+    mpid: 11,
+    name: '门店单号上架',
+    icon: 'user-delete',
+    router: '/storeorderinfo',
+  }, {
+    id: 114,
+    mpid: 11,
+    bpid: 1,
+    name: '门店分派',
+    icon: 'user-delete',
+    router: '/storeallot',
   },
 ]

@@ -1,13 +1,13 @@
 const APIV1 = '/api/v1'
-const APIV2 = '/api/v2'
+// const APIV2 = '/api/v2'
 
 let APIV3
 // 本地测试
-// APIV3 = 'http://192.168.0.185:8080/quandiExpressSiteManager'
+APIV3 = 'http://192.168.0.185:8080/quandiExpressSiteManager'
 // 仝舟本地测试
 // APIV3 = 'http://192.168.1.112:8080'
 // 线上
-APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+// APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -77,6 +77,11 @@ module.exports = {
       add: `${APIV3}/insertBlackList`,
       update: `${APIV3}/updateBlackList`,
       showSiteName: `${APIV3}/idUser`,
+    },
+
+    // 查询寄件及金额
+    mailprice: {
+      all: `${APIV3}/mailprice`,
     },
 
   },
