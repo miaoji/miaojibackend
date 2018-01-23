@@ -7,8 +7,8 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Mailprice = ({ location, dispatch, mailprice, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = mailprice
+const Storeallot = ({ location, dispatch, storeallot, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = storeallot
   const { pageSize } = pagination
 
   const modalProps = {
@@ -21,20 +21,20 @@ const Mailprice = ({ location, dispatch, mailprice, loading }) => {
     selectSiteName,
     onOk(data) {
       dispatch({
-        type: `mailprice/${modalType}`,
+        type: `storeallot/${modalType}`,
         payload: data,
       })
     },
     onCancel() {
       dispatch({
-        type: 'mailprice/hideModal',
+        type: 'storeallot/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['mailprice/query'],
+    loading: loading.effects['storeallot/query'],
     pagination,
     location,
     onChange(page, filter) {
@@ -51,13 +51,13 @@ const Mailprice = ({ location, dispatch, mailprice, loading }) => {
     },
     onDeleteItem(id) {
       dispatch({
-        type: 'mailprice/delete',
+        type: 'storeallot/delete',
         payload: id,
       })
     },
     onEditItem(item) {
       dispatch({
-        type: 'mailprice/showModal',
+        type: 'storeallot/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -82,24 +82,24 @@ const Mailprice = ({ location, dispatch, mailprice, loading }) => {
     },
     onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/mailprice',
+        pathname: '/storeallot',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/mailprice',
+        pathname: '/storeallot',
       }))
     },
     onDownLoad(payload) {
       dispatch({
-        type: 'mailprice/download',
+        type: 'storeallot/download',
         payload
       })
     },
     onAdd() {
       dispatch({
-        type: 'mailprice/showModal',
+        type: 'storeallot/showModal',
         payload: {
           modalType: 'create',
         },
@@ -116,11 +116,11 @@ const Mailprice = ({ location, dispatch, mailprice, loading }) => {
   )
 }
 
-Mailprice.propTypes = {
-  mailprice: PropTypes.object,
+Storeallot.propTypes = {
+  storeallot: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ mailprice, loading }) => ({ mailprice, loading }))(Mailprice)
+export default connect(({ storeallot, loading }) => ({ storeallot, loading }))(Storeallot)

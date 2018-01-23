@@ -1,15 +1,17 @@
 import { request, config, pageParams } from '../utils'
 const { api } = config
-const { mailprice } = api
+const { storeordertotal } = api
 
-export async function query (params) {
+export async function query(params) {
   params = pageParams(params)
   delete params.page
   delete params.pageSize
-  console.log(params)
+  params = JSON.stringify(params)
   return request({
-    url: mailprice.all,
+    url: storeordertotal.all,
     method: 'post',
-    params,
+    params: {
+      param: params,
+    },
   })
 }

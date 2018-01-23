@@ -1,7 +1,7 @@
-import React from 'react'
+// import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, create, update, remove, showSiteName } from '../services/mailprice'
+import { query, create, update, remove } from '../services/mailprice'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -14,7 +14,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/mailprice') {
           dispatch({
@@ -28,10 +28,11 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
+    *query({ payload = {} }, { call, put }) {
+      // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
+      const data = yield call(query, { ...payload, download: 0 })
       console.log('data', data)
-      if (data) {
+      if (data.obj) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -46,7 +47,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       const newmailprice = {
         idUser: payload.idUser.split('/-/')[1],
         mobile: payload.mobile,
@@ -63,7 +64,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ mailprice }) => mailprice.currentItem.id)
       const newmailprice = {
         note: payload.note,
@@ -79,7 +80,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload, state: 2 })
       if (data.code === 200) {
         message.success('删除成功')
@@ -89,21 +90,20 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getSiteName ({ payload }, { call, put }) {
-      const data = yield call(showSiteName)
+    *download({ payload }, { call }) {
+      console.log('payload', payload)
+      const data = yield call(query, {
+        feeType: 1,
+        status: 'success',
+        startTime: '1486310400000',
+        endTime: '1486396800000',
+        download: 1,
+        rownum: 1,
+        pagination: 10,
+      })
       console.log('data', data)
       if (data.code === 200 && data.obj) {
-        let children = []
-        for (let i = 0; i < data.obj.length; i++) {
-          let item = data.obj[i]
-          children.push(<Option key={`${item.name}/-/${item.idUser}`}>{item.name}</Option>)
-        }
-        yield put({
-          type: 'setSiteName',
-          payload: {
-            selectSiteName: children,
-          },
-        })
+        console.log('数据正在请求下载')
       } else {
         throw data.mess || '无法跟服务器建立有效连接'
       }
@@ -113,15 +113,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setSiteName (state, { payload }) {
+    setSiteName(state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 

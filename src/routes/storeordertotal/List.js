@@ -1,78 +1,53 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  // Menu,
-  Table,
-  Modal,
-  // Icon,
-  // message,
-  // Button
-} from 'antd'
+import { Table } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
-import { time } from '../../utils'
-
-const confirm = Modal.confirm
 
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    switch (e.key) {
-      case '1':
-        onEditItem(record)
-        break
-      case '2':
-        confirm({
-          title: '确定要删除吗?',
-          onOk () {
-            onDeleteItem(record.id)
-          },
-        })
-        break
-      default:
-        break
-    }
-  }
-
-  // const copyUrl = (record, e) => {
-  //   const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
-  //   window.prompt('请使用Ctrl+C复制到剪切板', href)
-  // }
 
   const columns = [
     {
-      title: '站点ID',
-      dataIndex: 'idUser',
-      key: 'idUser',
+      title: '单号',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      }
     }, {
-      title: '站点名称',
-      dataIndex: 'name',
-      key: 'name',
+      title: '品牌',
+      dataIndex: 'brand',
+      key: 'brand',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      }
     }, {
-      title: '黑名单手机号',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      title: '费用',
+      dataIndex: 'fee',
+      key: 'fee',
+      render: (text) => {
+        return <span>{text || 0}元</span>
+      }
     }, {
-      title: '理由',
-      dataIndex: 'note',
-      key: 'note',
+      title: '状态',
+      dataIndex: 'state',
+      key: 'state',
+      render: (text) => {
+        const repltext = {
+          101: '上架',
+          103: '分派',
+        }
+        return <span>{text ? repltext[text] : '未知'}</span>
+      }
     }, {
-      title: '时间',
+      title: '日期',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const createTime = time.formatTime(text.toString())
-        return <span>{createTime}</span>
+        return <span>{text}</span>
       },
-    }, {
-      title: '操作',
-      key: 'operation',
-      width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
-      },
-    },
+    }
   ]
 
   const getBodyWrapperProps = {

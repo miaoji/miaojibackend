@@ -83,6 +83,17 @@ module.exports = {
     mailprice: {
       all: `${APIV3}/mailprice`,
     },
-
+    // 查询门店单号总量
+    storeordertotal: {
+      all: `${APIV3}/orderSntotal`
+    },
+    // 查询门店单号上架信息
+    storeorderinfo: {
+      all: `${APIV3}/sendMail101`
+    },
+    // 车讯门店分配信息
+    storeallot: {
+      all: `${APIV3}/sendMail103`
+    },
   },
 }

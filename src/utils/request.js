@@ -40,7 +40,7 @@ const fetch = (options) => {
       jsonp(url, {
         param: `${qs.stringify(data)}&callback`,
         name: `jsonp_${new Date().getTime()}`,
-        timeout: 4000,
+        timeout: 60000,
       }, (error, result) => {
         if (error) {
           reject(error)
@@ -59,14 +59,14 @@ const fetch = (options) => {
         url,
         method: 'get',
         params: cloneData || params,
-        timeout: 5000,
+        timeout: 60000,
       })
     case 'delete':
       return axios({
         url,
         method: 'delete',
         params: cloneData || params,
-        timeout: 5000,
+        timeout: 60000,
       })
     case 'post':
       return axios({
@@ -74,7 +74,7 @@ const fetch = (options) => {
         method: 'post',
         data: cloneData,
         params,
-        timeout: 5000,
+        timeout: 60000,
       })
     case 'put':
       return axios.put(url, cloneData)

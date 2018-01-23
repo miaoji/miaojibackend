@@ -1,11 +1,11 @@
 // import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, create, update, remove } from '../services/storeordertotal'
+import { query, create, update, remove } from '../services/storeallot'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
-  namespace: 'storeordertotal',
+  namespace: 'storeallot',
 
   state: {
     currentItem: {},
@@ -16,7 +16,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/storeordertotal') {
+        if (location.pathname === '/storeallot') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -29,6 +29,15 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      // const newPayload = {
+      //   // feeType: 1,
+      //   // status: 'success',
+      //   // startTime: '1486310400000',
+      //   // endTime: '1486396800000',
+      //   download: 0,
+      //   // rownum: 1,
+      //   // pagination: 10,
+      // }
       const data = yield call(query, { ...payload, download: 0 })
       console.log('data', data)
       if (data.obj) {
@@ -47,13 +56,13 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      const newstoreordertotal = {
+      const newstoreallot = {
         idUser: payload.idUser.split('/-/')[1],
         mobile: payload.mobile,
         note: payload.note,
         state: 1,
       }
-      const data = yield call(create, { state: 1, ...newstoreordertotal })
+      const data = yield call(create, { state: 1, ...newstoreallot })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -64,12 +73,12 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ storeordertotal }) => storeordertotal.currentItem.id)
-      const newstoreordertotal = {
+      const id = yield select(({ storeallot }) => storeallot.currentItem.id)
+      const newstoreallot = {
         note: payload.note,
         id,
       }
-      const data = yield call(update, newstoreordertotal)
+      const data = yield call(update, newstoreallot)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

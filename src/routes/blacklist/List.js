@@ -43,7 +43,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'name',
       key: 'name',
     }, {
-      title: '黑名单手机号',
+      title: '黑名单手机号/单号',
       dataIndex: 'mobile',
       key: 'mobile',
     }, {

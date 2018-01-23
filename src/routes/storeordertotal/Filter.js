@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 // import moment from 'moment'
 // import { FilterItem } from '../../components'
-import { Form, Button, Row, Col,
+import {
+  Form, Button, Row, Col,
   // DatePicker,
   Input,
   // Cascader,
   // Switch,
+  Modal
 } from 'antd'
 // import city from '../../utils/city'
 import { DateRange } from '../../components'
@@ -29,7 +31,8 @@ const TwoColProps = {
 }
 
 const Filter = ({
-  onAdd,
+  // onAdd,
+  onDownLoad,
   onFilterChange,
   filter,
   form: {
@@ -83,6 +86,18 @@ const Filter = ({
     handleSubmit()
   }
 
+  const handleDownLoad = () => {
+    console.log(11)
+    Modal.confirm({
+      title: '下载前请确认是否是你想要的数据！',
+      onOk() {
+        onDownLoad({
+          a: 1, b: 2
+        })
+      }
+    })
+  }
+
   // 时间选择器change事件
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
@@ -116,9 +131,9 @@ const Filter = ({
         {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
-          )}
+        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+        )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -127,7 +142,8 @@ const Filter = ({
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
           <div>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+            {/* <Button size="large" type="ghost" onClick={onAdd}>新增</Button> */}
+            <Button size="large" type="ghost" onClick={handleDownLoad}>下载到本地</Button>
           </div>
         </div>
       </Col>
@@ -141,6 +157,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  onDownLoad: PropTypes.func
 }
 
 export default Form.create()(Filter)

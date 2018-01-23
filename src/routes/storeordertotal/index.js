@@ -19,13 +19,13 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
     selectSiteName,
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `storeordertotal/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'storeordertotal/hideModal',
       })
@@ -37,33 +37,31 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
     loading: loading.effects['storeordertotal/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page, filter) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
           ...query,
+          ...filter,
           page: page.current,
           pageSize: page.pageSize,
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'storeordertotal/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'storeordertotal/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
-      })
-      dispatch({
-        type: 'storeordertotal/getSiteName',
       })
     },
   }
@@ -72,7 +70,7 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -82,7 +80,7 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/storeordertotal',
         query: {
@@ -93,15 +91,18 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
         pathname: '/storeordertotal',
       }))
     },
-    onAdd () {
+    onDownLoad(payload) {
+      dispatch({
+        type: 'storeordertotal/download',
+        payload
+      })
+    },
+    onAdd() {
       dispatch({
         type: 'storeordertotal/showModal',
         payload: {
           modalType: 'create',
         },
-      })
-      dispatch({
-        type: 'storeordertotal/getSiteName',
       })
     },
   }

@@ -221,11 +221,27 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'storeordertotal',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/storeordertotal'))
               cb(null, require('./routes/storeordertotal/'))
             }, 'storeordertotal')
+          },
+        }, {
+          path: 'storeorderinfo',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/storeorderinfo'))
+              cb(null, require('./routes/storeorderinfo/'))
+            }, 'storeorderinfo')
+          },
+        }, {
+          path: 'storeallot',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/storeallot'))
+              cb(null, require('./routes/storeallot/'))
+            }, 'storeallot')
           },
         }, {
           path: '*',

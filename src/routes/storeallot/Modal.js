@@ -1,10 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
-import city from '../../utils/city'
+import {
+  Form,
+  Input,
+  // InputNumber,
+  // Radio,
+  Modal,
+  // Cascader,
+  Select,
+} from 'antd'
+// import city from '../../utils/city'
 
 const FormItem = Form.Item
-const Option = Select.Option
+// const Option = Select.Option
 const { TextArea } = Input
 
 const formItemLayout = {
@@ -62,17 +70,17 @@ const modal = ({
             ],
           })(<Select showSearch disabled={paramDisabled} placeholder="输入站点名称或者IdUser可搜索" defaultValue="" style={{ width: 286 }}>{selectSiteName}</Select>)}
         </FormItem>
-        <FormItem label="手机号/单号" hasFeedback {...formItemLayout}>
+        <FormItem label="手机号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('mobile', {
             initialValue: item.mobile,
             rules: [
               {
                 required: !paramDisabled,
                 pattern: /^[0-9]{11}$/,
-                message: '请输入手机号码/单号!',
+                message: '请输入手机号码!',
               },
             ],
-          })(<Input placeholder="请输入手机号码/单号!" disabled={paramDisabled} />)}
+          })(<Input placeholder="请输入手机号码!" disabled={paramDisabled} />)}
         </FormItem>
         <FormItem label="理由" hasFeedback {...formItemLayout}>
           {getFieldDecorator('note', {
@@ -96,6 +104,7 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  selectSiteName: PropTypes.array,
 }
 
 export default Form.create()(modal)

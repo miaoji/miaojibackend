@@ -3,16 +3,11 @@ import PropTypes from 'prop-types'
 import {
   Form,
   Input,
-  // InputNumber,
-  // Radio,
   Modal,
-  // Cascader,
   Select,
 } from 'antd'
-// import city from '../../utils/city'
 
 const FormItem = Form.Item
-// const Option = Select.Option
 const { TextArea } = Input
 
 const formItemLayout = {

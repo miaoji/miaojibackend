@@ -23,23 +23,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '收款类型',
-      dataIndex: 'feeType',
-      key: 'feeType',
-      filters: [
-        { text: '寄件费', value: 1 },
-        { text: '代收货款', value: 2 },
-        { text: '到付费', value: 3 },
-      ],
-      render: (text) => {
-        const repltext = {
-          1: '寄件费',
-          2: '代收货款',
-          3: '到付费'
-        }
-        return <span>{text ? repltext[text] : '未知'}</span>
-      }
-    }, {
       title: '费用',
       dataIndex: 'fee',
       key: 'fee',
@@ -47,18 +30,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{text || 0}元</span>
       }
     }, {
-      title: '支付状态',
-      dataIndex: 'status',
-      key: 'status',
-      filters: [
-        { text: '成功', value: 'success' },
-        { text: '关闭', value: 'close' },
-      ],
+      title: '状态',
+      dataIndex: 'state',
+      key: 'state',
       render: (text) => {
         const repltext = {
-          success: '成功',
-          close: '关闭',
-          wait: '等待'
+          101: '上架',
+          103: '分派'
         }
         return <span>{text ? repltext[text] : '未知'}</span>
       }
