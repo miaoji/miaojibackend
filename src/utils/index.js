@@ -152,6 +152,7 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   if (typeCheck) {
     return res
   }
+  return false
 }
 
 module.exports = {
