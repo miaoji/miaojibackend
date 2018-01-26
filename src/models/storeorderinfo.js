@@ -1,8 +1,11 @@
 // import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
-import { query, create, update, remove } from '../services/storeorderinfo'
+import { message, notification } from 'antd'
+import { query, downLoad, create, update, remove } from '../services/storeorderinfo'
 import { pageModel } from './common'
+import { config } from '../utils'
+
+const { APIV3 } = config
 
 export default modelExtend(pageModel, {
   namespace: 'storeorderinfo',
@@ -38,7 +41,7 @@ export default modelExtend(pageModel, {
       //   // rownum: 1,
       //   // pagination: 10,
       // }
-      const data = yield call(query, { ...payload, download: 0 }) 
+      const data = yield call(query, { ...payload, download: 0 })
       console.log('data', data)
       if (data.obj) {
         yield put({
@@ -99,19 +102,18 @@ export default modelExtend(pageModel, {
     },
 
     *download({ payload }, { call }) {
-      console.log('payload', payload)
-      const data = yield call(query, {
-        feeType: 1,
-        status: 'success',
-        startTime: '1486310400000',
-        endTime: '1486396800000',
-        download: 1,
-        rownum: 1,
-        pagination: 10,
-      })
-      console.log('data', data)
+      console.log('aa', payload)
+      const data = yield call(downLoad, { ...payload, download: 1 })
       if (data.code === 200 && data.obj) {
-        console.log('数据正在请求下载')
+        const url = data.obj
+        const sssss = window.open(`${APIV3}${url}`)
+        if (sssss === null) {
+          notification.warn({
+            message: '下载失败',
+            description: '请关闭浏览阻止网页弹窗的功能!!!',
+            duration: 0
+          })
+        }
       } else {
         throw data.mess || '无法跟服务器建立有效连接'
       }

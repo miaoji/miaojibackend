@@ -91,10 +91,10 @@ const Storeallot = ({ location, dispatch, storeallot, loading }) => {
         pathname: '/storeallot',
       }))
     },
-    onDownLoad(payload) {
+    onDownLoad() {
       dispatch({
         type: 'storeallot/download',
-        payload
+        payload: location.query
       })
     },
     onAdd() {

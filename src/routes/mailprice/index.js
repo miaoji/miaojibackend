@@ -91,10 +91,10 @@ const Mailprice = ({ location, dispatch, mailprice, loading }) => {
         pathname: '/mailprice',
       }))
     },
-    onDownLoad(payload) {
+    onDownLoad() {
       dispatch({
         type: 'mailprice/download',
-        payload
+        payload: location.query
       })
     },
     onAdd() {

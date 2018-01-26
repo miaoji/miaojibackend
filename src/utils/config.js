@@ -3,20 +3,21 @@ const APIV1 = '/api/v1'
 
 let APIV3
 // 本地测试
-APIV3 = 'http://192.168.0.185:8080/quandiExpressSiteManager'
+APIV3 = 'http://192.168.0.187:8080'
 // 仝舟本地测试
 // APIV3 = 'http://192.168.1.112:8080'
 // 线上
-// APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+// APIV3 = 'http://app.quandikeji.com:8288'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  APIV3 = 'http://app.quandikeji.com:8288/quandiExpressSiteManager'
+  APIV3 = 'http://app.quandikeji.com:8288'
 }
 
 let APIV4 = 'http://app.quandikeji.com/WeChatService'
 
 module.exports = {
+  APIV3,
   name: '妙寄后台管理系统',
   prefix: '妙寄后台',
   footerText: '妙寄 后台 © 2017 圈嘀科技',
@@ -29,34 +30,34 @@ module.exports = {
   openPages: ['/login'],
   apiPrefix: '/api/v1',
   api: {
-    userLogin: `${APIV3}/signIn`, // 登陆
+    userLogin: `${APIV3}/quandiExpressSiteManager/signIn`, // 登陆
     userLogout: `${APIV1}/user/logout`, // 登出
 
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
 
-    wxuser: `${APIV3}/received`, // 微信用户明细
-    wxusers: `${APIV3}/wechatuser`, // 微信用户
+    wxuser: `${APIV3}/quandiExpressSiteManager/received`, // 微信用户明细
+    wxusers: `${APIV3}/quandiExpressSiteManager/wechatuser`, // 微信用户
 
-    storeusers: `${APIV3}/store`, // 门店用户
+    storeusers: `${APIV3}/quandiExpressSiteManager/store`, // 门店用户
 
-    communications: `${APIV3}/communicationdata`, // 通信数据
+    communications: `${APIV3}/quandiExpressSiteManager/communicationdata`, // 通信数据
 
-    income: `${APIV3}/income`, // 收入
-    expend: `${APIV3}/expenditure`, // 支出
-    normal: `${APIV3}/regularMail?expresstype=0`, // 普通件
-    collect: `${APIV3}/regularMail?expresstype=1`, // 到付件
-    collection: `${APIV3}/regularMail?expresstype=2`, // 代收件
+    income: `${APIV3}/quandiExpressSiteManager/income`, // 收入
+    expend: `${APIV3}/quandiExpressSiteManager/expenditure`, // 支出
+    normal: `${APIV3}/quandiExpressSiteManager/regularMail?expresstype=0`, // 普通件
+    collect: `${APIV3}/quandiExpressSiteManager/regularMail?expresstype=1`, // 到付件
+    collection: `${APIV3}/quandiExpressSiteManager/regularMail?expresstype=2`, // 代收件
 
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,
     dashboard: `${APIV1}/dashboard`,
 
-    topups: `${APIV3}/rechargeRecord`, // 充值记录
-    withdraws: `${APIV3}/extractionamount`, // 提现记录
+    topups: `${APIV3}/quandiExpressSiteManager/rechargeRecord`, // 充值记录
+    withdraws: `${APIV3}/quandiExpressSiteManager/extractionamount`, // 提现记录
 
-    orders: `${APIV3}/expressStatus`, // 运单管理
-    order: `${APIV3}/expressStatus`,
+    orders: `${APIV3}/quandiExpressSiteManager/expressStatus`, // 运单管理
+    order: `${APIV3}/quandiExpressSiteManager/expressStatus`,
 
     // 二维码推广接口
     qr: {
@@ -68,32 +69,32 @@ module.exports = {
     },
     // 充值消费接口
     consume: {
-      query: `${APIV3}/paymentOrder`, // 分页查询
+      query: `${APIV3}/quandiExpressSiteManager/paymentOrder`, // 分页查询
     },
 
     // 黑名单接口
     blacklist: {
-      all: `${APIV3}/blackList`,
-      add: `${APIV3}/insertBlackList`,
-      update: `${APIV3}/updateBlackList`,
-      showSiteName: `${APIV3}/idUser`,
+      all: `${APIV3}/quandiExpressSiteManager/blackList`,
+      add: `${APIV3}/quandiExpressSiteManager/insertBlackList`,
+      update: `${APIV3}/quandiExpressSiteManager/updateBlackList`,
+      showSiteName: `${APIV3}/quandiExpressSiteManager/idUser`,
     },
 
     // 查询寄件及金额
     mailprice: {
-      all: `${APIV3}/mailprice`,
+      all: `${APIV3}/quandiExpressSiteManager/mailprice`,
     },
     // 查询门店单号总量
     storeordertotal: {
-      all: `${APIV3}/orderSntotal`
+      all: `${APIV3}/quandiExpressSiteManager/orderSntotal`
     },
     // 查询门店单号上架信息
     storeorderinfo: {
-      all: `${APIV3}/sendMail101`
+      all: `${APIV3}/quandiExpressSiteManager/sendMail101`
     },
     // 车讯门店分配信息
     storeallot: {
-      all: `${APIV3}/sendMail103`
+      all: `${APIV3}/quandiExpressSiteManager/sendMail103`
     },
   },
 }
