@@ -3,7 +3,7 @@ const APIV1 = '/api/v1'
 
 let APIV3
 // 本地测试
-APIV3 = 'http://192.168.0.185:8080/quandiExpressSiteManager'
+APIV3 = 'http://192.168.0.187:8080/quandiExpressSiteManager'
 // 仝舟本地测试
 // APIV3 = 'http://192.168.1.112:8080'
 // 线上
@@ -95,5 +95,21 @@ module.exports = {
     storeallot: {
       all: `${APIV3}/sendMail103`
     },
+    // 单号规则配置
+    ordernumber: {
+      index: `${APIV3}/selectorderNumber`,
+      create: `${APIV3}/insertOrderNumber`,
+      update: `${APIV3}/updateOrderNumber`,
+      showBrandName: `${APIV3}/selectBrandId`
+    },
+    // 京东配置 接口
+    jd: {
+      // 查询单号池剩余单量
+      findOrderSheetCount: `${APIV3}/JDService/order/findOrderSheetCount`,
+      // 批量填充单号池
+      orderSheet: `${APIV3}/JDService/order/orderSheet`,
+      // 设置京东分成比例
+      setJDConfig: `${APIV3}/JDService/order/setJDConfig`
+    }
   },
 }

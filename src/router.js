@@ -244,6 +244,14 @@ const Routers = function ({ history, app }) {
             }, 'storeallot')
           },
         }, {
+          path: 'ordernumber',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/ordernumber'))
+              cb(null, require('./routes/ordernumber/'))
+            }, 'ordernumber')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {
