@@ -1,10 +1,11 @@
+// import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, create, update, remove, showSiteName } from '../services/blacklists'
+import { query, create, update, remove } from '../services/storeorderinfo'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
-  namespace: 'blacklist',
+  namespace: 'storeorderinfo',
 
   state: {
     currentItem: {},
@@ -13,9 +14,9 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/blacklist') {
+        if (location.pathname === '/storeorderinfo') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -27,9 +28,19 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
-      if (data) {
+    *query({ payload = {} }, { call, put }) {
+      // const newPayload = {
+      //   // feeType: 1,
+      //   // status: 'success',
+      //   // startTime: '1486310400000',
+      //   // endTime: '1486396800000',
+      //   download: 0,
+      //   // rownum: 1,
+      //   // pagination: 10,
+      // }
+      const data = yield call(query, { ...payload, download: 0 }) 
+      console.log('data', data)
+      if (data.obj) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -44,30 +55,30 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
-      const newblacklist = {
+    *create({ payload }, { call, put }) {
+      const newstoreorderinfo = {
         idUser: payload.idUser.split('/-/')[1],
         mobile: payload.mobile,
         note: payload.note,
         state: 1,
       }
-      const data = yield call(create, { state: 1, ...newblacklist })
+      const data = yield call(create, { state: 1, ...newstoreorderinfo })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data.mess == 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
+        throw data.mess === 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ blacklist }) => blacklist.currentItem.id)
-      const newblacklist = {
+    *update({ payload }, { select, call, put }) {
+      const id = yield select(({ storeorderinfo }) => storeorderinfo.currentItem.id)
+      const newstoreorderinfo = {
         note: payload.note,
         id,
       }
-      const data = yield call(update, newblacklist)
+      const data = yield call(update, newstoreorderinfo)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -77,31 +88,30 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload, state: 2 })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess == 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
+        throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
       }
     },
 
-    *getSiteName ({}, { call, put }) {
-      const data = yield call(showSiteName)
+    *download({ payload }, { call }) {
+      console.log('payload', payload)
+      const data = yield call(query, {
+        feeType: 1,
+        status: 'success',
+        startTime: '1486310400000',
+        endTime: '1486396800000',
+        download: 1,
+        rownum: 1,
+        pagination: 10,
+      })
       console.log('data', data)
       if (data.code === 200 && data.obj) {
-        let children = []
-        for (let i = 0; i < data.obj.length; i++) {
-          let item = data.obj[i]
-          children.push(<Option key={`${item.name}/-/${item.idUser}`}>{item.name}</Option>)
-        }
-        yield put({
-          type: 'setSiteName',
-          payload: {
-            selectSiteName: children,
-          },
-        })
+        console.log('数据正在请求下载')
       } else {
         throw data.mess || '无法跟服务器建立有效连接'
       }
@@ -111,15 +121,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setSiteName (state, { payload }) {
+    setSiteName(state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 

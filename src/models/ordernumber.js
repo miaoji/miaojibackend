@@ -1,10 +1,10 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, create, update, remove, showSiteName } from '../services/blacklists'
+import { query, create, update, remove, showBrandName } from '../services/ordernumber'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
-  namespace: 'blacklist',
+  namespace: 'ordernumber',
 
   state: {
     currentItem: {},
@@ -15,7 +15,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/blacklist') {
+        if (location.pathname === '/ordernumber') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -44,33 +44,44 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
-      const newblacklist = {
-        idUser: payload.idUser.split('/-/')[1],
-        mobile: payload.mobile,
-        note: payload.note,
-        state: 1,
+    *create ({ payload }, { call, put, select }) {
+      const { userId } = yield select(_ => _.app.user)
+      let newOrderNumber = {
+        cname: userId,
+        // brand: payload.brand.split('/-/')[0],
+        brandId: payload.brand.split('/-/')[1],
+        start: payload.start,
+        end: payload.end,
+        length: payload.length
       }
-      const data = yield call(create, { state: 1, ...newblacklist })
+      newOrderNumber = JSON.stringify(newOrderNumber)
+      const data = yield call(create, newOrderNumber)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data.mess == 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
+        throw data.mess || data
       }
     },
 
     *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ blacklist }) => blacklist.currentItem.id)
-      const newblacklist = {
-        note: payload.note,
+      const id = yield select(({ ordernumber }) => ordernumber.currentItem.id)
+      const { userId } = yield select(_ => _.app.user)
+      let orderNumber = {
         id,
+        cname: userId,
+        // brand: payload.brand.split('/-/')[0],
+        brandId: payload.brand.split('/-/')[1],
+        start: payload.start,
+        end: payload.end,
+        length: payload.length
       }
-      const data = yield call(update, newblacklist)
-      if (data.code === 200) {
+      orderNumber = JSON.stringify(orderNumber)
+      const data = yield call(update, orderNumber)
+      if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
-        message.success('更新成功')
+        message.success(data.mess)
         yield put({ type: 'query' })
       } else {
         throw data.mess || data
@@ -78,28 +89,32 @@ export default modelExtend(pageModel, {
     },
 
     *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload, state: 2 })
+      let orderNumber = {
+        id: payload,
+        state: 2
+      }
+      orderNumber = JSON.stringify(orderNumber)
+      const data = yield call(update, orderNumber)
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess == 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
+        throw data.mess || data
       }
     },
 
-    *getSiteName ({}, { call, put }) {
-      const data = yield call(showSiteName)
-      console.log('data', data)
+    *getBrandName ({}, { call, put }) {
+      const data = yield call(showBrandName)
       if (data.code === 200 && data.obj) {
         let children = []
         for (let i = 0; i < data.obj.length; i++) {
           let item = data.obj[i]
-          children.push(<Option key={`${item.name}/-/${item.idUser}`}>{item.name}</Option>)
+          children.push(<Option key={`${item.brand}/-/${item.id}`}>{item.brand}</Option>)
         }
         yield put({
-          type: 'setSiteName',
+          type: 'setBrandName',
           payload: {
-            selectSiteName: children,
+            brandName: children,
           },
         })
       } else {
@@ -111,16 +126,16 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setSiteName (state, { payload }) {
-      return { ...state, ...payload }
-    },
-
     showModal (state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
     hideModal (state) {
       return { ...state, modalVisible: false }
+    },
+
+    setBrandName (state, { payload }) {
+      return { ...state, ...payload }
     },
 
   },

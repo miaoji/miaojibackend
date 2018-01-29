@@ -199,5 +199,23 @@ module.exports = [
     name: '门店订单分派',
     icon: 'user-delete',
     router: '/storeallot',
-  },
+  }, {
+    id: 12,
+    bpid: 1,
+    name: '京东管理',
+    icon: 'export'
+  }, {
+    id: 121,
+    bpid: 1,
+    mpid: 12,
+    name: '单号管理',
+    icon: 'user-delete',
+    router: '/mailprice',
+  }, {
+    id: 13,
+    bpid: 1,
+    name: '单号规则配置',
+    icon: 'setting',
+    router: '/ordernumber'
+  }
 ]

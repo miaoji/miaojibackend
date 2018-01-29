@@ -96,5 +96,21 @@ module.exports = {
     storeallot: {
       all: `${APIV3}/quandiExpressSiteManager/sendMail103`
     },
+    // 单号规则配置
+    ordernumber: {
+      index: `${APIV3}/quandiExpressSiteManager/selectorderNumber`,
+      create: `${APIV3}/quandiExpressSiteManager/insertOrderNumber`,
+      update: `${APIV3}/quandiExpressSiteManager/updateOrderNumber`,
+      showBrandName: `${APIV3}/quandiExpressSiteManager/selectBrandId`
+    },
+    // 京东配置 接口
+    jd: {
+      // 查询单号池剩余单量
+      findOrderSheetCount: `${APIV3}/JDService/order/findOrderSheetCount`,
+      // 批量填充单号池
+      orderSheet: `${APIV3}/JDService/order/orderSheet`,
+      // 设置京东分成比例
+      setJDConfig: `${APIV3}/JDService/order/setJDConfig`
+    }
   },
 }
