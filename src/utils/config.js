@@ -92,7 +92,7 @@ module.exports = {
     storeorderinfo: {
       all: `${APIV3}/quandiExpressSiteManager/sendMail101`
     },
-    // 车讯门店分配信息
+    // 查询门店分配信息
     storeallot: {
       all: `${APIV3}/quandiExpressSiteManager/sendMail103`
     },
