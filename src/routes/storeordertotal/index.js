@@ -91,10 +91,10 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
         pathname: '/storeordertotal',
       }))
     },
-    onDownLoad(payload) {
+    onDownLoad() {
       dispatch({
         type: 'storeordertotal/download',
-        payload
+        payload: location.query
       })
     },
     onAdd() {

@@ -15,3 +15,19 @@ export async function query(params) {
     },
   })
 }
+
+export async function downLoad(params) {
+  params = pageParams(params)
+  delete params.page
+  delete params.pageSize
+  delete params.pagination
+  delete params.rownum
+  params = JSON.stringify(params)
+  return request({
+    url: storeordertotal.all,
+    method: 'post',
+    params: {
+      param: params,
+    },
+  })
+}

@@ -91,9 +91,7 @@ const Filter = ({
     Modal.confirm({
       title: '下载前请确认是否是你想要的数据！',
       onOk() {
-        onDownLoad({
-          a: 1, b: 2
-        })
+        onDownLoad()
       }
     })
   }

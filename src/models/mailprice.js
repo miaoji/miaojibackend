@@ -1,8 +1,11 @@
 // import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
-import { query, create, update, remove } from '../services/mailprice'
+import { notification } from 'antd'
+import { query, downLoad } from '../services/mailprice'
 import { pageModel } from './common'
+import { config } from '../utils'
+
+const { APIV3 } = config
 
 export default modelExtend(pageModel, {
   namespace: 'mailprice',
@@ -47,63 +50,19 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload }, { call, put }) {
-      const newmailprice = {
-        idUser: payload.idUser.split('/-/')[1],
-        mobile: payload.mobile,
-        note: payload.note,
-        state: 1,
-      }
-      const data = yield call(create, { state: 1, ...newmailprice })
-      if (data.success && data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success(data.mess)
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
-      }
-    },
-
-    *update({ payload }, { select, call, put }) {
-      const id = yield select(({ mailprice }) => mailprice.currentItem.id)
-      const newmailprice = {
-        note: payload.note,
-        id,
-      }
-      const data = yield call(update, newmailprice)
-      if (data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success('更新成功')
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess || data
-      }
-    },
-
-    *'delete'({ payload }, { call, put }) {
-      const data = yield call(remove, { id: payload, state: 2 })
-      if (data.code === 200) {
-        message.success('删除成功')
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
-      }
-    },
-
     *download({ payload }, { call }) {
-      console.log('payload', payload)
-      const data = yield call(query, {
-        feeType: 1,
-        status: 'success',
-        startTime: '1486310400000',
-        endTime: '1486396800000',
-        download: 1,
-        rownum: 1,
-        pagination: 10,
-      })
-      console.log('data', data)
+      console.log('aa', payload)
+      const data = yield call(downLoad, { ...payload, download: 1 })
       if (data.code === 200 && data.obj) {
-        console.log('数据正在请求下载')
+        const url = data.obj
+        const sssss = window.open(`${APIV3}${url}`)
+        if (sssss === null) {
+          notification.warn({
+            message: '下载失败',
+            description: '请关闭浏览阻止网页弹窗的功能!!!',
+            duration: 0
+          })
+        }
       } else {
         throw data.mess || '无法跟服务器建立有效连接'
       }
@@ -123,7 +82,7 @@ export default modelExtend(pageModel, {
 
     hideModal(state) {
       return { ...state, modalVisible: false }
-    },
+    }
 
-  },
+  }
 })
