@@ -252,6 +252,14 @@ const Routers = function ({ history, app }) {
             }, 'ordernumber')
           },
         }, {
+          path: 'publish',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/publish'))
+              cb(null, require('./routes/publish/'))
+            }, 'publish')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {
