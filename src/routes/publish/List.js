@@ -1,100 +1,113 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
-import styles from './List.less'
-import classnames from 'classnames'
-import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
-import { time } from '../../utils'
+import BraftEditor from 'braft-editor'
+import 'braft-editor/dist/braft.css'
 
-const confirm = Modal.confirm
+class List extends React.Component {
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    switch (e.key) {
-      case '1':
-        onEditItem(record)
-        break
-      case '2':
-        confirm({
-          title: '确定要删除吗?',
-          onOk () {
-            onDeleteItem(record.id)
-          },
-        })
-        break
-      default:
-        break
+  state = {
+    htmlContent: ''
+  }
+
+  handleHTMLChange = (htmlContent) => {
+    this.setState({ htmlContent })
+  }
+
+  render() {
+    const editorProps = {
+      placeholder: '你好!',
+      initialContent: '',
+      onHTMLChange: this.handleHTMLChange,
+      viewWrapper: '.list',
+      // 增加自定义预览按钮
+      extendControls: [
+        {
+          type: 'split',
+        },
+        {
+          type: 'button',
+          text: '预览',
+          className: 'preview-button',
+          onClick: () => {
+            window.open().document.write(this.state.htmlContent)
+          }
+        }, {
+          type: 'dropdown',
+          text: <span>下拉菜单</span>,
+          component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>
+        }, {
+          type: 'button',
+          text: '提交',
+          className: 'preview-button',
+          onClick: () => {
+            console.log('this.state.htmlContent', this.state.htmlContent)
+          }
+        }
+      ],
+      media: {
+        // 图片上传功能
+        uploadFn: (param) => {
+          const api = 'http://php.winnerwly.top'
+          // const api = 'http://127.0.0.1'
+          const serverURL = `${api}/index.php`
+          const xhr = new XMLHttpRequest
+          const fd = new FormData()
+
+          // libraryId可用于通过mediaLibrary示例来操作对应的媒体内容
+          console.log(param.libraryId)
+          console.log('param', param)
+
+          const successFn = (response) => {
+            console.log('response-success', response)
+            if (xhr.responseText === 'error') {
+              return '上传失败'
+            }
+            // 假设服务端直接返回文件上传后的地址
+            // 上传成功后调用param.success并传入上传后的文件地址
+            param.success({
+              url: `${api}${xhr.responseText}`
+              // url: 'http://pic4.nipic.com/20091217/3885730_124701000519_2.jpg'
+            })
+          }
+
+          const progressFn = (event) => {
+            // 上传进度发生变化时调用param.progress
+            param.progress(event.loaded / event.total * 100)
+          }
+
+          const errorFn = (response) => {
+            console.log('response-error', response)
+            // 上传发生错误时调用param.error
+            param.error({
+              msg: 'unable to upload.'
+            })
+          }
+
+          xhr.upload.addEventListener('progress', progressFn, false)
+          xhr.addEventListener('load', successFn, false)
+          xhr.addEventListener('error', errorFn, false)
+          xhr.addEventListener('abort', errorFn, false)
+
+          fd.append('file', param.file)
+          console.log('fd', fd)
+          xhr.open('POST', serverURL, true)
+          xhr.send(fd)
+        }
+      }
     }
+
+    return (
+      <div className="list">
+        <BraftEditor {...editorProps} />
+      </div>
+    )
   }
 
-  const copyUrl = (record, e) => {
-    const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
-    window.prompt('请使用Ctrl+C复制到剪切板', href)
-  }
-
-  const columns = [
-    {
-      title: '站点ID',
-      dataIndex: 'idUser',
-      key: 'idUser',
-    }, {
-      title: '站点名称',
-      dataIndex: 'name',
-      key: 'name',
-    }, {
-      title: '黑名单手机号/单号',
-      dataIndex: 'mobile',
-      key: 'mobile',
-    }, {
-      title: '理由',
-      dataIndex: 'note',
-      key: 'note',
-    }, {
-      title: '时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-      render: (text) => {
-        const createTime = time.formatTime(text.toString())
-        return <span>{createTime}</span>
-      },
-    }, {
-      title: '操作',
-      key: 'operation',
-      width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
-      },
-    },
-  ]
-
-  const getBodyWrapperProps = {
-    page: location.query.page,
-    rows: tableProps.pagination.rows,
-  }
-
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
-
-  return (
-    <div>
-      <Table
-        {...tableProps}
-        className={classnames({ [styles.table]: true })}
-        bordered
-        scroll={{ x: 1250 }}
-        columns={columns}
-        simple
-        rowKey={record => record.id}
-        getBodyWrapper={getBodyWrapper}
-      />
-    </div>
-  )
 }
 
-List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  location: PropTypes.object,
-}
+// List.propTypes = {
+//   onDeleteItem: PropTypes.func,
+//   onEditItem: PropTypes.func,
+//   location: PropTypes.object,
+// }
 
 export default List
