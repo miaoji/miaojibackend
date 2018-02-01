@@ -1,20 +1,39 @@
 import React from 'react'
 import BraftEditor from 'braft-editor'
+import PropTypes from 'prop-types'
 import 'braft-editor/dist/braft.css'
+import { Form, Input, Modal } from 'antd'
+
+const confirm = Modal.confirm
+const FormItem = Form.Item
+const formItemLayout = {
+  labelCol: {
+    span: 24,
+  },
+  wrapperCol: {
+    span: 24,
+  },
+}
 
 class List extends React.Component {
 
   state = {
-    htmlContent: ''
+    htmlContent: '',
+    title: ''
   }
+
 
   handleHTMLChange = (htmlContent) => {
     this.setState({ htmlContent })
   }
 
+  handleTieleChange = (title) => {
+    this.setState({ title: title.target.value })
+  }
+
   render() {
     const editorProps = {
-      placeholder: '你好!',
+      placeholder: '请输入文章的正文!',
       initialContent: '',
       onHTMLChange: this.handleHTMLChange,
       viewWrapper: '.list',
@@ -33,13 +52,24 @@ class List extends React.Component {
         }, {
           type: 'dropdown',
           text: <span>下拉菜单</span>,
-          component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>
+          component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>,
+          // component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>,
+          // component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>,
+          // component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>,
         }, {
           type: 'button',
           text: '提交',
           className: 'preview-button',
           onClick: () => {
             console.log('this.state.htmlContent', this.state.htmlContent)
+            console.log('this.state.title', this.state.title)
+            const _this = this
+            confirm({
+              title: '确定要发表吗?',
+              onOk() {
+                _this.props.onpublish({ htmlContent: _this.state.htmlContent, title: _this.state.title })
+              }
+            })
           }
         }
       ],
@@ -47,7 +77,6 @@ class List extends React.Component {
         // 图片上传功能
         uploadFn: (param) => {
           const api = 'http://php.winnerwly.top'
-          // const api = 'http://127.0.0.1'
           const serverURL = `${api}/index.php`
           const xhr = new XMLHttpRequest
           const fd = new FormData()
@@ -64,9 +93,9 @@ class List extends React.Component {
             // 假设服务端直接返回文件上传后的地址
             // 上传成功后调用param.success并传入上传后的文件地址
             param.success({
-              url: `${api}${xhr.responseText}`
-              // url: 'http://pic4.nipic.com/20091217/3885730_124701000519_2.jpg'
+              url: JSON.parse(xhr.responseText).obj
             })
+            return false
           }
 
           const progressFn = (event) => {
@@ -94,20 +123,30 @@ class List extends React.Component {
         }
       }
     }
-
+    // const { getFieldDecorator } = this.props.form
     return (
       <div className="list">
-        <BraftEditor {...editorProps} />
+        <Form>
+          <FormItem label="标题" hasFeedback {...formItemLayout}>
+            <Input onChange={this.handleTieleChange} placeholder="请输入单号前缀!" />
+          </FormItem>
+          <FormItem label="正文" hasFeedback {...formItemLayout}>
+            <BraftEditor {...editorProps} />
+            {/* <BraftEditor {...editorProps} /> */}
+          </FormItem>
+        </Form>
       </div>
     )
   }
 
 }
 
-// List.propTypes = {
-//   onDeleteItem: PropTypes.func,
-//   onEditItem: PropTypes.func,
-//   location: PropTypes.object,
-// }
+List.propTypes = {
+  onDeleteItem: PropTypes.func,
+  onEditItem: PropTypes.func,
+  location: PropTypes.object,
+  form: PropTypes.object,
+  onpublish: PropTypes.func
+}
 
-export default List
+export default Form.create()(List)

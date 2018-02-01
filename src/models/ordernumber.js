@@ -1,6 +1,7 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, create, update, remove, showBrandName } from '../services/ordernumber'
+import { query, create, update, showBrandName } from '../services/ordernumber'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -9,25 +10,25 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create',
+    modalType: 'create'
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/ordernumber') {
           dispatch({
             type: 'query',
-            payload: location.query,
+            payload: location.query
           })
         }
       })
-    },
+    }
   },
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
         yield put({
@@ -44,7 +45,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put, select }) {
+    *create({ payload }, { call, put, select }) {
       const { userId } = yield select(_ => _.app.user)
       let newOrderNumber = {
         cname: userId,
@@ -65,7 +66,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ ordernumber }) => ordernumber.currentItem.id)
       const { userId } = yield select(_ => _.app.user)
       let orderNumber = {
@@ -88,7 +89,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete'({ payload }, { call, put }) {
       let orderNumber = {
         id: payload,
         state: 2
@@ -103,7 +104,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getBrandName ({}, { call, put }) {
+    *getBrandName({ payload }, { call, put }) {
       const data = yield call(showBrandName)
       if (data.code === 200 && data.obj) {
         let children = []
@@ -126,15 +127,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 
-    setBrandName (state, { payload }) {
+    setBrandName(state, { payload }) {
       return { ...state, ...payload }
     },
 

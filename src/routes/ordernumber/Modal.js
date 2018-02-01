@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Select } from 'antd'
+import { Form, Input, InputNumber, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
-const Option = Select.Option
-const { TextArea } = Input
 
 const formItemLayout = {
   labelCol: {
@@ -64,16 +62,13 @@ const modal = ({
             initialValue: item.end,
             rules: [
               {
-                required: true,
+                // required: true,
                 message: '请输入单号后缀!',
               },
             ],
           })(<Input placeholder="请输入单号后缀!" />)}
         </FormItem>
-        <FormItem 
-          label="单号长度"
-          hasFeedback 
-          {...formItemLayout}>
+        <FormItem label="单号长度" hasFeedback {...formItemLayout}>
           {getFieldDecorator('length', {
             initialValue: item.length,
             rules: [
@@ -105,6 +100,7 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  brandName: PropTypes.array
 }
 
 export default Form.create()(modal)

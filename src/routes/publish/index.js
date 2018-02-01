@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
 import List from './List'
 
@@ -13,39 +12,18 @@ const Publish = ({ location, dispatch, publish, loading }) => {
     loading: loading.effects['publish/query'],
     pagination,
     location,
-    onChange (page) {
-      const { query, pathname } = location
-      dispatch(routerRedux.push({
-        pathname,
-        query: {
-          ...query,
-          page: page.current,
-          pageSize: page.pageSize,
-        },
-      }))
-    },
-    onDeleteItem (id) {
+    onpublish(data) {
+      console.log('data', data)
       dispatch({
-        type: 'publish/delete',
-        payload: id,
+        type: 'publish/create',
+        payload: data
       })
-    },
-    onEditItem (item) {
-      dispatch({
-        type: 'publish/showModal',
-        payload: {
-          modalType: 'update',
-          currentItem: item,
-        },
-      })
-      dispatch({
-        type: 'publish/getSiteName',
-      })
-    },
+    }
   }
 
   return (
     <div className="content-inner">
+      {/* <Input /> */}
       <List {...listProps} />
     </div>
   )
