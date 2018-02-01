@@ -52,7 +52,7 @@ export default modelExtend(pageModel, {
         // brand: payload.brand.split('/-/')[0],
         brandId: payload.brand.split('/-/')[1],
         start: payload.start,
-        end: payload.end,
+        end: payload.end || '',
         length: payload.length
       }
       newOrderNumber = JSON.stringify(newOrderNumber)

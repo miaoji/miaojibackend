@@ -18,7 +18,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -41,6 +41,9 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '后缀',
       dataIndex: 'end',
       key: 'end',
+      render: (text) => {
+        return <span>{(text === '' || !text) ? '无' : text}</span>
+      }
     }, {
       title: '长度',
       dataIndex: 'length',
