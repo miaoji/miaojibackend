@@ -51,11 +51,9 @@ class List extends React.Component {
           }
         }, {
           type: 'dropdown',
-          text: <span>下拉菜单</span>,
-          component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>,
-          // component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>,
-          // component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>,
-          // component: <h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1>,
+          text: 'Foo',
+          showDropDownArrow: true,
+          component: <div><h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1><h1>123456</h1></div>
         }, {
           type: 'button',
           text: '提交',
