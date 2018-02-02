@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import { YQL, CORS } from './config'
+// import { YQL, CORS } from './config'
 import jsonp from 'jsonp'
 import lodash from 'lodash'
 import pathToRegexp from 'path-to-regexp'
@@ -77,18 +77,18 @@ const fetch = (options) => {
         params,
         timeout: 60000,
       })
-    case 'parampost':
-      let param = new URLSearchParams()
-      param.append(paramkey, cloneData)
-      return axios({
-        url,
-        method: 'post',
-        data: param,
-        timeout: 200000,
-        headers: {
-          'content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
+    // case 'parampost':
+    //   let param = new URLSearchParams()
+    //   param.append(paramkey, cloneData)
+    //   return axios({
+    //     url,
+    //     method: 'post',
+    //     data: param,
+    //     timeout: 200000,
+    //     headers: {
+    //       'content-Type': 'application/x-www-form-urlencoded'
+    //     }
+    //   })
     case 'put':
       return axios.put(url, cloneData)
     case 'patch':
