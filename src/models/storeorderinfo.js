@@ -101,6 +101,11 @@ export default modelExtend(pageModel, {
     },
 
     *download({ payload }, { call }) {
+      notification.success({
+        message: '下载中...',
+        description: '正在为您准备资源,请稍等!!!',
+        duration: 0
+      })
       const data = yield call(downLoad, { ...payload, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj

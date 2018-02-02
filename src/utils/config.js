@@ -56,8 +56,8 @@ module.exports = {
     topups: `${APIV3}/quandiExpressSiteManager/rechargeRecord`, // 充值记录
     withdraws: `${APIV3}/quandiExpressSiteManager/extractionamount`, // 提现记录
 
-    orders: `${APIV3}/quandiExpressSiteManager/expressStatus`, // 运单管理
-    order: `${APIV3}/quandiExpressSiteManager/expressStatus`,
+    orders: `${APIV3}/quandiExpressSiteManager/waybillStatus`, // 运单管理
+    order: `${APIV3}/quandiExpressSiteManager/waybillStatus`,
 
     // 二维码推广接口
     qr: {
