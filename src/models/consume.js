@@ -35,7 +35,6 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      console.log('提交请求的数据---', payload)
       // 转换提交的交易类型的数据
       if (typeof(payload.transactionType) === 'string') {
         payload.transactionType = [payload.transactionType]
@@ -48,7 +47,6 @@ export default modelExtend(pageModel, {
       if (typeof(payload.paymentMethod) === 'string') {
         payload.paymentMethod = [payload.paymentMethod]
       }
-      console.log('payload111111', payload)
       // return
       let data = yield call(query, payload)
       if (data.code === 200) {

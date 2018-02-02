@@ -13,7 +13,6 @@ const Publish = ({ location, dispatch, publish, loading }) => {
     pagination,
     location,
     onpublish(data) {
-      console.log('data', data)
       dispatch({
         type: 'publish/create',
         payload: data

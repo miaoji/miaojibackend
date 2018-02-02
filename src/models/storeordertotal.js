@@ -33,7 +33,6 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       const data = yield call(query, { ...payload, download: 0 })
-      console.log('data', data)
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -93,7 +92,6 @@ export default modelExtend(pageModel, {
     },
 
     *download({ payload }, { call }) {
-      console.log('aa', payload)
       const data = yield call(downLoad, { ...payload, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj

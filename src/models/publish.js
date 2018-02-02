@@ -27,8 +27,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *create ({ payload }, { call, put }) {
-      console.log('payload', payload)
+    *create() {
       location.reload()
     }
 
@@ -36,7 +35,7 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setStates (state, { payload }) {
+    setStates(state, { payload }) {
       return { ...state, ...payload }
     }
 

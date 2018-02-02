@@ -29,13 +29,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '费用',
-      dataIndex: 'fee',
-      key: 'fee',
-      render: (text) => {
-        return <span>{text || 0}元</span>
-      }
-    }, {
       title: '状态',
       dataIndex: 'state',
       key: 'state',

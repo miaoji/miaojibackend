@@ -1,3 +1,4 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { query, create, update, remove, showSiteName } from '../services/blacklists'
@@ -13,7 +14,7 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/blacklist') {
           dispatch({
@@ -27,7 +28,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
         yield put({
@@ -44,7 +45,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       const newblacklist = {
         idUser: payload.idUser.split('/-/')[1],
         mobile: payload.mobile,
@@ -57,11 +58,11 @@ export default modelExtend(pageModel, {
         message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data.mess == 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
+        throw data.mess === 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ blacklist }) => blacklist.currentItem.id)
       const newblacklist = {
         note: payload.note,
@@ -77,19 +78,18 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *'delete'({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload, state: 2 })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess == 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
+        throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
       }
     },
 
-    *getSiteName ({}, { call, put }) {
+    *getSiteName({ payload }, { call, put }) {
       const data = yield call(showSiteName)
-      console.log('data', data)
       if (data.code === 200 && data.obj) {
         let children = []
         for (let i = 0; i < data.obj.length; i++) {
@@ -111,15 +111,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setSiteName (state, { payload }) {
+    setSiteName(state, { payload }) {
       return { ...state, ...payload }
     },
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 

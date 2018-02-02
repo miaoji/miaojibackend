@@ -34,7 +34,6 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
       const data = yield call(query, { ...payload, download: 0 })
-      console.log('data', data)
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -51,7 +50,6 @@ export default modelExtend(pageModel, {
     },
 
     *download({ payload }, { call }) {
-      console.log('aa', payload)
       const data = yield call(downLoad, { ...payload, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj

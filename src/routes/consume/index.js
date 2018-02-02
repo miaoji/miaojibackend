@@ -74,9 +74,6 @@ const Consume = ({ location, dispatch, consume, loading }) => {
       })
     },
     onFilterStatus (value) {
-      console.log('index接收的---', value)
-      console.log('...value转换的数据---', { ...value })
-      console.log('location', location.pathname)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {

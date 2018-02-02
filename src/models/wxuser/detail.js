@@ -18,8 +18,6 @@ export default {
           const userId = queryURL('userId')
           const username = queryURL('username')
           const usermobile = queryURL('usermobile')
-          // console.log('userId', userId)
-          // console.log('usermobile', usermobile)
           if (userId) {
             dispatch({ type: 'query', payload: { userId } })
             dispatch({ type: 'setUser', payload: { user: { username, usermobile } } })
@@ -36,7 +34,6 @@ export default {
       const data = yield call(query, payload)
       const { success, message, status, ...other } = data
       delete other.obj.userId
-      console.log('other.obj', other.obj)
       if (success) {
         yield put({
           type: 'querySuccess',

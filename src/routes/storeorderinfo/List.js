@@ -6,9 +6,12 @@ import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
-
   const columns = [
     {
+      title: '站点名',
+      dataIndex: 'name',
+      key: 'name'
+    }, {
       title: '单号',
       dataIndex: 'orderSn',
       key: 'orderSn',
@@ -18,13 +21,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'brand',
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      }
-    }, {
-      title: '费用',
-      dataIndex: 'fee',
-      key: 'fee',
-      render: (text) => {
-        return <span>{text || 0}元</span>
       }
     }, {
       title: '状态',

@@ -29,17 +29,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      // const newPayload = {
-      //   // feeType: 1,
-      //   // status: 'success',
-      //   // startTime: '1486310400000',
-      //   // endTime: '1486396800000',
-      //   download: 0,
-      //   // rownum: 1,
-      //   // pagination: 10,
-      // }
       const data = yield call(query, { ...payload, download: 0 }) 
-      console.log('data', data)
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -99,7 +89,6 @@ export default modelExtend(pageModel, {
     },
 
     *download({ payload }, { call }) {
-      console.log('payload', payload)
       const data = yield call(query, {
         feeType: 1,
         status: 'success',
@@ -109,9 +98,8 @@ export default modelExtend(pageModel, {
         rownum: 1,
         pagination: 10,
       })
-      console.log('data', data)
       if (data.code === 200 && data.obj) {
-        console.log('数据正在请求下载')
+        console.info('数据正在请求下载')
       } else {
         throw data.mess || '无法跟服务器建立有效连接'
       }

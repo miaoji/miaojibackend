@@ -35,10 +35,10 @@ let checkbookData = Mock.mock({
 
 let database = checkbookData.data
 
-const NOTFOUND = {
-  message: 'Not Found',
-  documentation_url: 'http://localhost:8000/request',
-}
+// const NOTFOUND = {
+//   message: 'Not Found',
+//   documentation_url: 'http://localhost:8000/request',
+// }
 
 module.exports = {
 

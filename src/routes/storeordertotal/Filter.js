@@ -43,7 +43,6 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    console.log('createTime', createTime)
     if (createTime.length === 2) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
@@ -87,7 +86,6 @@ const Filter = ({
   }
 
   const handleDownLoad = () => {
-    console.log(11)
     Modal.confirm({
       title: '下载前请确认是否是你想要的数据！',
       onOk() {
@@ -109,7 +107,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { name, mobile } = filter
+  const { name } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -122,9 +120,6 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>

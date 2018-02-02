@@ -43,8 +43,7 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    console.log('createTime', createTime)
-    if (createTime.length === 2) {
+    if (createTime && createTime.length === 2) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
@@ -87,7 +86,6 @@ const Filter = ({
   }
 
   const handleDownLoad = () => {
-    console.log(11)
     Modal.confirm({
       title: '下载前请确认是否是你想要的数据！',
       onOk() {

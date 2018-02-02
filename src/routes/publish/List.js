@@ -59,8 +59,6 @@ class List extends React.Component {
           text: '提交',
           className: 'preview-button',
           onClick: () => {
-            console.log('this.state.htmlContent', this.state.htmlContent)
-            console.log('this.state.title', this.state.title)
             const _this = this
             confirm({
               title: '确定要发表吗?',
@@ -80,11 +78,8 @@ class List extends React.Component {
           const fd = new FormData()
 
           // libraryId可用于通过mediaLibrary示例来操作对应的媒体内容
-          console.log(param.libraryId)
-          console.log('param', param)
 
-          const successFn = (response) => {
-            console.log('response-success', response)
+          const successFn = () => {
             if (xhr.responseText === 'error') {
               return '上传失败'
             }
@@ -101,8 +96,7 @@ class List extends React.Component {
             param.progress(event.loaded / event.total * 100)
           }
 
-          const errorFn = (response) => {
-            console.log('response-error', response)
+          const errorFn = () => {
             // 上传发生错误时调用param.error
             param.error({
               msg: 'unable to upload.'
@@ -115,7 +109,6 @@ class List extends React.Component {
           xhr.addEventListener('abort', errorFn, false)
 
           fd.append('file', param.file)
-          console.log('fd', fd)
           xhr.open('POST', serverURL, true)
           xhr.send(fd)
         }
