@@ -100,7 +100,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('brand', { initialValue: brand })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('brand', { initialValue: brand })(<Search placeholder="按快递品牌搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
