@@ -68,7 +68,7 @@ const modal = ({
             rules: [
               {
                 required: !paramDisabled,
-                pattern: /^[0-9]{11}$/,
+                // pattern: /^[0-9]{11}$/,
                 message: '请输入手机号码/单号!',
               },
             ],
