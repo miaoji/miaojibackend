@@ -10,7 +10,7 @@ const fetch = (options) => {
   let {
     method = 'get',
     data,
-    paramkey,
+    // paramkey,
     params,
     fetchType,
     url,
