@@ -48,14 +48,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         let encryptNum = `${str.substr(0, 5)}****${str.substr(9, 10)}`
         return <span>{encryptNum}</span>
       },
-    },
-     /* {
-       title: '地理所属店铺',
-       dataIndex: 'belongStore',
-       key: 'belongStore',
-       render:(text)=><span>{text?text:"暂无"}</span>
-     },*/
-    {
+    }, {
       title: '创建时间',
       dataIndex: 'subscribeTime',
       key: 'subscribeTime',
@@ -78,7 +71,8 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         { text: '关注', value: '1' },
         { text: '取消关注', value: '0' },
       ],
-      onFilter: (value, record) => Number(record.subscribe) === Number(value),
+      filterMultiple: false,
+      // onFilter: (value, record) => Number(record.subscribe) === Number(value),
       render: (text) => {
         const realtext = {
           0: '取消关注',

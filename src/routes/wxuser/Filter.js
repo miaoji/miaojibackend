@@ -38,7 +38,6 @@ const Filter = ({
   const handleFields = (fields) => {
     const { createTime } = fields
     if (createTime.length) {
-      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
       fields.endTime = repairTime.endTime
@@ -49,6 +48,7 @@ const Filter = ({
 
   const handleSubmit = () => {
     let fields = getFieldsValue()
+    fields.subscribe = subscribe
     fields = handleFields(fields)
     onFilterChange(fields)
   }
@@ -77,7 +77,7 @@ const Filter = ({
     onFilterChange(fields)
   }
 
-  const { wxName, address } = filter
+  const { wxName, address, subscribe } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
