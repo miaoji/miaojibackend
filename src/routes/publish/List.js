@@ -76,8 +76,10 @@ class List extends React.Component {
           const serverURL = `${api}/index.php`
           const xhr = new XMLHttpRequest
           const fd = new FormData()
-
-          // libraryId可用于通过mediaLibrary示例来操作对应的媒体内容
+          console.log('param', param.file)
+          let r = new FileReader()
+          r.readAsDataURL(param.file)
+          console.log('r', r.result)
 
           const successFn = () => {
             if (xhr.responseText === 'error') {
