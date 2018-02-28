@@ -2,7 +2,8 @@ import React from 'react'
 import BraftEditor from 'braft-editor'
 import PropTypes from 'prop-types'
 import 'braft-editor/dist/braft.css'
-import { Form, Input, Modal } from 'antd'
+import { Form, Input, Modal, notification, Select, Row, Col } from 'antd'
+import { upload } from '../../services/publish'
 
 const confirm = Modal.confirm
 const FormItem = Form.Item
@@ -19,7 +20,9 @@ class List extends React.Component {
 
   state = {
     htmlContent: '',
-    title: ''
+    title: '',
+    type: '0',
+    notify: '0'
   }
 
 
@@ -29,6 +32,16 @@ class List extends React.Component {
 
   handleTieleChange = (title) => {
     this.setState({ title: title.target.value })
+  }
+
+  handleTypeChange = (type) => {
+    console.log('type', type)
+    this.setState({ type })
+  }
+
+  handleNotifyChange = (notify) => {
+    console.log('notify', notify)
+    this.setState({ notify })
   }
 
   render() {
@@ -47,7 +60,10 @@ class List extends React.Component {
           text: '预览',
           className: 'preview-button',
           onClick: () => {
-            window.open().document.write(this.state.htmlContent)
+            const htmlContent = this.state.htmlContent
+            const title = this.state.title
+            const contant = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1; user-scalable=no;"/><title>${title}</title></head><body>${htmlContent}</body></html>`
+            window.open().document.write(contant)
           }
         }, {
           type: 'dropdown',
@@ -63,7 +79,15 @@ class List extends React.Component {
             confirm({
               title: '确定要发表吗?',
               onOk() {
-                _this.props.onpublish({ htmlContent: _this.state.htmlContent, title: _this.state.title })
+                const htmlContent = _this.state.htmlContent
+                const title = _this.state.title
+                const contant = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1; user-scalable=no;"/><title>${title}</title></head><body>${htmlContent}</body></html>`
+                _this.props.onpublish({
+                  contant,
+                  title,
+                  type: Number(_this.state.type),
+                  receiveId: Number(_this.state.notify)
+                })
               }
             })
           }
@@ -71,61 +95,65 @@ class List extends React.Component {
       ],
       media: {
         // 图片上传功能
-        uploadFn: (param) => {
-          const api = 'http://php.winnerwly.top'
-          const serverURL = `${api}/index.php`
-          const xhr = new XMLHttpRequest
-          const fd = new FormData()
-          console.log('param', param.file)
-          let r = new FileReader()
-          r.readAsDataURL(param.file)
-          console.log('r', r.result)
-
-          const successFn = () => {
-            if (xhr.responseText === 'error') {
-              return '上传失败'
-            }
-            // 假设服务端直接返回文件上传后的地址
-            // 上传成功后调用param.success并传入上传后的文件地址
-            param.success({
-              url: JSON.parse(xhr.responseText).obj
+        async uploadFn (param) {
+          if (typeof (FileReader) === 'undefined') {
+            param.error({
+              msg: '上传失败'
+            })
+            notification.warning({
+              message: '图片上传失败',
+              description: '抱歉,你的浏览器暂不支持图片上传功能,请使用谷歌浏览器,或者切换到浏览器的极速模式'
             })
             return false
           }
-
-          const progressFn = (event) => {
-            // 上传进度发生变化时调用param.progress
-            param.progress(event.loaded / event.total * 100)
+          let fileReader = new FileReader()
+          fileReader.readAsDataURL(param.file)
+          // 将转成base64的图片上传至服务器
+          fileReader.onload = async function (e) {
+            let base64Code = e.currentTarget.result
+            base64Code = base64Code.split('base64,')[1]
+            const data = await upload({ filee: base64Code })
+            if (data.obj) {
+              param.progress(100)
+              param.success({
+                url: data.obj
+              })
+            } else {
+              param.error({
+                msg: 'unable to upload.'
+              })
+            }
           }
-
-          const errorFn = () => {
-            // 上传发生错误时调用param.error
-            param.error({
-              msg: 'unable to upload.'
-            })
-          }
-
-          xhr.upload.addEventListener('progress', progressFn, false)
-          xhr.addEventListener('load', successFn, false)
-          xhr.addEventListener('error', errorFn, false)
-          xhr.addEventListener('abort', errorFn, false)
-
-          fd.append('file', param.file)
-          xhr.open('POST', serverURL, true)
-          xhr.send(fd)
+          return false
         }
       }
     }
-    // const { getFieldDecorator } = this.props.form
     return (
       <div className="list">
         <Form>
-          <FormItem label="标题" hasFeedback {...formItemLayout}>
-            <Input onChange={this.handleTieleChange} placeholder="请输入单号前缀!" />
-          </FormItem>
+          <Row>
+            <Col span={8}>
+              <FormItem label="标题" hasFeedback {...formItemLayout}>
+                <Input style={{ width: 390 }} onChange={this.handleTieleChange} placeholder="请输入文章的标题!" />
+              </FormItem>
+            </Col>
+            <Col span={3}>
+              <FormItem label="消息类型" hasFeedback {...formItemLayout}>
+                <Select defaultValue="0" style={{ width: 120 }} onChange={this.handleTypeChange}>
+                  <Option value="0">通知提醒</Option>
+                </Select>
+              </FormItem>
+            </Col>
+            <Col span={3}>
+              <FormItem label="通知人" hasFeedback {...formItemLayout}>
+                <Select defaultValue="0" style={{ width: 120 }} onChange={this.handleNotifyChange}>
+                  <Option value="0">所有人</Option>
+                </Select>
+              </FormItem>
+            </Col>
+          </Row>
           <FormItem label="正文" hasFeedback {...formItemLayout}>
             <BraftEditor {...editorProps} />
-            {/* <BraftEditor {...editorProps} /> */}
           </FormItem>
         </Form>
       </div>

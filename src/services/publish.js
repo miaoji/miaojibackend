@@ -1,43 +1,22 @@
-import { request, config, pageParams } from '../utils'
+import { request, config } from '../utils'
 const { api } = config
-const { blacklist } = api
+const { publish } = api
 
-export async function query (params) {
-  params = pageParams(params)
+export async function upload (params) {
+  // params = pageParams(params)
+  console.log('params', params)
   return request({
-    url: blacklist.all,
+    url: publish.upload,
     method: 'post',
-    params,
+    data: params
   })
 }
 
 export async function create (params) {
+  // params = pageParams(params)
   return request({
-    url: blacklist.add,
+    url: publish.send,
     method: 'post',
-    params,
-  })
-}
-
-export async function update (params) {
-  return request({
-    url: blacklist.update,
-    method: 'post',
-    params,
-  })
-}
-
-export async function remove (params) {
-  return request({
-    url: blacklist.update,
-    method: 'post',
-    params,
-  })
-}
-
-export async function showSiteName () {
-  return request({
-    url: blacklist.showSiteName,
-    method: 'post',
+    data: params,
   })
 }
