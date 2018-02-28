@@ -3,7 +3,7 @@ import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
 import { query, downLoad, create, update, remove } from '../services/storeorderinfo'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { config, time } from '../utils'
 
 const { APIV3 } = config
 
@@ -20,6 +20,7 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/storeorderinfo') {
+          // const querys = location.query
           dispatch({
             type: 'query',
             payload: location.query,
@@ -28,10 +29,10 @@ export default modelExtend(pageModel, {
       })
     },
   },
-
   effects: {
-
     *query({ payload = {} }, { call, put }) {
+      message.info('默认查询昨日一天的数据')
+      const times = time.yesterTime()
       // const newPayload = {
       //   // feeType: 1,
       //   // status: 'success',
@@ -41,7 +42,7 @@ export default modelExtend(pageModel, {
       //   // rownum: 1,
       //   // pagination: 10,
       // }
-      const data = yield call(query, { ...payload, download: 0 })
+      const data = yield call(query, { ...times, ...payload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',

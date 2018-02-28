@@ -1,9 +1,10 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/storeuser'
+import { create, remove, update } from '../services/storeuser'
 import * as storeusersService from '../services/storeusers'
 import { pageModel } from './common'
-import { config } from '../utils'
-import { gettimes } from '../utils/time' // 转换时间戳的函数
+import { config, time } from '../utils'
+import { message } from 'antd'
+// import { gettimes } from '../utils/time' // 转换时间戳的函数
 
 const { query } = storeusersService
 const { prefix } = config
@@ -36,7 +37,9 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      let data = yield call(query, payload)
+      message.info('默认查询昨日一天的数据')
+      const times = time.yesterTime()
+      let data = yield call(query, { ...times, ...payload })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -75,7 +78,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       const newUser = { status: 2, id: payload }
       const data = yield call(update, newUser)
       if (data.success) {

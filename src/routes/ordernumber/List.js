@@ -53,6 +53,19 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'brand',
       key: 'brand',
     }, {
+      title: '快递类型',
+      dataIndex: 'mailType',
+      key: 'mailType',
+      render: (text) => {
+        const replText = {
+          0: '普通件',
+          1: '到付件',
+          2: '代收货款件',
+          3: '通用'
+        }
+        return <span>{replText[text]}</span>
+      }
+    }, {
       title: '时间',
       dataIndex: 'createTime',
       key: 'createTime',

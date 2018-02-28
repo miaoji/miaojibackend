@@ -1,10 +1,10 @@
 // 传入一个时间戳,转换成常见的时间格式
 
 export const formatTime = function (val) {
-  if (val == null || val == '' || val.length != 13) {
+  if (val == null || val === '' || val.length !== 13) {
     return '未知时间'
   }
-  let date = new Date(parseInt(val))
+  let date = new Date(parseInt(val, 10))
   let y = date.getFullYear()
   let m = date.getMonth() + 1
   m = m > 9 ? m : `0${m}`
@@ -47,5 +47,20 @@ export const repairTime = function (val) {
   return {
     startTime,
     endTime,
+  }
+}
+
+export function yesterTime() {
+  const date = new Date()
+  const h = date.getHours()
+  const m = date.getMinutes()
+  const s = date.getSeconds()
+  const ms = date.getMilliseconds()
+  const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
+  const startTime = date.getTime() - times
+  const endTime = date.getTime() - times + 86400000 - 1
+  return {
+    startTime,
+    endTime
   }
 }

@@ -23,6 +23,18 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{text || '暂无'}</span>
       }
     }, {
+      title: '快递类型',
+      dataIndex: 'mailtype',
+      key: 'mailtype',
+      render: (text) => {
+        const replText = {
+          0: '普通件',
+          1: '到付件',
+          2: '代收货款件'
+        }
+        return <span>{replText[text]}</span>
+      }
+    }, {
       title: '状态',
       dataIndex: 'state',
       key: 'state',
@@ -32,6 +44,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           103: '分派'
         }
         return <span>{text ? repltext[text] : '未知'}</span>
+      }
+    }, {
+      title: '金额',
+      dataIndex: 'account',
+      key: 'account',
+      render: (text) => {
+        return <span>{text} 元</span>
       }
     }, {
       title: '日期',

@@ -4,6 +4,8 @@ import { Form, Input, InputNumber, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
 
+const Option = Select.Option
+
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -85,10 +87,26 @@ const modal = ({
             rules: [
               {
                 required: true,
-                message: '选择快递品牌!',
+                message: '请选择快递品牌!',
               },
             ],
-          })(<Select showSearch placeholder="请输入快递品牌" defaultValue="" style={{ width: 286 }}>{brandName}</Select>)}
+          })(<Select showSearch placeholder="请选择快递品牌!" defaultValue="" style={{ width: 286 }}>{brandName}</Select>)}
+        </FormItem>
+        <FormItem label="快递类型" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('mailType', {
+            initialValue: item.mailType,
+            rules: [
+              {
+                required: true,
+                message: '请输选择快递类型!',
+              },
+            ],
+          })(<Select placeholder="请输选择快递类型!" style={{ width: 286 }}>
+            <Option value={3}>通用(默认)</Option>
+            <Option value={0}>普通件</Option>
+            <Option value={1}>到付件</Option>
+            <Option value={2}>代收货款</Option>
+          </Select>)}
         </FormItem>
       </Form>
     </Modal>

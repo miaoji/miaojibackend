@@ -3,7 +3,7 @@ import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
 import { query, downLoad, create, update, remove } from '../services/storeordertotal'
 import { pageModel } from './common'
-import { config } from '../utils'
+import { config, time } from '../utils'
 
 const { APIV3 } = config
 
@@ -32,7 +32,9 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      const data = yield call(query, { ...payload, download: 0 })
+      message.info('默认查询昨日一天的数据')
+      const times = time.yesterTime()
+      const data = yield call(query, { ...times, ...payload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',

@@ -53,7 +53,8 @@ export default modelExtend(pageModel, {
         brandId: payload.brand.split('/-/')[1],
         start: payload.start,
         end: payload.end || '',
-        length: payload.length
+        length: payload.length,
+        mailType: payload.mailType
       }
       newOrderNumber = JSON.stringify(newOrderNumber)
       const data = yield call(create, newOrderNumber)
@@ -76,6 +77,7 @@ export default modelExtend(pageModel, {
         brandId: payload.brand.split('/-/')[1],
         start: payload.start,
         end: payload.end,
+        mailType: payload.mailType,
         length: payload.length
       }
       orderNumber = JSON.stringify(orderNumber)
