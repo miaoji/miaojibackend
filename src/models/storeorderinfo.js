@@ -31,7 +31,9 @@ export default modelExtend(pageModel, {
   },
   effects: {
     *query({ payload = {} }, { call, put }) {
-      message.info('默认查询昨日一天的数据')
+      if (!payload.startTime) {
+        message.info('默认查询昨日一天的数据')
+      }
       const times = time.yesterTime()
       // const newPayload = {
       //   // feeType: 1,

@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { create, remove, update } from '../services/storeuser'
 import * as storeusersService from '../services/storeusers'
 import { pageModel } from './common'
-import { config, time } from '../utils'
+import { config } from '../utils'
 import { message } from 'antd'
 // import { gettimes } from '../utils/time' // 转换时间戳的函数
 
@@ -37,9 +37,11 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      message.info('默认查询昨日一天的数据')
-      const times = time.yesterTime()
-      let data = yield call(query, { ...times, ...payload })
+      // if (!payload.startTime) {
+      //   message.info('默认查询昨日一天的数据')
+      // }
+      // const times = time.yesterTime()
+      let data = yield call(query, payload)
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',

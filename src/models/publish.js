@@ -41,10 +41,11 @@ export default modelExtend(pageModel, {
         message.warning('请输入文章标题')
         return
       }
-      if (payload.htmlContent === '') {
+      if (payload.contant === '') {
         message.warning('正文不能为空')
         return
       }
+      payload.contant = payload.contant.replace('+','%2b')
       const createId = JSON.parse(storage({ key: 'user' })).userId
       const data = yield call(create, { ...payload, createId })
       if (data.code === 200) {
