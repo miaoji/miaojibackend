@@ -220,11 +220,11 @@ module.exports = [
     icon: 'setting',
     router: '/ordernumber'
   },
-  // {
-  //   id: 14,
-  //   bpid: 1,
-  //   name: '发表文章',
-  //   icon: 'edit',
-  //   router: '/publish'
-  // }
+  {
+    id: 14,
+    bpid: 1,
+    name: '发表文章',
+    icon: 'edit',
+    router: '/publish'
+  }
 ]
