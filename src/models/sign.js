@@ -1,11 +1,11 @@
 /* 京东单号管理 */
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { findOrderSheetCount, setJDConfig, orderSheet } from '../services/jd'
+import { query } from '../services/sign'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
-  namespace: 'jd',
+  namespace: 'sign',
 
   state: {
     currentItem: {},
@@ -17,7 +17,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/jd') {
+        if (location.pathname === '/sign') {
           dispatch({
             type: 'query',
             payload: location.query
@@ -30,7 +30,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      const data = yield call(findOrderSheetCount, payload)
+      const data = yield call(query, payload)
       if (data.obj) {
         yield put({
           type: 'querySuccess',

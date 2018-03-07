@@ -260,6 +260,22 @@ const Routers = function ({ history, app }) {
             }, 'publish')
           },
         }, {
+          path: 'jd',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/jd'))
+              cb(null, require('./routes/jd/'))
+            }, 'jd')
+          },
+        }, {
+          path: 'sign',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/sign'))
+              cb(null, require('./routes/sign/'))
+            }, 'sign')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {

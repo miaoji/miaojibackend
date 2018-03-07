@@ -5,75 +5,17 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
-
-  const columns = [
-    {
-      title: '单号',
-      dataIndex: 'orderSn',
-      key: 'orderSn',
-    }, {
-      title: '品牌',
-      dataIndex: 'brand',
-      key: 'brand',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      }
-    }, {
-      title: '费用',
-      dataIndex: 'fee',
-      key: 'fee',
-      render: (text) => {
-        return <span>{text || 0}元</span>
-      }
-    }, {
-      title: '状态',
-      dataIndex: 'state',
-      key: 'state',
-      render: (text) => {
-        const repltext = {
-          101: '上架',
-          103: '分派'
-        }
-        return <span>{text ? repltext[text] : '未知'}</span>
-      }
-    }, {
-      title: '日期',
-      dataIndex: 'createTime',
-      key: 'createTime',
-      render: (text) => {
-        return <span>{text}</span>
-      },
-    }
-  ]
-
-  const getBodyWrapperProps = {
-    page: location.query.page,
-    rows: tableProps.pagination.rows,
-  }
-
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
-
+const List = ({ list }) => {
   return (
     <div>
-      <Table
-        {...tableProps}
-        className={classnames({ [styles.table]: true })}
-        bordered
-        scroll={{ x: 1250 }}
-        columns={columns}
-        simple
-        rowKey={record => record.id}
-        getBodyWrapper={getBodyWrapper}
-      />
+      <br/>
+      <h1>单号池剩余单号数量为 <b>{list}</b></h1>
     </div>
   )
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  location: PropTypes.object,
+  list: PropTypes.str,
 }
 
 export default List

@@ -204,16 +204,16 @@ module.exports = [
   }, {
     id: 12,
     bpid: 1,
-    name: '京东管理',
-    icon: 'export'
-  }, {
+    name: '京东单号管理',
+    icon: 'export',
+    router: '/jd'
+  }, /*{
     id: 121,
     bpid: 1,
     mpid: 12,
     name: '单号管理',
     icon: 'user-delete',
-    router: '/mailprice',
-  }, {
+  }, */{
     id: 13,
     bpid: 1,
     name: '单号规则配置',
@@ -226,5 +226,12 @@ module.exports = [
     name: '发表文章',
     icon: 'edit',
     router: '/publish'
+  },
+  {
+    id: 15,
+    bpid: 1,
+    name: '签收',
+    icon: 'edit',
+    router: '/sign'
   }
 ]

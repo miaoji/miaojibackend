@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
+import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Jd = ({ location, dispatch, jd, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = jd
+const Sign = ({ location, dispatch, sign, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = sign
   const { pageSize } = pagination
 
   const modalProps = {
@@ -16,34 +16,63 @@ const Jd = ({ location, dispatch, jd, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '填充单号池' : '修改黑名单信息'}`,
+    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
     selectSiteName,
-    onOk(data) {
-      console.log('data', data)
-      // return
+    onOk (data) {
       dispatch({
-        type: `jd/${modalType}`,
+        type: `sign/${modalType}`,
         payload: data,
       })
     },
-    onCancel() {
+    onCancel () {
       dispatch({
-        type: 'jd/hideModal',
+        type: 'sign/hideModal',
       })
     },
   }
 
   const listProps = {
-    list,
-    loading: loading.effects['jd/query']
+    dataSource: list,
+    loading: loading.effects['sign/query'],
+    pagination,
+    location,
+    onChange (page) {
+      const { query, pathname } = location
+      dispatch(routerRedux.push({
+        pathname,
+        query: {
+          ...query,
+          page: page.current,
+          pageSize: page.pageSize,
+        },
+      }))
+    },
+    onDeleteItem (id) {
+      dispatch({
+        type: 'sign/delete',
+        payload: id,
+      })
+    },
+    onEditItem (item) {
+      dispatch({
+        type: 'sign/showModal',
+        payload: {
+          modalType: 'update',
+          currentItem: item,
+        },
+      })
+      dispatch({
+        type: 'sign/getSiteName',
+      })
+    },
   }
 
   const filterProps = {
     filter: {
       ...location.query,
     },
-    onFilterChange(value) {
+    onFilterChange (value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -53,29 +82,26 @@ const Jd = ({ location, dispatch, jd, loading }) => {
         },
       }))
     },
-    onSearch(fieldsValue) {
+    onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/jd',
+        pathname: '/sign',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/jd',
+        pathname: '/sign',
       }))
     },
-    onDownLoad(payload) {
+    onAdd () {
       dispatch({
-        type: 'jd/download',
-        payload
-      })
-    },
-    onAdd() {
-      dispatch({
-        type: 'jd/showModal',
+        type: 'sign/showModal',
         payload: {
           modalType: 'create',
         },
+      })
+      dispatch({
+        type: 'sign/getSiteName',
       })
     },
   }
@@ -89,11 +115,11 @@ const Jd = ({ location, dispatch, jd, loading }) => {
   )
 }
 
-Jd.propTypes = {
-  jd: PropTypes.object,
+Sign.propTypes = {
+  sign: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ jd, loading }) => ({ jd, loading }))(Jd)
+export default connect(({ sign, loading }) => ({ sign, loading }))(Sign)
