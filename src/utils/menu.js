@@ -227,11 +227,11 @@ module.exports = [
     icon: 'edit',
     router: '/publish'
   },
-  {
-    id: 15,
-    bpid: 1,
-    name: '签收',
-    icon: 'edit',
-    router: '/sign'
-  }
+  // {
+  //   id: 15,
+  //   bpid: 1,
+  //   name: '签收',
+  //   icon: 'edit',
+  //   router: '/sign'
+  // }
 ]

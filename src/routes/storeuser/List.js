@@ -48,7 +48,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'type',
       key: 'type',
       render: (text) => <span>{text === '0'
-            ? '主张号'
+            ? '主帐号'
             : '子帐号'}</span>,
     }, {
       title: '状态',
