@@ -197,17 +197,23 @@ module.exports = [
   }, {
     id: 17,
     bpid: 1,
-    mpid: 11,
+    mpid: 19,
     name: '门店上架总量',
     icon: 'user-delete',
     router: '/selectshelves',
   }, {
     id: 18,
     bpid: 1,
-    mpid: 11,
+    mpid: 19,
     name: '门店分派总量',
     icon: 'user-delete',
     router: '/sentalong',
+  }, {
+    id: 19,
+    bpid: 1,
+    mpid: 11,
+    name: '门店到件总量',
+    icon: 'user-delete',
   }, {
     id: 113,
     bpid: 1,
