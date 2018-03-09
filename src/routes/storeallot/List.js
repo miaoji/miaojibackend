@@ -12,16 +12,16 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'name',
       key: 'name'
     }, {
-      title: '单号',
-      dataIndex: 'orderSn',
-      key: 'orderSn',
+      title: '品牌',
+      dataIndex: 'brand',
+      key: 'brand',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '品牌',
-      dataIndex: 'brand',
-      key: 'brand',
+      title: '单号',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }
@@ -35,6 +35,32 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           103: '分派'
         }
         return <span>{text ? repltext[text] : '未知'}</span>
+      }
+    }, {
+      title: '快递类型',
+      dataIndex: 'mailtype',
+      key: 'mailtype',
+      render: (text) => {
+        const repltext = {
+          0: '普通件',
+          1: '到付件',
+          2: '代收货款件'
+        }
+        return <span>{repltext[text] || '未知'}</span>
+      }
+    }, {
+      title: '金额',
+      dataIndex: 'account',
+      key: 'account',
+      render: (text) => {
+        return <span>{text || '0'} 元</span>
+      }
+    }, {
+      title: '分派人',
+      dataIndex: 'cname',
+      key: 'cname',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '日期',

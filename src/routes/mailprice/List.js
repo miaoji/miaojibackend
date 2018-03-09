@@ -9,6 +9,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
+      title: '站点名',
+      dataIndex: 'name',
+      key: 'name'
+    }, {
       title: '单号',
       dataIndex: 'orderSn',
       key: 'orderSn',
@@ -27,15 +31,15 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'feeType',
       key: 'feeType',
       filters: [
-        { text: '寄件费', value: 1 },
-        { text: '代收货款', value: 2 },
-        { text: '到付费', value: 3 },
+        { text: '寄件费', value: 13 },
+        { text: '代收货款', value: 8 },
+        { text: '到付费', value: 9 },
       ],
       render: (text) => {
         const repltext = {
-          1: '寄件费',
-          2: '代收货款',
-          3: '到付费'
+          13: '寄件费',
+          8: '代收货款',
+          9: '到付费'
         }
         return <span>{text ? repltext[text] : '未知'}</span>
       }
@@ -45,6 +49,20 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'fee',
       render: (text) => {
         return <span>{text || 0}元</span>
+      }
+    }, {
+      title: '收款方式',
+      dataIndex: 'payType',
+      key: 'payType',
+      render: (text) => {
+        const replText = {
+          1: '支付宝',
+          2: '微信',
+          3: '余额',
+          4: '现金',
+          0: '未知'
+        }
+        return <span>{replText[text || 0]}</span>
       }
     }, {
       title: '支付状态',

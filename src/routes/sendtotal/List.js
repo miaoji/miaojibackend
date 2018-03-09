@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
+import { Link } from 'dva/router'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -10,66 +11,40 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     {
       title: '站点名',
       dataIndex: 'name',
-      key: 'name'
-    }, {
-      title: '品牌',
-      dataIndex: 'brand',
-      key: 'brand',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
+      key: 'name',
+      render: (text, record) => {
+        // return <span>{ text || '站点名暂无'}</span>
+        return <Link to={`/mailprice?idUser=${record.idUser}`}>{text}</Link>
       }
     }, {
-      title: '单号',
-      dataIndex: 'orderSn',
-      key: 'orderSn',
+      title: '支付成功',
+      dataIndex: 'success',
+      key: 'success',
       render: (text) => {
-        return <span>{text || '暂无'}</span>
+        return <span>{text || 0} 元</span>
       }
     }, {
-      title: '状态',
-      dataIndex: 'state',
-      key: 'state',
+      title: '等待支付',
+      dataIndex: 'wait',
+      key: 'wait',
       render: (text) => {
-        const repltext = {
-          101: '上架',
-          103: '分派'
-        }
-        return <span>{text ? repltext[text] : '未知'}</span>
+        return <span>{text || 0} 元</span>
       }
     }, {
-      title: '快递类型',
-      dataIndex: 'mailtype',
-      key: 'mailtype',
+      title: '支付关闭',
+      dataIndex: 'close',
+      key: 'cloce',
       render: (text) => {
-        const repltext = {
-          0: '普通件',
-          1: '到付件',
-          2: '代收货款件'
-        }
-        return <span>{repltext[text] || '未知'}</span>
+        return <span>{text || 0} 元</span>
       }
-    }, {
-      title: '金额',
-      dataIndex: 'account',
-      key: 'account',
-      render: (text) => {
-        return <span>{text || '0'} 元</span>
-      }
-    }, {
-      title: '日期',
-      dataIndex: 'createTime',
-      key: 'createTime',
-      render: (text) => {
-        return <span>{text}</span>
-      },
-    }
+    },
   ]
 
   const getBodyWrapperProps = {
     page: location.query.page,
     rows: tableProps.pagination.rows,
   }
-
+console.log('getBodyWrapperProps', getBodyWrapperProps)
   const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (

@@ -1,14 +1,14 @@
 // import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
-import { query, downLoad, create, update, remove } from '../services/storeordertotal'
+import { query, downLoad, create, update, remove } from '../services/sendtotal'
 import { pageModel } from './common'
 import { config, time } from '../utils'
 
 const { APIV3 } = config
 
 export default modelExtend(pageModel, {
-  namespace: 'storeordertotal',
+  namespace: 'sendtotal',
 
   state: {
     currentItem: {},
@@ -19,7 +19,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/storeordertotal') {
+        if (location.pathname === '/sendtotal') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -32,13 +32,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      if (!payload.startTime) {
-        message.info('默认查询昨日一天的数据')
-      }
-      const times = time.yesterTime()
-      // const data = yield call(query, { ...times, ...payload, download: 0 })
-      const data = yield call(query, { ...payload, download: 0 })
-      console.log('data', data)
+      const data = yield call(query, payload)
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -55,13 +49,13 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      const newstoreordertotal = {
+      const newsendtotal = {
         idUser: payload.idUser.split('/-/')[1],
         mobile: payload.mobile,
         note: payload.note,
         state: 1,
       }
-      const data = yield call(create, { state: 1, ...newstoreordertotal })
+      const data = yield call(create, { state: 1, ...newsendtotal })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -72,12 +66,12 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ storeordertotal }) => storeordertotal.currentItem.id)
-      const newstoreordertotal = {
+      const id = yield select(({ sendtotal }) => sendtotal.currentItem.id)
+      const newsendtotal = {
         note: payload.note,
         id,
       }
-      const data = yield call(update, newstoreordertotal)
+      const data = yield call(update, newsendtotal)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -103,11 +97,7 @@ export default modelExtend(pageModel, {
         description: '正在为您准备资源,请稍等!!!',
         duration: 0
       })
-      if (!payload.startTime) {
-        message.info('默认下载昨天一天的数据')
-      }
-      const times = time.yesterTime()
-      const data = yield call(downLoad, { ...times, ...payload, download: 1 })
+      const data = yield call(downLoad, { ...payload, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj
         const sssss = window.open(`${APIV3}${url}`)

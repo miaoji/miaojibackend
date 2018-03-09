@@ -1,11 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table } from 'antd'
+import { Table, Modal } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
+import { DropOption } from '../../components'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const confirm = Modal.confirm
+
+const List = ({ openSentalong, openSelectshelves, location, onEditItem, onDeleteItem, ...tableProps }) => {
+  const handleMenuClick = (record, e) => {
+    switch (e.key) {
+      case '1':
+        // window.open(`/bootdetail?orderNo=${record.ORDER_NO}`)
+        openSelectshelves(record.idUser)
+        break
+      case '2':
+        openSentalong(record.idUser)
+        break
+      default:
+        break
+    }
+  }
+
   const columns = [
     {
       title: '站点名',
@@ -45,7 +62,14 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'createTime',
       render: (text) => {
         return <span>{text}</span>
-      },
+      }
+    }, {
+      title: '更多信息',
+      key: 'operation',
+      width: 100,
+      render: (text, record) => {
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '上架信息' }, { key: '2', name: '分配信息' }]} />
+      }
     }
   ]
 

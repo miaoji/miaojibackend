@@ -1,36 +1,45 @@
-/* 京东单号管理 */
+// import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
-import { query } from '../services/sign'
+import { notification } from 'antd'
+import { query, downLoad } from '../services/sentalong'
 import { pageModel } from './common'
+import { config, time } from '../utils'
+import { message } from 'antd'
+
+const { APIV3 } = config
 
 export default modelExtend(pageModel, {
-  namespace: 'sign',
+  namespace: 'sentalong',
 
   state: {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
-    list: ''
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/sign') {
+        if (location.pathname === '/sentalong') {
           dispatch({
             type: 'query',
-            payload: location.query
+            payload: location.query,
           })
         }
       })
-    }
+    },
   },
 
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
+      if (!payload.startTime) {
+        message.info('默认查询昨日一天的数据')
+      }
+      const times = time.yesterTime()
+      // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
+      // const data = yield call(query, { ...times, ...payload, download: 0 })
+      const data = yield call(query, { ...payload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -46,23 +55,11 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload = {} }, { call, put }) {
-      const data =yield call(orderSheet, payload)
-      if (data.code === 200) {
-        message.success('填充单号池已完成')
-        yield put({
-          type: 'query'
-        })
-        yield put({
-          type: 'hideModal'
-        })
-      }
-    }
-
   },
 
   reducers: {
-    setState(state, { payload }) {
+
+    setSiteName(state, { payload }) {
       return { ...state, ...payload }
     },
 
@@ -70,9 +67,9 @@ export default modelExtend(pageModel, {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal(state, { payload }) {
-      return { ...state, ...payload, modalVisible: false }
+    hideModal(state) {
+      return { ...state, modalVisible: false }
     }
-  }
 
+  }
 })

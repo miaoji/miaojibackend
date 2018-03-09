@@ -30,3 +30,12 @@ export async function setJDConfig (params) {
 		params
 	})
 }
+
+// 获取京东分成比例
+export async function getJDConfig (params) {
+	return request({
+		url: jd.getJDConfig,
+		method: 'post',
+		params
+	})
+}

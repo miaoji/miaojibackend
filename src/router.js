@@ -276,6 +276,30 @@ const Routers = function ({ history, app }) {
             }, 'sign')
           },
         }, {
+          path: 'sendtotal',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/sendtotal'))
+              cb(null, require('./routes/sendtotal/'))
+            }, 'sendtotal')
+          },
+        }, {
+          path: 'selectshelves',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/selectshelves'))
+              cb(null, require('./routes/selectshelves/'))
+            }, 'selectshelves')
+          },
+        }, {
+          path: 'sentalong',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/sentalong'))
+              cb(null, require('./routes/sentalong/'))
+            }, 'sentalong')
+          },
+        }, {
           path: '*',
           getComponent (nextState, cb) {
             require.ensure([], require => {

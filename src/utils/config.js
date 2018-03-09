@@ -3,11 +3,9 @@ const APIV1 = '/api/v1'
 
 let APIV3
 // 本地测试
-// APIV3 = 'http://192.168.231.232:8080'
-// 仝舟本地测试
-// APIV3 = 'http://192.168.1.112:8080'
+APIV3 = 'http://192.168.231.232:8080'
 // 线上
-APIV3 = 'http://app.quandikeji.com:8288'
+// APIV3 = 'http://app.quandikeji.com:8288'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -110,13 +108,27 @@ module.exports = {
       // 批量填充单号池
       orderSheet: `${APIV3}/JDService/order/orderSheet`,
       // 设置京东分成比例
-      setJDConfig: `${APIV3}/JDService/order/setJDConfig`
+      setJDConfig: `${APIV3}/JDService/order/setJDConfig`,
+      // 获取京东分成比例
+      getJDConfig: `${APIV3}/JDService/order/getJDConfig`,
     },
     // 文章上传功能
     publish: {
       // quandiExpressSiteManager/upload
       upload: `${APIV3}/quandiExpressSiteManager/upload`,
       send: `${APIV3}/quandiExpressSiteManager/insertreleaseArticle`
+    },
+    // 门店支付寄件汇总
+    sendtotal: {
+      all: `${APIV3}/quandiExpressSiteManager/orderState`
+    },
+    // 门店到件总量 -- 上架
+    selectshelves: {
+      all: `${APIV3}/quandiExpressSiteManager/selectshelves`
+    },
+    // 门店到件总量 -- 分派
+    sentalong: {
+      all: `${APIV3}/quandiExpressSiteManager/sentAlong`
     }
   }
 }

@@ -44,7 +44,8 @@ export default modelExtend(pageModel, {
       //   // rownum: 1,
       //   // pagination: 10,
       // }
-      const data = yield call(query, { ...times, ...payload, download: 0 })
+      // const data = yield call(query, { ...times, ...payload, download: 0 })
+      const data = yield call(query, { ...payload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -109,7 +110,11 @@ export default modelExtend(pageModel, {
         description: '正在为您准备资源,请稍等!!!',
         duration: 0
       })
-      const data = yield call(downLoad, { ...payload, download: 1 })
+      if (!payload.startTime) {
+        message.info('默认下载昨天一天的数据')
+      }
+      const times = time.yesterTime()
+      const data = yield call(downLoad, { ...times, ...payload, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj
         const sssss = window.open(`${APIV3}${url}`)

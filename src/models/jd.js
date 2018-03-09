@@ -1,7 +1,7 @@
 /* 京东单号管理 */
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { findOrderSheetCount, setJDConfig, orderSheet } from '../services/jd'
+import { findOrderSheetCount, setJDConfig, orderSheet, getJDConfig } from '../services/jd'
 import { pageModel } from './common'
 
 export default modelExtend(pageModel, {
@@ -11,7 +11,8 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
-    list: ''
+    list: '',
+    jdconfig: ''
   },
 
   subscriptions: {
@@ -31,11 +32,15 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       const data = yield call(findOrderSheetCount, payload)
+      const jdconfig = yield call(getJDConfig)
+      console.log('JDconfig', JDconfig)
+
       if (data.obj) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj
+            list: data.obj,
+            jdconfig: jdconfig.obj
           }
         })
       }

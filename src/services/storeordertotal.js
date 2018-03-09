@@ -6,6 +6,8 @@ export async function query(params) {
   params = pageParams(params)
   delete params.page
   delete params.pageSize
+  params.pagination = Number(params.pagination)
+  params.rownum = Number(params.rownum)
   params = JSON.stringify(params)
   return request({
     url: storeordertotal.all,

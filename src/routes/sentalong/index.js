@@ -7,8 +7,8 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = storeordertotal
+const Sentalong = ({ location, dispatch, sentalong, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = sentalong
   const { pageSize } = pagination
 
   const modalProps = {
@@ -21,20 +21,20 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
     selectSiteName,
     onOk(data) {
       dispatch({
-        type: `storeordertotal/${modalType}`,
+        type: `sentalong/${modalType}`,
         payload: data,
       })
     },
     onCancel() {
       dispatch({
-        type: 'storeordertotal/hideModal',
+        type: 'sentalong/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['storeordertotal/query'],
+    loading: loading.effects['sentalong/query'],
     pagination,
     location,
     onChange(page, filter) {
@@ -49,31 +49,15 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
         },
       }))
     },
-    openSelectshelves(idUser) {
-      dispatch(routerRedux.push({
-        pathname: '/storeorderinfo',
-        query: {
-          idUser
-        },
-      }))
-    },
-    openSentalong(idUser){
-      dispatch(routerRedux.push({
-        pathname: '/storeallot',
-        query: {
-          idUser
-        },
-      }))
-    },
     onDeleteItem(id) {
       dispatch({
-        type: 'storeordertotal/delete',
+        type: 'sentalong/delete',
         payload: id,
       })
     },
     onEditItem(item) {
       dispatch({
-        type: 'storeordertotal/showModal',
+        type: 'sentalong/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -98,24 +82,24 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
     },
     onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/storeordertotal',
+        pathname: '/sentalong',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/storeordertotal',
+        pathname: '/sentalong',
       }))
     },
     onDownLoad() {
       dispatch({
-        type: 'storeordertotal/download',
+        type: 'sentalong/download',
         payload: location.query
       })
     },
     onAdd() {
       dispatch({
-        type: 'storeordertotal/showModal',
+        type: 'sentalong/showModal',
         payload: {
           modalType: 'create',
         },
@@ -132,11 +116,11 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
   )
 }
 
-Storeordertotal.propTypes = {
-  storeordertotal: PropTypes.object,
+Sentalong.propTypes = {
+  sentalong: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ storeordertotal, loading }) => ({ storeordertotal, loading }))(Storeordertotal)
+export default connect(({ sentalong, loading }) => ({ sentalong, loading }))(Sentalong)
