@@ -2,14 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import JdModal from './JdModal'
 
-const Jd = ({ location, jdconfig, dispatch, jd, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = jd
+const Jd = ({ location, dispatch, jd, loading }) => {
+  const { list, jdconfig, pagination, currentItem, modalVisible, jdModalVisible, modalType, selectSiteName } = jd
   const { pageSize } = pagination
+  console.log('jdconfig', list)
 
   const modalProps = {
     type: modalType,
@@ -32,6 +33,27 @@ const Jd = ({ location, jdconfig, dispatch, jd, loading }) => {
     },
   }
 
+  const jdModalProps = {
+    type: modalType,
+    item: modalType === 'create' ? {} : currentItem,
+    visible: jdModalVisible,
+    confirmLoading: loading.effects['boot/update'],
+    title: `${modalType === 'create' ? '设置京东分配比例' : '设置京东分配比例'}`,
+    wrapClassName: 'vertical-center-modal',
+    selectSiteName,
+    onOk(data) {
+      dispatch({
+        type: `jd/setjdconfig`,
+        payload: data,
+      })
+    },
+    onCancel() {
+      dispatch({
+        type: 'jd/hideJdModal',
+      })
+    },
+  }
+
   const listProps = {
     list,
     jdconfig,
@@ -41,6 +63,16 @@ const Jd = ({ location, jdconfig, dispatch, jd, loading }) => {
   const filterProps = {
     filter: {
       ...location.query,
+    },
+    onRefresh(){
+      dispatch(routerRedux.push({
+        pathname: '/jd',
+      }))
+    },
+    onSetJdConfig(){
+      dispatch({
+        type: 'jd/showJdModal'
+      })
     },
     onFilterChange(value) {
       dispatch(routerRedux.push({
@@ -84,6 +116,7 @@ const Jd = ({ location, jdconfig, dispatch, jd, loading }) => {
       <Filter {...filterProps} />
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
+      {jdModalVisible && <JdModal {...jdModalProps} />}
     </div>
   )
 }

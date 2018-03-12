@@ -9,9 +9,9 @@ const List = ({ list, jdconfig }) => {
   return (
     <div>
       <br/>
-      <h1>单号池剩余单号数量为 <b>{ list || '暂无' }</b></h1>
+      <h1>单号池剩余单号数量为 <b>{ list[0] || '暂无' }</b></h1>
       <br/>
-      <h1>京东分成比例为 <b>{ jdconfig || '暂无' }</b></h1>
+      <h1>京东分成比例为 <b>{ list[1] ? Math.round(Number(list[1])*100)+'%' : '暂无' }</b></h1>
     </div>
   )
 }

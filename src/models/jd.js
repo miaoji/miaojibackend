@@ -10,9 +10,9 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
+    jdModalVisible: false,
     modalType: 'create',
-    list: '',
-    jdconfig: ''
+    list: [],
   },
 
   subscriptions: {
@@ -33,14 +33,12 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       const data = yield call(findOrderSheetCount, payload)
       const jdconfig = yield call(getJDConfig)
-      // console.log('jdconfig', jdconfig)
 
-      if (data.obj) {
+      if (data.obj&&jdconfig.obj) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj,
-            jdconfig: jdconfig.obj
+            list: [data.obj, jdconfig.obj]
           }
         })
       }
@@ -57,7 +55,22 @@ export default modelExtend(pageModel, {
           type: 'hideModal'
         })
       }
-    }
+    },
+
+    *setjdconfig({ payload = {} }, { call, put }) {
+      // return
+      const item = JSON.stringify({brandId: 20, config: Number(payload.number)/100})
+      const data =yield call(setJDConfig, {param: item})
+      if (data.code === 200) {
+        message.success('设置京东分成比例已完成')
+        yield put({
+          type: 'hideJdModal'
+        })
+        yield put({
+          type: 'query'
+        })
+      }
+    },
 
   },
 
@@ -72,7 +85,16 @@ export default modelExtend(pageModel, {
 
     hideModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: false }
-    }
+    },
+
+    showJdModal(state, { payload }) {
+      return { ...state, ...payload, jdModalVisible: true }
+    },
+
+    hideJdModal(state, { payload }) {
+      return { ...state, ...payload, jdModalVisible: false }
+    },
+
   }
 
 })

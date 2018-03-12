@@ -36,6 +36,6 @@ export async function getJDConfig (params) {
 	return request({
 		url: jd.getJDConfig,
 		method: 'post',
-		params
+		params: {param: ''}
 	})
 }
