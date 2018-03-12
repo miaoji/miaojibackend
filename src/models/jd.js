@@ -33,7 +33,7 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       const data = yield call(findOrderSheetCount, payload)
       const jdconfig = yield call(getJDConfig)
-      console.log('jdconfig', jdconfig)
+      // console.log('jdconfig', jdconfig)
 
       if (data.obj) {
         yield put({

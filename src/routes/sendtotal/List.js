@@ -14,7 +14,6 @@ const List = ({ filter, location, onLink, onEditItem, onDeleteItem, ...tableProp
       key: 'name',
       render: (text, record) => {
         if (filter.startTime) {
-          console.log('filter.startTime', filter.endTime);
           return <Link to={`/mailprice?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text||'暂无站点名'}</Link>
         }
         return <Link to={`/mailprice?idUser=${record.idUser}`}>{text||'暂无站点名'}</Link>
