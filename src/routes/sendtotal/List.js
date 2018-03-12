@@ -6,15 +6,18 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ filter, location, onLink, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
-        // return <span>{ text || '站点名暂无'}</span>
-        return <Link to={`/mailprice?idUser=${record.idUser}`}>{text}</Link>
+        if (filter.startTime) {
+          console.log('filter.startTime', filter.endTime);
+          return <Link to={`/mailprice?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text||'暂无站点名'}</Link>
+        }
+        return <Link to={`/mailprice?idUser=${record.idUser}`}>{text||'暂无站点名'}</Link>
       }
     }, {
       title: '支付成功',
@@ -44,7 +47,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     page: location.query.page,
     rows: tableProps.pagination.rows,
   }
-console.log('getBodyWrapperProps', getBodyWrapperProps)
   const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (

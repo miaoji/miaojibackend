@@ -13,7 +13,6 @@ export async function query(data) {
 }
 
 export async function create(data) {
-  console.log('data', data)
   return request({
     url: ordernumber.create,
     method: 'post',

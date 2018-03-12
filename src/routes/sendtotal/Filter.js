@@ -1,21 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import moment from 'moment'
-// import { FilterItem } from '../../components'
 import {
   Form, Button, Row, Col,
-  // DatePicker,
   Input,
-  // Cascader,
-  // Switch,
   Modal
 } from 'antd'
-// import city from '../../utils/city'
 import { DateRange } from '../../components'
 import { time } from '../../utils'
 
 const Search = Input.Search
-// const { RangePicker } = DatePicker
 
 const ColProps = {
   xs: 24,
@@ -107,22 +100,22 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { name } = filter
+  const { name, startTime, endTime } = filter
 
   let initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = filter.createTime[0]
+  if (startTime) {
+    initialCreateTime[0] = String(startTime)
   }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = filter.createTime[1]
+  if (endTime) {
+    initialCreateTime[1] = String(endTime)
   }
 
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
+      {/*<Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
+      </Col>*/}
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />

@@ -34,6 +34,9 @@ const Selectshelves = ({ location, dispatch, selectshelves, loading }) => {
 
   const listProps = {
     dataSource: list,
+    filter: {
+      ...location.query,
+    },
     loading: loading.effects['selectshelves/query'],
     pagination,
     location,

@@ -107,14 +107,14 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { name } = filter
+  const { name, startTime, endTime } = filter
 
   let initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = filter.createTime[0]
+  if (startTime) {
+    initialCreateTime[0] = String(startTime)
   }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = filter.createTime[1]
+  if (endTime) {
+    initialCreateTime[1] = String(endTime)
   }
 
 

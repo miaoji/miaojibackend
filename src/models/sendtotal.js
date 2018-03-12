@@ -32,7 +32,12 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
+      if (!payload.startTime) {
+        message.info('默认查询昨日一天的数据')
+      }
+      const times = time.yesterTime()
+
+      const data = yield call(query, {...times, ...payload})
       if (data.obj) {
         yield put({
           type: 'querySuccess',

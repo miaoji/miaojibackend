@@ -89,8 +89,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     rows: tableProps.pagination.rows,
   }
 
-  console.log('getBodyWrapperProps', getBodyWrapperProps)
-
   const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (

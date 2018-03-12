@@ -1,13 +1,14 @@
 import React from 'react'
 import { DatePicker, Form } from 'antd'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 
 class DateRange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      startValue: props.startValue,
-      endValue: props.endValue,
+      startValue: props.value[0]?moment.unix(Math.round(props.value[0]/1000)):undefined,
+      endValue: props.value[1]?moment.unix(Math.round(props.value[1]/1000-86400)):undefined,
       endOpen: false,
       size: props.size,
     }

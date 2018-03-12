@@ -107,22 +107,22 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { name } = filter
+  const { name, startTime, endTime } = filter
 
   let initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = filter.createTime[0]
+  if (startTime) {
+    initialCreateTime[0] = startTime
   }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = filter.createTime[1]
+  if (endTime) {
+    initialCreateTime[1] = endTime
   }
 
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
+      {/*<Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
+      </Col>*/}
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />

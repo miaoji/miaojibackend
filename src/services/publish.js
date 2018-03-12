@@ -4,7 +4,6 @@ const { publish } = api
 
 export async function upload (params) {
   // params = pageParams(params)
-  console.log('params', params)
   return request({
     url: publish.upload,
     method: 'post',

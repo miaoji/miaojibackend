@@ -53,7 +53,9 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
       dispatch(routerRedux.push({
         pathname: '/storeorderinfo',
         query: {
-          idUser
+          idUser,
+          startTime: location.query.startTime,
+          endTime: location.query.endTime
         },
       }))
     },
@@ -61,7 +63,9 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
       dispatch(routerRedux.push({
         pathname: '/storeallot',
         query: {
-          idUser
+          idUser,
+          startTime: location.query.startTime,
+          endTime: location.query.endTime
         },
       }))
     },

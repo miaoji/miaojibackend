@@ -3,7 +3,8 @@ const APIV1 = '/api/v1'
 
 let APIV3
 // 本地测试
-APIV3 = 'http://192.168.231.232:8080'
+// APIV3 = 'http://192.168.231.232:8080'
+APIV3 = 'http://192.168.231.231:8080'
 // 线上
 // APIV3 = 'http://app.quandikeji.com:8288'
 

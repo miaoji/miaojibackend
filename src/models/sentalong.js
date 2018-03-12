@@ -38,8 +38,8 @@ export default modelExtend(pageModel, {
       }
       const times = time.yesterTime()
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      // const data = yield call(query, { ...times, ...payload, download: 0 })
-      const data = yield call(query, { ...payload, download: 0 })
+      const data = yield call(query, { ...times, ...payload, download: 0 })
+      // const data = yield call(query, { ...payload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',

@@ -36,9 +36,8 @@ export default modelExtend(pageModel, {
         message.info('默认查询昨日一天的数据')
       }
       const times = time.yesterTime()
-      // const data = yield call(query, { ...times, ...payload, download: 0 })
-      const data = yield call(query, { ...payload, download: 0 })
-      console.log('data', data)
+      const data = yield call(query, { ...times, ...payload, download: 0 })
+      // const data = yield call(query, { ...payload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',

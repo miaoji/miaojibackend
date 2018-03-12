@@ -6,7 +6,7 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
@@ -14,6 +14,9 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
+        if (filter.startTime && filter.endTime) {
+          return <Link to={`/storeorderinfo?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text}</Link>
+        }
         return <Link to={`/storeorderinfo?idUser=${record.idUser}`}>{text}</Link>
       }
     }, {

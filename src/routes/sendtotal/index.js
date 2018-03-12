@@ -33,10 +33,15 @@ const Sendtotal = ({ location, dispatch, sendtotal, loading }) => {
   }
 
   const listProps = {
+    filter: {
+      ...location.query,
+    },
     dataSource: list,
     loading: loading.effects['sendtotal/query'],
     pagination,
     location,
+    onLink(iduser, query){
+    },
     onChange(page, filter) {
       const { query, pathname } = location
       dispatch(routerRedux.push({

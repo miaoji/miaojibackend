@@ -7,7 +7,7 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Jd = ({ location, dispatch, jd, loading }) => {
+const Jd = ({ location, jdconfig, dispatch, jd, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = jd
   const { pageSize } = pagination
 
@@ -20,8 +20,6 @@ const Jd = ({ location, dispatch, jd, loading }) => {
     wrapClassName: 'vertical-center-modal',
     selectSiteName,
     onOk(data) {
-      console.log('data', data)
-      // return
       dispatch({
         type: `jd/${modalType}`,
         payload: data,
@@ -36,6 +34,7 @@ const Jd = ({ location, dispatch, jd, loading }) => {
 
   const listProps = {
     list,
+    jdconfig,
     loading: loading.effects['jd/query']
   }
 

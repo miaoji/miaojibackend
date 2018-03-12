@@ -35,12 +35,10 @@ class List extends React.Component {
   }
 
   handleTypeChange = (type) => {
-    console.log('type', type)
     this.setState({ type })
   }
 
   handleNotifyChange = (notify) => {
-    console.log('notify', notify)
     this.setState({ notify })
   }
 

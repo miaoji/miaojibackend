@@ -34,6 +34,9 @@ const Sentalong = ({ location, dispatch, sentalong, loading }) => {
 
   const listProps = {
     dataSource: list,
+    filter: {
+      ...location.query,
+    },
     loading: loading.effects['sentalong/query'],
     pagination,
     location,
