@@ -5,6 +5,7 @@ import { Row, Col, Card } from 'antd'
 import { NumberCard, Quote, Sales, Weather, RecentSales, Comments, Completed, Browser, Cpu, User } from './components'
 import styles from './index.less'
 import { color } from '../../utils'
+import SimpleChartComponent from '../../components/Echart/SimpleChartComponent'
 
 const bodyStyle = {
   bodyStyle: {
@@ -22,6 +23,9 @@ function Dashboard ({ dashboard }) {
   return (
     <Row gutter={24}>
       {numberCards}
+      <Col lg={18} md={24}>
+        <SimpleChartComponent />
+      </Col>
       <Col lg={18} md={24}>
         <Card bordered={false} bodyStyle={{ ...bodyStyle.bodyStyle, padding: 0 }}>
           <User {...user} />
