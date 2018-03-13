@@ -8,7 +8,7 @@ export default {
     sales: [],
     quote: {
       name: '圈嘀科技',
-      title: '名言',
+      title: '--',
       content: '学如逆水行舟，不进则退',
       avatar: 'http://img.dongqiudi.com/uploads/avatar/2015/07/25/QM387nh7As_thumb_1437790672318.jpg',
     },
@@ -56,6 +56,7 @@ export default {
       payload,
     }, { call, put }) {
       const data = yield call(query, parse(payload))
+      console.log('data', data);
     },
   },
   reducers: {
