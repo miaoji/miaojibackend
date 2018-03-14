@@ -54,7 +54,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/dashboard' || location.pathname === '') {
+        if (location.pathname === '/dashboard' || location.pathname === '/') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -95,8 +95,12 @@ export default modelExtend(pageModel, {
           sendData.push([item.createTime, item.count])
         })
 
+        storage({type: 'set', key:'linedata', val: JSON.stringify({
+          time: todayStr,
+          receviceData,
+          sendData
+        })})
 
-        localStorage.setItem('time', '123456')
         yield put({
           type: 'setStates',
           payload: {
@@ -104,11 +108,6 @@ export default modelExtend(pageModel, {
             sendData
           }
         })
-        storage({type: 'set', key:'linedata', val: JSON.stringify({
-          time: todayStr,
-          receviceData,
-          sendData
-        })})
       }
       
     },

@@ -52,7 +52,7 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
     ],
     series: [
       {
-        name: '揽件',
+        name: '派件',
         type: 'line',
         // stack: '总量',
         smooth: false,
@@ -65,7 +65,7 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
         data: receviceData
       },
       {
-        name: '派件',
+        name: '揽件',
         type: 'line',
         // stack: '总量',
         smooth: false,
