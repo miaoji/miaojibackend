@@ -1,14 +1,16 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 import './theme/macarons.js'
-import { time } from '../../utils'
+import { time } from '../../../../utils'
 
-const SimpleChartComponent = () => {
+const SimpleChartComponent = ({receviceData, sendData}) => {
+  console.log('receviceData123123', receviceData)
+  console.log('sendData121312', sendData)
   const dataname = time.getLineTime()
   let labelShow = true
   const option = {
     backgroundColor: '#fff',
-    color: ['#f00','#90f', '#09f', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+    color: ['#f0f','#90f', '#09f', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
     title: {
       text: '堆叠区域图',
     },
@@ -16,7 +18,7 @@ const SimpleChartComponent = () => {
       trigger: 'axis',
     },
     legend: {
-      data: ['门店', '个人', '商场'],
+      data: ['揽件', '派件'],
     },
     toolbox: {
       show: true,
@@ -27,9 +29,9 @@ const SimpleChartComponent = () => {
       },
     },
     grid: {
-      left: '2%',
-      right: '2%',
-      bottom: '2%',
+      left: '4%',
+      right: '4%',
+      bottom: '4%',
       containLabel: true,
     },
     xAxis: [
@@ -40,7 +42,6 @@ const SimpleChartComponent = () => {
         },
         type: 'category',
         boundaryGap: false,
-        // data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日','周一', '周二', '周三', '周四', '周五', '周六', '周日','周一', '周二', '周三', '周四', '周五', '周六', '周日','周一', '周二', '周三', '周四', '周五', '周六', '周日'],
         data: dataname
       },
     ],
@@ -51,7 +52,7 @@ const SimpleChartComponent = () => {
     ],
     series: [
       {
-        name: '门店',
+        name: '揽件',
         type: 'line',
         // stack: '总量',
         smooth: false,
@@ -61,10 +62,10 @@ const SimpleChartComponent = () => {
               rotate: '36'
           }
         },
-        data: [['2018-02-11', 100],['2018-02-12', 123],['2018-02-14', 100],['2018-02-15', 123],['2018-02-16', 343],['2018-02-17', 435]],
+        data: receviceData
       },
       {
-        name: '个人',
+        name: '派件',
         type: 'line',
         // stack: '总量',
         smooth: false,
@@ -74,21 +75,8 @@ const SimpleChartComponent = () => {
               rotate: '36'
           }
         },
-        data: [150, 20,30, 232, 201, 154, 565, 330, 410,150, 232, 201, 154, 565, 330, 410,150, 232, 201, 154, 565, 330, 410,150, 232, 201, 154, 565, 330, 410],
-      },
-      {
-        name: '商场',
-        type: 'line',
-        // stack: '总量',
-        smooth: false,
-        label: {
-          normal: {
-              show: true,
-              rotate: '36'
-          }
-        },
-        data: [120, 1000,10,30, 101, 134, 90, 230, 210,120, 1000, 101, 134, 90, 230, 210,120, 1000, 101, 134, 90, 230, 210,120, 1000, 101, 134, 90, 230, 210],
-      },
+        data: sendData
+      }
     ],
   }
   return (

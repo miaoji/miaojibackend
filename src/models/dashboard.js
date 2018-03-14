@@ -1,10 +1,15 @@
+import modelExtend from 'dva-model-extend'
+import { pageModel } from './common'
 import { color } from '../utils/theme'
-import { myCity, query } from '../services/dashboard'
+import { storage, time } from '../utils'
+import { myCity, query, getLineData } from '../services/dashboard'
 import { parse } from 'qs'
 
-export default {
+export default modelExtend(pageModel, {
   namespace: 'dashboard',
   state: {
+    receviceData: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    sendData: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     sales: [],
     quote: {
       name: '圈嘀科技',
@@ -47,18 +52,70 @@ export default {
     },
   },
   subscriptions: {
-    setup ({ dispatch }) {
-      dispatch({ type: 'query' })
+    setup ({ dispatch, history }) {
+      history.listen(location => {
+        if (location.pathname === '/dashboard' || location.pathname === '') {
+          dispatch({
+            type: 'query',
+            payload: location.query,
+          })
+        }
+      })
     },
   },
   effects: {
     *query ({
       payload,
     }, { call, put }) {
-      const data = yield call(query, parse(payload))
-      console.log('data', data);
+      const storageData = JSON.parse(storage({key: 'linedata'}))
+      const todayStr = time.getToday(new Date().getTime())
+      let receviceData = []
+      let sendData = []
+
+      console.log('storageData', storageData)
+      
+      if (storageData && todayStr === storageData.time) {
+        yield put({
+          type: 'setStates',
+          payload: {
+            receviceData: storageData.receviceData,
+            sendData: storageData.sendData
+          }
+        })
+        return
+      }
+      const data = yield call(getLineData)
+      if (data.code === 200) {
+        const recevice = data.obj.recevice
+        const send = data.obj.send
+        recevice.forEach((item) => {
+          receviceData.push([item.createTime, item.count])
+        })
+        send.forEach((item) => {
+          sendData.push([item.createTime, item.count])
+        })
+
+
+        localStorage.setItem('time', '123456')
+        yield put({
+          type: 'setStates',
+          payload: {
+            receviceData,
+            sendData
+          }
+        })
+        storage({type: 'set', key:'linedata', val: JSON.stringify({
+          time: todayStr,
+          receviceData,
+          sendData
+        })})
+      }
+      
     },
   },
   reducers: {
+    setStates (state, { payload }) {
+      return { ...state, ...payload }
+    },
   },
-}
+})

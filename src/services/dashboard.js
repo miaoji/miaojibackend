@@ -18,8 +18,15 @@ export async function queryWeather (params) {
 
 export async function query (params) {
   return request({
-    url: dashboard,
+    url: dashboard.all,
     method: 'get',
     data: params,
+  })
+}
+
+export async function getLineData () {
+  return request({
+    url: dashboard.echart,
+    method: 'post'
   })
 }

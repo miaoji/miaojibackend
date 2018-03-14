@@ -65,21 +65,22 @@ export function yesterTime() {
   }
 }
 
+// val 时间戳
+export function getToday (val) {
+  let date = new Date(val)
+  let y = date.getFullYear()
+  let m = date.getMonth() + 1
+  m = m > 9 ? m : `0${m}`
+  let d = date.getDate()
+  d = d > 9 ? d : `0${d}`
+  return (`${y}-${m}-${d}`)
+}
+
 export function getLineTime (){
   var date = []
 
-  const formatTimes = function (val) {
-    let date = new Date(val)
-    let y = date.getFullYear()
-    let m = date.getMonth() + 1
-    m = m > 9 ? m : `0${m}`
-    let d = date.getDate()
-    d = d > 9 ? d : `0${d}`
-    return (`${y}-${m}-${d}`)
-  }
-
   for (var i = 0; i < 30; i++) {
-    date.unshift(formatTimes((new Date().getTime()-(86400000*(i+1)))))
+    date.unshift(getToday((new Date().getTime()-(86400000*(i+1)))))
   }
   return date
 }

@@ -5,7 +5,7 @@ import { Row, Col, Card } from 'antd'
 import { NumberCard, Quote, Sales, Weather, RecentSales, Comments, Completed, Browser, Cpu, User } from './components'
 import styles from './index.less'
 import { color, time } from '../../utils'
-import SimpleChartComponent from '../../components/Echart/SimpleChartComponent'
+import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 
 const bodyStyle = {
   bodyStyle: {
@@ -17,18 +17,25 @@ const bodyStyle = {
 console.log('arrarrr', arrarrr);
 const arrarrr = time.getLineTime()
 
-function Dashboard ({ dashboard }) {
-  const { weather, sales, quote, numbers, recentSales, comments, completed, browser, cpu, user } = dashboard
+function Dashboard (data) {
+  console.log('data1231', data)
+  const { receviceData, sendData, weather, sales, quote, numbers, recentSales, comments, completed, browser, cpu, user } = data.dashboard
   const numberCards = numbers.map((item, key) => <Col key={key} lg={6} md={12}>
     <NumberCard {...item} />
   </Col>)
+
+  const lineProps = {
+    receviceData,
+    sendData
+  }
+  console.log('lineProps', lineProps)
 
   return (
     <Row gutter={24}>
       {numberCards}
       <Col lg={24} md={24}>
         <Card>
-          <SimpleChartComponent />
+          <SimpleChartComponent { ...lineProps }/>
         </Card>
       </Col>
       <Col lg={18} md={24}>

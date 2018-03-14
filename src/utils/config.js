@@ -50,7 +50,10 @@ module.exports = {
 
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,
-    dashboard: `${APIV1}/dashboard`,
+    dashboard: {
+      all: `${APIV1}/dashboard`,
+      echart: `${APIV3}/quandiExpressSiteManager/lineChart`
+    },
 
     topups: `${APIV3}/quandiExpressSiteManager/rechargeRecord`, // 充值记录
     withdraws: `${APIV3}/quandiExpressSiteManager/extractionamount`, // 提现记录
