@@ -10,7 +10,6 @@ import JdModal from './JdModal'
 const Jd = ({ location, dispatch, jd, loading }) => {
   const { list, jdconfig, pagination, currentItem, modalVisible, jdModalVisible, modalType, selectSiteName } = jd
   const { pageSize } = pagination
-  console.log('jdconfig', list)
 
   const modalProps = {
     type: modalType,
@@ -43,7 +42,7 @@ const Jd = ({ location, dispatch, jd, loading }) => {
     selectSiteName,
     onOk(data) {
       dispatch({
-        type: `jd/setjdconfig`,
+        type: 'jd/setjdconfig',
         payload: data,
       })
     },
@@ -64,12 +63,12 @@ const Jd = ({ location, dispatch, jd, loading }) => {
     filter: {
       ...location.query,
     },
-    onRefresh(){
+    onRefresh() {
       dispatch(routerRedux.push({
         pathname: '/jd',
       }))
     },
-    onSetJdConfig(){
+    onSetJdConfig() {
       dispatch({
         type: 'jd/showJdModal'
       })

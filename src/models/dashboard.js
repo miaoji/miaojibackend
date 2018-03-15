@@ -2,14 +2,13 @@ import modelExtend from 'dva-model-extend'
 import { pageModel } from './common'
 import { color } from '../utils/theme'
 import { storage, time } from '../utils'
-import { myCity, query, getLineData } from '../services/dashboard'
-import { parse } from 'qs'
+import { getLineData, weChatUser, storeTotal, income } from '../services/dashboard'
 
 export default modelExtend(pageModel, {
   namespace: 'dashboard',
   state: {
-    receviceData: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    sendData: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    receviceData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    sendData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     sales: [],
     quote: {
       name: '圈嘀科技',
@@ -17,29 +16,30 @@ export default modelExtend(pageModel, {
       content: '学如逆水行舟，不进则退',
       avatar: 'http://img.dongqiudi.com/uploads/avatar/2015/07/25/QM387nh7As_thumb_1437790672318.jpg',
     },
-    numbers: [
-      {
-        icon: 'pay-circle-o',
-        color: color.green,
-        title: '今日收入',
-        number: 2781,
-      }, {
-        icon: 'team',
-        color: color.blue,
-        title: '新增用户',
-        number: 3241,
-      }, {
-        icon: 'message',
-        color: color.purple,
-        title: '在线人数',
-        number: 253,
-      }, {
-        icon: 'shopping-cart',
-        color: color.red,
-        title: '今日购买',
-        number: 4324,
-      },
-    ],
+    income: {
+      icon: 'pay-circle-o',
+      color: color.green,
+      title: '昨日收入',
+      number: 2781,
+    },
+    storeTotal: {
+      icon: 'shop',
+      color: color.blue,
+      title: '门店总数',
+      number: 3241,
+    },
+    weChatUser: {
+      icon: 'wechat',
+      color: color.purple,
+      title: '微信用户',
+      number: 253,
+    },
+    shop: {
+      icon: 'shopping-cart',
+      color: color.red,
+      title: '今日购买',
+      number: 4324,
+    },
     recentSales: [],
     comments: [],
     completed: [],
@@ -52,28 +52,85 @@ export default modelExtend(pageModel, {
     },
   },
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/dashboard' || location.pathname === '/') {
-          dispatch({
-            type: 'query',
-            payload: location.query,
-          })
+          // dispatch({
+          //   type: 'query',
+          //   payload: location.query,
+          // })
+          dispatch({ type: 'getIncome' })
+          dispatch({ type: 'getStoreTotal' })
+          dispatch({ type: 'getWeChatUser' })
         }
       })
     },
   },
   effects: {
-    *query ({
+    *getIncome({ payload }, { call, put }) {
+      const data = yield call(income)
+      if (data.code === 200) {
+        yield put({
+          type: 'setStates',
+          payload: {
+            income: {
+              icon: 'pay-circle-o',
+              color: color.green,
+              title: '昨日收入',
+              number: data.obj,
+            }
+          }
+        })
+        console.log('12312312', data.obj)
+      } else {
+        throw data.mess || '网络连接失败'
+      }
+    },
+    *getStoreTotal({ payload }, { call, put }) {
+      const data = yield call(storeTotal)
+      if (data.code === 200) {
+        console.log('data', data)
+        yield put({
+          type: 'setStates',
+          payload: {
+            storeTotal: {
+              icon: 'shop',
+              color: color.blue,
+              title: '门店总数',
+              number: data.obj
+            }
+          }
+        })
+      } else {
+        throw data.mess || '网络连接失败'
+      }
+    },
+    *getWeChatUser({ payload }, { call, put }) {
+      const data = yield call(weChatUser)
+      if (data.code === 200) {
+        yield put({
+          type: 'setStates',
+          payload: {
+            weChatUser: {
+              icon: 'wechat',
+              color: color.purple,
+              title: '微信用户',
+              number: data.obj
+            }
+          }
+        })
+      } else {
+        throw data.mess || '网络连接失败'
+      }
+    },
+    *query({
       payload,
     }, { call, put }) {
-      const storageData = JSON.parse(storage({key: 'linedata'}))
+      const storageData = JSON.parse(storage({ key: 'linedata' }))
       const todayStr = time.getToday(new Date().getTime())
       let receviceData = []
       let sendData = []
 
-      console.log('storageData', storageData)
-      
       if (storageData && todayStr === storageData.time) {
         yield put({
           type: 'setStates',
@@ -95,11 +152,13 @@ export default modelExtend(pageModel, {
           sendData.push([item.createTime, item.count])
         })
 
-        storage({type: 'set', key:'linedata', val: JSON.stringify({
-          time: todayStr,
-          receviceData,
-          sendData
-        })})
+        storage({
+          type: 'set', key: 'linedata', val: JSON.stringify({
+            time: todayStr,
+            receviceData,
+            sendData
+          })
+        })
 
         yield put({
           type: 'setStates',
@@ -109,11 +168,10 @@ export default modelExtend(pageModel, {
           }
         })
       }
-      
     },
   },
   reducers: {
-    setStates (state, { payload }) {
+    setStates(state, { payload }) {
       return { ...state, ...payload }
     },
   },

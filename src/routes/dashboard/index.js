@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
-import { NumberCard, Quote, Sales, Weather, RecentSales, Comments, Completed, Browser, Cpu, User } from './components'
+import { NumberCard, Quote, User } from './components'
+// import { Quote, User } from './components'
 import styles from './index.less'
-import { color, time } from '../../utils'
+import { color } from '../../utils'
 import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 
 const bodyStyle = {
@@ -14,13 +15,11 @@ const bodyStyle = {
   },
 }
 
-console.log('arrarrr', arrarrr);
-const arrarrr = time.getLineTime()
-
 function Dashboard (data) {
-  console.log('data1231', data)
-  const { receviceData, sendData, weather, sales, quote, numbers, recentSales, comments, completed, browser, cpu, user } = data.dashboard
-  const numberCards = numbers.map((item, key) => <Col key={key} lg={6} md={12}>
+  const { receviceData, sendData, quote, user, income, storeTotal, weChatUser, shop } = data.dashboard
+  const munArr = [income, storeTotal, weChatUser, shop]
+  console.log('newbers', munArr)
+  const numberCards = munArr.map((item, key) => <Col key={key} lg={6} md={12}>
     <NumberCard {...item} />
   </Col>)
 
@@ -28,14 +27,13 @@ function Dashboard (data) {
     receviceData,
     sendData
   }
-  console.log('lineProps', lineProps)
 
   return (
     <Row gutter={24}>
       {numberCards}
       <Col lg={24} md={24}>
         <Card>
-          <SimpleChartComponent { ...lineProps }/>
+          <SimpleChartComponent {...lineProps} />
         </Card>
       </Col>
       <Col lg={18} md={24}>

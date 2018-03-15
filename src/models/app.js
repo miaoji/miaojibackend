@@ -1,6 +1,6 @@
-import { query, logout } from '../services/app'
+// import { query, logout } from '../services/app'
 import { routerRedux } from 'dva/router'
-import { parse } from 'qs'
+// import { parse } from 'qs'
 import { config, storage } from '../utils'
 const { prefix } = config
 
@@ -32,11 +32,10 @@ export default {
 
     *query ({
       payload,
-    }, { call, put }) {
+    }, { put }) {
       const token = storage({ key: 'token' })
       // let pathname = location.hash.slice(1).split('?')[0]
       let pathname = location.pathname
-      console.log('pathname', pathname)
       if (token && token.length > 0) {
         let user = storage({ key: 'user' })
         user = typeof user === 'string' && JSON.parse(user)

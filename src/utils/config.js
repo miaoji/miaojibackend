@@ -3,10 +3,10 @@ const APIV1 = '/api/v1'
 
 let APIV3
 // 本地测试
-// APIV3 = 'http://192.168.231.232:8080'
+APIV3 = 'http://192.168.231.232:8080'
 // APIV3 = 'http://192.168.231.231:8080'
 // 线上
-APIV3 = 'http://app.quandikeji.com:8288'
+// APIV3 = 'http://app.quandikeji.com:8288'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -51,8 +51,16 @@ module.exports = {
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,
     dashboard: {
+      // 获取首页的本地数据
       all: `${APIV1}/dashboard`,
-      echart: `${APIV3}/quandiExpressSiteManager/lineChart`
+      // 获取折线图数据
+      echart: `${APIV3}/quandiExpressSiteManager/lineChart`,
+      // 获取微信用户数据
+      weChatUser: `${APIV3}/quandiExpressSiteManager/homePageWechatUserTotal`,
+      // 获取门店总数
+      storeTotal: `${APIV3}/quandiExpressSiteManager/homePageStoreTotal`,
+      // 昨日收入
+      income: `${APIV3}/quandiExpressSiteManager/lineChart`,
     },
 
     topups: `${APIV3}/quandiExpressSiteManager/rechargeRecord`, // 充值记录

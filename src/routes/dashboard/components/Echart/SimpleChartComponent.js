@@ -4,10 +4,7 @@ import './theme/macarons.js'
 import { time } from '../../../../utils'
 
 const SimpleChartComponent = ({receviceData, sendData}) => {
-  console.log('receviceData123123', receviceData)
-  console.log('sendData121312', sendData)
   const dataname = time.getLineTime()
-  let labelShow = true
   const option = {
     backgroundColor: '#fff',
     color: ['#f0f','#90f', '#09f', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
@@ -42,7 +39,7 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
         },
         type: 'category',
         boundaryGap: false,
-        data: dataname
+        data: [ ...dataname, '' ]
       },
     ],
     yAxis: [

@@ -234,7 +234,8 @@ module.exports = [
     name: '京东单号管理',
     icon: 'export',
     router: '/jd'
-  }, /*{
+  },
+  /* {
     id: 121,
     bpid: 1,
     mpid: 12,
