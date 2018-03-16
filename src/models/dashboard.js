@@ -55,10 +55,10 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/dashboard' || location.pathname === '/') {
-          // dispatch({
-          //   type: 'query',
-          //   payload: location.query,
-          // })
+          dispatch({
+            type: 'query',
+            payload: location.query,
+          })
           dispatch({ type: 'getIncome' })
           dispatch({ type: 'getStoreTotal' })
           dispatch({ type: 'getWeChatUser' })

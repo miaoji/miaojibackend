@@ -18,7 +18,6 @@ const bodyStyle = {
 function Dashboard (data) {
   const { receviceData, sendData, quote, user, income, storeTotal, weChatUser, shop } = data.dashboard
   const munArr = [income, storeTotal, weChatUser, shop]
-  console.log('newbers', munArr)
   const numberCards = munArr.map((item, key) => <Col key={key} lg={6} md={12}>
     <NumberCard {...item} />
   </Col>)
