@@ -29,7 +29,7 @@ export default modelExtend(pageModel, {
       number: 3241,
     },
     weChatUser: {
-      icon: 'wechat',
+      icon: 'message',
       color: color.purple,
       title: '微信用户',
       number: 253,
@@ -112,7 +112,7 @@ export default modelExtend(pageModel, {
           type: 'setStates',
           payload: {
             weChatUser: {
-              icon: 'wechat',
+              icon: 'message',
               color: color.purple,
               title: '微信用户',
               number: data.obj
