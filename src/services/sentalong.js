@@ -2,7 +2,7 @@ import { request, config, pageParams } from '../utils'
 const { api } = config
 const { sentalong } = api
 
-export async function query (params) {
+export async function query(params) {
   params = pageParams(params)
   delete params.page
   delete params.pageSize
@@ -15,5 +15,16 @@ export async function query (params) {
     params: {
       param: params,
     },
+  })
+}
+
+export async function download(params) {
+  params = JSON.stringify(params)
+  return request({
+    url: sentalong.all,
+    method: 'post',
+    params: {
+      param: params
+    }
   })
 }

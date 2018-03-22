@@ -3,10 +3,10 @@ const APIV1 = '/api/v1'
 
 let APIV3
 // 本地测试
-// APIV3 = 'http://192.168.231.232:8080'
+APIV3 = 'http://192.168.231.232:8080'
 // APIV3 = 'http://192.168.231.231:8080'
 // 线上
-APIV3 = 'http://app.quandikeji.com:8288'
+// APIV3 = 'http://app.quandikeji.com:8288'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -89,23 +89,6 @@ module.exports = {
       update: `${APIV3}/quandiExpressSiteManager/updateBlackList`,
       showSiteName: `${APIV3}/quandiExpressSiteManager/idUser`,
     },
-
-    // 查询寄件及金额
-    mailprice: {
-      all: `${APIV3}/quandiExpressSiteManager/mailprice`,
-    },
-    // 查询门店单号总量
-    storeordertotal: {
-      all: `${APIV3}/quandiExpressSiteManager/orderSntotal`
-    },
-    // 查询门店单号上架信息
-    storeorderinfo: {
-      all: `${APIV3}/quandiExpressSiteManager/sendMail101`
-    },
-    // 查询门店分配信息
-    storeallot: {
-      all: `${APIV3}/quandiExpressSiteManager/sendMail103`
-    },
     // 单号规则配置
     ordernumber: {
       index: `${APIV3}/quandiExpressSiteManager/selectorderNumber`,
@@ -134,13 +117,33 @@ module.exports = {
     sendtotal: {
       all: `${APIV3}/quandiExpressSiteManager/orderState`
     },
+    // 查询寄件及金额
+    mailprice: {
+      all: `${APIV3}/quandiExpressSiteManager/mailprice`,
+    },
+
     // 门店到件总量 -- 上架
     selectshelves: {
-      all: `${APIV3}/quandiExpressSiteManager/selectshelves`
+      // all: `${APIV3}/quandiExpressSiteManager/selectshelves` 废除的接口地址
+      // all: `${APIV3}/quandiExpressSiteManager/selectSendMail`
     },
     // 门店到件总量 -- 分派
     sentalong: {
-      all: `${APIV3}/quandiExpressSiteManager/sentAlong`
-    }
+      // all: `${APIV3}/quandiExpressSiteManager/sentAlong` 废除的接口地址
+      all: `${APIV3}/quandiExpressSiteManager/selectSendMail`
+    },
+    // 门店订单汇总
+    storeordertotal: {
+      // all: `${APIV3}/quandiExpressSiteManager/orderSntotal` 废弃的接口地址
+      all: `${APIV3}/quandiExpressSiteManager/sendddMail`
+    },
+    // 查询门店单号上架信息
+    storeorderinfo: {
+      // all: `${APIV3}/quandiExpressSiteManager/sendMail101` 废弃的接口地址
+    },
+    // 查询门店分配信息
+    storeallot: {
+      // all: `${APIV3}/quandiExpressSiteManager/sendMail103` 废弃的接口地址
+    },
   }
 }

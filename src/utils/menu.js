@@ -53,7 +53,7 @@ module.exports = [
     mpid: 4,
     icon: 'pay-circle',
     name: '收支数据',
-//  router: '/checkbook',
+    //  router: '/checkbook',
   },
   // {
   //   id: 43,
@@ -168,7 +168,9 @@ module.exports = [
     name: '黑名单',
     icon: 'user-delete',
     router: '/blacklist',
-  }, {
+  },
+  // -- //
+  {
     id: 11,
     bpid: 1,
     name: '门店管理',
@@ -188,30 +190,30 @@ module.exports = [
     icon: 'user-delete',
     router: '/mailprice',
   }, {
+    id: 18,
+    bpid: 1,
+    mpid: 11,
+    name: '门店派件量',
+    icon: 'user-delete',
+    router: '/sentalong',
+  }, {
     id: 112,
     bpid: 1,
     mpid: 11,
-    name: '门店订单总量',
+    name: '门店订单汇总',
     icon: 'user-delete',
     router: '/storeordertotal',
   }, {
     id: 17,
     bpid: 1,
-    mpid: 19,
+    mpid: -1,
     name: '门店上架总量',
     icon: 'user-delete',
     router: '/selectshelves',
   }, {
-    id: 18,
-    bpid: 1,
-    mpid: 19,
-    name: '门店分派总量',
-    icon: 'user-delete',
-    router: '/sentalong',
-  }, {
     id: 19,
     bpid: 1,
-    mpid: 11,
+    mpid: -1,
     name: '门店到件总量',
     icon: 'user-delete',
   }, {
@@ -228,7 +230,9 @@ module.exports = [
     name: '门店订单分派',
     icon: 'user-delete',
     router: '/storeallot',
-  }, {
+  },
+  // -- //
+  {
     id: 12,
     bpid: 1,
     name: '京东单号管理',

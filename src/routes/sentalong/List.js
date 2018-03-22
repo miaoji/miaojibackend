@@ -6,23 +6,38 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
-
+const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点名',
-      dataIndex: 'name',
-      key: 'name',
+      title: '单号',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text, record) => {
-        if (filter.startTime&&filter.endTime) {
-          return <Link to={`/storeallot?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text}</Link>
-        }
         return <Link to={`/storeallot?idUser=${record.idUser}`}>{text}</Link>
       }
     }, {
-      title: '分派数量',
-      dataIndex: 'total103',
-      key: 'total103',
+      title: '品牌',
+      dataIndex: 'brand',
+      key: 'brand',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      }
+    }, {
+      title: '快递类型',
+      dataIndex: 'mailtype',
+      key: 'mailtype',
+      render: (text) => {
+        const realText = {
+          0: '普通件',
+          1: '到付件',
+          2: '代收货款'
+        }
+        return <span>{realText[text] || '暂无'}</span>
+      }
+    }, {
+      title: '时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }

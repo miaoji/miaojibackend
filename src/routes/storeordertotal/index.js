@@ -2,35 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
+import { Tabs } from 'antd'
 import List from './List'
-import Filter from './Filter'
-import Modal from './Modal'
+import { Page } from '../../components'
+import queryString from 'query-string'
+
+const { TabPane } = Tabs
+
+const EnumPostStatus = {
+  UNPUBLISH: 1,
+  PUBLISHED: 2,
+  SSS: 3,
+  BBB: 4,
+}
 
 const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = storeordertotal
-  const { pageSize } = pagination
-
-  const modalProps = {
-    type: modalType,
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
-    wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk(data) {
-      dispatch({
-        type: `storeordertotal/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel() {
-      dispatch({
-        type: 'storeordertotal/hideModal',
-      })
-    },
-  }
+  const { list, pagination } = storeordertotal
+  const { query, pathname } = location
 
   const listProps = {
     dataSource: list,
@@ -38,7 +26,6 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
     pagination,
     location,
     onChange(page, filter) {
-      const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -59,7 +46,7 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
         },
       }))
     },
-    openSentalong(idUser){
+    openSentalong(idUser) {
       dispatch(routerRedux.push({
         pathname: '/storeallot',
         query: {
@@ -86,53 +73,32 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
     },
   }
 
-  const filterProps = {
-    filter: {
-      ...location.query,
-    },
-    onFilterChange(value) {
-      dispatch(routerRedux.push({
-        pathname: location.pathname,
-        query: {
-          ...value,
-          page: 1,
-          pageSize,
-        },
-      }))
-    },
-    onSearch(fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/storeordertotal',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/storeordertotal',
-      }))
-    },
-    onDownLoad() {
-      dispatch({
-        type: 'storeordertotal/download',
-        payload: location.query
-      })
-    },
-    onAdd() {
-      dispatch({
-        type: 'storeordertotal/showModal',
-        payload: {
-          modalType: 'create',
-        },
-      })
-    },
+  const handleTabClick = (key) => {
+    dispatch(routerRedux.push({
+      pathname,
+      search: queryString.stringify({
+        status: key,
+      }),
+    }))
   }
 
   return (
-    <div className="content-inner">
-      <Filter {...filterProps} />
-      <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
-    </div>
+    <Page inner>
+      <Tabs activeKey={query.status === String(EnumPostStatus.UNPUBLISH) ? String(EnumPostStatus.UNPUBLISH) : String(EnumPostStatus.PUBLISHED)} onTabClick={handleTabClick}>
+        <TabPane tab="上架" key={String(EnumPostStatus.PUBLISHED)}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="分派" key={String(EnumPostStatus.UNPUBLISH)}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="签收" key={String(EnumPostStatus.SSS)}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="点单" key={String(EnumPostStatus.BBB)}>
+          <List {...listProps} />
+        </TabPane>
+      </Tabs>
+    </Page>
   )
 }
 

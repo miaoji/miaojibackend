@@ -37,7 +37,7 @@ export default modelExtend(pageModel, {
       }
       const times = time.yesterTime()
 
-      const data = yield call(query, {...times, ...payload})
+      const data = yield call(query, { ...times, ...payload })
       if (data.obj) {
         yield put({
           type: 'querySuccess',
