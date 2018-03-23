@@ -125,7 +125,7 @@ module.exports = {
     // 门店到件总量 -- 上架
     selectshelves: {
       // all: `${APIV3}/quandiExpressSiteManager/selectshelves` 废除的接口地址
-      // all: `${APIV3}/quandiExpressSiteManager/selectSendMail`
+      all: `${APIV3}/quandiExpressSiteManager/noSign`
     },
     // 门店到件总量 -- 分派
     sentalong: {
@@ -137,9 +137,10 @@ module.exports = {
       // all: `${APIV3}/quandiExpressSiteManager/orderSntotal` 废弃的接口地址
       all: `${APIV3}/quandiExpressSiteManager/sendddMail`
     },
-    // 查询门店单号上架信息
+    // 查询门店派件及金额
     storeorderinfo: {
       // all: `${APIV3}/quandiExpressSiteManager/sendMail101` 废弃的接口地址
+      all: `${APIV3}/quandiExpressSiteManager/sendddMailprice`
     },
     // 查询门店分配信息
     storeallot: {

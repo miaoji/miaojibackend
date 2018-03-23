@@ -19,7 +19,6 @@ export async function query(params) {
 }
 
 export async function downLoad(params) {
-  params = pageParams(params)
   delete params.page
   delete params.pageSize
   delete params.pagination

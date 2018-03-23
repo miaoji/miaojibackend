@@ -8,9 +8,9 @@ import AnimTableBody from '../../components/DataTable/AnimTableBody'
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点名',
-      dataIndex: 'name',
-      key: 'name'
+      title: '单号',
+      dataIndex: 'orderSn',
+      key: 'orderSn'
     }, {
       title: '品牌',
       dataIndex: 'brand',
@@ -19,39 +19,55 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '单号',
-      dataIndex: 'orderSn',
-      key: 'orderSn',
+      title: '金额',
+      dataIndex: 'account',
+      key: 'account',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '状态',
+      title: '收款方式',
+      dataIndex: 'payType',
+      key: 'payType',
+      render: (text) => {
+        const repltext = {
+          1: '支付宝',
+          2: '微信',
+          3: '余额',
+          4: '现金'
+        }
+        return <span>{text ? repltext[text] : '未知'}</span>
+      }
+    }, {
+      title: '收款状态',
+      dataIndex: 'status',
+      key: 'status',
+      render: (text) => {
+        const repltext = {
+          success: '成功',
+          wait: '等待',
+          cancel: '交易取消',
+          close: '交易关闭'
+        }
+        return <span>{repltext[text] || '未知'}</span>
+      }
+    }, {
+      title: '快递状态',
       dataIndex: 'state',
       key: 'state',
       render: (text) => {
         const repltext = {
           101: '上架',
-          103: '分派'
-        }
-        return <span>{text ? repltext[text] : '未知'}</span>
-      }
-    }, {
-      title: '快递类型',
-      dataIndex: 'mailtype',
-      key: 'mailtype',
-      render: (text) => {
-        const repltext = {
-          0: '普通件',
-          1: '到付件',
-          2: '代收货款件'
+          103: '分派',
+          301: '签收',
+          1: '点单'
         }
         return <span>{repltext[text] || '未知'}</span>
       }
     }, {
-      title: '金额',
-      dataIndex: 'account',
-      key: 'account',
+      title: '操作人',
+      dataIndex: 'realName',
+      key: 'realName',
       render: (text) => {
         return <span>{text || '0'} 元</span>
       }

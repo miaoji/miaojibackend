@@ -1,10 +1,9 @@
 // import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { notification } from 'antd'
+import { notification, message } from 'antd'
 import { query, downLoad } from '../services/selectshelves'
 import { pageModel } from './common'
 import { config, time } from '../utils'
-import { message } from 'antd'
 
 const { APIV3 } = config
 
@@ -52,6 +51,28 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      }
+    },
+
+    *download({ payload }, { call }) {
+      notification.success({
+        message: '下载中...',
+        description: '正在为您准备资源,请稍等!!!',
+        duration: 0
+      })
+      const data = yield call(downLoad, { ...payload, download: 1 })
+      if (data.code === 200 && data.obj) {
+        const url = data.obj
+        const sssss = window.open(`${APIV3}${url}`)
+        if (sssss === null) {
+          notification.warn({
+            message: '下载失败',
+            description: '请关闭浏览阻止网页弹窗的功能!!!',
+            duration: 0
+          })
+        }
+      } else {
+        throw data.mess || '无法跟服务器建立有效连接'
       }
     },
 

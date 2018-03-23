@@ -17,3 +17,19 @@ export async function query (params) {
     },
   })
 }
+
+export async function downLoad(params) {
+  delete params.page
+  delete params.pageSize
+  delete params.pagination
+  delete params.rownum
+  params = JSON.stringify(params)
+  return request({
+    url: selectshelves.all,
+    method: 'post',
+    params: {
+      param: params,
+    },
+  })
+}
+

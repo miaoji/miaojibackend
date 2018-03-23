@@ -1,37 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Table } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
-import { DropOption } from '../../components'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const confirm = Modal.confirm
+// const confirm = Modal.confirm
 
-const List = ({ openSentalong, openSelectshelves, location, onEditItem, onDeleteItem, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    switch (e.key) {
-      case '1':
-        // window.open(`/bootdetail?orderNo=${record.ORDER_NO}`)
-        openSelectshelves(record.idUser)
-        break
-      case '2':
-        openSentalong(record.idUser)
-        break
-      default:
-        break
-    }
-  }
-
+const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点名',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text) => {
-        return <span>{text || '暂无站点名'}</span>
-      }
-    }, {
       title: '单号',
       dataIndex: 'orderSn',
       key: 'orderSn',
@@ -46,15 +24,24 @@ const List = ({ openSentalong, openSelectshelves, location, onEditItem, onDelete
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '状态',
+      title: '快递状态',
       dataIndex: 'state',
       key: 'state',
       render: (text) => {
         const repltext = {
           101: '上架',
           103: '分派',
+          301: '签收',
+          1: '点单',
         }
         return <span>{text ? repltext[text] : '未知'}</span>
+      }
+    }, {
+      title: '操作人',
+      dataIndex: 'realName',
+      key: 'realName',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '日期',
@@ -62,13 +49,6 @@ const List = ({ openSentalong, openSelectshelves, location, onEditItem, onDelete
       key: 'createTime',
       render: (text) => {
         return <span>{text}</span>
-      }
-    }, {
-      title: '更多信息',
-      key: 'operation',
-      width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '上架信息' }, { key: '2', name: '分配信息' }]} />
       }
     }
   ]

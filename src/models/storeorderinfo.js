@@ -1,7 +1,7 @@
 // import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
-import { query, downLoad, create, update, remove } from '../services/storeorderinfo'
+import { query, downLoad } from '../services/storeorderinfo'
 import { pageModel } from './common'
 import { config, time } from '../utils'
 
@@ -36,6 +36,7 @@ export default modelExtend(pageModel, {
       }
       const times = time.yesterTime()
       const data = yield call(query, { ...times, ...payload, download: 0 })
+      console.log('data', data)
       // const data = yield call(query, { ...payload, download: 0 })
       if (data.obj) {
         yield put({
@@ -49,49 +50,6 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      }
-    },
-
-    *create({ payload }, { call, put }) {
-      const newstoreorderinfo = {
-        idUser: payload.idUser.split('/-/')[1],
-        mobile: payload.mobile,
-        note: payload.note,
-        state: 1,
-      }
-      const data = yield call(create, { state: 1, ...newstoreorderinfo })
-      if (data.success && data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success(data.mess)
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
-      }
-    },
-
-    *update({ payload }, { select, call, put }) {
-      const id = yield select(({ storeorderinfo }) => storeorderinfo.currentItem.id)
-      const newstoreorderinfo = {
-        note: payload.note,
-        id,
-      }
-      const data = yield call(update, newstoreorderinfo)
-      if (data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success('更新成功')
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess || data
-      }
-    },
-
-    *'delete'({ payload }, { call, put }) {
-      const data = yield call(remove, { id: payload, state: 2 })
-      if (data.code === 200) {
-        message.success('删除成功')
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
       }
     },
 
@@ -123,19 +81,5 @@ export default modelExtend(pageModel, {
 
   },
 
-  reducers: {
-
-    setSiteName(state, { payload }) {
-      return { ...state, ...payload }
-    },
-
-    showModal(state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
-    },
-
-    hideModal(state) {
-      return { ...state, modalVisible: false }
-    },
-
-  },
+  reducers: {},
 })

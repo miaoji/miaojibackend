@@ -1,31 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import { Link } from 'dva/router'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
-
+const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点名',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text, record) => {
-        if (filter.startTime && filter.endTime) {
-          return <Link to={`/storeorderinfo?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text}</Link>
+      title: '单号',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
+    }, {
+      title: '品牌',
+      dataIndex: 'brand',
+      key: 'brand',
+    }, {
+      title: '快递状态',
+      dataIndex: 'state',
+      key: 'state',
+      render: (text) => {
+        const replText = {
+          101: '上架',
+          103: '分派',
+          1: '点单'
         }
-        return <Link to={`/storeorderinfo?idUser=${record.idUser}`}>{text}</Link>
+        return <span>{replText[text]}</span>
       }
     }, {
-      title: '上架数量',
-      dataIndex: 'total101',
-      key: 'total101',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      }
+      title: '操作人',
+      dataIndex: 'realName',
+      key: 'realName',
+    }, {
+      title: '时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
     }
   ]
 
