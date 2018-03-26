@@ -31,6 +31,9 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload }, { put, call }) {
+      if (payload.state && payload.state === '520') {
+        delete payload.state
+      }
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()

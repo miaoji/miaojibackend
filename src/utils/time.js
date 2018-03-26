@@ -52,7 +52,7 @@ export const repairTime = function (val) {
 }
 
 export function yesterTime() {
-  const dayCount = 7
+  const dayCount = 1
   message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
   const date = new Date()
   const h = date.getHours()

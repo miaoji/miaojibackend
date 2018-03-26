@@ -49,10 +49,15 @@ const Filter = ({
       fields.startTime = repairTime.startTime
       fields.endTime = repairTime.endTime
     }
+    console.log('name', name)
     if (name) {
       fields.idUser = name.split('/-/')[1]
+    } else {
+      fields.idUser = fields.idUser.split('/-/')[1]
     }
+    console.log('fields.idUser', fields.idUser)
     delete fields.createTime
+    delete fields.name
     return fields
   }
 
@@ -66,7 +71,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({ ...filter, ...fields })
+    onFilterChange({ ...filter, ...fields, name: undefined })
   }
 
   const handleReset = () => {
@@ -124,7 +129,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields, name: undefined })
   }
 
-  const { idUser, startTime, endTime } = filter
+  const { startTime, endTime } = filter
 
   let initialCreateTime = []
   if (startTime) {
@@ -138,7 +143,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('idUser', { initialValue: idUser })(
+        {getFieldDecorator('idUser')(
           <Select showSearch placeholder="按站点名称搜索" size="large" style={{ width: '100%' }} onChange={handleStoreChange}>{storeList}</Select>
         )}
       </Col>
