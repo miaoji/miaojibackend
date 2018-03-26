@@ -2,7 +2,7 @@ import { request, config, pageParams } from '../utils'
 const { api } = config
 const { storeorderinfo } = api
 
-export async function query (params) {
+export async function query(params) {
   params = pageParams(params)
   delete params.page
   delete params.pageSize
@@ -15,6 +15,16 @@ export async function query (params) {
     params: {
       param: params,
     },
+  })
+}
+
+export async function getStoreInfo(params) {
+  return request({
+    url: storeorderinfo.all,
+    method: 'get',
+    params: {
+      param: JSON.stringify(params)
+    }
   })
 }
 

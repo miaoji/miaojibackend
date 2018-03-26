@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import { Link } from 'dva/router'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -12,8 +11,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '单号',
       dataIndex: 'orderSn',
       key: 'orderSn',
-      render: (text, record) => {
-        return <Link to={`/storeallot?idUser=${record.idUser}`}>{text}</Link>
+      render: (text) => {
+        return <span>{text}</span>
       }
     }, {
       title: '品牌',

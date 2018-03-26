@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { message, notification } from 'antd'
+import { notification } from 'antd'
 import { query, downLoad } from '../services/storeordertotal'
 import { pageModel } from './common'
 import { config, time } from '../utils'
@@ -31,15 +31,15 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload }, { put, call }) {
-      if (payload.state === '520') {
-        delete payload.state
-      }
+      let newpayload = {}
       if (!payload.startTime) {
-        message.info('默认查询昨日一天的数据')
+        const times = time.yesterTime()
+        newpayload = { ...times, ...payload }
+      } else {
+        newpayload = { ...payload }
       }
-      const times = time.yesterTime()
-      const data = yield call(query, { ...times, ...payload, download: 0 })
-      // const data = yield call(query, { ...payload, download: 0 })
+      // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
+      const data = yield call(query, { ...newpayload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -59,13 +59,16 @@ export default modelExtend(pageModel, {
       notification.success({
         message: '下载中...',
         description: '正在为您准备资源,请稍等!!!',
-        duration: 0
+        duration: 5
       })
+      let newpayload = {}
       if (!payload.startTime) {
-        message.info('默认下载昨天一天的数据')
+        const times = time.yesterTime()
+        newpayload = { ...times, ...payload }
+      } else {
+        newpayload = { ...payload }
       }
-      const times = time.yesterTime()
-      const data = yield call(downLoad, { ...times, ...payload, download: 1 })
+      const data = yield call(downLoad, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj
         const sssss = window.open(`${APIV3}${url}`)

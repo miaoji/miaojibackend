@@ -23,7 +23,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'account',
       key: 'account',
       render: (text) => {
-        return <span>{text || '暂无'}</span>
+        return <span>{text || '0'}元</span>
       }
     }, {
       title: '收款方式',
@@ -69,7 +69,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'realName',
       key: 'realName',
       render: (text) => {
-        return <span>{text || '0'} 元</span>
+        return <span>{text || '无'}</span>
       }
     }, {
       title: '日期',

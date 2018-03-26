@@ -1,4 +1,5 @@
 // 传入一个时间戳,转换成常见的时间格式
+import { message } from 'antd'
 
 export const formatTime = function (val) {
   if (val == null || val === '' || val.length !== 13) {
@@ -51,14 +52,16 @@ export const repairTime = function (val) {
 }
 
 export function yesterTime() {
+  const dayCount = 7
+  message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
   const date = new Date()
   const h = date.getHours()
   const m = date.getMinutes()
   const s = date.getSeconds()
   const ms = date.getMilliseconds()
   const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
-  const startTime = date.getTime() - times
-  const endTime = date.getTime() - times + 86400000 - 1
+  const startTime = date.getTime() - 86400000 * dayCount - times
+  const endTime = date.getTime() - times - 1
   return {
     startTime,
     endTime
@@ -66,7 +69,7 @@ export function yesterTime() {
 }
 
 // val 时间戳
-export function getToday (val) {
+export function getToday(val) {
   let date = new Date(val)
   let y = date.getFullYear()
   let m = date.getMonth() + 1
@@ -76,11 +79,11 @@ export function getToday (val) {
   return (`${y}-${m}-${d}`)
 }
 
-export function getLineTime (){
-  var date = []
+export function getLineTime() {
+  let date = []
 
-  for (var i = 0; i < 30; i++) {
-    date.unshift(getToday((new Date().getTime()-(86400000*(i+1)))))
+  for (let i = 0; i < 30; i++) {
+    date.unshift(getToday((new Date().getTime() - (86400000 * (i + 1)))))
   }
   return date
 }

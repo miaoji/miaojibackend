@@ -18,13 +18,13 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     confirmLoading: loading.effects['storeUser/update'],
     title: `${modalType === 'create' ? '创建门店' : '更新门店'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `storeUser/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'storeUser/hideModal',
       })
@@ -37,7 +37,7 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -48,19 +48,19 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
+    onMarkItem(id) {
       dispatch({
         type: 'storeUser/markBlackList',
         payload: id,
       })
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'storeUser/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'storeUser/showModal',
         payload: {
@@ -69,17 +69,14 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         },
       })
     },
-    // rowSelection: {
-    //   selectedRowKeys,
-    //   onChange: (keys) => {
-    //     dispatch({
-    //       type: 'storeUser/updateState',
-    //       payload: {
-    //         selectedRowKeys: keys,
-    //       },
-    //     })
-    //   },
-    // },
+    toStoreorderinfo(idUser) {
+      dispatch(routerRedux.push({
+        pathname: '/storeorderinfo',
+        query: {
+          ...idUser
+        },
+      }))
+    }
   }
 
   const filterProps = {
@@ -87,7 +84,7 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -97,7 +94,7 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/storeUser',
         query: {
@@ -108,7 +105,7 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         pathname: '/storeUser',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'storeUser/showModal',
         payload: {
@@ -116,7 +113,7 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         },
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'storeUser/switchIsMotion' })
     },
   }
@@ -134,15 +131,14 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
+        selectedRowKeys.length > 0 && <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+          <Col>
+            {`选中 ${selectedRowKeys.length} 个微信用户 `}
+            <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
+              <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
+            </Popconfirm>
+          </Col>
+        </Row>
       }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}

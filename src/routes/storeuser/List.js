@@ -5,19 +5,19 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
+// import { Link } from 'dva/router'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
-      onEditItem(record)
+      toStoreorderinfo({ idUser: record.id })
     } else if (e.key === '2') {
       confirm({
         title: '确定要删除这一条记录吗?',
-        onOk () {
+        onOk() {
           onDeleteItem(record.id)
         },
       })
@@ -30,7 +30,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'id',
       key: 'id',
       render: (text) => {
-        return <span>{ text?text:'暂无' }</span>
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '帐号',
@@ -41,22 +41,22 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'name',
       key: 'name',
       render: (text) => {
-        return <span>{ text?text:'暂无'}</span>
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '店铺级别',
       dataIndex: 'type',
       key: 'type',
       render: (text) => <span>{text === '0'
-            ? '主帐号'
-            : '子帐号'}</span>,
+        ? '主帐号'
+        : '子帐号'}</span>,
     }, {
       title: '状态',
       dataIndex: 'isdelete',
       key: 'isdelete',
       render: (text) => <span>{text === 0
-            ? '禁用'
-            : '启用'}</span>,
+        ? '禁用'
+        : '启用'}</span>,
     }, {
       title: '创建时间',
       dataIndex: 'createtime',
@@ -66,32 +66,14 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         return <span>{createtime}</span>
       },
     },
-    // {
-    //   title: '是否黑名单',
-    //   dataIndex: 'blacklist',
-    //   key: 'blacklist',
-    //   filters: [
-    //     { text: '否', value: '0' },
-    //     { text: '是', value: '1' }
-    //   ],
-    //   onFilter: (value, record) => Number(record.blacklist) === Number(value),
-    //   render: (text) => {
-    //     const realtext = {
-    //       '0': '否',
-    //       '1': '是',
-    //     }
-    //     const newtext = text?text:0
-    //     return <span>{realtext[newtext]}</span>
-    //   }
-    // },
-    // {
-    //   title: '操作',
-    //   key: 'operation',
-    //   width: 100,
-    //   render: (text, record) => {
-    //     return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
-    //   },
-    // },
+    {
+      title: '操作',
+      key: 'operation',
+      width: 100,
+      render: (text, record) => {
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '寄件与金额' }]} />
+      },
+    },
   ]
 
   const getBodyWrapperProps = {
@@ -122,6 +104,7 @@ List.propTypes = {
   onEditItem: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
+  toStoreorderinfo: PropTypes.func
 }
 
 export default List

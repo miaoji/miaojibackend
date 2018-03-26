@@ -174,55 +174,48 @@ module.exports = [
     id: 11,
     bpid: 1,
     name: '门店管理',
-    icon: 'user-delete'
+    icon: 'shop',
   }, {
     id: 16,
     bpid: 1,
     mpid: 11,
     name: '门店寄件支付汇总',
-    icon: 'shop',
     router: '/sendtotal'
   }, {
     id: 111,
     bpid: 16,
     mpid: -1,
     name: '寄件及金额',
-    icon: 'user-delete',
     router: '/mailprice',
   }, {
     id: 18,
     bpid: 1,
     mpid: 11,
-    name: '门店派件量',
-    icon: 'user-delete',
+    name: '门店派件信息',
     router: '/sentalong',
   }, {
     id: 112,
     bpid: 1,
     mpid: 11,
     name: '门店订单汇总',
-    icon: 'user-delete',
     router: '/storeordertotal',
   }, {
     id: 113,
     bpid: 1,
     mpid: 11,
     name: '门店分派及金额',
-    icon: 'user-delete',
     router: '/storeorderinfo',
   }, {
     id: 17,
     bpid: 1,
     mpid: 11,
     name: '门店未签收',
-    icon: 'user-delete',
     router: '/selectshelves',
   }, {
     id: 114,
     bpid: 1,
     mpid: -1,
     name: '门店订单分派',
-    icon: 'user-delete',
     router: '/storeallot',
   },
   // -- //

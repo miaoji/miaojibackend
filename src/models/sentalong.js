@@ -30,14 +30,16 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    *query({ payload }, { call, put }) {
+      let newpayload = {}
       if (!payload.startTime) {
-        message.info('默认查询昨日一天的数据')
+        const times = time.yesterTime()
+        newpayload = { ...times, ...payload }
+      } else {
+        newpayload = { ...payload }
       }
-      const times = time.yesterTime()
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      const data = yield call(query, { ...times, ...payload, download: 0 })
-      // const data = yield call(query, { ...payload, download: 0 })
+      const data = yield call(query, { ...newpayload, download: 0 })
       console.log('data', data)
       if (data.obj) {
         yield put({
@@ -60,7 +62,14 @@ export default modelExtend(pageModel, {
         description: '正在为您准备资源,请稍等!!!',
         duration: 0
       })
-      const res = yield call(download, { ...payload, download: 1 })
+      let newpayload = {}
+      if (!payload.startTime) {
+        const times = time.yesterTime()
+        newpayload = { ...times, ...payload }
+      } else {
+        newpayload = { ...payload }
+      }
+      const res = yield call(download, { ...newpayload, download: 1 })
       console.log('res', res)
       if (res.code === 200 && res.obj) {
         const open = window.open(`${APIV3}${res.obj}`)
