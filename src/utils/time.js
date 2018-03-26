@@ -52,7 +52,7 @@ export const repairTime = function (val) {
 }
 
 export function yesterTime() {
-  const dayCount = 6
+  const dayCount = 1
   if (window.location.search==='') {
     message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
   }
