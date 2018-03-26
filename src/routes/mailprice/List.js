@@ -9,10 +9,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
-      title: '站点名',
-      dataIndex: 'name',
-      key: 'name'
-    }, {
       title: '单号',
       dataIndex: 'orderSn',
       key: 'orderSn',
