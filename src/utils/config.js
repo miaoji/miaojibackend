@@ -38,7 +38,10 @@ module.exports = {
     wxuser: `${APIV3}/quandiExpressSiteManager/received`, // 微信用户明细
     wxusers: `${APIV3}/quandiExpressSiteManager/wechatuser`, // 微信用户
 
-    storeusers: `${APIV3}/quandiExpressSiteManager/store`, // 门店用户
+    storeusers: {
+      all: `${APIV3}/quandiExpressSiteManager/store`, // 门店用户
+      list: `${APIV3}/quandiExpressSiteManager/stName`, // 获取门店列表信息
+    },
 
     communications: `${APIV3}/quandiExpressSiteManager/communicationdata`, // 通信数据
 

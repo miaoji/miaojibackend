@@ -1,6 +1,5 @@
 import { request, config, pageParams } from '../utils'
-const { api } = config
-const { storeorderinfo } = api
+const { api: { storeorderinfo, storeusers } } = config
 
 export async function query(params) {
   params = pageParams(params)
@@ -20,8 +19,8 @@ export async function query(params) {
 
 export async function getStoreInfo(params) {
   return request({
-    url: storeorderinfo.all,
-    method: 'get',
+    url: storeusers.list,
+    method: 'post',
     params: {
       param: JSON.stringify(params)
     }

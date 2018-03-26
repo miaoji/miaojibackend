@@ -5,7 +5,7 @@ const { storeusers } = api
 export async function query (params) {
   params = pageParams(params)
   return request({
-    url: storeusers,
+    url: storeusers.all,
     method: 'get',
     fetchType: 'CORS',
     data: params,
@@ -14,7 +14,7 @@ export async function query (params) {
 
 export async function remove (params) {
   return request({
-    url: storeusers,
+    url: storeusers.all,
     method: 'delete',
     data: params,
   })

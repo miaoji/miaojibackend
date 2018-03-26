@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 import {
   Form, Button, Row, Col,
   // DatePicker,
-  Input,
+  // Input,
+  Select,
   // Cascader,
   // Switch,
   Modal
@@ -14,9 +15,7 @@ import {
 import { DateRange } from '../../components'
 import { time } from '../../utils'
 
-const Search = Input.Search
-// const { RangePicker } = DatePicker
-
+// const Search = Input.Search
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -35,6 +34,7 @@ const Filter = ({
   onDownLoad,
   onFilterChange,
   filter,
+  storeList,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -42,12 +42,15 @@ const Filter = ({
   },
 }) => {
   const handleFields = (fields) => {
-    const { createTime } = fields
+    const { createTime, name } = fields
     if (createTime.length === 2) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
       fields.endTime = repairTime.endTime
+    }
+    if (name) {
+      fields.idUser = name.split('/-/')[1]
     }
     delete fields.createTime
     return fields
@@ -107,6 +110,20 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
+  // 站点名选择器
+  const handleStoreChange = (values) => {
+    let fields = getFieldsValue()
+    console.log('value', values)
+    fields.name = values
+    fields = handleFields(fields)
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
+    onFilterChange({ ...filter, ...fields, name: undefined })
+  }
+
   const { idUser, startTime, endTime } = filter
 
   let initialCreateTime = []
@@ -121,7 +138,9 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('idUser', { initialValue: idUser })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('idUser', { initialValue: idUser })(
+          <Select showSearch placeholder="按站点名称搜索" size="large" style={{ width: '100%' }} onChange={handleStoreChange}>{storeList}</Select>
+        )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
@@ -150,7 +169,8 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  onDownLoad: PropTypes.func
+  onDownLoad: PropTypes.func,
+  storeList: PropTypes.array,
 }
 
 export default Form.create()(Filter)

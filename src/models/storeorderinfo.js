@@ -1,4 +1,4 @@
-// import React from 'react'
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
 import { query, downLoad, getStoreInfo } from '../services/storeorderinfo'
@@ -14,6 +14,7 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    storeList: []
   },
 
   subscriptions: {
@@ -22,6 +23,7 @@ export default modelExtend(pageModel, {
         if (location.pathname === '/storeorderinfo') {
           const querys = location.query
           console.log('querys', querys)
+          dispatch({ type: 'getStoreInfo' })
           dispatch({
             type: 'query',
             payload: location.query,
@@ -89,10 +91,15 @@ export default modelExtend(pageModel, {
       const res = yield call(getStoreInfo)
       if (res.code === 200) {
         console.log('responent', res)
+        let children = []
+        for (let i = 0; i < res.obj.length; i++) {
+          let item = res.obj[i]
+          children.push(<Option title={`${item.name}`} key={`${item.name}/-/${item.idUser}`}>{item.name}</Option>)
+        }
         yield put({
           type: 'setStates',
           payload: {
-            storeList: res.obj
+            storeList: children
           }
         })
       }
