@@ -5,7 +5,7 @@ import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-// import { Link } from 'dva/router'
+import { Link } from 'dva/router'
 import { time } from '../../utils'
 
 const confirm = Modal.confirm
@@ -29,8 +29,8 @@ const List = ({ toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, 
       title: '站点ID',
       dataIndex: 'id',
       key: 'id',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
+      render: (text, record) => {
+        return <Link to={`/storeUserDetail?name=${record.name}`}>{text}</Link>
       }
     }, {
       title: '帐号',
@@ -71,7 +71,7 @@ const List = ({ toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, 
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '寄件与金额' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '门店分派及金额' }]} />
       },
     },
   ]
@@ -94,6 +94,10 @@ const List = ({ toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, 
         simple
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
+        onExpandedRowsChange={(e, re) => {
+          console.log('e', e)
+          console.log('re', re)
+        }}
       />
     </div>
   )

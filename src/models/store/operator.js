@@ -1,18 +1,21 @@
 import modelExtend from 'dva-model-extend'
-import { query } from '../services/sendtotal'
-import { pageModel } from './common'
-import { time } from '../utils'
-
+import { query } from '../../services/sendtotal'
+import { pageModel } from '../common'
+import { time } from '../../utils'
 
 export default modelExtend(pageModel, {
-  namespace: 'expressfee',
+  namespace: 'operator',
 
-  state: {},
+  state: {
+    currentItem: {},
+    modalVisible: false,
+    modalType: 'create',
+  },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/sendtotal') {
+        if (location.pathname === '/operator') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -25,6 +28,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      console.log('感觉这是一个bug')
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()

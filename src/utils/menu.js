@@ -20,20 +20,6 @@ module.exports = [
     router: '/wxuserdetail',
   },
   {
-    id: 3,
-    bpid: 1,
-    name: '门店用户',
-    icon: 'shop',
-    router: '/storeuser',
-  },
-  {
-    id: 31,
-    mpid: -1,
-    bpid: 3,
-    name: '门店用户详细',
-    router: '/storeuser/:id',
-  },
-  {
     id: 4,
     bpid: 1,
     name: '数据统计',
@@ -175,14 +161,91 @@ module.exports = [
     bpid: 1,
     name: '门店管理',
     icon: 'shop',
+  },
+  {
+    id: 3,
+    bpid: 1,
+    mpid: 11,
+    name: '门店用户',
+    router: '/storeuser',
+  },
+  {
+    id: 28,
+    bpid: 3,
+    mpid: -1,
+    name: '门店操作人详情',
+    router: '/storeuserDetail',
+  },
+  {
+    id: 25,
+    bpid: 28,
+    mpid: -1,
+    name: '操作人寄件汇总',
+    router: '/operator',
+  },
+  {
+    id: 23,
+    bpid: 1,
+    mpid: 11,
+    name: '门店寄件金额',
+    router: '/expressfee',
+  },
+  {
+    id: 24,
+    bpid: 11,
+    mpid: -1,
+    name: '门店单号汇总',
+    router: '/expressfeedetail',
+  },
+  {
+    id: 25,
+    bpid: 1,
+    mpid: 11,
+    name: '门店点单上架分派签收',
+    router: '/business',
   }, {
+    id: 26,
+    bpid: 25,
+    mpid: -1,
+    name: '操作人',
+    router: '/operatorbyname',
+  }, {
+    id: 27,
+    bpid: 26,
+    mpid: -1,
+    name: '快件详情',
+    router: '/orderbyuser',
+  },
+  {
     id: 16,
     bpid: 1,
     mpid: 11,
     name: '门店寄件支付汇总',
     router: '/sendtotal'
-  }, {
-    id: 111,
+  },
+  {
+    id: 29,
+    bpid: 1,
+    mpid: 11,
+    name: '门店派件金额',
+    router: '/assignFee'
+  },
+  {
+    id: 30,
+    bpid: 29,
+    mpid: -1,
+    name: '操作人派件金额',
+    router: '/operatorAssignFee'
+  },
+  {
+    id: 31,
+    bpid: 1,
+    mpid: 11,
+    name: '门店签收',
+    router: '/storeSign'
+  },
+  {
+    id: 19,
     bpid: 16,
     mpid: -1,
     name: '寄件及金额',
@@ -194,13 +257,13 @@ module.exports = [
     name: '门店派件信息',
     router: '/sentalong',
   }, {
-    id: 112,
+    id: 20,
     bpid: 1,
     mpid: 11,
     name: '门店订单汇总',
     router: '/storeordertotal',
   }, {
-    id: 113,
+    id: 22,
     bpid: 1,
     mpid: 11,
     name: '门店分派及金额',

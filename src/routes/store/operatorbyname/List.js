@@ -4,38 +4,45 @@ import { Table } from 'antd'
 import { Link } from 'dva/router'
 import styles from './List.less'
 import classnames from 'classnames'
-import AnimTableBody from '../../components/DataTable/AnimTableBody'
+import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点名',
+      title: '操作人',
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/mailprice?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '暂无站点名'}</Link>
+          return <Link to={`/orderbyuser?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '暂无站点名'}</Link>
         }
-        return <Link to={`/mailprice?idUser=${record.idUser}`}>{text || '暂无站点名'}</Link>
+        return <Link to={`/orderbyuser?name=${record.name}`}>{text || '暂无站点名'}</Link>
       }
     }, {
-      title: '支付成功',
+      title: '点单数量',
       dataIndex: 'success',
       key: 'success',
       render: (text) => {
         return <span>{text || 0} 元</span>
       }
     }, {
-      title: '等待支付',
+      title: '上架数量',
       dataIndex: 'wait',
       key: 'wait',
       render: (text) => {
         return <span>{text || 0} 元</span>
       }
     }, {
-      title: '支付关闭',
+      title: '分派数量',
       dataIndex: 'close',
       key: 'cloce',
+      render: (text) => {
+        return <span>{text || 0} 元</span>
+      }
+    }, {
+      title: '签收数量',
+      dataIndex: 'close1',
+      key: 'cloce1',
       render: (text) => {
         return <span>{text || 0} 元</span>
       }

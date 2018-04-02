@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Form, Button, Row, Col,
-} from 'antd'
-import { DateRange } from '../../components'
-import { time } from '../../utils'
+import moment from 'moment'
+import { Form, Button, Row, Col } from 'antd'
+import { DateRange } from '../../../components'
+import { time } from '../../../utils'
 
 const ColProps = {
   xs: 24,
@@ -30,7 +29,7 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length === 2) {
+    if (createTime.length) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
@@ -43,14 +42,7 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    // 判断搜索提交的内容是否为空
-    // 为空则等于undefined
-    for (let item in fields) {
-      if (/^\s*$/g.test(fields[item])) {
-        fields[item] = undefined
-      }
-    }
-    onFilterChange({ ...filter, ...fields })
+    onFilterChange(fields)
   }
 
   const handleReset = () => {
@@ -72,38 +64,29 @@ const Filter = ({
     handleSubmit()
   }
 
-  // 时间选择器change事件
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
-    for (let item in fields) {
-      if (/^\s*$/g.test(fields[item])) {
-        fields[item] = undefined
-      }
-    }
-    onFilterChange({ ...filter, ...fields })
+    onFilterChange(fields)
   }
-
-  const { startTime, endTime } = filter
 
   let initialCreateTime = []
-  if (startTime) {
-    initialCreateTime[0] = String(startTime)
+  if (filter.createTime && filter.createTime[0]) {
+    initialCreateTime[0] = moment(filter.createTime[0])
   }
-  if (endTime) {
-    initialCreateTime[1] = String(endTime)
+  if (filter.createTime && filter.createTime[1]) {
+    initialCreateTime[1] = moment(filter.createTime[1])
   }
-
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
-        )}
+      <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
@@ -116,12 +99,9 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  onAdd: PropTypes.func,
-  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  onDownLoad: PropTypes.func
 }
 
 export default Form.create()(Filter)

@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { Form, Button, Row, Col, Input, Cascader } from 'antd'
-import city from '../../utils/city'
-import { DateRange } from '../../components'
-import { time } from '../../utils'
-
-const Search = Input.Search
+import {
+  Form, Button, Row, Col,
+} from 'antd'
+import { DateRange } from '../../../components'
+import { time } from '../../../utils'
 
 const ColProps = {
   xs: 24,
@@ -22,6 +20,7 @@ const TwoColProps = {
 }
 
 const Filter = ({
+  // onAdd,
   onFilterChange,
   filter,
   form: {
@@ -32,7 +31,7 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length) {
+    if (createTime.length === 2) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
@@ -45,7 +44,14 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    onFilterChange(fields)
+    // 判断搜索提交的内容是否为空
+    // 为空则等于undefined
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
+    onFilterChange({ ...filter, ...fields })
   }
 
   const handleReset = () => {
@@ -67,43 +73,38 @@ const Filter = ({
     handleSubmit()
   }
 
+  // 时间选择器change事件
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
-    onFilterChange(fields)
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
+    onFilterChange({ ...filter, ...fields })
   }
-  const { name, address } = filter
+
+  const { startTime, endTime } = filter
 
   let initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = moment(filter.createTime[0])
+  if (startTime) {
+    initialCreateTime[0] = String(startTime)
   }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = moment(filter.createTime[1])
+  if (endTime) {
+    initialCreateTime[1] = String(endTime)
   }
+
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />)}
+      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+        )}
       </Col>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('address', { initialValue: address })(
-          <Cascader
-            size="large"
-            style={{ width: '100%' }}
-            options={city}
-            placeholder="请挑选地址"
-            onChange={handleChange.bind(null, 'address')}
-          />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
-          )}
-      </Col>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
+      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
@@ -116,9 +117,12 @@ const Filter = ({
 }
 
 Filter.propTypes = {
+  onAdd: PropTypes.func,
+  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  onDownLoad: PropTypes.func
 }
 
 export default Form.create()(Filter)

@@ -14,7 +14,7 @@ const Routers = function ({ history, app }) {
     {
       path: '/',
       component: App,
-      getIndexRoute (nextState, cb) {
+      getIndexRoute(nextState, cb) {
         require.ensure([], require => {
           registerModel(app, require('./models/dashboard'))
           cb(null, { component: require('./routes/dashboard/') })
@@ -23,7 +23,7 @@ const Routers = function ({ history, app }) {
       childRoutes: [
         {
           path: 'dashboard',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/dashboard'))
               cb(null, require('./routes/dashboard/'))
@@ -31,7 +31,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'user',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/user'))
               cb(null, require('./routes/user/'))
@@ -39,7 +39,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'user/:id',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/user/detail'))
               cb(null, require('./routes/user/detail/'))
@@ -47,7 +47,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'wxuser',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/wxuser'))
               cb(null, require('./routes/wxuser/'))
@@ -55,7 +55,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'wxuserdetail',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/wxuser/detail'))
               cb(null, require('./routes/wxuser/detail/'))
@@ -63,15 +63,15 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'storeuser',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/storeuser'))
               cb(null, require('./routes/storeuser/'))
             }, 'storeuser')
           },
         }, {
-          path: 'storeuser/:id',
-          getComponent (nextState, cb) {
+          path: 'storeuserdetail',
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/storeuser/detail'))
               cb(null, require('./routes/storeuser/detail/'))
@@ -79,7 +79,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'message',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/message'))
               cb(null, require('./routes/message/'))
@@ -87,7 +87,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'message/:id',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/message/detail'))
               cb(null, require('./routes/message/detail/'))
@@ -95,7 +95,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'communication',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/communication'))
               cb(null, require('./routes/communication/'))
@@ -104,7 +104,7 @@ const Routers = function ({ history, app }) {
         },
         {
           path: 'income',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/income'))
               cb(null, require('./routes/income'))
@@ -113,7 +113,7 @@ const Routers = function ({ history, app }) {
         },
         {
           path: 'expend',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/expend'))
               cb(null, require('./routes/expend'))
@@ -122,7 +122,7 @@ const Routers = function ({ history, app }) {
         },
         {
           path: 'normal',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/normal'))
               cb(null, require('./routes/normal'))
@@ -131,7 +131,7 @@ const Routers = function ({ history, app }) {
         },
         {
           path: 'collect',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/collect'))
               cb(null, require('./routes/collect'))
@@ -140,7 +140,7 @@ const Routers = function ({ history, app }) {
         },
         {
           path: 'collection',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/collection'))
               cb(null, require('./routes/collection'))
@@ -149,7 +149,7 @@ const Routers = function ({ history, app }) {
         },
         {
           path: 'topups',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/topup'))
               cb(null, require('./routes/wallet/topup'))
@@ -157,7 +157,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'withdraws',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/withdraw'))
               cb(null, require('./routes/wallet/withdraw'))
@@ -165,7 +165,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'order',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/order'))
               cb(null, require('./routes/order/'))
@@ -173,7 +173,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'consume',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/consume'))
               cb(null, require('./routes/consume/'))
@@ -181,7 +181,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'qr',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/qr'))
               cb(null, require('./routes/qr/'))
@@ -189,7 +189,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'qrdetail',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/qr/detail'))
               cb(null, require('./routes/qr/detail'))
@@ -197,7 +197,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'login',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/login'))
               cb(null, require('./routes/login/'))
@@ -205,7 +205,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'blacklist',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/blacklist'))
               cb(null, require('./routes/blacklist/'))
@@ -213,7 +213,7 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'mailprice',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/mailprice'))
               cb(null, require('./routes/mailprice/'))
@@ -295,13 +295,77 @@ const Routers = function ({ history, app }) {
           path: 'expressfee',
           getComponent(nextState, cb) {
             require.ensure([], require => {
-              registerModel(app, require('./models/expressfee'))
-              cb(null, require('./routes/expressfee/'))
+              registerModel(app, require('./models/store/expressfee'))
+              cb(null, require('./routes/store/expressfee/'))
             }, 'expressfee')
           },
         }, {
+          path: 'operator',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/operator'))
+              cb(null, require('./routes/store/operator/'))
+            }, 'operator')
+          },
+        }, {
+          path: 'expressfeedetail',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/expressfeedetail'))
+              cb(null, require('./routes/store/expressfeedetail/'))
+            }, 'expressfeedetail')
+          },
+        }, {
+          path: 'business',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/business'))
+              cb(null, require('./routes/store/business/'))
+            }, 'business')
+          },
+        }, {
+          path: 'operatorbyname',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/operatorbyname'))
+              cb(null, require('./routes/store/operatorbyname/'))
+            }, 'operatorbyname')
+          },
+        }, {
+          path: 'orderbyuser',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/orderbyuser'))
+              cb(null, require('./routes/store/orderbyuser/'))
+            }, 'orderbyuser')
+          },
+        }, {
+          path: 'assignFee',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/assignFee'))
+              cb(null, require('./routes/store/assignFee/'))
+            }, 'assignFee')
+          },
+        }, {
+          path: 'operatorAssignFee',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/operatorAssignFee'))
+              cb(null, require('./routes/store/operatorAssignFee/'))
+            }, 'operatorAssignFee')
+          },
+        }, {
+          path: 'storeSign',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/storeSign'))
+              cb(null, require('./routes/store/storeSign/'))
+            }, 'storeSign')
+          },
+        }, {
           path: '*',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/error/'))
             }, 'error')
