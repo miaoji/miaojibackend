@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Form, Button, Row, Col, Input, Cascader } from 'antd'
-import city from '../../utils/city'
+import { Form, Button, Row, Col, Input } from 'antd'
 import { DateRange } from '../../components'
 import { time } from '../../utils'
 
@@ -73,7 +72,7 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name, address } = filter
+  const { name } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -87,16 +86,6 @@ const Filter = ({
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('address', { initialValue: address })(
-          <Cascader
-            size="large"
-            style={{ width: '100%' }}
-            options={city}
-            placeholder="请挑选地址"
-            onChange={handleChange.bind(null, 'address')}
-          />)}
       </Col>
       <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(

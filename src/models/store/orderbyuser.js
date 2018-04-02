@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { query } from '../../services/sendtotal'
+import { query } from '../../services/store/orderbyuser'
 import { pageModel } from '../common'
 import { time } from '../../utils'
 
@@ -37,7 +37,7 @@ export default modelExtend(pageModel, {
         newpayload = { ...payload }
       }
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      const data = yield call(query, { ...newpayload, download: 0 })
+      const data = yield call(query, { mailtype: 0, ...newpayload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',

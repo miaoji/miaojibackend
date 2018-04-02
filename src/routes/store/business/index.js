@@ -2,35 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
+import { Tabs } from 'antd'
+import { Page } from '../../../components'
+
+const { TabPane } = Tabs
 
 const Business = ({ location, dispatch, business, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = business
+  const { list, pagination } = business
   const { pageSize } = pagination
-
-  const modalProps = {
-    type: modalType,
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
-    wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk(data) {
-      dispatch({
-        type: `business/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel() {
-      dispatch({
-        type: 'business/hideModal',
-      })
-    },
-  }
+  const { query, pathname } = location
 
   const listProps = {
     filter: {
@@ -44,7 +26,6 @@ const Business = ({ location, dispatch, business, loading }) => {
     // },
     onChange(page, filter) {
       console.log(11)
-      const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -114,12 +95,31 @@ const Business = ({ location, dispatch, business, loading }) => {
     },
   }
 
+  const handleTabClick = (key) => {
+    dispatch(routerRedux.push({
+      pathname,
+      query: {
+        ...location.query,
+        mailtype: key,
+      },
+    }))
+  }
+
   return (
-    <div className="content-inner">
+    <Page inner>
       <Filter {...filterProps} />
-      <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
-    </div>
+      <Tabs activeKey={query.mailtype || '0'} onTabClick={handleTabClick}>
+        <TabPane tab="普通件" key={0}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="到付件" key={1}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="代收货款" key={2}>
+          <List {...listProps} />
+        </TabPane>
+      </Tabs>
+    </Page>
   )
 }
 

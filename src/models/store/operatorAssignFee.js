@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { query } from '../../services/sendtotal'
+import { query } from '../../services/store/operatorAssignFee'
 import { pageModel } from '../common'
 import { time } from '../../utils'
 

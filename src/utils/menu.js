@@ -198,14 +198,14 @@ module.exports = [
     router: '/expressfeedetail',
   },
   {
-    id: 25,
+    id: 32,
     bpid: 1,
     mpid: 11,
     name: '门店点单上架分派签收',
     router: '/business',
   }, {
     id: 26,
-    bpid: 25,
+    bpid: 32,
     mpid: -1,
     name: '操作人',
     router: '/operatorbyname',
@@ -215,13 +215,6 @@ module.exports = [
     mpid: -1,
     name: '快件详情',
     router: '/orderbyuser',
-  },
-  {
-    id: 16,
-    bpid: 1,
-    mpid: 11,
-    name: '门店寄件支付汇总',
-    router: '/sendtotal'
   },
   {
     id: 29,
@@ -243,6 +236,13 @@ module.exports = [
     mpid: 11,
     name: '门店签收',
     router: '/storeSign'
+  },
+  {
+    id: 16,
+    bpid: 1,
+    mpid: 11,
+    name: '门店寄件支付汇总',
+    router: '/sendtotal'
   },
   {
     id: 19,
