@@ -236,14 +236,6 @@ const Routers = function ({ history, app }) {
             }, 'storeorderinfo')
           },
         }, {
-          path: 'storeallot',
-          getComponent(nextState, cb) {
-            require.ensure([], require => {
-              registerModel(app, require('./models/storeallot'))
-              cb(null, require('./routes/storeallot/'))
-            }, 'storeallot')
-          },
-        }, {
           path: 'ordernumber',
           getComponent(nextState, cb) {
             require.ensure([], require => {
@@ -298,6 +290,14 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/sentalong'))
               cb(null, require('./routes/sentalong/'))
             }, 'sentalong')
+          },
+        }, {
+          path: 'expressfee',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/expressfee'))
+              cb(null, require('./routes/expressfee/'))
+            }, 'expressfee')
           },
         }, {
           path: '*',

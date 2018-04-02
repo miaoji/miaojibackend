@@ -211,12 +211,6 @@ module.exports = [
     mpid: 11,
     name: '门店未签收',
     router: '/selectshelves',
-  }, {
-    id: 114,
-    bpid: 1,
-    mpid: -1,
-    name: '门店订单分派',
-    router: '/storeallot',
   },
   // -- //
   {
