@@ -11,7 +11,6 @@ const { TabPane } = Tabs
 
 const Business = ({ location, dispatch, business, loading }) => {
   const { list, pagination } = business
-  const { pageSize } = pagination
   const { query, pathname } = location
 
   const listProps = {
@@ -58,13 +57,11 @@ const Business = ({ location, dispatch, business, loading }) => {
       ...location.query,
     },
     onFilterChange(value) {
-      console.log('1231', value)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
+          mailtype: query.mailtype
         },
       }))
     },

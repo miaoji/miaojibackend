@@ -5,32 +5,14 @@ import { connect } from 'dva'
 // import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
+import { Tabs } from 'antd'
+import { Page } from '../../../components'
+
+const { TabPane } = Tabs
 
 const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = expressfeedetail
-  const { pageSize } = pagination
-
-  const modalProps = {
-    type: modalType,
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
-    wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk(data) {
-      dispatch({
-        type: `expressfeedetail/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel() {
-      dispatch({
-        type: 'expressfeedetail/hideModal',
-      })
-    },
-  }
+  const { list, pagination } = expressfeedetail
+  const { query, pathname } = location
 
   const listProps = {
     filter: {
@@ -40,11 +22,8 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
     loading: loading.effects['expressfeedetail/query'],
     pagination,
     location,
-    // onLink(iduser, query){
-    // },
     onChange(page, filter) {
       console.log(11)
-      const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -71,6 +50,7 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
       })
     },
   }
+  const { payType, name } = location.query
 
   const filterProps = {
     filter: {
@@ -82,8 +62,8 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
+          payType,
+          name
         },
       }))
     },
@@ -114,12 +94,34 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
     },
   }
 
+  const handleTabClick = (key) => {
+    dispatch(routerRedux.push({
+      pathname,
+      query: {
+        ...location.query,
+        payType: key,
+      },
+    }))
+  }
+
   return (
-    <div className="content-inner">
+    <Page inner>
       <Filter {...filterProps} />
-      <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
-    </div>
+      <Tabs activeKey={query.payType || '1'} onTabClick={handleTabClick}>
+        <TabPane tab="支付宝" key={1}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="微信" key={2}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="余额" key={3}>
+          <List {...listProps} />
+        </TabPane>
+        <TabPane tab="现金" key={4}>
+          <List {...listProps} />
+        </TabPane>
+      </Tabs>
+    </Page>
   )
 }
 

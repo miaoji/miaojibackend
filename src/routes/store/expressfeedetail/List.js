@@ -9,8 +9,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
   const columns = [
     {
       title: '单号',
-      dataIndex: 'success',
-      key: 'success',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }

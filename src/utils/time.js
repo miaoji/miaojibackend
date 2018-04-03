@@ -52,8 +52,11 @@ export const repairTime = function (val) {
 }
 
 export function yesterTime() {
-  const dayCount = 1
-  if (window.location.search==='') {
+  let dayCount = 10
+  if (process.env.NODE_ENV !== 'development') {
+    dayCount = 1
+  }
+  if (window.location.search === '') {
     message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
   }
   const date = new Date()

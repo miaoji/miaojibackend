@@ -10,7 +10,7 @@ import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
       toStoreorderinfo({ idUser: record.id })
@@ -30,6 +30,9 @@ const List = ({ toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, 
       dataIndex: 'id',
       key: 'id',
       render: (text, record) => {
+        if (filter.startTime) {
+          return <Link to={`/storeUserDetail?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text}</Link>
+        }
         return <Link to={`/storeUserDetail?name=${record.name}`}>{text}</Link>
       }
     }, {
@@ -108,7 +111,8 @@ List.propTypes = {
   onEditItem: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
-  toStoreorderinfo: PropTypes.func
+  toStoreorderinfo: PropTypes.func,
+  filter: PropTypes.object
 }
 
 export default List

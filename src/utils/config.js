@@ -3,10 +3,12 @@ const APIV1 = '/api/v1'
 
 let APIV3
 // 本地测试
-// APIV3 = 'http://192.168.231.232:8080'
+// 徐景阳
+APIV3 = 'http://192.168.231.232:8080'
+// 吴聪
 // APIV3 = 'http://192.168.231.231:8080'
 // 线上
-APIV3 = 'http://app.quandikeji.com:8288'
+// APIV3 = 'http://app.quandikeji.com:8288'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -148,6 +150,46 @@ module.exports = {
     // 查询门店分配信息
     storeallot: {
       // all: `${APIV3}/quandiExpressSiteManager/sendMail103` 废弃的接口地址
+    },
+    // 门店寄件金额
+    expressfee: {
+      all: `${APIV3}/quandiExpressSiteManager/selectStorePrice`
+    },
+    // 门店单号汇总
+    expressfeedetail: {
+      all: `${APIV3}/quandiExpressSiteManager/selectPayType`
+    },
+    // 操作人寄件总金额
+    storeUserDetail: {
+      all: `${APIV3}/quandiExpressSiteManager/selectrealName`
+    },
+    // 操作人寄件详情
+    operator: {
+      all: `${APIV3}/quandiExpressSiteManager/selectRealNamedetails`
+    },
+    // 门店点单上架分派签收
+    business: {
+      all: `${APIV3}/quandiExpressSiteManager/selectdsfq`
+    },
+    // 根据站点名查询站点下操作人寄件汇总
+    operatorbyname: {
+      all: `${APIV3}/quandiExpressSiteManager/selectRealNamedsfq`
+    },
+    // 根据操作人姓名查询门店单号汇总
+    orderbyuser: {
+      all: `${APIV3}/quandiExpressSiteManager/selectRealNamedsfqDetails`
+    },
+    // 门店派件金额
+    assignFee: {
+      all: `${APIV3}/quandiExpressSiteManager/selectpjjetotal`
+    },
+    // 操作人派件金额
+    operatorAssignFee: {
+      all: `${APIV3}/quandiExpressSiteManager/selectpjjeDetails`
+    },
+    // 门店签收信息汇总
+    storeSign: {
+      all: `${APIV3}/quandiExpressSiteManager/selectrealName`
     },
   }
 }

@@ -28,7 +28,12 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      console.log('感觉这是一个bug')
+      yield put({
+        type: 'setStates',
+        payload: {
+          list: []
+        }
+      })
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()
@@ -57,7 +62,7 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    setSiteName(state, { payload }) {
+    setStates(state, { payload }) {
       return { ...state, ...payload }
     },
 

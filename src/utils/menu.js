@@ -192,7 +192,7 @@ module.exports = [
   },
   {
     id: 24,
-    bpid: 11,
+    bpid: 23,
     mpid: -1,
     name: '门店单号汇总',
     router: '/expressfeedetail',

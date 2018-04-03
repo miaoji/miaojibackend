@@ -13,21 +13,24 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'name',
       key: 'name',
       render: (text) => {
-        return <Link to={`/operatorAssignFee?name=${text}`}>{text || '暂无'}</Link>
+        if (filter.startTime) {
+          return <Link to={`/operatorAssignFee?name=${text}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '/'}</Link>
+        }
+        return <Link to={`/operatorAssignFee?name=${text}`}>{text || '/'}</Link>
       }
     }, {
       title: '派件量',
-      dataIndex: 'success',
-      key: 'success',
+      dataIndex: 'sendPiecesNumber',
+      key: 'sendPiecesNumber',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '派件金额',
-      dataIndex: 'wait',
-      key: 'wait',
+      dataIndex: 'sendPiecesPrice',
+      key: 'sendPiecesPrice',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }
   ]

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import { Link } from 'dva/router'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
@@ -10,56 +9,60 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
   const columns = [
     {
       title: '品牌',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'brand',
+      key: 'brand',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }
     }, {
       title: '单号',
-      dataIndex: 'success',
-      key: 'success',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '操作人',
-      dataIndex: 'wait',
-      key: 'wait',
+      dataIndex: 'realName',
+      key: 'realName',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '快递状态',
-      dataIndex: 'close',
-      key: 'cloce',
-      render: (text, record) => {
-        if (filter.startTime) {
-          return <Link to={`/expressfeedetail?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
-        }
-        return <Link to={`/expressfeedetail?name=${record.name}`}>{text || 0}元</Link>
-      }
+      dataIndex: 'state',
+      key: 'state',
     }, {
       title: '金额',
-      dataIndex: 'close12',
-      key: 'cloce12',
+      dataIndex: 'account',
+      key: 'account',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '收款方式',
-      dataIndex: 'close22',
-      key: 'cloce22',
+      dataIndex: 'payType',
+      key: 'payType',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        const replText = {
+          1: '支付宝',
+          2: '微信',
+          3: '余额',
+          4: '支付宝',
+        }
+        return <span>{replText[text]}</span>
       }
     }, {
       title: '收款状态',
-      dataIndex: 'close32',
-      key: 'cloce32',
+      dataIndex: 'status',
+      key: 'status',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
+    }, {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
     }
   ]
 

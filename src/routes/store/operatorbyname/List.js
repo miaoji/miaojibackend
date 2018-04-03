@@ -12,39 +12,39 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '操作人',
       dataIndex: 'name',
       key: 'name',
-      render: (text, record) => {
+      render: (text) => {
         if (filter.startTime) {
-          return <Link to={`/orderbyuser?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '暂无站点名'}</Link>
+          return <Link to={`/orderbyuser?realName=${text}&name=${filter.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '暂无'}</Link>
         }
-        return <Link to={`/orderbyuser?name=${record.name}`}>{text || '暂无站点名'}</Link>
+        return <Link to={`/orderbyuser?realName=${text}&name=${filter.name}`}>{text || '暂无'}</Link>
       }
     }, {
       title: '点单数量',
-      dataIndex: 'success',
-      key: 'success',
+      dataIndex: 'ddtotal',
+      key: 'ddtotal',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '上架数量',
-      dataIndex: 'wait',
-      key: 'wait',
+      dataIndex: 'sjtotal',
+      key: 'sjtotal',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '分派数量',
-      dataIndex: 'close',
-      key: 'cloce',
+      dataIndex: 'fptotal',
+      key: 'fptotal',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '签收数量',
-      dataIndex: 'close1',
-      key: 'cloce1',
+      dataIndex: 'qstotal',
+      key: 'qstotal',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     },
   ]

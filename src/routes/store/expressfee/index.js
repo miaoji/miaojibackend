@@ -9,7 +9,6 @@ import Modal from './Modal'
 
 const Expressfee = ({ location, dispatch, expressfee, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = expressfee
-  const { pageSize } = pagination
 
   const modalProps = {
     type: modalType,
@@ -82,8 +81,6 @@ const Expressfee = ({ location, dispatch, expressfee, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
         },
       }))
     },

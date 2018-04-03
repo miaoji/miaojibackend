@@ -31,11 +31,16 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length === 2) {
+    console.log('createTime', createTime)
+    if (createTime && createTime.length === 2) {
       // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
       const repairTime = time.repairTime(fields.createTime)
       fields.startTime = repairTime.startTime
       fields.endTime = repairTime.endTime
+    }
+    if (createTime && createTime[1] && createTime[1].length === 13) {
+      fields.startTime = createTime[0]
+      fields.endTime = createTime[1]
     }
     delete fields.createTime
     return fields

@@ -17,7 +17,7 @@ const StoreUserDetail = ({ location, dispatch, storeUserDetail, loading }) => {
       dispatch(routerRedux.push({
         pathname: '/operator',
         query: {
-          name: '四季绿城3号门',
+          name,
           realName: item.realName
         },
       }))
@@ -36,30 +36,9 @@ const StoreUserDetail = ({ location, dispatch, storeUserDetail, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
+          name: location.query.name,
         },
       }))
-    },
-    onSearch(fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/storeUserDetail',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/storeUserDetail',
-      }))
-    },
-    onAdd() {
-      dispatch({
-        type: 'storeUserDetail/showModal',
-        payload: {
-          modalType: 'create',
-        },
-      })
-    },
-    switchIsMotion() {
-      dispatch({ type: 'storeUserDetail/switchIsMotion' })
     },
   }
 

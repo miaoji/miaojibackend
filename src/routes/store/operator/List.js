@@ -8,15 +8,15 @@ import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '品牌Id',
-      dataIndex: 'name',
-      key: 'name',
+      title: '品牌',
+      dataIndex: 'brand',
+      key: 'brand',
     }, {
       title: '单号',
-      dataIndex: 'success',
-      key: 'success',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '费用',
@@ -30,7 +30,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'payType',
       key: 'payType',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text}</span>
+      }
+    }, {
+      title: '时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: (text) => {
+        return <span>{text}</span>
       }
     },
   ]

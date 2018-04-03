@@ -9,7 +9,6 @@ import Modal from './Modal'
 
 const Operator = ({ location, dispatch, operator, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = operator
-  const { pageSize } = pagination
 
   const modalProps = {
     type: modalType,
@@ -40,8 +39,6 @@ const Operator = ({ location, dispatch, operator, loading }) => {
     loading: loading.effects['operator/query'],
     pagination,
     location,
-    // onLink(iduser, query){
-    // },
     onChange(page, filter) {
       console.log(11)
       const { query, pathname } = location
@@ -78,39 +75,15 @@ const Operator = ({ location, dispatch, operator, loading }) => {
     },
     onFilterChange(value) {
       console.log('1231', value)
+      const { name, realName } = location.query
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
+          name,
+          realName
         },
       }))
-    },
-    onSearch(fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/operator',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/operator',
-      }))
-    },
-    onDownLoad() {
-      dispatch({
-        type: 'operator/download',
-        payload: location.query
-      })
-    },
-    onAdd() {
-      dispatch({
-        type: 'operator/showModal',
-        payload: {
-          modalType: 'create',
-        },
-      })
     },
   }
 

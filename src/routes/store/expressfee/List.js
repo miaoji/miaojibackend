@@ -17,34 +17,43 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       }
     }, {
       title: '支付宝',
-      dataIndex: 'success',
-      key: 'success',
-      render: (text) => {
-        return <span>{text || 0} 元</span>
+      dataIndex: 'AlipayPrice',
+      key: 'AlipayPrice',
+      render: (text, record) => {
+        if (filter.startTime) {
+          return <Link to={`/expressfeedetail?payType=1&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
+        }
+        return <Link to={`/expressfeedetail?payType=1&name=${record.name}`}>{text || 0}元</Link>
       }
     }, {
       title: '微信',
-      dataIndex: 'wait',
-      key: 'wait',
-      render: (text) => {
-        return <span>{text || 0} 元</span>
+      dataIndex: 'WeChatPrice',
+      key: 'WeChatPrice',
+      render: (text, record) => {
+        if (filter.startTime) {
+          return <Link to={`/expressfeedetail?payType=2&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
+        }
+        return <Link to={`/expressfeedetail?payType=2&name=${record.name}`}>{text || 0}元</Link>
       }
     }, {
       title: '余额',
-      dataIndex: 'close',
-      key: 'cloce',
+      dataIndex: 'balance',
+      key: 'balance',
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/expressfeedetail?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
+          return <Link to={`/expressfeedetail?payType=3&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
         }
-        return <Link to={`/expressfeedetail?name=${record.name}`}>{text || 0}元</Link>
+        return <Link to={`/expressfeedetail?payType=3&name=${record.name}`}>{text || 0}元</Link>
       }
     }, {
       title: '现金',
-      dataIndex: 'close2',
-      key: 'cloce2',
-      render: (text) => {
-        return <span>{text || 0} 元</span>
+      dataIndex: 'cash',
+      key: 'cash',
+      render: (text, record) => {
+        if (filter.startTime) {
+          return <Link to={`/expressfeedetail?payType=4&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
+        }
+        return <Link to={`/expressfeedetail?payType=4&name=${record.name}`}>{text || 0}元</Link>
       }
     }
   ]

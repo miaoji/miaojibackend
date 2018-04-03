@@ -8,16 +8,16 @@ const List = ({ list, handleClick }) => {
   // const { data } = storeUserDetail
   const detail = (
     <Row gutter={16}>
-      {[1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2].map((item) => {
+      {list.length > 0 ? list.map((item) => {
         return (
           <Col span={4}>
-            <Card className={styles.card} onClick={() => { handleClick({ realName: item }) }}>
-              <p>操作人: 张三</p>
-              <p>寄件总金额: 326元</p>
+            <Card className={styles.card} onClick={() => { handleClick({ realName: item.realName }) }}>
+              <p>操作人: {item.realName}</p>
+              <p>寄件总金额: {item.countfee || 0}元</p>
             </Card>
           </Col>
         )
-      })}
+      }) : <span>暂无相关数据</span>}
     </Row>
   )
   return (<div className="content-inner">

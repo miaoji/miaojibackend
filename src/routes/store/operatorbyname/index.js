@@ -13,7 +13,6 @@ const { TabPane } = Tabs
 
 const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = operatorbyname
-  const { pageSize } = pagination
   const { query, pathname } = location
 
   const modalProps = {
@@ -81,13 +80,12 @@ const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
       ...location.query,
     },
     onFilterChange(value) {
-      console.log('1231', value)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
+          mailtype: query.mailtype,
+          name: query.name
         },
       }))
     },

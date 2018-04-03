@@ -1,6 +1,6 @@
 import { request, config, pageParams } from '../../utils'
 const { api } = config
-const { sendtotal } = api
+const { operatorAssignFee } = api
 
 export async function query (params) {
   params = pageParams(params)
@@ -8,7 +8,7 @@ export async function query (params) {
   // delete params.pageSize
   params = JSON.stringify(params)
   return request({
-    url: sendtotal.all,
+    url: operatorAssignFee.all,
     method: 'post',
     params: {
       param: params

@@ -13,7 +13,6 @@ const { TabPane } = Tabs
 
 const Orderbyuser = ({ location, dispatch, orderbyuser, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = orderbyuser
-  const { pageSize } = pagination
   const { query, pathname } = location
 
   const modalProps = {
@@ -86,8 +85,8 @@ const Orderbyuser = ({ location, dispatch, orderbyuser, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
+          realName: query.realName,
+          name: query.name
         },
       }))
     },

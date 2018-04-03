@@ -14,9 +14,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'name',
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/operatorbyname?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '暂无站点名'}</Link>
+          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '/'}</Link>
         }
-        return <Link to={`/operatorbyname?name=${record.name}`}>{text || '暂无站点名'}</Link>
+        return <Link to={`/operatorbyname?name=${record.name}&mailtype=${filter.mailtype || '0'}`}>{text || '/'}</Link>
       }
     }, {
       title: '点单数量',

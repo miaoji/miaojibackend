@@ -37,6 +37,10 @@ const Filter = ({
       fields.startTime = repairTime.startTime
       fields.endTime = repairTime.endTime
     }
+    if (createTime && createTime[1] && createTime[1].length === 13) {
+      fields.startTime = createTime[0]
+      fields.endTime = createTime[1]
+    }
     delete fields.createTime
     return fields
   }

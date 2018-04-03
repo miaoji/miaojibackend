@@ -32,6 +32,9 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
   }
 
   const listProps = {
+    filter: {
+      ...location.query,
+    },
     dataSource: list,
     loading: loading.effects['storeUser/query'],
     pagination,
