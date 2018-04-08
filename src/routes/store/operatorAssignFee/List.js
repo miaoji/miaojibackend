@@ -32,6 +32,15 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '快递状态',
       dataIndex: 'state',
       key: 'state',
+      render: (text) => {
+        const real = {
+          1: '点单',
+          101: '上架',
+          103: '分派',
+          301: '签收',
+        }
+        return <span>{text ? real[text] : '暂无'}</span>
+      }
     }, {
       title: '金额',
       dataIndex: 'account',

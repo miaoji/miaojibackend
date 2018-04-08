@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './index.less'
 import { Card, Col, Row } from 'antd'
 
-const List = ({ list, handleClick }) => {
+const List = ({ list, filter, handleClick }) => {
   console.log('list', list)
   // const { data } = storeUserDetail
   const detail = (
@@ -11,7 +11,7 @@ const List = ({ list, handleClick }) => {
       {list.length > 0 ? list.map((item) => {
         return (
           <Col span={4}>
-            <Card className={styles.card} onClick={() => { handleClick({ realName: item.realName }) }}>
+            <Card className={styles.card} onClick={() => { handleClick({ realName: item.realName, ...filter }) }}>
               <p>操作人: {item.realName}</p>
               <p>寄件总金额: {item.countfee || 0}元</p>
             </Card>
@@ -29,7 +29,8 @@ const List = ({ list, handleClick }) => {
 
 List.propTypes = {
   list: PropTypes.object,
-  handleClick: PropTypes.func
+  handleClick: PropTypes.func,
+  filter: PropTypes.object,
 }
 
 export default List

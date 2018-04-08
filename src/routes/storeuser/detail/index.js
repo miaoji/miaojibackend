@@ -11,14 +11,19 @@ const StoreUserDetail = ({ location, dispatch, storeUserDetail, loading }) => {
   const listProps = {
     list,
     loading,
+    filter: {
+      ...location.query,
+    },
     handleClick(item) {
       const { name } = location.query
       console.log('name', name)
       dispatch(routerRedux.push({
         pathname: '/operator',
         query: {
+          endTime: item.endTime,
+          startTime: item.startTime,
           name,
-          realName: item.realName
+          realName: item.realName,
         },
       }))
       console.log('name', name)

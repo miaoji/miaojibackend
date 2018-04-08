@@ -167,4 +167,5 @@ module.exports = {
   pageParams,
   time,
   storage,
+  handleFields: time.handleFields,
 }

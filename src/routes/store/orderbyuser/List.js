@@ -8,32 +8,32 @@ import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '品牌',
-      dataIndex: 'success',
-      key: 'success',
+      title: '快递品牌',
+      dataIndex: 'brand',
+      key: 'brand',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '单号',
-      dataIndex: 'wait',
-      key: 'wait',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '快递状态',
-      dataIndex: 'close',
-      key: 'cloce',
+      dataIndex: 'state',
+      key: 'state',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '创建时间',
-      dataIndex: 'close1',
-      key: 'cloce1',
+      dataIndex: 'createTime',
+      key: 'createTime',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || '暂无'}</span>
       }
     },
   ]

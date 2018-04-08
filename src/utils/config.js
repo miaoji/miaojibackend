@@ -165,7 +165,7 @@ module.exports = {
     },
     // 操作人寄件详情
     operator: {
-      all: `${APIV3}/quandiExpressSiteManager/selectRealNamedetails`
+      all: `${APIV3}/quandiExpressSiteManager/selectRealNameDetails`
     },
     // 门店点单上架分派签收
     business: {
@@ -189,7 +189,7 @@ module.exports = {
     },
     // 门店签收信息汇总
     storeSign: {
-      all: `${APIV3}/quandiExpressSiteManager/selectrealName`
+      all: `${APIV3}/quandiExpressSiteManager/SignRate`
     },
   }
 }

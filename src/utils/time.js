@@ -52,24 +52,28 @@ export const repairTime = function (val) {
 }
 
 export function yesterTime() {
-  let dayCount = 10
+  let dayCount = 1
   if (process.env.NODE_ENV !== 'development') {
     dayCount = 1
+    if (window.location.search === '') {
+      message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
+    }
+    const date = new Date()
+    const h = date.getHours()
+    const m = date.getMinutes()
+    const s = date.getSeconds()
+    const ms = date.getMilliseconds()
+    const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
+    const startTime = date.getTime() - 86400000 * dayCount - times
+    const endTime = date.getTime() - times - 1
+    return {
+      startTime,
+      endTime
+    }
   }
-  if (window.location.search === '') {
-    message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
-  }
-  const date = new Date()
-  const h = date.getHours()
-  const m = date.getMinutes()
-  const s = date.getSeconds()
-  const ms = date.getMilliseconds()
-  const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
-  const startTime = date.getTime() - 86400000 * dayCount - times
-  const endTime = date.getTime() - times - 1
   return {
-    startTime,
-    endTime
+    startTime: 1519833600000,
+    endTime: 1519920004096
   }
 }
 
@@ -91,4 +95,19 @@ export function getLineTime() {
     date.unshift(getToday((new Date().getTime() - (86400000 * (i + 1)))))
   }
   return date
+}
+
+export function handleFields(fields) {
+  const { createTime } = fields
+  if (createTime.length === 2) {
+    const repairtime = repairTime(fields.createTime)
+    fields.startTime = repairtime.startTime
+    fields.endTime = repairtime.endTime
+  }
+  if (createTime && createTime[1] && createTime[1].length === 13) {
+    fields.startTime = createTime[0]
+    fields.endTime = createTime[1]
+  }
+  delete fields.createTime
+  return fields
 }

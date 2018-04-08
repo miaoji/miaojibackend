@@ -19,14 +19,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'todayqs',
       key: 'todayqs',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '第二天签收量',
       dataIndex: 'tomorrowqs',
       key: 'tomorrowqs',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '第三天签收量',

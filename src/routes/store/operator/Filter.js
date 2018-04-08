@@ -4,7 +4,7 @@ import {
   Form, Button, Row, Col,
 } from 'antd'
 import { DateRange } from '../../../components'
-import { time } from '../../../utils'
+import { handleFields } from '../../../utils'
 
 const ColProps = {
   xs: 24,
@@ -28,21 +28,6 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  const handleFields = (fields) => {
-    const { createTime } = fields
-    if (createTime.length === 2) {
-      const repairTime = time.repairTime(fields.createTime)
-      fields.startTime = repairTime.startTime
-      fields.endTime = repairTime.endTime
-    }
-    if (createTime && createTime[1] && createTime[1].length === 13) {
-      fields.startTime = createTime[0]
-      fields.endTime = createTime[1]
-    }
-    delete fields.createTime
-    return fields
-  }
-
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
