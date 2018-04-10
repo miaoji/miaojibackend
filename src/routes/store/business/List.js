@@ -23,35 +23,35 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'success',
       key: 'success',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '上架数量',
       dataIndex: 'wait',
       key: 'wait',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '分派数量',
       dataIndex: 'close',
       key: 'cloce',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '签收数量',
       dataIndex: 'close1',
       key: 'cloce1',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '派件量',
       dataIndex: 'close2',
       key: 'cloce2',
       render: (text) => {
-        return <span>{text || 0} 元</span>
+        return <span>{text || 0}</span>
       }
     },
   ]

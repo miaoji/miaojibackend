@@ -30,7 +30,13 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'payType',
       key: 'payType',
       render: (text) => {
-        return <span>{text}</span>
+        const realText = {
+          1: '支付宝',
+          2: '微信',
+          3: '余额',
+          4: '现金',
+        }
+        return <span>{text ? realText[text] : '暂无'}</span>
       }
     }, {
       title: '时间',
