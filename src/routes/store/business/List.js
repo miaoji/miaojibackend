@@ -60,9 +60,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
           return <span>该站点无法操作</span>
         }
         if (filter.startTime) {
-          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
         }
-        return <Link to={`/operatorbyname?name=${record.name}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
+        return <Link to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
       }
     }
   ]

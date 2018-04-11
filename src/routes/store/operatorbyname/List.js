@@ -50,9 +50,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       width: 140,
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/orderbyuser?realName=${record.name}&name=${filter.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看快件详情</Link>
+          return <Link to={`/orderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看快件详情</Link>
         }
-        return <Link to={`/orderbyuser?realName=${record.name}&name=${filter.name}`}>查看快件详情</Link>
+        return <Link to={`/orderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}`}>查看快件详情</Link>
       }
     }
   ]

@@ -85,7 +85,7 @@ const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
         query: {
           ...value,
           mailtype: query.mailtype,
-          name: query.name
+          idUser: query.idUser,
         },
       }))
     },

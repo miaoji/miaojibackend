@@ -80,13 +80,13 @@ const Orderbyuser = ({ location, dispatch, orderbyuser, loading }) => {
       ...location.query,
     },
     onFilterChange(value) {
-      console.log('1231', value)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
           ...value,
           realName: query.realName,
-          name: query.name
+          idUser: query.idUser,
+          mailtype: query.mailtype
         },
       }))
     },
