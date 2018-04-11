@@ -17,8 +17,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       }
     }, {
       title: '支付宝',
-      dataIndex: 'AlipayPrice',
-      key: 'AlipayPrice',
+      dataIndex: 'alipayPrice',
+      key: 'alipayPrice',
       render: (text, record) => {
         if (filter.startTime) {
           return <Link to={`/expressfeedetail?payType=1&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
@@ -27,8 +27,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       }
     }, {
       title: '微信',
-      dataIndex: 'WeChatPrice',
-      key: 'WeChatPrice',
+      dataIndex: 'weChatPrice',
+      key: 'weChatPrice',
       render: (text, record) => {
         if (filter.startTime) {
           return <Link to={`/expressfeedetail?payType=2&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
