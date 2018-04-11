@@ -1,39 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Table } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
 import { Link } from 'dva/router'
 import { time } from '../../utils'
 
-const confirm = Modal.confirm
 
 const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      toStoreorderinfo({ idUser: record.id })
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要删除这一条记录吗?',
-        onOk() {
-          onDeleteItem(record.id)
-        },
-      })
-    }
-  }
-
   const columns = [
     {
       title: '站点ID',
       dataIndex: 'id',
       key: 'id',
-      render: (text, record) => {
-        if (filter.startTime) {
-          return <Link to={`/storeUserDetail?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text}</Link>
-        }
-        return <Link to={`/storeUserDetail?name=${record.name}`}>{text}</Link>
+      render: (text) => {
+        return <span>{text}</span>
       }
     }, {
       title: '帐号',
@@ -72,9 +54,12 @@ const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, lo
     {
       title: '操作',
       key: 'operation',
-      width: 100,
+      width: 150,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '门店分派及金额' }]} />
+        if (filter.startTime) {
+          return <Link to={`/storeUserDetail?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+        }
+        return <Link to={`/storeUserDetail?name=${record.name}`}>查看操作人详情</Link>
       },
     },
   ]

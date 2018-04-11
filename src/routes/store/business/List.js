@@ -12,48 +12,59 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
-      render: (text, record) => {
-        if (filter.startTime) {
-          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '/'}</Link>
-        }
-        return <Link to={`/operatorbyname?name=${record.name}&mailtype=${filter.mailtype || '0'}`}>{text || '/'}</Link>
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '点单数量',
-      dataIndex: 'success',
-      key: 'success',
+      dataIndex: 'ddtotal',
+      key: 'ddtotal',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
     }, {
       title: '上架数量',
-      dataIndex: 'wait',
-      key: 'wait',
+      dataIndex: 'sjtotal',
+      key: 'sjtotal',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
     }, {
       title: '分派数量',
-      dataIndex: 'close',
-      key: 'cloce',
+      dataIndex: 'fptotal',
+      key: 'fptotal',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
     }, {
       title: '签收数量',
-      dataIndex: 'close1',
-      key: 'cloce1',
+      dataIndex: 'qstotal',
+      key: 'qstotal',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
     }, {
       title: '派件量',
-      dataIndex: 'close2',
-      key: 'cloce2',
+      dataIndex: 'sendPiecesNumber',
+      key: 'sendPiecesNumber',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
-    },
+    }, {
+      title: '操作',
+      dataIndex: 'option',
+      key: 'option',
+      width: 140,
+      render: (text, record) => {
+        if (!record.name) {
+          return <span>该站点无法操作</span>
+        }
+        if (filter.startTime) {
+          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+        }
+        return <Link to={`/operatorbyname?name=${record.name}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
+      }
+    }
   ]
 
   const getBodyWrapperProps = {

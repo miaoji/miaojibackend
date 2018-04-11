@@ -26,7 +26,13 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'state',
       key: 'state',
       render: (text) => {
-        return <span>{text || '暂无'}</span>
+        const replText = {
+          1: '点单',
+          101: '上架',
+          103: '分派',
+          301: '签收'
+        }
+        return <span>{replText[text]}</span>
       }
     }, {
       title: '创建时间',

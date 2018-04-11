@@ -13,40 +13,48 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'name',
       key: 'name',
       render: (text) => {
-        if (filter.startTime) {
-          return <Link to={`/orderbyuser?realName=${text}&name=${filter.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '暂无'}</Link>
-        }
-        return <Link to={`/orderbyuser?realName=${text}&name=${filter.name}`}>{text || '暂无'}</Link>
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '点单数量',
       dataIndex: 'ddtotal',
       key: 'ddtotal',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
     }, {
       title: '上架数量',
       dataIndex: 'sjtotal',
       key: 'sjtotal',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
     }, {
       title: '分派数量',
       dataIndex: 'fptotal',
       key: 'fptotal',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
     }, {
       title: '签收数量',
       dataIndex: 'qstotal',
       key: 'qstotal',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
-    },
+    }, {
+      title: '操作',
+      dataIndex: 'option',
+      key: 'option',
+      width: 140,
+      render: (text, record) => {
+        if (filter.startTime) {
+          return <Link to={`/orderbyuser?realName=${record.name}&name=${filter.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看快件详情</Link>
+        }
+        return <Link to={`/orderbyuser?realName=${record.name}&name=${filter.name}`}>查看快件详情</Link>
+      }
+    }
   ]
 
   const getBodyWrapperProps = {

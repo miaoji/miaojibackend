@@ -13,10 +13,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'name',
       key: 'name',
       render: (text) => {
-        if (filter.startTime) {
-          return <Link to={`/operatorAssignFee?name=${text}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '/'}</Link>
-        }
-        return <Link to={`/operatorAssignFee?name=${text}`}>{text || '/'}</Link>
+        return <span>{text || '暂无'}</span>
       }
     }, {
       title: '派件量',
@@ -31,6 +28,17 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'sendPiecesPrice',
       render: (text) => {
         return <span>{text || 0}</span>
+      }
+    }, {
+      title: '操作',
+      dataIndex: 'option',
+      key: 'option',
+      width: 140,
+      render: (text, record) => {
+        if (filter.startTime) {
+          return <Link to={`/operatorAssignFee?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人派件金额</Link>
+        }
+        return <Link to={`/operatorAssignFee?name=${record.name}`}>查看操作人派件金额</Link>
       }
     }
   ]

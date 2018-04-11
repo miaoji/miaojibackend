@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
@@ -19,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -29,7 +29,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     }
   }
 
-  const copyUrl = (record, e) => {
+  const copyUrl = (record) => {
     const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
     window.prompt('请使用Ctrl+C复制到剪切板', href)
   }

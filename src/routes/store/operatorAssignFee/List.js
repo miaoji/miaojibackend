@@ -46,7 +46,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'account',
       key: 'account',
       render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text}</span>
       }
     }, {
       title: '收款方式',
@@ -66,7 +66,12 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
-        return <span>{text || 0}</span>
+        const replText = {
+          success: '成功',
+          close: '取消',
+          waiting: '等待'
+        }
+        return <span>{replText[text]}</span>
       }
     }, {
       title: '创建时间',

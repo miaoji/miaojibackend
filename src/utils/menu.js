@@ -240,7 +240,7 @@ module.exports = [
   {
     id: 16,
     bpid: 1,
-    mpid: 11,
+    mpid: -1,
     name: '门店寄件支付汇总',
     router: '/sendtotal'
   },
@@ -253,25 +253,25 @@ module.exports = [
   }, {
     id: 18,
     bpid: 1,
-    mpid: 11,
+    mpid: -1,
     name: '门店派件信息',
     router: '/sentalong',
   }, {
     id: 20,
     bpid: 1,
-    mpid: 11,
+    mpid: -1,
     name: '门店订单汇总',
     router: '/storeordertotal',
   }, {
     id: 22,
     bpid: 1,
-    mpid: 11,
+    mpid: -1,
     name: '门店分派及金额',
     router: '/storeorderinfo',
   }, {
     id: 17,
     bpid: 1,
-    mpid: 11,
+    mpid: -1,
     name: '门店未签收',
     router: '/selectshelves',
   },
