@@ -256,7 +256,8 @@ module.exports = [
     mpid: -1,
     name: '门店派件信息',
     router: '/sentalong',
-  }, {
+  },
+  {
     id: 20,
     bpid: 1,
     mpid: -1,
