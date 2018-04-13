@@ -57,9 +57,9 @@ const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, lo
       width: 150,
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/storeUserDetail?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+          return <Link to={`/storeUserDetail?idUser=${record.id}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
         }
-        return <Link to={`/storeUserDetail?name=${record.name}`}>查看操作人详情</Link>
+        return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看操作人详情</Link>
       },
     },
   ]

@@ -15,19 +15,16 @@ const StoreUserDetail = ({ location, dispatch, storeUserDetail, loading }) => {
       ...location.query,
     },
     handleClick(item) {
-      const { name } = location.query
-      console.log('name', name)
+      const { idUser } = location.query
       dispatch(routerRedux.push({
         pathname: '/operator',
         query: {
           endTime: item.endTime,
           startTime: item.startTime,
-          name,
+          idUser,
           realName: item.realName,
         },
       }))
-      console.log('name', name)
-      console.log(item)
     }
   }
 
@@ -41,7 +38,7 @@ const StoreUserDetail = ({ location, dispatch, storeUserDetail, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          name: location.query.name,
+          idUser: location.query.idUser,
         },
       }))
     },

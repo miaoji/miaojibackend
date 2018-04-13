@@ -4,8 +4,12 @@ const { operator } = api
 
 export async function query (params) {
   params = pageParams(params)
-  // delete params.page
-  // delete params.pageSize
+  if (params.download && params.download === 1) {
+    delete params.page
+    delete params.pageSize
+    delete params.pagination
+    delete params.rownum
+  }
   params = JSON.stringify(params)
   return request({
     url: operator.all,

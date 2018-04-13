@@ -73,14 +73,23 @@ const Operator = ({ location, dispatch, operator, loading }) => {
     filter: {
       ...location.query,
     },
+    handleDownLoad() {
+      console.log('ss', location.query)
+      dispatch({
+        type: 'operator/download',
+        payload: {
+          ...location.query
+        }
+      })
+    },
     onFilterChange(value) {
       console.log('1231', value)
-      const { name, realName } = location.query
+      const { idUser, realName } = location.query
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
           ...value,
-          name,
+          idUser,
           realName
         },
       }))
