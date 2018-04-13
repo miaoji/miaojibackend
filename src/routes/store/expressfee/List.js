@@ -21,9 +21,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'alipayPrice',
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/expressfeedetail?payType=1&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
+          return <Link to={`/expressfeedetail?payType=1&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
         }
-        return <Link to={`/expressfeedetail?payType=1&name=${record.name}`}>{text || 0}元</Link>
+        return <Link to={`/expressfeedetail?payType=1&idUser=${record.idUser}`}>{text || 0}元</Link>
       }
     }, {
       title: '微信',
@@ -31,9 +31,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'weChatPrice',
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/expressfeedetail?payType=2&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
+          return <Link to={`/expressfeedetail?payType=2&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
         }
-        return <Link to={`/expressfeedetail?payType=2&name=${record.name}`}>{text || 0}元</Link>
+        return <Link to={`/expressfeedetail?payType=2&idUser=${record.idUser}`}>{text || 0}元</Link>
       }
     }, {
       title: '余额',
@@ -41,9 +41,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'balance',
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/expressfeedetail?payType=3&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
+          return <Link to={`/expressfeedetail?payType=3&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
         }
-        return <Link to={`/expressfeedetail?payType=3&name=${record.name}`}>{text || 0}元</Link>
+        return <Link to={`/expressfeedetail?payType=3&idUser=${record.idUser}`}>{text || 0}元</Link>
       }
     }, {
       title: '现金',
@@ -51,9 +51,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'cash',
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/expressfeedetail?payType=4&name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
+          return <Link to={`/expressfeedetail?payType=4&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || 0}元</Link>
         }
-        return <Link to={`/expressfeedetail?payType=4&name=${record.name}`}>{text || 0}元</Link>
+        return <Link to={`/expressfeedetail?payType=4&idUser=${record.idUser}`}>{text || 0}元</Link>
       }
     }
   ]

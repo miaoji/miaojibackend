@@ -36,9 +36,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       width: 140,
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/operatorAssignFee?name=${record.name}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人派件金额</Link>
+          return <Link to={`/operatorAssignFee?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人派件金额</Link>
         }
-        return <Link to={`/operatorAssignFee?name=${record.name}`}>查看操作人派件金额</Link>
+        return <Link to={`/operatorAssignFee?idUser=${record.idUser}`}>查看操作人派件金额</Link>
       }
     }
   ]

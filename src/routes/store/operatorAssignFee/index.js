@@ -9,7 +9,6 @@ import Modal from './Modal'
 
 const OperatorAssignFee = ({ location, dispatch, operatorAssignFee, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = operatorAssignFee
-  const { pageSize } = pagination
 
   const modalProps = {
     type: modalType,
@@ -77,13 +76,11 @@ const OperatorAssignFee = ({ location, dispatch, operatorAssignFee, loading }) =
       ...location.query,
     },
     onFilterChange(value) {
-      console.log('1231', value)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
           ...value,
-          page: 1,
-          pageSize,
+          idUser: location.query.idUser
         },
       }))
     },

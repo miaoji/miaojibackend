@@ -3,7 +3,6 @@ import { notification } from 'antd'
 import { query } from '../../services/store/operator'
 import { pageModel } from '../common'
 import { time } from '../../utils'
-import { APIV3 } from '../../utils/config'
 
 export default modelExtend(pageModel, {
   namespace: 'operator',
@@ -70,7 +69,7 @@ export default modelExtend(pageModel, {
       const data = yield call(query, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj
-        const openUrl = window.open(`${APIV3}${url}`)
+        const openUrl = window.open(url)
         if (openUrl === null) {
           notification.warn({
             message: '下载失败',

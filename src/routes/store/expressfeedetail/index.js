@@ -50,7 +50,7 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
       })
     },
   }
-  const { payType, name } = location.query
+  const { payType, idUser } = location.query
 
   const filterProps = {
     filter: {
@@ -63,7 +63,7 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
         query: {
           ...value,
           payType,
-          name
+          idUser
         },
       }))
     },
