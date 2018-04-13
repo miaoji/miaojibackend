@@ -14,6 +14,10 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }
+    }, {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime'
     }
   ]
 
