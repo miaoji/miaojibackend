@@ -1,13 +1,14 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 import './theme/macarons.js'
+import PropTypes from 'prop-types'
 import { time } from '../../../../utils'
 
-const SimpleChartComponent = ({receviceData, sendData}) => {
+const SimpleChartComponent = ({ receviceData, sendData }) => {
   const dataname = time.getLineTime()
   const option = {
     backgroundColor: '#fff',
-    color: ['#f0f','#90f', '#09f', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+    color: ['#f0f', '#90f', '#09f', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
     title: {
       text: '堆叠区域图',
     },
@@ -20,7 +21,7 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
     toolbox: {
       show: true,
       feature: {
-        magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},// 平铺于堆叠的切换
+        magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] }, // 平铺于堆叠的切换
         restore: { show: true },
         saveAsImage: {}, // 下载按钮
       },
@@ -39,7 +40,7 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
         },
         type: 'category',
         boundaryGap: false,
-        data: [ ...dataname, '' ]
+        data: [...dataname, '']
       },
     ],
     yAxis: [
@@ -55,8 +56,8 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
         smooth: false,
         label: {
           normal: {
-              show: true,
-              rotate: '36'
+            show: true,
+            rotate: '36'
           }
         },
         data: receviceData
@@ -68,8 +69,8 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
         smooth: false,
         label: {
           normal: {
-              show: true,
-              rotate: '36'
+            show: true,
+            rotate: '36'
           }
         },
         data: sendData
@@ -78,7 +79,7 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
   }
   return (
     <div className="examples">
-      <div className="parent">
+      <div className="parent" style={{ minWidth: '1200px' }}>
         <ReactEcharts
           option={option}
           style={{ height: '350px', width: '100%' }}
@@ -89,6 +90,9 @@ const SimpleChartComponent = ({receviceData, sendData}) => {
     </div>
   )
 }
-
+SimpleChartComponent.propTypes = {
+  receviceData: PropTypes.array,
+  sendData: PropTypes.array,
+}
 
 export default SimpleChartComponent
