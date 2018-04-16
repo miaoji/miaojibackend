@@ -1,14 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch, Menu, Dropdown } from 'antd'
+import { Form, Button, Row, Col, Input, Cascader } from 'antd'
 import city from '../../utils/city'
 import { DateRange } from '../../components'
 import { time } from '../../utils'
 
 const Search = Input.Search
-const { RangePicker } = DatePicker
 
 const ColProps = {
   xs: 24,
@@ -24,9 +22,6 @@ const TwoColProps = {
 }
 
 const Filter = ({
-  onAdd,
-  isMotion,
-  switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -35,6 +30,8 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
+  const { wxName, address, subscribe } = filter
+
   const handleFields = (fields) => {
     const { createTime } = fields
     if (createTime.length) {
@@ -77,7 +74,6 @@ const Filter = ({
     onFilterChange(fields)
   }
 
-  const { wxName, address, subscribe } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -102,12 +98,12 @@ const Filter = ({
             onChange={handleChange.bind(null, 'address')}
           />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
-          )}
+      <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 16 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+        )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
+      <Col {...TwoColProps} style={{ marginBottom: '0px' }} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
@@ -115,14 +111,11 @@ const Filter = ({
           </div>
         </div>
       </Col>
-    </Row>
+    </Row >
   )
 }
 
 Filter.propTypes = {
-  onAdd: PropTypes.func,
-  isMotion: PropTypes.bool,
-  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,

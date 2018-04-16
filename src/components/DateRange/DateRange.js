@@ -1,19 +1,19 @@
 import React from 'react'
-import { DatePicker, Form } from 'antd'
+import { DatePicker, Form, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
 class DateRange extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      startValue: props.value[0]?moment.unix(Math.round(props.value[0]/1000)):undefined,
-      endValue: props.value[1]?moment.unix(Math.round(props.value[1]/1000-86400)):undefined,
+      startValue: props.value[0] ? moment.unix(Math.round(props.value[0] / 1000)) : undefined,
+      endValue: props.value[1] ? moment.unix(Math.round(props.value[1] / 1000 - 86400)) : undefined,
       endOpen: false,
       size: props.size,
     }
   }
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     if (props.value.length !== 2) {
       this.setState({
         startValue: null,
@@ -74,32 +74,39 @@ class DateRange extends React.Component {
     this.setState({ endOpen: open })
   }
 
-  render () {
+  render() {
     const { startValue, endValue, endOpen } = this.state
     return (
       <div>
-        <DatePicker
-          disabledDate={this.disabledStartDate}
-          format="YYYY-MM-DD"
-          value={startValue}
-          placeholder="开始时间"
-          showToday={false}
-          size={this.state.size}
-          onChange={this.onStartChange}
-          onOpenChange={this.handleStartOpenChange}
-        />
-        &nbsp;&nbsp;&nbsp;
-        <DatePicker
-          disabledDate={this.disabledEndDate}
-          showToday={false}
-          format="YYYY-MM-DD"
-          value={endValue}
-          placeholder="结束时间"
-          size={this.state.size}
-          onChange={this.onEndChange}
-          open={endOpen}
-          onOpenChange={this.handleEndOpenChange}
-        />
+        <Row>
+          <Col style={{ marginBottom: '14px' }} xs={{ span: 24, offset: 0 }} lg={{ span: 11 }}>
+            <DatePicker
+              disabledDate={this.disabledStartDate}
+              format="YYYY-MM-DD"
+              value={startValue}
+              placeholder="开始时间"
+              showToday={false}
+              style={{ width: '100%' }}
+              size={this.state.size}
+              onChange={this.onStartChange}
+              onOpenChange={this.handleStartOpenChange}
+            />
+          </Col>
+          <Col style={{ marginBottom: '14px' }} xs={{ span: 24, offset: 0 }} lg={{ span: 11, offset: 2 }}>
+            <DatePicker
+              disabledDate={this.disabledEndDate}
+              showToday={false}
+              style={{ width: '100%' }}
+              format="YYYY-MM-DD"
+              value={endValue}
+              placeholder="结束时间"
+              size={this.state.size}
+              onChange={this.onEndChange}
+              open={endOpen}
+              onOpenChange={this.handleEndOpenChange}
+            />
+          </Col>
+        </Row>
       </div>
     )
   }
@@ -110,6 +117,7 @@ DateRange.propTypes = {
   startValue: PropTypes.string,
   endValue: PropTypes.string,
   size: PropTypes.string,
+  value: PropTypes.array
 }
 
 export default Form.create()(DateRange)
