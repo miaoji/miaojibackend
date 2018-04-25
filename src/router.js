@@ -364,6 +364,22 @@ const Routers = function ({ history, app }) {
             }, 'storeSign')
           },
         }, {
+          path: 'selectfenpai',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/selectfenpai'))
+              cb(null, require('./routes/store/selectfenpai/'))
+            }, 'selectfenpai')
+          },
+        }, {
+          path: 'selectpjjeDetails',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/selectpjjeDetails'))
+              cb(null, require('./routes/store/selectpjjeDetails/'))
+            }, 'selectpjjeDetails')
+          },
+        }, {
           path: '*',
           getComponent(nextState, cb) {
             require.ensure([], require => {

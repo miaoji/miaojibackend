@@ -1,11 +1,11 @@
-import { notification } from 'antd'
 import modelExtend from 'dva-model-extend'
-import { query, download } from '../../services/store/orderbyuser'
+import { notification } from 'antd'
+import { query, download } from '../../services/store/selectpjjeDetails'
 import { pageModel } from '../common'
 import { time } from '../../utils'
 
 export default modelExtend(pageModel, {
-  namespace: 'orderbyuser',
+  namespace: 'selectpjjeDetails',
 
   state: {
     currentItem: {},
@@ -16,7 +16,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/orderbyuser') {
+        if (location.pathname === '/selectpjjeDetails') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -38,7 +38,7 @@ export default modelExtend(pageModel, {
         newpayload = { ...payload }
       }
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      const data = yield call(query, { mailtype: 0, ...newpayload, download: 0 })
+      const data = yield call(query, { ...newpayload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',

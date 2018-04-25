@@ -238,6 +238,20 @@ module.exports = [
     router: '/storeSign'
   },
   {
+    id: 33,
+    bpid: 1,
+    mpid: 11,
+    name: '门店分派',
+    router: '/selectfenpai'
+  },
+  {
+    id: 34,
+    bpid: 33,
+    mpid: -1,
+    name: '操作人分派详情',
+    router: '/selectpjjeDetails'
+  },
+  {
     id: 16,
     bpid: 1,
     mpid: -1,

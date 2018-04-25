@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import { Link } from 'dva/router'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
@@ -9,44 +8,30 @@ import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '操作人',
-      dataIndex: 'name',
-      key: 'name',
+      title: '品牌',
+      dataIndex: 'brand',
+      key: 'brand',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '点单数量',
-      dataIndex: 'ddtotal',
-      key: 'ddtotal',
+      title: '单号',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text) => {
-        return <span>{text}</span>
+        return <span>{text || 0}</span>
       }
     }, {
-      title: '上架数量',
-      dataIndex: 'sjtotal',
-      key: 'sjtotal',
+      title: '操作人',
+      dataIndex: 'realName',
+      key: 'realName',
       render: (text) => {
-        return <span>{text}</span>
+        return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '签收数量',
-      dataIndex: 'qstotal',
-      key: 'qstotal',
-      render: (text) => {
-        return <span>{text}</span>
-      }
-    }, {
-      title: '操作',
-      dataIndex: 'option',
-      key: 'option',
-      width: 140,
-      render: (text, record) => {
-        if (filter.startTime) {
-          return <Link to={`/orderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看快件详情</Link>
-        }
-        return <Link to={`/orderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}`}>查看快件详情</Link>
-      }
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
     }
   ]
 

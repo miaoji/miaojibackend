@@ -16,32 +16,11 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '点单数量',
-      dataIndex: 'ddtotal',
-      key: 'ddtotal',
+      title: '分派数量',
+      dataIndex: 'fptotal',
+      key: 'fptotal',
       render: (text) => {
-        return <span>{text}</span>
-      }
-    }, {
-      title: '上架数量',
-      dataIndex: 'sjtotal',
-      key: 'sjtotal',
-      render: (text) => {
-        return <span>{text}</span>
-      }
-    }, {
-      title: '签收数量',
-      dataIndex: 'qstotal',
-      key: 'qstotal',
-      render: (text) => {
-        return <span>{text}</span>
-      }
-    }, {
-      title: '派件量',
-      dataIndex: 'sendPiecesNumber',
-      key: 'sendPiecesNumber',
-      render: (text) => {
-        return <span>{text}</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '操作',
@@ -49,13 +28,10 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'option',
       width: 140,
       render: (text, record) => {
-        if (!record.name) {
-          return <span>该站点无法操作</span>
-        }
         if (filter.startTime) {
-          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+          return <Link to={`/selectpjjeDetails?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人派件金额</Link>
         }
-        return <Link to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
+        return <Link to={`/selectpjjeDetails?idUser=${record.idUser}`}>查看操作人派件金额</Link>
       }
     }
   ]
