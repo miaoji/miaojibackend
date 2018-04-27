@@ -37,13 +37,6 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{text}</span>
       }
     }, {
-      title: '派件量',
-      dataIndex: 'sendPiecesNumber',
-      key: 'sendPiecesNumber',
-      render: (text) => {
-        return <span>{text}</span>
-      }
-    }, {
       title: '操作',
       dataIndex: 'option',
       key: 'option',

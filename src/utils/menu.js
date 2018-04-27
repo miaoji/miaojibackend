@@ -238,6 +238,13 @@ module.exports = [
     router: '/storeSign'
   },
   {
+    id: 35,
+    bpid: 31,
+    mpid: -1,
+    name: '订单详情',
+    router: '/storeSignDetail'
+  },
+  {
     id: 33,
     bpid: 1,
     mpid: 11,

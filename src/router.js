@@ -380,6 +380,14 @@ const Routers = function ({ history, app }) {
             }, 'selectpjjeDetails')
           },
         }, {
+          path: 'storeSignDetail',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/storeSignDetail'))
+              cb(null, require('./routes/store/storeSignDetail/'))
+            }, 'storeSignDetail')
+          },
+        }, {
           path: '*',
           getComponent(nextState, cb) {
             require.ensure([], require => {

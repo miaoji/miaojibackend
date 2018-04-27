@@ -1,10 +1,10 @@
 import modelExtend from 'dva-model-extend'
-import { query } from '../../services/store/storeSign'
+import { detailquery } from '../../services/store/storeSign'
 import { pageModel } from '../common'
 import { time } from '../../utils'
 
 export default modelExtend(pageModel, {
-  namespace: 'storeSign',
+  namespace: 'storeSignDetail',
 
   state: {
     currentItem: {},
@@ -15,7 +15,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (location.pathname === '/storeSign') {
+        if (location.pathname === '/storeSignDetail') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -37,7 +37,7 @@ export default modelExtend(pageModel, {
         newpayload = { ...payload }
       }
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      const data = yield call(query, { tr: 0, ...newpayload, download: 0 })
+      const data = yield call(detailquery, { tr: 0, ...newpayload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',
