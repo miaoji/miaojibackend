@@ -154,6 +154,12 @@ module.exports = [
     name: '黑名单',
     icon: 'user-delete',
     router: '/blacklist',
+  }, {
+    id: 36,
+    bpid: 1,
+    name: '黑名单订单详情',
+    icon: 'user-delete',
+    router: '/blacklistdetail',
   },
   // -- //
   {

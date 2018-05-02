@@ -388,6 +388,14 @@ const Routers = function ({ history, app }) {
             }, 'storeSignDetail')
           },
         }, {
+          path: 'blacklistdetail',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/blacklistdetail'))
+              cb(null, require('./routes/store/blacklistdetail/'))
+            }, 'blacklistdetail')
+          },
+        }, {
           path: '*',
           getComponent(nextState, cb) {
             require.ensure([], require => {

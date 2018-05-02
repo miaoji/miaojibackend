@@ -199,5 +199,9 @@ module.exports = {
     selectpjjeDetails: {
       all: `${APIV3}/quandiExpressSiteManager/selectpjjeDetails`
     },
+    // 黑名单详情
+    backlistdetail: {
+      all: `${APIV3}/quandiExpressSiteManager/blackListdetails`
+    }
   }
 }
