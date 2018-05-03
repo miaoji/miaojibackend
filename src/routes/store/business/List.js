@@ -20,21 +20,21 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'ddtotal',
       key: 'ddtotal',
       render: (text) => {
-        return <span>{text}</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '上架数量',
       dataIndex: 'sjtotal',
       key: 'sjtotal',
       render: (text) => {
-        return <span>{text}</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '签收数量',
       dataIndex: 'qstotal',
       key: 'qstotal',
       render: (text) => {
-        return <span>{text}</span>
+        return <span>{text || 0}</span>
       }
     }, {
       title: '操作',
