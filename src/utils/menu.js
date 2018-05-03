@@ -207,7 +207,7 @@ module.exports = [
     id: 32,
     bpid: 1,
     mpid: 11,
-    name: '门店点单上架分派签收',
+    name: '门店点单上架签收',
     router: '/business',
   }, {
     id: 26,
@@ -225,7 +225,7 @@ module.exports = [
   {
     id: 29,
     bpid: 1,
-    mpid: 11,
+    mpid: -1,
     name: '门店派件金额',
     router: '/assignFee'
   },

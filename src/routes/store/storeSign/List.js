@@ -24,8 +24,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       }
     }, {
       title: '第一天签收量',
-      dataIndex: 'tomorrowqs',
-      key: 'tomorrowqs',
+      dataIndex: 'todayqs',
+      key: 'todayqs',
       render: (text, record) => {
         if (filter.startTime) {
           return (
@@ -49,6 +49,31 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       }
     }, {
       title: '第二天签收量',
+      dataIndex: 'tomorrowqs',
+      key: 'tomorrowqs',
+      render: (text, record) => {
+        if (filter.startTime) {
+          return (
+            <Tooltip placement="top" title="查看订单详情">
+              <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{(text || text === 0) ? text : '暂无'}</Link>
+            </Tooltip>
+          )
+        }
+        return (
+          <Tooltip placement="top" title="查看订单详情">
+            <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
+          </Tooltip>
+        )
+      }
+    }, {
+      title: '第二天签收率',
+      dataIndex: 'tomorrowqsPercentage',
+      key: 'tomorrowqsPercentage',
+      render: (text) => {
+        return <span>{(text || text === 0) ? text : '暂无'}</span>
+      }
+    }, {
+      title: '第三天天签收量',
       dataIndex: 'aftertomorrowqs',
       key: 'aftertomorrowqs',
       render: (text, record) => {
@@ -66,32 +91,32 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         )
       }
     }, {
-      title: '第二天签收率',
+      title: '第三天天签收率',
       dataIndex: 'afternoqsPercentage',
       key: 'afternoqsPercentage',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
       }
     }, {
-      title: '前两天未签收数',
+      title: '前三天未签收数',
       dataIndex: 'noSignTotal',
       key: 'noSignTotal',
       render: (text, record) => {
         if (filter.startTime) {
           return (
             <Tooltip placement="top" title="查看订单详情">
-              <Link to={`/storeSignDetail?tr=3&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{(text || text === 0) ? text : '暂无'}</Link>
+              <Link to={`/storeSignDetail?tr=4&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{(text || text === 0) ? text : '暂无'}</Link>
             </Tooltip>
           )
         }
         return (
           <Tooltip placement="top" title="查看订单详情">
-            <Link to={`/storeSignDetail?tr=3&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
+            <Link to={`/storeSignDetail?tr=4&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
           </Tooltip>
         )
       }
     }, {
-      title: '前两未签收率',
+      title: '前三未签收率',
       dataIndex: 'noqsPercentage',
       key: 'noqsPercentage',
       render: (text) => {
