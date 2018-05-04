@@ -193,7 +193,7 @@ module.exports = [
     id: 23,
     bpid: 1,
     mpid: 11,
-    name: '门店寄件金额',
+    name: '门店寄件',
     router: '/expressfee',
   },
   {
@@ -207,7 +207,7 @@ module.exports = [
     id: 32,
     bpid: 1,
     mpid: 11,
-    name: '门店点单上架签收',
+    name: '门店操作',
     router: '/business',
   }, {
     id: 26,
@@ -247,7 +247,7 @@ module.exports = [
     id: 35,
     bpid: 31,
     mpid: -1,
-    name: '订单详情',
+    name: '签收订单详情',
     router: '/storeSignDetail'
   },
   {
