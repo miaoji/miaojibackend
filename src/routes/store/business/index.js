@@ -24,7 +24,6 @@ const Business = ({ location, dispatch, business, loading }) => {
     // onLink(iduser, query){
     // },
     onChange(page, filter) {
-      console.log(11)
       dispatch(routerRedux.push({
         pathname,
         query: {

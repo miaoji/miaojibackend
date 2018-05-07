@@ -47,7 +47,6 @@ const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
     // onLink(iduser, query){
     // },
     onChange(page, filter) {
-      console.log(11)
       dispatch(routerRedux.push({
         pathname,
         query: {

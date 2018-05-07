@@ -23,7 +23,6 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
     pagination,
     location,
     onChange(page, filter) {
-      console.log(11)
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -57,13 +56,12 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
       ...location.query,
     },
     onFilterChange(value) {
-      console.log('1231', value)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
-          ...value,
           payType,
-          idUser
+          idUser,
+          ...value
         },
       }))
     },

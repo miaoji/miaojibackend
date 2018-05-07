@@ -42,7 +42,6 @@ const OperatorAssignFee = ({ location, dispatch, operatorAssignFee, loading }) =
     // onLink(iduser, query){
     // },
     onChange(page, filter) {
-      console.log(11)
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,

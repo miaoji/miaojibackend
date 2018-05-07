@@ -43,7 +43,6 @@ const AssignFee = ({ location, dispatch, assignFee, loading }) => {
     // onLink(iduser, query){
     // },
     onChange(page, filter) {
-      console.log(11)
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -77,7 +76,6 @@ const AssignFee = ({ location, dispatch, assignFee, loading }) => {
       ...location.query,
     },
     onFilterChange(value) {
-      console.log('1231', value)
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
