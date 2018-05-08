@@ -82,10 +82,6 @@ const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, lo
         simple
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
-        onExpandedRowsChange={(e, re) => {
-          console.info('e', e)
-          console.info('re', re)
-        }}
       />
     </div>
   )
