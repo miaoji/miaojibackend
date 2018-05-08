@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col,
+  Form, Button, Row, Col, Input, Select
 } from 'antd'
 import { DateRange } from '../../../components'
 import { handleFields } from '../../../utils'
 
+const { Option } = Select
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -72,10 +73,13 @@ const Filter = ({
         fields[item] = undefined
       }
     }
+    if (fields.state === '0') {
+      fields.state = undefined
+    }
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime } = filter
+  const { startTime, endTime, brand, state } = filter
 
   let initialCreateTime = []
   if (startTime) {
@@ -84,10 +88,35 @@ const Filter = ({
   if (endTime) {
     initialCreateTime[1] = String(endTime)
   }
+  const brandChange = (key) => {
+    console.log('key', key.target.value)
+    handleChange('brand', key.target.value)
+  }
+  const stateChange = (key) => {
+    handleChange('state', key)
+  }
 
 
   return (
     <Row gutter={24}>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <span>快递品牌 : </span>
+        {getFieldDecorator('brand', { initialValue: brand })(
+          <Input onPressEnter={brandChange} size="large" style={{ width: '70%' }} placeholder="按品牌搜索" />
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <span>快递状态 : </span>
+        {getFieldDecorator('state', { initialValue: state || '0' })(
+          <Select onChange={stateChange} size="large" style={{ width: '70%' }} placeholder="按快递状态筛选">
+            <Option key="0">全部</Option>
+            <Option key="1">点单</Option>
+            <Option key="101">上架</Option>
+            <Option key="103">分派</Option>
+            <Option key="301">签收</Option>
+          </Select>
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />

@@ -23,8 +23,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       }
     }, {
       title: '操作人',
-      dataIndex: 'realName',
-      key: 'realName',
+      dataIndex: 'cname',
+      key: 'cname',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       }

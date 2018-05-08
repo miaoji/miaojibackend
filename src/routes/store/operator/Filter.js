@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col,
+  Form, Button, Row, Col, Input, Select
 } from 'antd'
 import { DateRange } from '../../../components'
 import { handleFields } from '../../../utils'
-
+const { Search } = Input
+const { Option } = Select
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -71,10 +72,13 @@ const Filter = ({
         fields[item] = undefined
       }
     }
+    if (fields.payType === '0') {
+      fields.payType = undefined
+    }
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime } = filter
+  const { startTime, endTime, brand, payType } = filter
 
   let initialCreateTime = []
   if (startTime) {
@@ -83,10 +87,30 @@ const Filter = ({
   if (endTime) {
     initialCreateTime[1] = String(endTime)
   }
+  const payTypeChange = (key) => {
+    handleChange('payType', key)
+  }
 
 
   return (
     <Row gutter={24}>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        {getFieldDecorator('brand', { initialValue: brand })(
+          <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按站点名搜索" />
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <span>收款方式 : </span>
+        {getFieldDecorator('payType', { initialValue: payType || '0' })(
+          <Select onChange={payTypeChange} size="large" style={{ width: '70%' }} placeholder="按支付方式筛选">
+            <Option key="0">全部</Option>
+            <Option key="1">支付宝</Option>
+            <Option key="2">微信</Option>
+            <Option key="3">余额</Option>
+            <Option key="4">现金</Option>
+          </Select>
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />

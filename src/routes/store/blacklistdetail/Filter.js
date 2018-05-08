@@ -76,7 +76,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime, mobile } = filter
+  const { startTime, endTime, mobile, name } = filter
 
   let initialCreateTime = []
   if (startTime) {
@@ -86,9 +86,13 @@ const Filter = ({
     initialCreateTime[1] = String(endTime)
   }
 
-
   return (
     <Row gutter={24}>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        {getFieldDecorator('name', { initialValue: name })(
+          <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按站点名搜索" />
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search onPressEnter={handleSubmit} placeholder="按手机号码搜索" size="large" onSearch={handleSubmit} />)}
       </Col>

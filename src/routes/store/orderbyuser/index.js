@@ -85,7 +85,9 @@ const Orderbyuser = ({ location, dispatch, orderbyuser, loading }) => {
           ...value,
           realName: query.realName,
           idUser: query.idUser,
-          mailtype: query.mailtype
+          mailtype: query.mailtype,
+          page: 1,
+          pageSize: 10,
         },
       }))
     },

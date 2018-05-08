@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col,
+  Form, Button, Row, Col, Input
 } from 'antd'
 import { DateRange } from '../../../components'
 import { handleFields } from '../../../utils'
@@ -74,7 +74,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime } = filter
+  const { startTime, endTime, brand } = filter
 
   let initialCreateTime = []
   if (startTime) {
@@ -83,10 +83,20 @@ const Filter = ({
   if (endTime) {
     initialCreateTime[1] = String(endTime)
   }
+  const brandChange = (key) => {
+    console.log('key', key.target.value)
+    handleChange('brand', key.target.value)
+  }
 
 
   return (
     <Row gutter={24}>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <span>快递品牌 : </span>
+        {getFieldDecorator('brand', { initialValue: brand })(
+          <Input onPressEnter={brandChange} size="large" style={{ width: '70%' }} placeholder="按品牌搜索" />
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />

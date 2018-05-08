@@ -79,6 +79,8 @@ const Expressfee = ({ location, dispatch, expressfee, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
+          page: 1,
+          pageSize: 10
         },
       }))
     },

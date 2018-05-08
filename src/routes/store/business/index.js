@@ -60,7 +60,9 @@ const Business = ({ location, dispatch, business, loading }) => {
         pathname: location.pathname,
         query: {
           ...value,
-          mailtype: query.mailtype
+          mailtype: query.mailtype,
+          page: 1,
+          pageSize: 10
         },
       }))
     },

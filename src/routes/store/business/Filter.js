@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col,
+  Form, Button, Row, Col, Input
 } from 'antd'
 import { DateRange } from '../../../components'
 import { handleFields } from '../../../utils'
@@ -74,7 +74,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime } = filter
+  const { startTime, endTime, name } = filter
 
   let initialCreateTime = []
   if (startTime) {
@@ -83,10 +83,20 @@ const Filter = ({
   if (endTime) {
     initialCreateTime[1] = String(endTime)
   }
+  const nameChange = (key) => {
+    console.log('key', key.target.value)
+    handleChange('name', key.target.value)
+  }
 
 
   return (
     <Row gutter={24}>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <span>站点名 : </span>
+        {getFieldDecorator('name', { initialValue: name })(
+          <Input onPressEnter={nameChange} size="large" style={{ width: '70%' }} placeholder="按站点名搜索" />
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />

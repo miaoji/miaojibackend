@@ -4,8 +4,8 @@ const { operatorAssignFee } = api
 
 export async function query (params) {
   params = pageParams(params)
-  // delete params.page
-  // delete params.pageSize
+  delete params.page
+  delete params.pageSize
   params = JSON.stringify(params)
   return request({
     url: operatorAssignFee.all,

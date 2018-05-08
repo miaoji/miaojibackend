@@ -79,7 +79,9 @@ const OperatorAssignFee = ({ location, dispatch, operatorAssignFee, loading }) =
         pathname: location.pathname,
         query: {
           ...value,
-          idUser: location.query.idUser
+          idUser: location.query.idUser,
+          page: 1,
+          pageSize: 10
         },
       }))
     },

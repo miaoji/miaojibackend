@@ -2,13 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import { Tabs } from 'antd'
 import { Page } from '../../../components'
-
-const { TabPane } = Tabs
 
 const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => {
   const { list, pagination } = expressfeedetail
@@ -49,7 +45,7 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
       })
     },
   }
-  const { payType, idUser } = location.query
+  const { idUser, showName } = location.query
 
   const filterProps = {
     filter: {
@@ -59,8 +55,10 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
-          payType,
           idUser,
+          showName,
+          page: 1,
+          pageSize: 10,
           ...value
         },
       }))
@@ -92,33 +90,10 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
     },
   }
 
-  const handleTabClick = (key) => {
-    dispatch(routerRedux.push({
-      pathname,
-      query: {
-        ...location.query,
-        payType: key,
-      },
-    }))
-  }
-
   return (
     <Page inner>
       <Filter {...filterProps} />
-      <Tabs activeKey={query.payType || '1'} onTabClick={handleTabClick}>
-        <TabPane tab="支付宝" key={1}>
-          <List {...listProps} />
-        </TabPane>
-        <TabPane tab="微信" key={2}>
-          <List {...listProps} />
-        </TabPane>
-        <TabPane tab="余额" key={3}>
-          <List {...listProps} />
-        </TabPane>
-        <TabPane tab="现金" key={4}>
-          <List {...listProps} />
-        </TabPane>
-      </Tabs>
+      <List {...listProps} />
     </Page>
   )
 }

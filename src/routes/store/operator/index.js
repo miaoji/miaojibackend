@@ -87,7 +87,9 @@ const Operator = ({ location, dispatch, operator, loading }) => {
         query: {
           ...value,
           idUser,
-          realName
+          realName,
+          page: 1,
+          pageSize: 10
         },
       }))
     },

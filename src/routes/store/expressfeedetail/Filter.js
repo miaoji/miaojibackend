@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Select
+  Form, Button, Row, Col, Select, Input
 } from 'antd'
 import { DateRange } from '../../../components'
 import { handleFields } from '../../../utils'
@@ -71,10 +71,16 @@ const Filter = ({
         fields[item] = undefined
       }
     }
+    if (fields.payType === '0') {
+      fields.payType = undefined
+    }
+    if (fields.status === '0') {
+      fields.status = undefined
+    }
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime, payType } = filter
+  const { startTime, endTime, payType, status, brand } = filter
 
   let initialCreateTime = []
   if (startTime) {
@@ -86,18 +92,43 @@ const Filter = ({
   const payTypeChange = (key) => {
     handleChange('payType', key)
   }
+  const statusChange = (key) => {
+    handleChange('status', key)
+  }
+  const brandChange = (key) => {
+    console.log('key', key.target.value)
+    handleChange('brand', key.target.value)
+  }
 
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>支付方式 : </span>
-        {getFieldDecorator('payType', { initialValue: payType })(
+        <span>快递品牌 : </span>
+        {getFieldDecorator('brand', { initialValue: brand })(
+          <Input onPressEnter={brandChange} size="large" style={{ width: '70%' }} placeholder="按品牌搜索" />
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <span>收款方式 : </span>
+        {getFieldDecorator('payType', { initialValue: payType || '0' })(
           <Select onChange={payTypeChange} size="large" style={{ width: '70%' }} placeholder="按支付方式筛选">
+            <Option key="0">全部</Option>
             <Option key="1">支付宝</Option>
             <Option key="2">微信</Option>
             <Option key="3">余额</Option>
             <Option key="4">现金</Option>
+          </Select>
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <span>完成状态 : </span>
+        {getFieldDecorator('status', { initialValue: status || '0' })(
+          <Select onChange={statusChange} size="large" style={{ width: '70%' }} placeholder="按支付方式筛选">
+            <Option key="0">全部</Option>
+            <Option key="success">成功</Option>
+            <Option key="wait">等待</Option>
+            <Option key="close">关闭</Option>
           </Select>
         )}
       </Col>

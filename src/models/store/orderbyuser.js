@@ -37,6 +37,9 @@ export default modelExtend(pageModel, {
       } else {
         newpayload = { ...payload }
       }
+      if (newpayload.realName === 'undefined') {
+        newpayload.realName = ''
+      }
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
       const data = yield call(query, { mailtype: 0, ...newpayload, download: 0 })
       if (data.obj) {

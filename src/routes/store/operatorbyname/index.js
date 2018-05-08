@@ -85,6 +85,8 @@ const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
           ...value,
           mailtype: query.mailtype,
           idUser: query.idUser,
+          page: 1,
+          pageSize: 10
         },
       }))
     },
