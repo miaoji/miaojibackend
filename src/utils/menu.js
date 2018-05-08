@@ -265,6 +265,13 @@ module.exports = [
     router: '/selectpjjeDetails'
   },
   {
+    id: 37,
+    bpid: 1,
+    mpid: 11,
+    name: '门店问题件',
+    router: '/problem'
+  },
+  {
     id: 16,
     bpid: 1,
     mpid: -1,

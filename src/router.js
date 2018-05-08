@@ -396,6 +396,14 @@ const Routers = function ({ history, app }) {
             }, 'blacklistdetail')
           },
         }, {
+          path: 'problem',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/store/problem'))
+              cb(null, require('./routes/store/problem/'))
+            }, 'problem')
+          },
+        }, {
           path: '*',
           getComponent(nextState, cb) {
             require.ensure([], require => {
