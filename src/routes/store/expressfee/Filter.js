@@ -84,7 +84,6 @@ const Filter = ({
     initialCreateTime[1] = String(endTime)
   }
   const nameChange = (key) => {
-    console.log('key', key.target.value)
     handleChange('name', key.target.value)
   }
 

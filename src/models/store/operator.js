@@ -29,7 +29,6 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      console.log('感觉这是一个bug')
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()

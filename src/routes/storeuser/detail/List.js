@@ -4,7 +4,6 @@ import styles from './index.less'
 import { Card, Col, Row } from 'antd'
 
 const List = ({ list, filter, handleClick }) => {
-  console.log('list', list)
   // const { data } = storeUserDetail
   const detail = (
     <Row gutter={16}>

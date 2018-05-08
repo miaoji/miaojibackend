@@ -81,7 +81,6 @@ export default modelExtend(pageModel, {
             }
           }
         })
-        console.log('12312312', data.obj)
       } else {
         throw data.mess || '网络连接失败'
       }
@@ -89,7 +88,6 @@ export default modelExtend(pageModel, {
     *getStoreTotal({ payload }, { call, put }) {
       const data = yield call(storeTotal)
       if (data.code === 200) {
-        console.log('data', data)
         yield put({
           type: 'setStates',
           payload: {

@@ -96,7 +96,6 @@ const Filter = ({
     handleChange('status', key)
   }
   const brandChange = (key) => {
-    console.log('key', key.target.value)
     handleChange('brand', key.target.value)
   }
 

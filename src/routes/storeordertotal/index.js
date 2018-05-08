@@ -39,7 +39,6 @@ const Storeordertotal = ({ location, dispatch, storeordertotal, loading }) => {
       }))
     },
     onDownLoad() {
-      console.log(1)
       dispatch({
         type: 'storeordertotal/download',
         payload: location.query

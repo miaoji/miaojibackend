@@ -21,8 +21,6 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/storeorderinfo') {
-          const querys = location.query
-          console.log('querys', querys)
           dispatch({ type: 'getStoreInfo' })
           dispatch({
             type: 'query',
@@ -90,7 +88,6 @@ export default modelExtend(pageModel, {
     *getStoreInfo({ payload }, { call, put }) {
       const res = yield call(getStoreInfo)
       if (res.code === 200) {
-        console.log('responent', res)
         let children = []
         for (let i = 0; i < res.obj.length; i++) {
           let item = res.obj[i]

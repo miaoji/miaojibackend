@@ -41,7 +41,6 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     location,
     isMotion,
     onChange(page) {
-      console.log('123', 123)
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,

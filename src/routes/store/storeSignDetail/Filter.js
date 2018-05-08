@@ -84,7 +84,6 @@ const Filter = ({
     initialCreateTime[1] = String(endTime)
   }
   const brandChange = (key) => {
-    console.log('key', key.target.value)
     handleChange('brand', key.target.value)
   }
 

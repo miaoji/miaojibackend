@@ -49,13 +49,11 @@ const Filter = ({
       fields.startTime = repairTime.startTime
       fields.endTime = repairTime.endTime
     }
-    console.log('name', name)
     if (name) {
       fields.idUser = name.split('/-/')[1]
     } else {
       fields.idUser = fields.idUser.split('/-/')[1]
     }
-    console.log('fields.idUser', fields.idUser)
     delete fields.createTime
     delete fields.name
     return fields
@@ -118,7 +116,6 @@ const Filter = ({
   // 站点名选择器
   const handleStoreChange = (values) => {
     let fields = getFieldsValue()
-    console.log('value', values)
     fields.name = values
     fields = handleFields(fields)
     for (let item in fields) {
