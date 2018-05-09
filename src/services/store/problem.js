@@ -1,6 +1,6 @@
 import { request, config, pageParams } from '../../utils'
 const { api } = config
-const { selectfenpai } = api
+const { problem } = api
 
 export async function query (params) {
   params = pageParams(params)
@@ -9,7 +9,7 @@ export async function query (params) {
   delete params.download
   params = JSON.stringify(params)
   return request({
-    url: selectfenpai.all,
+    url: problem.all,
     method: 'post',
     params: {
       param: params

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import {
   Form, Button, Row, Col, Input
 } from 'antd'
-import { DateRange } from '../../../components'
+import { DateRange, FilterItem } from '../../../components'
 import { handleFields } from '../../../utils'
-
+const { Search } = Input
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -74,7 +74,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime, name } = filter
+  const { startTime, endTime, name, brand, orderSn } = filter
 
   let initialCreateTime = []
   if (startTime) {
@@ -83,20 +83,32 @@ const Filter = ({
   if (endTime) {
     initialCreateTime[1] = String(endTime)
   }
-  const nameChange = (key) => {
-    handleChange('name', key.target.value)
-  }
 
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>站点名 : </span>
-        {getFieldDecorator('name', { initialValue: name })(
-          <Input onPressEnter={nameChange} size="large" style={{ width: '70%' }} placeholder="按站点名搜索" />
-        )}
+      <Col {...ColProps} xl={{ span: 5 }} lg={{ span: 5 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <FilterItem label="站点名">
+          {getFieldDecorator('name', { initialValue: name })(
+            <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按站点名搜索" />
+          )}
+        </FilterItem>
       </Col>
-      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+      <Col {...ColProps} xl={{ span: 5 }} md={{ span: 5 }} sm={{ span: 12 }}>
+        <FilterItem label="快递品牌">
+          {getFieldDecorator('brand', { initialValue: brand })(
+            <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按快递品牌搜索" />
+          )}
+        </FilterItem>
+      </Col>
+      <Col {...ColProps} xl={{ span: 5 }} md={{ span: 5 }} sm={{ span: 12 }}>
+        <FilterItem label="快递单号">
+          {getFieldDecorator('orderSn', { initialValue: orderSn })(
+            <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按快递单号搜索" />
+          )}
+        </FilterItem>
+      </Col>
+      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 7 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}

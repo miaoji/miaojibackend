@@ -8,13 +8,6 @@ import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点ID',
-      dataIndex: 'idUser',
-      key: 'idUser',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      }
-    }, {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
@@ -22,25 +15,25 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{text || '暂无'}</span>
       }
     }, {
-      title: '分派数量',
-      dataIndex: 'fptotal',
-      key: 'fptotal',
+      title: '品牌',
+      dataIndex: 'brand',
+      key: 'brand',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      }
+    }, {
+      title: '单号',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text) => {
         return <span>{text || 0}</span>
       }
     }, {
-      title: '分派数量',
-      dataIndex: '123',
-      key: '123',
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
       render: (text) => {
-        return <span>{text || 0}</span>
-      }
-    }, {
-      title: '分派数量',
-      dataIndex: '343',
-      key: '343',
-      render: (text) => {
-        return <span>{text || 0}</span>
+        return <span>{text || '暂无'}</span>
       }
     }
   ]
