@@ -63,12 +63,14 @@ class List extends React.Component {
             const contant = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1; user-scalable=no;"/><title>${title}</title></head><body>${htmlContent}</body></html>`
             window.open().document.write(contant)
           }
-        }, /*{
-          type: 'dropdown',
-          text: 'Foo',
-          showDropDownArrow: true,
-          component: <div><h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1><h1>123456</h1></div>
-        }, */{
+        },
+        // /*{
+        //   type: 'dropdown',
+        //   text: 'Foo',
+        //   showDropDownArrow: true,
+        //   component: <div><h1 style={{ width: 200, color: '#ffffff', padding: 10, margin: 0 }}>Hello World!</h1><h1>123456</h1></div>
+        // }, */
+        {
           type: 'button',
           text: '提交',
           className: 'preview-button',
