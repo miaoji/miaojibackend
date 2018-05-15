@@ -10,19 +10,28 @@ import { Page } from '../../../components'
 const { TabPane } = Tabs
 
 const Business = ({ location, dispatch, business, loading }) => {
-  const { list, pagination } = business
+  const { list, sonlist, pagination, expandedRowKeys } = business
   const { query, pathname } = location
 
   const listProps = {
     filter: {
       ...location.query,
     },
+    sonlist,
+    expandedRowKeys,
+    onExpandedRowsChange(value) {
+      dispatch({
+        type: 'business/getOperator',
+        payload: {
+          idUser: value.pop(),
+          mailtype: location.query.mailtype || 0,
+        },
+      })
+    },
     dataSource: list,
     loading: loading.effects['business/query'],
     pagination,
     location,
-    // onLink(iduser, query){
-    // },
     onChange(page, filter) {
       dispatch(routerRedux.push({
         pathname,

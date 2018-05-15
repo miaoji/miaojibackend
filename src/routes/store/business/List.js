@@ -5,8 +5,9 @@ import { Link } from 'dva/router'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
+import SonTable from './SonTable'
 
-const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '站点名',
@@ -46,9 +47,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
           return <span>该站点无法操作</span>
         }
         if (filter.startTime) {
-          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+          return <Link target={'_blank'} to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
         }
-        return <Link to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
+        return <Link target={'_blank'} to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
       }
     }
   ]
@@ -68,8 +69,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        rowKey={record => record.idUser}
         getBodyWrapper={getBodyWrapper}
+        expandedRowRender={record => <SonTable record={record} list={sonlist} filter={filter} />}
       />
     </div>
   )
@@ -80,6 +82,7 @@ List.propTypes = {
   onEditItem: PropTypes.func,
   location: PropTypes.object,
   filter: PropTypes.object,
+  sonlist: PropTypes.array,
 }
 
 export default List
