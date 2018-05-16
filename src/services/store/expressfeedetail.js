@@ -16,3 +16,18 @@ export async function query (params) {
     }
   })
 }
+
+export async function download (params) {
+  delete params.page
+  delete params.pageSize
+  delete params.showName
+  params = JSON.stringify(params)
+  console.log('params', params)
+  return request({
+    url: expressfeedetail.download,
+    method: 'post',
+    params: {
+      param: params
+    }
+  })
+}

@@ -22,6 +22,7 @@ const TwoColProps = {
 const Filter = ({
   // onAdd,
   onFilterChange,
+  onDownLoad,
   filter,
   form: {
     getFieldDecorator,
@@ -101,11 +102,12 @@ const Filter = ({
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+            <Button type="primary" size="large" onClick={onDownLoad}>下载所有门店点单上架签收明细</Button>
           </div>
         </div>
       </Col>

@@ -4,11 +4,11 @@ const APIV1 = '/api/v1'
 let APIV3
 // 本地测试
 // 徐景阳
-// APIV3 = 'http://192.168.231.232:8080'
+APIV3 = 'http://192.168.231.232:8080'
 // 吴聪
 // APIV3 = 'http://192.168.231.231:8080'
 // 线上
-APIV3 = 'http://app.quandikeji.com:8288'
+// APIV3 = 'http://app.quandikeji.com:8288'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -157,7 +157,8 @@ module.exports = {
     },
     // 门店单号汇总
     expressfeedetail: {
-      all: `${APIV3}/quandiExpressSiteManager/selectPayType`
+      all: `${APIV3}/quandiExpressSiteManager/selectPayType`,
+      download: `${APIV3}/quandiExpressSiteManager/selectMailddownload`,
     },
     // 操作人寄件总金额
     storeUserDetail: {
