@@ -4,8 +4,6 @@ import { Link } from 'dva/router'
 import { Table } from 'antd'
 
 const SonTable = ({ record, list, filter }) => {
-  console.log('record', record)
-  console.log('list', list)
   const columns = [
     {
       title: '操作人',

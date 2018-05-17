@@ -13,8 +13,11 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, ...tablePro
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
+      render: (text, record) => {
+        if (filter.startTime) {
+          return <Link target={'_blank'} to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text}</Link>
+        }
+        return <Link target={'_blank'} to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>{text}</Link>
       }
     }, {
       title: '点单数量',

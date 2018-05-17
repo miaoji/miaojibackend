@@ -168,4 +168,5 @@ module.exports = {
   time,
   storage,
   handleFields: time.handleFields,
+  yesterTime: time.yesterTime,
 }
