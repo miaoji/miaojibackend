@@ -4,7 +4,7 @@ import {
   Form, Button, Row, Col, Input,
 } from 'antd'
 import { DateRange } from '../../../components'
-import { handleFields } from '../../../utils'
+import { handleFields, yesterTime } from '../../../utils'
 
 const { Search } = Input
 
@@ -76,7 +76,10 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime, mobile, name } = filter
+  let { startTime, endTime, mobile, name } = filter
+
+  if (!startTime) startTime = yesterTime().startTime
+  if (!endTime) endTime = yesterTime().endTime
 
   let initialCreateTime = []
   if (startTime) {

@@ -4,7 +4,7 @@ import {
   Form, Button, Row, Col, Input, Select
 } from 'antd'
 import { DateRange } from '../../../components'
-import { handleFields } from '../../../utils'
+import { handleFields, yesterTime } from '../../../utils'
 
 const { Option } = Select
 const ColProps = {
@@ -79,7 +79,10 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  const { startTime, endTime, brand, state } = filter
+  let { startTime, endTime, brand, state } = filter
+
+  if (!startTime) startTime = yesterTime().startTime
+  if (!endTime) endTime = yesterTime().endTime
 
   let initialCreateTime = []
   if (startTime) {

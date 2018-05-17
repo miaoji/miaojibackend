@@ -90,17 +90,6 @@ const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
         },
       }))
     },
-    onSearch(fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/operatorbyname',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/operatorbyname',
-      }))
-    },
     onDownLoad() {
       dispatch({
         type: 'operatorbyname/download',
