@@ -1,9 +1,12 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
+import { message, Select } from 'antd'
 import { create } from '../services/publish'
 import { pageModel } from './common'
 import { storage } from '../utils'
+import { query } from '../services/storeusers'
 
+const { Option } = Select
 export default modelExtend(pageModel, {
   namespace: 'publish',
 
@@ -11,10 +14,11 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    typeOption: []
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
+    setup({ dispatch, history }) {
       history.listen(location => {
         if (location.pathname === '/publish') {
           dispatch({
@@ -27,16 +31,30 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { put }) {
-      yield put({
-        type: 'querySuccess',
-        payload: {
-          list: ''
-        },
+    *query(_, { call, put }) {
+      const data = yield call(query, {
+        current: 1,
+        pageSize: 10000
       })
+      if (data.code === 200) {
+        const option = data.obj.map((item) => {
+          if (!item.name) {
+            return false
+          }
+          const val = `${item.id}///${item.name}`
+          return <Option key={val}>{item.name}</Option>
+        })
+        yield put({
+          type: 'setStates',
+          payload: {
+            typeOption: option
+          },
+        })
+      }
     },
 
     *create({ payload }, { call }) {
+      console.log('payload', payload)
       if (payload.title === '') {
         message.warning('请输入文章标题')
         return
@@ -45,7 +63,10 @@ export default modelExtend(pageModel, {
         message.warning('正文不能为空')
         return
       }
-      payload.contant = payload.contant.replace('+','%2b')
+      if (payload.receiveId !== '0') {
+        payload.receiveId = payload.receiveId.split('///')[0]
+      }
+      payload.contant = payload.contant.replace('+', '%2b')
       const createId = JSON.parse(storage({ key: 'user' })).userId
       const data = yield call(create, { ...payload, createId })
       if (data.code === 200) {

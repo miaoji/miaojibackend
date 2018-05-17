@@ -2,7 +2,7 @@ import React from 'react'
 import BraftEditor from 'braft-editor'
 import PropTypes from 'prop-types'
 import 'braft-editor/dist/braft.css'
-import { Form, Input, Modal, notification, Select, Row, Col } from 'antd'
+import { Form, Input, Modal, notification, Select, Row, Col, message } from 'antd'
 import { upload } from '../../services/publish'
 
 const confirm = Modal.confirm
@@ -39,6 +39,7 @@ class List extends React.Component {
   }
 
   handleNotifyChange = (notify) => {
+    console.log('notify', notify)
     this.setState({ notify })
   }
 
@@ -86,7 +87,7 @@ class List extends React.Component {
                   contant,
                   title,
                   type: Number(_this.state.type),
-                  receiveId: Number(_this.state.notify)
+                  receiveId: _this.state.notify
                 })
               }
             })
@@ -108,6 +109,12 @@ class List extends React.Component {
           }
           let fileReader = new FileReader()
           fileReader.readAsDataURL(param.file)
+          console.log('param.file', param.file.size)
+          if (param.file.size > 3145728) {
+            message.success('上传的图片不能大于3M')
+            return false
+          }
+          console.log('fileReader', fileReader)
           // 将转成base64的图片上传至服务器
           fileReader.onload = async function (e) {
             let base64Code = e.currentTarget.result
@@ -128,6 +135,7 @@ class List extends React.Component {
         }
       }
     }
+
     return (
       <div className="list">
         <Form>
@@ -146,8 +154,9 @@ class List extends React.Component {
             </Col>
             <Col span={3}>
               <FormItem label="通知人" hasFeedback {...formItemLayout}>
-                <Select defaultValue="0" style={{ width: 120 }} onChange={this.handleNotifyChange}>
+                <Select showSearch defaultValue="0" style={{ width: 240 }} onChange={this.handleNotifyChange}>
                   <Option value="0">所有人</Option>
+                  {this.props.typeOption}
                 </Select>
               </FormItem>
             </Col>
@@ -167,7 +176,8 @@ List.propTypes = {
   onEditItem: PropTypes.func,
   location: PropTypes.object,
   form: PropTypes.object,
-  onpublish: PropTypes.func
+  onpublish: PropTypes.func,
+  typeOption: PropTypes.array
 }
 
 export default Form.create()(List)

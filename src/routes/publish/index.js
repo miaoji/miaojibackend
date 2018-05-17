@@ -4,11 +4,12 @@ import { connect } from 'dva'
 import List from './List'
 
 const Publish = ({ location, dispatch, publish, loading }) => {
-  const { list, pagination } = publish
+  const { list, pagination, typeOption } = publish
 
 
   const listProps = {
     dataSource: list,
+    typeOption,
     loading: loading.effects['publish/query'],
     pagination,
     location,

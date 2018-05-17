@@ -3,8 +3,6 @@ import { create, remove, update } from '../services/storeuser'
 import * as storeusersService from '../services/storeusers'
 import { pageModel } from './common'
 import { config } from '../utils'
-import { message } from 'antd'
-// import { gettimes } from '../utils/time' // 转换时间戳的函数
 
 const { query } = storeusersService
 const { prefix } = config
