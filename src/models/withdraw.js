@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend'
 import * as withdrawsService from '../services/withdraws'
 import { pageModel } from './common'
 import { config } from '../utils'
+import { gettimes } from '../utils/time'
 
 const { query } = withdrawsService
 const { prefix } = config
@@ -18,19 +19,11 @@ export default modelExtend(pageModel, {
   subscriptions: {
 
     setup ({ dispatch, history }) {
-
       history.listen(location => {
-      	let query = location.query;
-          if (!query.pagination) {
-            query = {
-              pagination: 1,
-              rownum: 10
-            } 
-          };
         if (location.pathname === '/withdraws') {
           dispatch({
             type: 'query',
-            payload: query,
+            payload: location.query,
           })
         }
       })
@@ -41,25 +34,20 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       let data = yield call(query, payload)
-      if (data) {
-      	delete data.success
-      	delete data.message
-      	delete data.statusCode
-      	let list = []
-      	for (let item in data) {
-      		list.push(data[item])
-      	}
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: 60
+              total: data.total,
             },
           },
         })
+      } else {
+        throw data.mess || '网络不行了!!!'
       }
     },
 

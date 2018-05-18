@@ -21,7 +21,6 @@ export default modelExtend(pageModel, {
   subscriptions: {
 
     setup ({ dispatch, history }) {
-
       history.listen(location => {
         if (location.pathname === '/message') {
           dispatch({
@@ -37,7 +36,7 @@ export default modelExtend(pageModel, {
 
     *query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -49,6 +48,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || '网络不行了!!!'
       }
     },
 

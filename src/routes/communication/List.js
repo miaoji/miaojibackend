@@ -26,75 +26,82 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '主体',
-      dataIndex: 'subject',
-      key: 'subject'
+      dataIndex: 'name',
+      key: 'name',
     },
     {
       title: '短信数',
-      dataIndex: 'noteCount',
-      key: 'noteCount',
-      render: (text) => <span>{text + '次'}</span>,
+      dataIndex: 'countId',
+      key: 'countId',
+      render: (text) => {
+        let newtext = text || 0
+        return <span>{`${newtext}次`}</span>
+      },
     }, {
       title: '短信金额',
-      dataIndex: 'noteMoney',
-      key: 'noteMoney',
-      render: (text) => <span>{'￥' + text}</span>,
-    }, {
-      title: '语音数量',
-      dataIndex: 'voiceCount',
-      key: 'voiceCount',
-      render: (text) => <span>{text + '次'}</span>,
-    }, {
-      title: '语音通知金额',
-      dataIndex: 'voiceMoney',
-      key: 'voiceMoney',
-      render: (text) => <span>{'￥' + text}</span>,
-    }, {
+      dataIndex: 'countIdPrice',
+      key: 'countIdPrice',
+      render: (text) => <span>{`￥${text}`}</span>,
+    },
+    // {
+    //   title: '语音数量',
+    //   dataIndex: 'voiceCount',
+    //   key: 'voiceCount',
+    //   render: (text) => <span></span>,
+    // }, {
+    //   title: '语音通知金额',
+    //   dataIndex: 'voiceMoney',
+    //   key: 'voiceMoney',
+    //   render: (text) => <span></span>,
+    // },
+    {
       title: '微信通知数量',
-      dataIndex: 'wxCount',
-      key: 'wxCount',
-      render: (text) => <span>{text + '次'}</span>,
-    }, {
-      title: '直拨电话数量',
-      dataIndex: 'callCount',
-      key: 'callCount',
-      render: (text) => <span>{text + '次'}</span>,
-    }, {
-      title: '直拨时长',
-      dataIndex: 'callTime',
-      key: 'callTime',
-      render: (text) => <span>{text + '分'}</span>,
-    }, {
-      title: '直拨金额',
-      dataIndex: 'callMoney',
-      key: 'callMoney',
-      render: (text) => <span>{'￥' + text}</span>,
-    }, {
+      dataIndex: 'wechatQuantity',
+      key: 'wechatQuantity',
+      render: (text) => <span>{`${text}次`}</span>,
+    },
+    // {
+    //   title: '直拨电话数量',
+    //   dataIndex: 'callCount',
+    //   key: 'callCount',
+    //   render: (text) => <span></span>
+    // }, {
+    //   title: '直拨时长',
+    //   dataIndex: 'callTime',
+    //   key: 'callTime',
+    //   render: (text) => <span></span>,
+    // }, {
+    //   title: '直拨金额',
+    //   dataIndex: 'callMoney',
+    //   key: 'callMoney',
+    //   render: (text) => <span></span>,
+    // },
+    {
       title: '回拨次数',
-      dataIndex: 'callbackCount',
-      key: 'callbackCount',
-      render: (text) => <span>{text + '次'}</span>,
+      dataIndex: 'numberOfCalls',
+      key: 'numberOfCalls',
+      render: (text) => <span>{`${text}次`}</span>,
     }, {
       title: '回拨金额',
-      dataIndex: 'callbackMoney',
-      key: 'callbackMoney',
-      render: (text) => <span>{'￥' + text}</span>,
+      dataIndex: 'callbackAmout',
+      key: 'callbackAmout',
+      render: (text) => <span>{`￥${text}`}</span>,
     }, {
       title: '回拨时长',
-      dataIndex: 'callbackTime',
-      key: 'callbackTime',
-      render: (text) => <span>{text + '分'}</span>,
+      dataIndex: 'callbackDuration',
+      key: 'callbackDuration',
+      render: (text) => <span>{`${text}分`}</span>,
     }, {
       title: '总金额',
-      dataIndex: 'totalMoney',
-      key: 'totalMoney',
-      render: (text) => <span>{'￥' + text}</span>,
-    }, {
-      title: '时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'totalAmount',
+      key: 'totalAmount',
+      render: (text) => <span>{`￥${text}`}</span>,
     },
-
+    //  {
+    //   title: '时间',
+    //   dataIndex: 'createTime',
+    //   key: 'createTime',
+    // },
   ]
 
   const getBodyWrapperProps = {
@@ -110,7 +117,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
-        scroll={{ x: 1250 }}
+        scroll={{ x: 767 }}
         columns={columns}
         simple
         rowKey={record => record.id}

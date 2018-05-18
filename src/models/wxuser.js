@@ -1,8 +1,9 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/wxuser'
+import { create, remove, update } from '../services/wxuser'
 import * as wxusersService from '../services/wxusers'
 import { pageModel } from './common'
 import { config } from '../utils'
+// import { gettimes } from '../utils/time'
 
 const { query } = wxusersService
 const { prefix } = config
@@ -34,12 +35,12 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
-      if (data) {
+      let data = yield call(query, payload)
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
@@ -47,6 +48,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || '网络不行了!!!'
       }
     },
 
@@ -71,7 +74,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'markBlackList' ({ payload }, { call, put, select }) {
+    *'markBlackList' ({ payload }, { call, put }) {
       const newWxUser = payload
       const data = yield call(update, newWxUser)
       if (data.success) {

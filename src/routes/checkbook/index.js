@@ -30,7 +30,7 @@ const Checkbook = ({ location, dispatch, checkbook, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'checkbook/markBlackList',
-        payload: id
+        payload: id,
       })
     },
     onDeleteItem (id) {

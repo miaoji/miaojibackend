@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
 import { Link } from 'dva/router'
+import { time } from '../../../utils'
 
 const confirm = Modal.confirm
 
@@ -28,6 +29,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '流水号',
       dataIndex: 'orderId',
       key: 'OrderId',
+      render: (text) => <span>{text || '空'}</span>,
     }, {
       title: '金额',
       dataIndex: 'price',
@@ -37,17 +39,22 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '时间',
       dataIndex: 'createtime',
       key: 'createtime',
+      render: (text) => {
+        const createtime = time.formatTime(text)
+        return <span>{createtime}</span>
+      },
     }, {
       title: '充值人',
       dataIndex: 'name',
       key: 'name',
+      render: (text) => <span>{text || '空'}</span>,
     }, {
       title: '充值状态',
       dataIndex: 'status',
       key: 'status',
       filters: [
         { text: '失败', value: '0' },
-        { text: '成功', value: '1' }
+        { text: '成功', value: '1' },
       ],
       onFilter: (value, record) => Number(record.status) === Number(value),
       render: (text) => <span>{text === 0
@@ -69,7 +76,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
-        scroll={{ x: 1250 }}
+        scroll={{ x: 767 }}
         columns={columns}
         simple
         rowKey={record => record.id}

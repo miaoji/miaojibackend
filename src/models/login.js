@@ -1,6 +1,7 @@
 import { login } from '../services/login'
 import { routerRedux } from 'dva/router'
-import { queryURL } from '../utils'
+import { queryURL, storage } from '../utils'
+import md5 from 'js-md5'
 
 export default {
   namespace: 'login',
@@ -13,9 +14,24 @@ export default {
       payload,
     }, { put, call }) {
       yield put({ type: 'showLoginLoading' })
+      payload.password = md5(payload.password)
       const data = yield call(login, payload)
       yield put({ type: 'hideLoginLoading' })
-      if (data.success) {
+      if (data.code === 200) {
+        storage({
+          key: 'token',
+          val: data.obj[0].userId,
+          type: 'set',
+        })
+        let userList = {}
+        userList.trueName = data.obj[0].accounts
+        userList.userId = data.obj[0].userId
+        userList.userName = data.obj[0].name
+        storage({
+          key: 'user',
+          val: JSON.stringify(userList),
+          type: 'set',
+        })
         const from = queryURL('from')
         yield put({ type: 'app/query' })
         if (from) {
@@ -24,7 +40,7 @@ export default {
           yield put(routerRedux.push('/dashboard'))
         }
       } else {
-        throw data
+        throw data.mess || '网络不行了!!!'
       }
     },
   },

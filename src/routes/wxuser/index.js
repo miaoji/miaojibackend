@@ -37,8 +37,15 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange (page, filters) {
       const { query, pathname } = location
+      delete query.pagination
+      delete query.rownum
+      if (filters.subscribe && filters.subscribe.length===1) {
+        query.subscribe = filters.subscribe[0]
+      }else{
+        query.subscribe = undefined
+      }
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -51,7 +58,7 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
     onMarkItem (id) {
       dispatch({
         type: 'wxUser/markBlackList',
-        payload: { id, blacklist: 1}
+        payload: { id, blacklist: 1 },
       })
     },
     onDeleteItem (id) {

@@ -4,6 +4,10 @@ import request from './request'
 import classnames from 'classnames'
 import { color } from './theme'
 import lodash from 'lodash'
+import * as time from './time'
+
+const localStorage = window.localStorage
+const { localPrefix } = config
 
 // 连字符转驼峰
 String.prototype.hyphenToHump = function () {
@@ -99,6 +103,58 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
   return result
 }
 
+
+/**
+ * 对网络请求的params做处理，针对分页
+ * @param   {params} Object
+ * @return  {params} Object
+ */
+const pageParams = function (params) {
+  params = params || {
+    pagination: 1,
+    rownum: 10,
+  }
+  params.pagination = params.page || 1
+  params.rownum = params.pageSize || 10
+  return params
+}
+
+/**
+ * [对localStorage操作进行封装]
+ * @param  {String}  key    [存储的字段名字]
+ * @param  {String}  val    [存储的字段值]
+ * @param  {Boolean} prefix [是否加前缀，默认为true]
+ * @param  {String}  type   [localStorage的操作方式 get、set、remove、clear]
+ * @return {String} res     [localStorage.getItem(key)时返回的值]
+ */
+export const storage = function ({ key, val, prefix = true, type = 'get' }) {
+  let typeCheck = type === 'get'
+  if (prefix) {
+    key = localPrefix + key
+  }
+  let res = ''
+  switch (type) {
+    case 'get':
+      res = localStorage.getItem(key)
+      break
+    case 'set':
+      localStorage.setItem(key, val)
+      break
+    case 'remove':
+      localStorage.removeItem(key)
+      break
+    case 'clear':
+      localStorage.clear()
+      break
+    default:
+      break
+  }
+  if (typeCheck) {
+    return res
+  }
+  return false
+}
+
 module.exports = {
   config,
   menu,
@@ -108,4 +164,9 @@ module.exports = {
   queryURL,
   queryArray,
   arrayToTree,
+  pageParams,
+  time,
+  storage,
+  handleFields: time.handleFields,
+  yesterTime: time.yesterTime,
 }

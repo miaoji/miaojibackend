@@ -28,17 +28,17 @@ let checkbookData = Mock.mock({
         'others|0-999': 1,
       },
       'balance|0-999': 1,
-      createTime: '@datetime'
+      createTime: '@datetime',
     },
   ],
 })
 
 let database = checkbookData.data
 
-const NOTFOUND = {
-  message: 'Not Found',
-  documentation_url: 'http://localhost:8000/request',
-}
+// const NOTFOUND = {
+//   message: 'Not Found',
+//   documentation_url: 'http://localhost:8000/request',
+// }
 
 module.exports = {
 

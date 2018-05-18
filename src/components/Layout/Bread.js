@@ -9,7 +9,12 @@ import { queryArray } from '../../utils'
 const Bread = ({ menu }) => {
   // 匹配当前路由
   let pathArray = []
+  // 启动browserHistory路由匹配模式
   let pathname = location.pathname
+  // let pathname = location.hash!=='/'?location.hash.slice(1).split('?')[0]:'/'
+  // if (pathname === 'login') {
+    // pathname = '/'
+  // }
   let current
   for (let index in menu) {
     if (menu[index].router && pathToRegexp(menu[index].router).exec(pathname)) {

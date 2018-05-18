@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
-import { NumberCard, Quote, Sales, Weather, RecentSales, Comments, Completed, Browser, Cpu, User } from './components'
+import { NumberCard, Quote, User } from './components'
+// import { Quote, User } from './components'
 import styles from './index.less'
 import { color } from '../../utils'
+import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 
 const bodyStyle = {
   bodyStyle: {
@@ -13,15 +15,26 @@ const bodyStyle = {
   },
 }
 
-function Dashboard ({ dashboard }) {
-  const { weather, sales, quote, numbers, recentSales, comments, completed, browser, cpu, user } = dashboard
-  const numberCards = numbers.map((item, key) => <Col key={key} lg={6} md={12}>
+function Dashboard (data) {
+  const { receviceData, sendData, quote, user, income, storeTotal, weChatUser, shop } = data.dashboard
+  const munArr = [income, storeTotal, weChatUser, shop]
+  const numberCards = munArr.map((item, key) => <Col key={key} lg={6} md={12}>
     <NumberCard {...item} />
   </Col>)
+
+  const lineProps = {
+    receviceData,
+    sendData
+  }
 
   return (
     <Row gutter={24}>
       {numberCards}
+      <Col lg={24} md={24}>
+        <Card>
+          <SimpleChartComponent {...lineProps} />
+        </Card>
+      </Col>
       <Col lg={18} md={24}>
         <Card bordered={false} bodyStyle={{ ...bodyStyle.bodyStyle, padding: 0 }}>
           <User {...user} />
@@ -29,15 +42,6 @@ function Dashboard ({ dashboard }) {
       </Col>
       <Col lg={6} md={24}>
         <Row gutter={24}>
-          <Col lg={24} md={12}>
-            <Card bordered={false} className={styles.weather} bodyStyle={{
-              padding: 0,
-              height: 204,
-              background: color.blue,
-            }}>
-              <Weather {...weather} />
-            </Card>
-          </Col>
           <Col lg={24} md={12}>
             <Card bordered={false} className={styles.quote} bodyStyle={{
               padding: 0,

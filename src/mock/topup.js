@@ -4,7 +4,7 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 /*
- * @mock data 充值记录 
+ * @mock data 充值记录
  * serialNum 流水号, money 金额, time 时间, payPerson 充值人, status 充值状态
  */
 
@@ -16,7 +16,7 @@ let topupData = Mock.mock({
       'money|0-9999': 1,
       time: '@datetime',
       payPerson: '@cname',
-      'status|0-1': 1
+      'status|0-1': 1,
     },
   ],
 })

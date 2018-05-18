@@ -10,28 +10,27 @@ import { Link } from 'dva/router'
 const confirm = Modal.confirm
 
 const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
-
   const columns = [{
-      title: '主体',
-      dataIndex: 'subject',
-      key: 'subject'
-    },{
-        title: '上架数',
-        dataIndex: 'storesNum',
-        key: 'normalstoresNum'
-      }, {
-        title: '签收数',
-        dataIndex: 'signNum',
-        key: 'normalsignNum'
-      }, {
-        title: '退回数',
-        dataIndex: 'backNum',
-        key: 'normalbackNum'
-      }, {
-        title: '问题件数',
-        dataIndex: 'errNum',
-        key: 'normalerrNum'
-      }]
+    title: '主体',
+    dataIndex: 'name',
+    key: 'subject',
+  }, {
+    title: '上架数',
+    dataIndex: 'numberOfShelves',
+    key: 'normalstoresNum',
+  }, {
+    title: '签收数',
+    dataIndex: 'numberOfReceipts',
+    key: 'normalsignNum',
+  }, {
+    title: '退回数',
+    dataIndex: 'numberOfItemsReturned',
+    key: 'normalbackNum',
+  }, {
+    title: '问题件数',
+    dataIndex: 'numberOfQuestions',
+    key: 'normalerrNum',
+  }]
 
   const getBodyWrapperProps = {
     page: location.query.page,
@@ -46,7 +45,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
-        scroll={{ x: 1250 }}
+        scroll={{ x: 767 }}
         columns={columns}
         simple
         rowKey={record => record.id}

@@ -1,7 +1,7 @@
-import { query, logout } from '../services/app'
+// import { query, logout } from '../services/app'
 import { routerRedux } from 'dva/router'
-import { parse } from 'qs'
-import { config } from '../utils'
+// import { parse } from 'qs'
+import { config, storage } from '../utils'
 const { prefix } = config
 
 export default {
@@ -32,19 +32,23 @@ export default {
 
     *query ({
       payload,
-    }, { call, put }) {
-      const data = yield call(query, parse(payload))
-      if (data.success && data.user) {
+    }, { put }) {
+      const token = storage({ key: 'token' })
+      // let pathname = location.hash.slice(1).split('?')[0]
+      let pathname = location.pathname
+      if (token && token.length > 0) {
+        let user = storage({ key: 'user' })
+        user = typeof user === 'string' && JSON.parse(user)
         yield put({
           type: 'querySuccess',
-          payload: data.user,
+          payload: user,
         })
-        if (location.pathname === '/login') {
+        if (pathname === '/login') {
           yield put(routerRedux.push('/dashboard'))
         }
       } else {
-        if (config.openPages && config.openPages.indexOf(location.pathname) < 0) {
-          let from = location.pathname
+        if (config.openPages && config.openPages.indexOf(pathname) < 0) {
+          let from = pathname
           window.location = `${location.origin}/login?from=${from}`
         }
       }
@@ -52,13 +56,9 @@ export default {
 
     *logout ({
       payload,
-    }, { call, put }) {
-      const data = yield call(logout, parse(payload))
-      if (data.success) {
-        yield put({ type: 'query' })
-      } else {
-        throw (data)
-      }
+    }, { put }) {
+      storage({ type: 'clear' })
+      yield put({ type: 'query' })
     },
 
     *changeNavbar ({

@@ -26,7 +26,7 @@ const Normal = ({ location, dispatch, normal, loading }) => {
           pageSize: page.pageSize,
         },
       }))
-    }
+    },
   }
 
   const filterProps = {

@@ -26,34 +26,34 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '主体',
-      dataIndex: 'subject',
-      key: 'subject'
-    },{
-        title: '派送费',
-        dataIndex: 'deliveryCharges',
-        key: 'deliveryCharges',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '寄件费',
-        dataIndex: 'SendCharges',
-        key: 'SendCharges',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '到付',
-        dataIndex: 'collectCharges',
-        key: 'collectCharges',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '代收',
-        dataIndex: 'collection',
-        key: 'collection',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '其他',
-        dataIndex: 'others',
-        key: 'incomeothers',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, 
+      dataIndex: 'name',
+      key: 'subject',
+    }, {
+      title: '派送费',
+      dataIndex: 'deliveryAmount',
+      key: 'deliveryCharges',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '寄件费',
+      dataIndex: 'sendTheAmount',
+      key: 'SendCharges',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '到付',
+      dataIndex: 'toPay',
+      key: 'collectCharges',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '代收',
+      dataIndex: 'collection',
+      key: 'collection',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '其他',
+      dataIndex: 'otheramount',
+      key: 'incomeothers',
+      render: (text) => <span>{`￥${text}`}</span>,
+    },
 //    {
 //    title: '余额',
 //    dataIndex: 'balance',
@@ -75,7 +75,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
-        scroll={{ x: 1250 }}
+        scroll={{ x: 767 }}
         columns={columns}
         simple
         rowKey={record => record.id}

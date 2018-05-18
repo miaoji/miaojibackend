@@ -1,51 +1,72 @@
-import pathToRegexp from 'path-to-regexp'
-import { query } from '../../services/storeuser'
+import modelExtend from 'dva-model-extend'
+import { query } from '../../services/store/storeUserDetail'
+import { pageModel } from '../common'
+import { time } from '../../utils'
 
-export default {
-
+export default modelExtend(pageModel, {
   namespace: 'storeUserDetail',
 
   state: {
-    data: {},
+    currentItem: {},
+    modalVisible: false,
+    modalType: 'create',
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
-      history.listen(() => {
-        const match = pathToRegexp('/storeuser/:id').exec(location.pathname)
-        if (match) {
-          dispatch({ type: 'query', payload: { id: match[1] } })
+    setup({ dispatch, history }) {
+      history.listen(location => {
+        if (location.pathname === '/storeUserDetail') {
+          dispatch({
+            type: 'query',
+            payload: location.query,
+          })
         }
       })
     },
   },
 
   effects: {
-    *query ({
-      payload,
-    }, { call, put }) {
-      const data = yield call(query, payload)
-      const { success, message, status, ...other } = data
-      if (success) {
+
+    *query({ payload = {} }, { call, put }) {
+      let newpayload = {}
+      if (!payload.startTime) {
+        const times = time.yesterTime()
+        newpayload = { ...times, ...payload }
+      } else {
+        newpayload = { ...payload }
+      }
+      // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
+      const data = yield call(query, { ...newpayload, download: 0 })
+      if (data.obj) {
         yield put({
           type: 'querySuccess',
           payload: {
-            data: other,
+            list: data.obj,
+            pagination: {
+              current: Number(payload.page) || 1,
+              pageSize: Number(payload.pageSize) || 10,
+              total: data.total,
+            },
           },
         })
-      } else {
-        throw data
       }
     },
+
   },
 
   reducers: {
-    querySuccess (state, { payload }) {
-      const { data } = payload
-      return {
-        ...state,
-        data,
-      }
+
+    setSiteName(state, { payload }) {
+      return { ...state, ...payload }
     },
+
+    showModal(state, { payload }) {
+      return { ...state, ...payload, modalVisible: true }
+    },
+
+    hideModal(state) {
+      return { ...state, modalVisible: false }
+    },
+
   },
-}
+})

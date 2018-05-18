@@ -26,29 +26,31 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
   const columns = [
     {
       title: '主体',
-      dataIndex: 'subject',
-      key: 'subject'
-    },{
-        title: '通讯费',
-        dataIndex: 'communicateCharges',
-        key: 'communicateCharges',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '提现费用',
-        dataIndex: 'withdrawCharges',
-        key: 'withdrawCharges',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-        title: '其他',
-        dataIndex: 'others',
-        key: 'expendothers',
-        render: (text) => <span>{'￥' + text}</span>,
-      }, {
-      title: '余额',
-      dataIndex: 'balance',
-      key: 'balance',
-      render: (text) => <span>{'￥' + text}</span>,
-    }
+      dataIndex: 'name',
+      key: 'name',
+      render: (text) => <span>{text || '空'}</span>,
+    }, {
+      title: '通讯费',
+      dataIndex: 'communicate',
+      key: 'communicate',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '提现费用',
+      dataIndex: 'withdrawalAmount',
+      key: 'withdrawalAmount',
+      render: (text) => <span>{`￥${text}`}</span>,
+    }, {
+      title: '其他',
+      dataIndex: 'otheramount',
+      key: 'otheramount',
+      render: (text) => <span>{`￥${text}`}</span>,
+    },
+    //   {
+    //   title: '余额',
+    //   dataIndex: 'balance',
+    //   key: 'balance',
+    //   render: (text) => <span></span>,
+    // }
   ]
 
   const getBodyWrapperProps = {
@@ -64,7 +66,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
-        scroll={{ x: 1250 }}
+        scroll={{ x: 767 }}
         columns={columns}
         simple
         rowKey={record => record.id}

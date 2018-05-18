@@ -1,86 +1,65 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Table } from 'antd'
 import styles from './List.less'
 import classnames from 'classnames'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
 import { Link } from 'dva/router'
+import { time } from '../../utils'
 
-const confirm = Modal.confirm
 
-const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      onEditItem(record)
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要删除这一条记录吗?',
-        onOk () {
-          onDeleteItem(record.id)
-        },
-      })
-    }
-  }
-
+const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
   const columns = [
     {
+      title: '站点ID',
+      dataIndex: 'id',
+      key: 'id',
+      render: (text) => {
+        return <span>{text}</span>
+      }
+    }, {
       title: '帐号',
       dataIndex: 'mobile',
       key: 'mobile',
-      render: (text, record) => {
-        const str = text.toString()
-        let encryptNum = str.substr(0, 5) + '****' + str.substr(9, 10)
-        return <Link to={`storeuser/${record.id}`}>{encryptNum}</Link>
-      }
-    }, {
-      title: '经营者姓名',
-      dataIndex: 'null',
-      key: 'null',
     }, {
       title: '店铺名称',
       dataIndex: 'name',
       key: 'name',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      }
     }, {
       title: '店铺级别',
       dataIndex: 'type',
       key: 'type',
-      render: (text) => <span>{text === 0
-            ? '主张号'
-            : '子帐号'}</span>,
+      render: (text) => <span>{text === '0'
+        ? '主帐号'
+        : '子帐号'}</span>,
     }, {
       title: '状态',
       dataIndex: 'isdelete',
       key: 'isdelete',
       render: (text) => <span>{text === 0
-            ? '禁用'
-            : '启用'}</span>,
+        ? '禁用'
+        : '启用'}</span>,
     }, {
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',
-    }, {
-      title: '是否黑名单',
-      dataIndex: 'blacklist',
-      key: 'blacklist',
-      filters: [
-        { text: '否', value: '0' },
-        { text: '是', value: '1' }
-      ],
-      onFilter: (value, record) => Number(record.blacklist) === Number(value),
       render: (text) => {
-        const realtext = {
-          '0': '否',
-          '1': '是',
-        }
-        return <span>{realtext[text]}</span>
-      }
-    }, {
+        const createtime = time.formatTime(text)
+        return <span>{createtime}</span>
+      },
+    },
+    {
       title: '操作',
       key: 'operation',
-      width: 100,
+      width: 150,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
+        if (filter.startTime) {
+          return <Link to={`/storeUserDetail?idUser=${record.id}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+        }
+        return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看操作人详情</Link>
       },
     },
   ]
@@ -98,7 +77,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         {...tableProps}
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
-        scroll={{ x: 1250 }}
+        scroll={{ x: 767 }}
         columns={columns}
         simple
         rowKey={record => record.id}
@@ -113,6 +92,8 @@ List.propTypes = {
   onEditItem: PropTypes.func,
   isMotion: PropTypes.bool,
   location: PropTypes.object,
+  toStoreorderinfo: PropTypes.func,
+  filter: PropTypes.object
 }
 
 export default List
