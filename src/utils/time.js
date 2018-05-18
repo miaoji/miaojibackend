@@ -1,5 +1,5 @@
 // 传入一个时间戳,转换成常见的时间格式
-import { message } from 'antd'
+// import { message } from 'antd'
 
 export const formatTime = function (val) {
   if (val == null || val === '' || val.length !== 13) {
@@ -53,11 +53,12 @@ export const repairTime = function (val) {
 
 export function yesterTime() {
   let dayCount = 1
-  if (process.env.NODE_ENV !== 'development') {
+  const test = false
+  if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
-    if (window.location.search === '') {
-      message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
-    }
+    // if (window.location.search === '') {
+    //   message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
+    // }
     const date = new Date()
     const h = date.getHours()
     const m = date.getMinutes()
