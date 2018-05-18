@@ -2,7 +2,7 @@ import React from 'react'
 import BraftEditor from 'braft-editor'
 import PropTypes from 'prop-types'
 import 'braft-editor/dist/braft.css'
-import { Form, Input, Modal, notification, Select, Row, Col, message } from 'antd'
+import { Form, Input, Modal, notification, Select, Row, Col } from 'antd'
 import { upload } from '../../services/publish'
 
 const confirm = Modal.confirm
@@ -39,7 +39,6 @@ class List extends React.Component {
   }
 
   handleNotifyChange = (notify) => {
-    console.log('notify', notify)
     this.setState({ notify })
   }
 
@@ -107,14 +106,15 @@ class List extends React.Component {
             })
             return false
           }
-          let fileReader = new FileReader()
-          fileReader.readAsDataURL(param.file)
-          console.log('param.file', param.file.size)
           if (param.file.size > 3145728) {
-            message.success('上传的图片不能大于3M')
+            notification.warning({
+              message: '图片上传失败',
+              description: '上传的图片最大为3M'
+            })
             return false
           }
-          console.log('fileReader', fileReader)
+          let fileReader = new FileReader()
+          fileReader.readAsDataURL(param.file)
           // 将转成base64的图片上传至服务器
           fileReader.onload = async function (e) {
             let base64Code = e.currentTarget.result
