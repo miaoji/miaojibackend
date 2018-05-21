@@ -1,9 +1,19 @@
-import { request, config } from '../utils'
+import { request, config, pageParams } from '../utils'
+
 const { qr } = config.api
 
-export async function query (params) {
+export async function querydetail (params) {
   return request({
     url: qr.show,
+    method: 'get',
+    data: params,
+  })
+}
+
+export async function query (params) {
+  params = pageParams(params)
+  return request({
+    url: qr.all,
     method: 'get',
     data: params,
   })

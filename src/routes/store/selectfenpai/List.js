@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
+import classnames from 'classnames'
 import { Link } from 'dva/router'
 import styles from './List.less'
-import classnames from 'classnames'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
@@ -14,21 +14,21 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'idUser',
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      }
+      },
     }, {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      }
+      },
     }, {
       title: '分派数量',
       dataIndex: 'fptotal',
       key: 'fptotal',
       render: (text) => {
         return <span>{text || 0}</span>
-      }
+      },
     }, {
       title: '操作',
       dataIndex: 'option',
@@ -39,15 +39,15 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
           return <Link to={`/selectpjjeDetails?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人派件金额</Link>
         }
         return <Link to={`/selectpjjeDetails?idUser=${record.idUser}`}>查看操作人派件金额</Link>
-      }
-    }
+      },
+    },
   ]
 
   const getBodyWrapperProps = {
     page: location.query.page,
     rows: tableProps.pagination.rows,
   }
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>

@@ -1,13 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
-import city from '../../utils/city'
-import { time } from '../../utils'
+import { Form, Button, Row, Col, Input } from 'antd'
 
 const Search = Input.Search
-const { RangePicker } = DatePicker
 
 const ColProps = {
   xs: 24,
@@ -34,13 +30,11 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime) {
-      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
-      const repairTime = time.repairTime(fields.createTime)
-      fields.startTime = repairTime.startTime
-      fields.endTime = repairTime.endTime
+    if (createTime && createTime.length && createTime[0] && createTime[1]) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    } else {
+      delete fields.createTime
     }
-    delete fields.createTime
     return fields
   }
 
@@ -65,13 +59,7 @@ const Filter = ({
     handleSubmit()
   }
 
-  const handleChange = (key, values) => {
-    let fields = getFieldsValue()
-    fields[key] = values
-    fields = handleFields(fields)
-    onFilterChange(fields)
-  }
-  const { name, address } = filter
+  const { name } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {

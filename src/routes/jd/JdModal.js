@@ -2,14 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Form,
-  Input,
   InputNumber,
   Modal,
-  Select,
 } from 'antd'
 
 const FormItem = Form.Item
-const { TextArea } = Input
 
 const formItemLayout = {
   labelCol: {
@@ -50,8 +47,6 @@ const modal = ({
     onOk: handleOk,
   }
 
-  const paramDisabled = type === 'update'
-
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
@@ -64,7 +59,7 @@ const modal = ({
                 message: '请设置您需要设置的京东分配比例!',
               },
             ],
-          })(<InputNumber style={{ width: 286 }} placeholder="请设置您需要设置的京东分配比例"/>)}
+          })(<InputNumber style={{ width: 286 }} placeholder="请设置您需要设置的京东分配比例" />)}
         </FormItem>
       </Form>
     </Modal>

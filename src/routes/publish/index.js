@@ -16,9 +16,9 @@ const Publish = ({ location, dispatch, publish, loading }) => {
     onpublish(data) {
       dispatch({
         type: 'publish/create',
-        payload: data
+        payload: data,
       })
-    }
+    },
   }
 
   return (

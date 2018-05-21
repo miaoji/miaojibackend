@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
-import styles from './List.less'
+import { Table, Modal } from 'antd'
 import classnames from 'classnames'
+import moment from 'moment'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -26,11 +26,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       default:
         break
     }
-  }
-
-  const copyUrl = (record, e) => {
-    const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
-    window.prompt('请使用Ctrl+C复制到剪切板', href)
   }
 
   const columns = [
@@ -55,7 +50,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const createTime = time.formatTime(text.toString())
+        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
         return <span>{createTime}</span>
       },
     }, {
@@ -73,7 +68,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     rows: tableProps.pagination.rows,
   }
 
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>

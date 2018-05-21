@@ -1,35 +1,12 @@
-import { request, config } from '../utils'
-const { api } = config
+import { request, api, pageParams } from 'utils'
+
 const { wxuser } = api
 
 export async function query (params) {
+  params = pageParams(params)
   return request({
-    url: wxuser,
+    url: wxuser.list,
     method: 'get',
-    data: params,
-  })
-}
-
-export async function create (params) {
-  return request({
-    url: wxuser.replace('/:id', ''),
-    method: 'post',
-    data: params,
-  })
-}
-
-export async function remove (params) {
-  return request({
-    url: wxuser,
-    method: 'delete',
-    data: params,
-  })
-}
-
-export async function update (params) {
-  return request({
-    url: wxuser,
-    method: 'patch',
     data: params,
   })
 }

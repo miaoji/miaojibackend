@@ -16,15 +16,15 @@ const User = ({ location, dispatch, user, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['user/update'],
-    title: `${modalType === 'create' ? '创建用户' : '更新用户'}`,
+    title: `${modalType === 'create' ? 'Create User' : 'Update User'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `user/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'user/hideModal',
       })
@@ -37,7 +37,7 @@ const User = ({ location, dispatch, user, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -48,13 +48,13 @@ const User = ({ location, dispatch, user, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'user/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'user/showModal',
         payload: {
@@ -81,7 +81,7 @@ const User = ({ location, dispatch, user, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -91,7 +91,7 @@ const User = ({ location, dispatch, user, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/user',
         query: {
@@ -102,7 +102,7 @@ const User = ({ location, dispatch, user, loading }) => {
         pathname: '/user',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'user/showModal',
         payload: {
@@ -110,7 +110,7 @@ const User = ({ location, dispatch, user, loading }) => {
         },
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'user/switchIsMotion' })
     },
   }
@@ -128,15 +128,15 @@ const User = ({ location, dispatch, user, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`Selected ${selectedRowKeys.length} items `}
-               <Popconfirm title={'确定要删除吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
+        selectedRowKeys.length > 0 &&
+        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+          <Col>
+            {`Selected ${selectedRowKeys.length} items `}
+            <Popconfirm title={'Are you sure delete these items?'} placement="left" onConfirm={handleDeleteItems}>
+              <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
+            </Popconfirm>
+          </Col>
+        </Row>
       }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
@@ -145,10 +145,10 @@ const User = ({ location, dispatch, user, loading }) => {
 }
 
 User.propTypes = {
-  user: PropTypes.object,
-  location: PropTypes.object,
-  dispatch: PropTypes.func,
-  loading: PropTypes.object,
+  user: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.object.isRequired,
 }
 
 export default connect(({ user, loading }) => ({ user, loading }))(User)

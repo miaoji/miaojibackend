@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input, Select
+  Form, Button, Row, Col, Input, Select,
 } from 'antd'
 import { DateRange } from '../../../components'
-import { handleFields, yesterTime } from '../../../utils'
+import { handleFields, defaultTime } from '../../../utils'
+
 const { Search } = Input
 const { Option } = Select
 const ColProps = {
@@ -30,6 +31,7 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
+  filter = defaultTime(filter)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -78,22 +80,11 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { startTime, endTime, brand, payType } = filter
+  let { brand, payType, createTime } = filter
 
-  if (!startTime) startTime = yesterTime().startTime
-  if (!endTime) endTime = yesterTime().endTime
-
-  let initialCreateTime = []
-  if (startTime) {
-    initialCreateTime[0] = String(startTime)
-  }
-  if (endTime) {
-    initialCreateTime[1] = String(endTime)
-  }
   const payTypeChange = (key) => {
     handleChange('payType', key)
   }
-
 
   return (
     <Row gutter={24}>
@@ -115,7 +106,7 @@ const Filter = ({
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+        {getFieldDecorator('createTime', { initialValue: createTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
@@ -137,7 +128,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  handleDownLoad: PropTypes.func
+  handleDownLoad: PropTypes.func,
 }
 
 export default Form.create()(Filter)

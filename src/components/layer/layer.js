@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import styles from './layer.less'
+
 const { info, success, error, warning, confirm } = Modal
 
 const layer = {
@@ -15,25 +16,27 @@ const layer = {
   confirm,
 }
 
-layer.close = (index) => new Promise((resolve, reject) => {
-  const { prefixCls } = layer
-  let div = document.getElementById(`${prefixCls}-reference-${index}`)
-  if (index === undefined) {
-    const references = document.querySelectorAll(`.${prefixCls}-reference`)
-    div = references[references.length - 1]
-  }
-  if (!div) {
-    message.error('关闭失败，未找到Dom')
-    return
-  }
-  const unmountResult = ReactDOM.unmountComponentAtNode(div)
-  if (unmountResult && div.parentNode) {
-    div.parentNode.removeChild(div)
-    resolve(index)
-  } else {
-    reject(index)
-  }
-})
+layer.close = (index) => {
+  return new Promise((resolve, reject) => {
+    const { prefixCls } = layer
+    let div = document.getElementById(`${prefixCls}-reference-${index}`)
+    if (index === undefined) {
+      const references = document.querySelectorAll(`.${prefixCls}-reference`)
+      div = references[references.length - 1]
+    }
+    if (!div) {
+      message.error('关闭失败，未找到Dom')
+      return
+    }
+    const unmountResult = ReactDOM.unmountComponentAtNode(div)
+    if (unmountResult && div.parentNode) {
+      div.parentNode.removeChild(div)
+      resolve(index)
+    } else {
+      reject(index)
+    }
+  })
+}
 
 layer.closeAll = () => {
   const { prefixCls } = layer

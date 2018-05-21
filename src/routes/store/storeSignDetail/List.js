@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import styles from './List.less'
 import classnames from 'classnames'
+import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
@@ -13,29 +13,29 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'brand',
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      }
+      },
     }, {
       title: '单号',
       dataIndex: 'orderSn',
       key: 'orderSn',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
-      }
+      },
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
-      }
-    }
+      },
+    },
   ]
 
   const getBodyWrapperProps = {
     page: location.query.page,
     rows: tableProps.pagination.rows,
   }
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>

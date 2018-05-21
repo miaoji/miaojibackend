@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
+import { FilterItem, DateRange } from 'components'
+import { Form, Button, Row, Col,
+  // DatePicker,
+  Input, Cascader, Switch } from 'antd'
 import city from '../../utils/city'
-import { time } from '../../utils'
 
 const Search = Input.Search
-const { RangePicker } = DatePicker
+// const { RangePicker } = DatePicker
 
 const ColProps = {
   xs: 24,
@@ -36,13 +37,11 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length) {
-      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
-      const repairTime = time.repairTime(fields.createTime)
-      fields.startTime = repairTime.startTime
-      fields.endTime = repairTime.endTime
+    if (createTime && createTime.length && createTime[0] && createTime[1]) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    } else {
+      delete fields.createTime
     }
-    delete fields.createTime
     return fields
   }
 
@@ -85,34 +84,35 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按名称搜索" size="large" onSearch={handleSubmit} />)}
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按微信名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
         {getFieldDecorator('address', { initialValue: address })(
           <Cascader
             size="large"
             style={{ width: '100%' }}
             options={city}
-            placeholder="请挑选地址"
+            placeholder="按地址搜索"
             onChange={handleChange.bind(null, 'address')}
           />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
-        <FilterItem label="创建时间">
+      <Col {...ColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
+        <FilterItem label="">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            // <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}
         </FilterItem>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            <Button size="large" onClick={handleReset}>重置</Button>
           </div>
           <div>
-            <Switch style={{ marginRight: 16 }} size="large" defaultChecked={isMotion} onChange={switchIsMotion} checkedChildren={'移动'} unCheckedChildren={'移动'} />
+            <Switch style={{ marginRight: 16 }} size="large" defaultChecked={isMotion} onChange={switchIsMotion} checkedChildren={'动态'} unCheckedChildren={'Motion'} />
             <Button size="large" type="ghost" onClick={onAdd}>创建</Button>
           </div>
         </div>

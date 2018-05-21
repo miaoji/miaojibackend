@@ -1,6 +1,7 @@
 const qs = require('qs')
 const Mock = require('mockjs')
 const config = require('../utils/config')
+
 const { apiPrefix } = config
 
 let usersListData = Mock.mock({
@@ -15,23 +16,33 @@ let usersListData = Mock.mock({
       isMale: '@boolean',
       email: '@email',
       createTime: '@datetime',
-      avatar () {
+      avatar() {
         return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))
       },
     },
   ],
 })
 
+
 let database = usersListData.data
 
+const EnumRoleType = {
+  ADMIN: 'admin',
+  DEFAULT: 'guest',
+  DEVELOPER: 'developer',
+}
+
 const userPermission = {
-  DEFAULT: [
-    'dashboard', 'chart',
-  ],
-  ADMIN: [
-    'dashboard', 'users', 'UIElement', 'UIElementIconfont', 'chart',
-  ],
-  DEVELOPER: ['dashboard', 'users', 'UIElement', 'UIElementIconfont', 'chart'],
+  DEFAULT: {
+    visit: ['1', '2', '21', '7', '5', '51', '52', '53'],
+    role: EnumRoleType.DEFAULT,
+  },
+  ADMIN: {
+    role: EnumRoleType.ADMIN,
+  },
+  DEVELOPER: {
+    role: EnumRoleType.DEVELOPER,
+  },
 }
 
 const adminUsers = [
@@ -79,9 +90,9 @@ const NOTFOUND = {
 
 module.exports = {
 
-  [`POST ${apiPrefix}/user/login`] (req, res) {
+  [`POST ${apiPrefix}/user/login`](req, res) {
     const { username, password } = req.body
-    const user = adminUsers.filter((item) => item.username === username)
+    const user = adminUsers.filter((item) => { return item.username === username })
 
     if (user.length > 0 && user[0].password === password) {
       const now = new Date()
@@ -96,12 +107,12 @@ module.exports = {
     }
   },
 
-  [`GET ${apiPrefix}/user/logout`] (req, res) {
+  [`GET ${apiPrefix}/user/logout`](req, res) {
     res.clearCookie('token')
     res.status(200).end()
   },
 
-  [`GET ${apiPrefix}/user`] (req, res) {
+  [`GET ${apiPrefix}/user`](req, res) {
     const cookie = req.headers.cookie || ''
     const cookies = qs.parse(cookie.replace(/\s/g, ''), { delimiter: ';' })
     const response = {}
@@ -126,7 +137,7 @@ module.exports = {
     res.json(response)
   },
 
-  [`GET ${apiPrefix}/users`] (req, res) {
+  [`GET ${apiPrefix}/users`](req, res) {
     const { query } = req
     let { pageSize, page, ...other } = query
     pageSize = pageSize || 10
@@ -162,13 +173,14 @@ module.exports = {
     })
   },
 
-  [`DELETE ${apiPrefix}/users`] (req, res) {
+  [`DELETE ${apiPrefix}/users`](req, res) {
     const { ids } = req.body
-    database = database.filter((item) => !ids.some(_ => _ === item.id))
+    database = database.filter((item) => { return !ids.some(_ => _ === item.id) })
     res.status(204).end()
   },
 
-  [`POST ${apiPrefix}/user`] (req, res) {
+
+  [`POST ${apiPrefix}/user`](req, res) {
     const newData = req.body
     newData.createTime = Mock.mock('@now')
     newData.avatar = newData.avatar || Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', newData.nickName.substr(0, 1))
@@ -179,7 +191,7 @@ module.exports = {
     res.status(200).end()
   },
 
-  [`GET ${apiPrefix}/user/:id`] (req, res) {
+  [`GET ${apiPrefix}/user/:id`](req, res) {
     const { id } = req.params
     const data = queryArray(database, id, 'id')
     if (data) {
@@ -189,18 +201,18 @@ module.exports = {
     }
   },
 
-  [`DELETE ${apiPrefix}/user/:id`] (req, res) {
+  [`DELETE ${apiPrefix}/user/:id`](req, res) {
     const { id } = req.params
     const data = queryArray(database, id, 'id')
     if (data) {
-      database = database.filter((item) => item.id !== id)
+      database = database.filter((item) => { return item.id !== id })
       res.status(204).end()
     } else {
       res.status(404).json(NOTFOUND)
     }
   },
 
-  [`PATCH ${apiPrefix}/user/:id`] (req, res) {
+  [`PATCH ${apiPrefix}/user/:id`](req, res) {
     const { id } = req.params
     const editItem = req.body
     let isExist = false

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { Table } from 'antd'
 import styles from './List.less'
-import classnames from 'classnames'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
@@ -13,14 +13,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'brand',
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      }
+      },
     }, {
       title: '单号',
       dataIndex: 'orderSn',
       key: 'orderSn',
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      }
+      },
     }, {
       title: '快递状态',
       dataIndex: 'state',
@@ -30,17 +30,17 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
           1: '点单',
           101: '上架',
           103: '分派',
-          301: '签收'
+          301: '签收',
         }
         return <span>{replText[text]}</span>
-      }
+      },
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      }
+      },
     },
   ]
 
@@ -48,7 +48,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
     page: location.query.page,
     rows: tableProps.pagination.rows,
   }
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>

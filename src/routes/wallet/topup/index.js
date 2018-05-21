@@ -7,7 +7,7 @@ import List from './List'
 import Filter from './Filter'
 
 const TopUp = ({ location, dispatch, topup, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = topup
+  const { list, pagination, isMotion, selectedRowKeys } = topup
   const { pageSize } = pagination
 
   const listProps = {
@@ -16,7 +16,7 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -27,19 +27,19 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
+    onMarkItem(id) {
       dispatch({
         type: 'topup/markBlackList',
         payload: id,
       })
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'topup/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'topup/showModal',
         payload: {
@@ -55,7 +55,7 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -65,7 +65,7 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/topup',
         query: {
@@ -76,7 +76,7 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
         pathname: '/topup',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'topup/showModal',
         payload: {
@@ -84,7 +84,7 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
         },
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'topup/switchIsMotion' })
     },
   }
@@ -102,15 +102,15 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
+        selectedRowKeys.length > 0 &&
+        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+          <Col>
+            {`选中 ${selectedRowKeys.length} 个微信用户 `}
+            <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
+              <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
+            </Popconfirm>
+          </Col>
+        </Row>
       }
       <List {...listProps} />
     </div>

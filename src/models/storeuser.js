@@ -1,27 +1,25 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update } from '../services/storeuser'
-import * as storeusersService from '../services/storeusers'
-import { pageModel } from './common'
-import { config } from '../utils'
+import { config, initialCreateTime } from 'utils'
+import { query } from '../services/storeuser'
+import { pageModel } from './system/common'
 
-const { query } = storeusersService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
-  namespace: 'storeUser',
+  namespace: 'storeuser',
 
   state: {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    isMotion: false,
+    columnslist: [],
+    isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
   },
 
   subscriptions: {
-
-    setup ({ dispatch, history }) {
-      history.listen(location => {
+    setup({ dispatch, history }) {
+      history.listen((location) => {
         if (location.pathname === '/storeuser') {
           dispatch({
             type: 'query',
@@ -34,8 +32,9 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
-      let data = yield call(query, payload)
+    *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
+      const data = yield call(query, payload)
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -48,62 +47,19 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      } else {
-        throw data.mess || '网络不行了!!!'
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
-      const { selectedRowKeys } = yield select(_ => _.user)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(storeusersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'markBlackList' ({ payload }, { call, put }) {
-      const newUser = { status: 2, id: payload }
-      const data = yield call(update, newUser)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ storeUser }) => storeUser.currentItem.id)
-      const newUser = { ...payload, id }
-      const data = yield call(update, newUser)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data
+    * queryColumnslist({ payload = {} }, { call, put }) {
+      // const list = yield select(({ storeuser }) => storeuser.list)
+      const data = yield call(query, payload)
+      if (data.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            columnslist: data.obj,
+          },
+        })
       }
     },
 
@@ -111,15 +67,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 
-    switchIsMotion (state) {
+    switchIsMotion(state) {
       localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
       return { ...state, isMotion: !state.isMotion }
     },

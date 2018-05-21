@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
+import { Tabs } from 'antd'
 // import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
-import { Tabs } from 'antd'
 import { Page } from '../../../components'
 
 const { TabPane } = Tabs
@@ -105,7 +105,7 @@ const Orderbyuser = ({ location, dispatch, orderbyuser, loading }) => {
     onDownLoad() {
       dispatch({
         type: 'orderbyuser/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
 import { Link } from 'dva/router'
-import styles from './List.less'
 import classnames from 'classnames'
+import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import SonTable from './SonTable'
 
@@ -18,28 +18,28 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, ...tablePro
           return <Link target={'_blank'} to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text}</Link>
         }
         return <Link target={'_blank'} to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>{text}</Link>
-      }
+      },
     }, {
       title: '点单数量',
       dataIndex: 'ddtotal',
       key: 'ddtotal',
       render: (text) => {
         return <span>{text || 0}</span>
-      }
+      },
     }, {
       title: '上架数量',
       dataIndex: 'sjtotal',
       key: 'sjtotal',
       render: (text) => {
         return <span>{text || 0}</span>
-      }
+      },
     }, {
       title: '签收数量',
       dataIndex: 'qstotal',
       key: 'qstotal',
       render: (text) => {
         return <span>{text || 0}</span>
-      }
+      },
     }, {
       title: '操作',
       dataIndex: 'option',
@@ -53,15 +53,15 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, ...tablePro
           return <Link target={'_blank'} to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
         }
         return <Link target={'_blank'} to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
-      }
-    }
+      },
+    },
   ]
 
   const getBodyWrapperProps = {
     page: location.query.page,
     rows: tableProps.pagination.rows,
   }
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>

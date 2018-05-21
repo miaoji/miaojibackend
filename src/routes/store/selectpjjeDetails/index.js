@@ -81,7 +81,7 @@ const SelectpjjeDetails = ({ location, dispatch, selectpjjeDetails, loading }) =
           ...value,
           idUser: location.query.idUser,
           page: 1,
-          pageSize: 10
+          pageSize: 10,
         },
       }))
     },
@@ -99,7 +99,7 @@ const SelectpjjeDetails = ({ location, dispatch, selectpjjeDetails, loading }) =
     onDownLoad() {
       dispatch({
         type: 'selectpjjeDetails/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

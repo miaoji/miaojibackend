@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { query } from '../../services/store/blacklistdetail'
-import { pageModel } from '../common'
-import { time } from '../../utils'
+import { pageModel } from '../system/common'
+import { time, initialCreateTime } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'blacklistdetail',
@@ -14,7 +14,7 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/blacklistdetail') {
           dispatch({
             type: 'query',
@@ -28,6 +28,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()

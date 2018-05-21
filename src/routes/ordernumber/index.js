@@ -94,7 +94,7 @@ const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
         type: 'ordernumber/showModal',
         payload: {
           modalType: 'create',
-        }
+        },
       })
       dispatch({
         type: 'ordernumber/getBrandName',

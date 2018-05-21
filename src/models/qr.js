@@ -1,10 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { create, update, remove } from '../services/qr'
-import * as bootsService from '../services/qrs'
-import { pageModel } from './common'
-
-const { query } = bootsService
+import { initialCreateTime } from 'utils'
+import { query, create, update, remove } from '../services/qr'
+import { pageModel } from './system/common'
 
 export default modelExtend(pageModel, {
   namespace: 'qr',
@@ -17,7 +15,7 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup ({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/qr') {
           dispatch({
             type: 'query',
@@ -31,6 +29,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
         yield put({
@@ -80,7 +79,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *delete ({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload })
       if (data.code === 200) {
         message.success('删除成功')

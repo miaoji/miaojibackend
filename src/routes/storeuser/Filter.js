@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Form, Button, Row, Col, Input } from 'antd'
-import { DateRange } from '../../components'
-import { time } from '../../utils'
+import { FilterItem, DateRange } from 'components'
+import { Form, Button, Row, Col, Input, Switch } from 'antd'
 
 const Search = Input.Search
 
@@ -21,6 +20,9 @@ const TwoColProps = {
 }
 
 const Filter = ({
+  onAdd,
+  isMotion,
+  switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -31,13 +33,11 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length) {
-      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
-      const repairTime = time.repairTime(fields.createTime)
-      fields.startTime = repairTime.startTime
-      fields.endTime = repairTime.endTime
+    if (createTime && createTime.length && createTime[0] && createTime[1]) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    } else {
+      delete fields.createTime
     }
-    delete fields.createTime
     return fields
   }
 
@@ -59,10 +59,6 @@ const Filter = ({
       }
     }
     setFieldsValue(fields)
-    filter.endTime = undefined
-    filter.startTime = undefined
-    filter.page = undefined
-    filter.pageSize = undefined
     handleSubmit()
   }
 
@@ -85,18 +81,24 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按姓名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
+        <FilterItem label="">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}
+        </FilterItem>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            <Button size="large" onClick={handleReset}>重置</Button>
+          </div>
+          <div>
+            <Switch style={{ marginRight: 16 }} size="large" defaultChecked={isMotion} onChange={switchIsMotion} checkedChildren={'动态'} unCheckedChildren={'Motion'} />
+            <Button size="large" type="ghost" onClick={onAdd}>创建</Button>
           </div>
         </div>
       </Col>
@@ -105,6 +107,9 @@ const Filter = ({
 }
 
 Filter.propTypes = {
+  onAdd: PropTypes.func,
+  isMotion: PropTypes.bool,
+  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,

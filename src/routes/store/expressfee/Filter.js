@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input
+  Form, Button, Row, Col, Input,
 } from 'antd'
+import moment from 'moment'
 import { DateRange } from '../../../components'
-import { handleFields, yesterTime } from '../../../utils'
+import { handleFields, defaultTime } from '../../../utils'
 
 const ColProps = {
   xs: 24,
@@ -30,6 +31,7 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
+  filter = defaultTime(filter)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -75,22 +77,19 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { startTime, endTime, name } = filter
-
-  if (!startTime) startTime = yesterTime().startTime
-  if (!endTime) endTime = yesterTime().endTime
+  let { name } = filter
 
   let initialCreateTime = []
-  if (startTime) {
-    initialCreateTime[0] = String(startTime)
+  if (filter.createTime && filter.createTime[0]) {
+    initialCreateTime[0] = moment(filter.createTime[0])
   }
-  if (endTime) {
-    initialCreateTime[1] = String(endTime)
+  if (filter.createTime && filter.createTime[1]) {
+    initialCreateTime[1] = moment(filter.createTime[1])
   }
   const nameChange = (key) => {
     handleChange('name', key.target.value)
   }
-
+  console.log('initialCreateTime', initialCreateTime)
 
   return (
     <Row gutter={24}>
@@ -124,7 +123,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  onDownLoad: PropTypes.func
+  onDownLoad: PropTypes.func,
 }
 
 export default Form.create()(Filter)

@@ -1,8 +1,11 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
-import { query, create, update, remove, showSiteName } from '../services/blacklists'
-import { pageModel } from './common'
+import { initialCreateTime } from 'utils'
+import { message, Select } from 'antd'
+import { query, create, update, remove, showSiteName } from '../services/blacklist'
+import { pageModel } from './system/common'
+
+const Option = Select
 
 export default modelExtend(pageModel, {
   namespace: 'blacklist',
@@ -15,7 +18,7 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/blacklist') {
           dispatch({
             type: 'query',
@@ -29,6 +32,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
         yield put({
@@ -78,7 +82,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete'({ payload }, { call, put }) {
+    *delete({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload, state: 2 })
       if (data.code === 200) {
         message.success('删除成功')
@@ -88,7 +92,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getSiteName({ payload }, { call, put }) {
+    *getSiteName(_, { call, put }) {
       const data = yield call(showSiteName)
       if (data.code === 200 && data.obj) {
         let children = []

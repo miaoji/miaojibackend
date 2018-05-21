@@ -1,4 +1,5 @@
 import { request, config } from '../utils'
+
 const { api } = config
 const { dashboard } = api
 
@@ -27,27 +28,27 @@ export async function query (params) {
 export async function getLineData() {
   return request({
     url: dashboard.echart,
-    method: 'post'
+    method: 'post',
   })
 }
 
 export async function weChatUser() {
   return request({
     url: dashboard.weChatUser,
-    method: 'post'
+    method: 'post',
   })
 }
 
 export async function storeTotal() {
   return request({
     url: dashboard.storeTotal,
-    method: 'post'
+    method: 'post',
   })
 }
 
 export async function income() {
   return request({
     url: dashboard.income,
-    method: 'post'
+    method: 'post',
   })
 }

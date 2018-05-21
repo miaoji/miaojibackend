@@ -9,7 +9,7 @@ module.exports = (webpackConfig) => {
     localIdentName: '[hash:base64:5]',
   }
   const cssLoaders = webpackConfig.module.loaders[3].loader.split('!')
-  webpackConfig.module.loaders[3].loader = cssLoaders.map(item => {
+  webpackConfig.module.loaders[3].loader = cssLoaders.map((item) => {
     if (item.startsWith('css')) {
       return `css?${JSON.stringify(cssLoaderOption)}`
     }
@@ -17,11 +17,21 @@ module.exports = (webpackConfig) => {
   }).join('!')
 
   // PreLoaders
-  // webpackConfig.module.preLoaders = [{
-  //   test: /\.js$/,
-  //   enforce: 'pre',
-  //   loader: 'eslint',
-  // }]
+  webpackConfig.module.preLoaders = [{
+    test: /\.js$/,
+    enforce: 'pre',
+    loader: 'eslint',
+  }]
+
+
+  // Alias
+  webpackConfig.resolve.alias = {
+    src: `${__dirname}/src`,
+    components: `${__dirname}/src/components`,
+    utils: `${__dirname}/src/utils`,
+    config: `${__dirname}/src/utils/config`,
+    enums: `${__dirname}/src/utils/enums`,
+  }
 
   return webpackConfig
 }

@@ -80,7 +80,7 @@ const Expressfee = ({ location, dispatch, expressfee, loading }) => {
         query: {
           ...value,
           page: 1,
-          pageSize: 10
+          pageSize: 10,
         },
       }))
     },
@@ -98,7 +98,7 @@ const Expressfee = ({ location, dispatch, expressfee, loading }) => {
     onDownLoad() {
       dispatch({
         type: 'expressfee/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

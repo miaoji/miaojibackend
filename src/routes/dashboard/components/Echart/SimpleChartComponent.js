@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
-import './theme/macarons.js'
 import PropTypes from 'prop-types'
+import './theme/macarons.js'
 import { time } from '../../../../utils'
 
 const SimpleChartComponent = ({ receviceData, sendData }) => {
@@ -36,11 +36,11 @@ const SimpleChartComponent = ({ receviceData, sendData }) => {
       {
         axisLabel: {
           rotate: 30,
-          interval: 0
+          interval: 0,
         },
         type: 'category',
         boundaryGap: false,
-        data: [...dataname, '']
+        data: [...dataname, ''],
       },
     ],
     yAxis: [
@@ -57,10 +57,10 @@ const SimpleChartComponent = ({ receviceData, sendData }) => {
         label: {
           normal: {
             show: true,
-            rotate: '36'
-          }
+            rotate: '36',
+          },
         },
-        data: receviceData
+        data: receviceData,
       },
       {
         name: '揽件',
@@ -70,11 +70,11 @@ const SimpleChartComponent = ({ receviceData, sendData }) => {
         label: {
           normal: {
             show: true,
-            rotate: '36'
-          }
+            rotate: '36',
+          },
         },
-        data: sendData
-      }
+        data: sendData,
+      },
     ],
   }
   return (

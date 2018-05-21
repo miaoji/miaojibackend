@@ -1,8 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
 import { query } from '../../services/store/business'
-import { pageModel } from '../common'
-import { time } from '../../utils'
+import { pageModel } from '../system/common'
+import { time, initialCreateTime } from '../../utils'
 import { query as queryOperator } from '../../services/store/operatorbyname'
 import { download } from '../../services/store/expressfeedetail'
 
@@ -16,12 +16,12 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     expandedRowKeys: [],
     sonlist: [],
-    iduser: 0
+    iduser: 0,
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/business') {
           dispatch({
             type: 'query',
@@ -35,6 +35,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()
@@ -63,7 +64,7 @@ export default modelExtend(pageModel, {
       notification.success({
         message: '准备中...',
         description: '正在为您准备资源,请稍等!!!',
-        duration: 3
+        duration: 3,
       })
       let newpayload = {}
       if (!payload.startTime) {
@@ -80,13 +81,13 @@ export default modelExtend(pageModel, {
           notification.warn({
             message: '下载失败',
             description: '请关闭浏览阻止网页弹窗的功能!!!',
-            duration: 3
+            duration: 3,
           })
         } else {
           notification.warn({
             message: '正在下载',
             description: '请等待!!!',
-            duration: 3
+            duration: 3,
           })
         }
       } else {
@@ -101,8 +102,8 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'setSiteName',
           payload: {
-            expandedRowKeys: [payload.idUser]
-          }
+            expandedRowKeys: [payload.idUser],
+          },
         })
         return
       }
@@ -123,13 +124,13 @@ export default modelExtend(pageModel, {
           payload: {
             sonlist: data.obj,
             expandedRowKeys: [payload.idUser],
-            iduser: payload.idUser
-          }
+            iduser: payload.idUser,
+          },
         })
       } else {
         message.warning('信息加载失败')
       }
-    }
+    },
 
   },
 

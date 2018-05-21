@@ -7,36 +7,35 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const StoreUser = ({ location, dispatch, storeUser, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = storeUser
+const Storeuser = ({ location, dispatch, storeuser, loading }) => {
+  const { list, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = storeuser
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['storeUser/update'],
-    title: `${modalType === 'create' ? '创建门店' : '更新门店'}`,
+    confirmLoading: loading.effects['storeuser/update'],
+    title: `${modalType === 'create' ? 'Create storeuser' : 'Update storeuser'}`,
     wrapClassName: 'vertical-center-modal',
     onOk(data) {
       dispatch({
-        type: `storeUser/${modalType}`,
+        type: `storeuser/${modalType}`,
         payload: data,
       })
     },
     onCancel() {
       dispatch({
-        type: 'storeUser/hideModal',
+        type: 'storeuser/hideModal',
       })
     },
   }
 
   const listProps = {
-    filter: {
-      ...location.query,
-    },
     dataSource: list,
-    loading: loading.effects['storeUser/query'],
+    columnslist,
+    filter: { ...location.query },
+    loading: loading.effects['storeuser/query'],
     pagination,
     location,
     isMotion,
@@ -51,35 +50,38 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         },
       }))
     },
-    onMarkItem(id) {
-      dispatch({
-        type: 'storeUser/markBlackList',
-        payload: id,
-      })
-    },
     onDeleteItem(id) {
       dispatch({
-        type: 'storeUser/delete',
+        type: 'storeuser/delete',
         payload: id,
       })
     },
     onEditItem(item) {
       dispatch({
-        type: 'storeUser/showModal',
+        type: 'storeuser/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
       })
     },
-    toStoreorderinfo(idUser) {
-      dispatch(routerRedux.push({
-        pathname: '/storeorderinfo',
-        query: {
-          ...idUser
-        },
-      }))
-    }
+    queryColumnslist() {
+      dispatch({
+        type: 'storeuser/queryColumnslist',
+      })
+    },
+    // 控制多选框的显示与隐藏
+    // rowSelection: {
+    //   selectedRowKeys,
+    //   onChange: (keys) => {
+    //     dispatch({
+    //       type: 'storeuser/updateState',
+    //       payload: {
+    //         selectedRowKeys: keys,
+    //       },
+    //     })
+    //   },
+    // },
   }
 
   const filterProps = {
@@ -99,31 +101,31 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     },
     onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/storeUser',
+        pathname: '/storeuser',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/storeUser',
+        pathname: '/storeuser',
       }))
     },
     onAdd() {
       dispatch({
-        type: 'storeUser/showModal',
+        type: 'storeuser/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion() {
-      dispatch({ type: 'storeUser/switchIsMotion' })
+      dispatch({ type: 'storeuser/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'storeUser/multiDelete',
+      type: 'storeuser/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -134,11 +136,12 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       {
-        selectedRowKeys.length > 0 && <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+        selectedRowKeys.length > 0 &&
+        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
           <Col>
-            {`选中 ${selectedRowKeys.length} 个微信用户 `}
-            <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
+            {`Selected ${selectedRowKeys.length} items `}
+            <Popconfirm title={'Are you sure delete these items?'} placement="left" onConfirm={handleDeleteItems}>
+              <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
             </Popconfirm>
           </Col>
         </Row>
@@ -149,11 +152,11 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
   )
 }
 
-StoreUser.propTypes = {
-  storeUser: PropTypes.object,
-  location: PropTypes.object,
-  dispatch: PropTypes.func,
-  loading: PropTypes.object,
+Storeuser.propTypes = {
+  storeuser: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.object.isRequired,
 }
 
-export default connect(({ storeUser, loading }) => ({ storeUser, loading }))(StoreUser)
+export default connect(({ storeuser, loading }) => ({ storeuser, loading }))(Storeuser)

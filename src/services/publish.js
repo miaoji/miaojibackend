@@ -1,20 +1,18 @@
-import { request, config } from '../utils'
-const { api } = config
-const { publish } = api
+import { request, api } from '../utils'
+
+const { articles } = api
 
 export async function upload (params) {
-  // params = pageParams(params)
   return request({
-    url: publish.upload,
+    url: articles.publish.upload,
     method: 'post',
-    data: params
+    data: params,
   })
 }
 
 export async function create (params) {
-  // params = pageParams(params)
   return request({
-    url: publish.send,
+    url: articles.publish.send,
     method: 'post',
     data: params,
   })

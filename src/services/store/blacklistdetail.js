@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../../utils'
+
 const { api } = config
 const { backlistdetail } = api
 
@@ -13,7 +14,7 @@ export async function query(params) {
     url: backlistdetail.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }

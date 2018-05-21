@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../../utils'
+
 const { api } = config
 const { operator } = api
 
@@ -15,7 +16,7 @@ export async function query (params) {
     url: operator.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }

@@ -6,6 +6,7 @@ import { Form, Input, Modal, notification, Select, Row, Col } from 'antd'
 import { upload } from '../../services/publish'
 
 const confirm = Modal.confirm
+const { Option } = Select
 const FormItem = Form.Item
 const formItemLayout = {
   labelCol: {
@@ -17,12 +18,11 @@ const formItemLayout = {
 }
 
 class List extends React.Component {
-
   state = {
     htmlContent: '',
     title: '',
     type: '0',
-    notify: '0'
+    notify: '0',
   }
 
 
@@ -62,7 +62,7 @@ class List extends React.Component {
             const title = this.state.title
             const contant = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1; user-scalable=no;"/><title>${title}</title></head><body>${htmlContent}</body></html>`
             window.open().document.write(contant)
-          }
+          },
         },
         // /*{
         //   type: 'dropdown',
@@ -86,33 +86,34 @@ class List extends React.Component {
                   contant,
                   title,
                   type: Number(_this.state.type),
-                  receiveId: _this.state.notify
+                  receiveId: _this.state.notify,
                 })
-              }
+              },
             })
-          }
-        }
+          },
+        },
       ],
       media: {
         // 图片上传功能
         async uploadFn (param) {
           if (typeof (FileReader) === 'undefined') {
             param.error({
-              msg: '上传失败'
+              msg: '上传失败',
             })
             notification.warning({
               message: '图片上传失败',
-              description: '抱歉,你的浏览器暂不支持图片上传功能,请使用谷歌浏览器,或者切换到浏览器的极速模式'
+              description: '抱歉,你的浏览器暂不支持图片上传功能,请使用谷歌浏览器,或者切换到浏览器的极速模式',
             })
             return false
           }
           if (param.file.size > 3145728) {
             notification.warning({
               message: '图片上传失败',
-              description: '上传的图片最大为3M'
+              description: '上传的图片最大为3M',
             })
             return false
           }
+          /* eslint no-undef: 'off' */
           let fileReader = new FileReader()
           fileReader.readAsDataURL(param.file)
           // 将转成base64的图片上传至服务器
@@ -123,17 +124,17 @@ class List extends React.Component {
             if (data.obj) {
               param.progress(100)
               param.success({
-                url: data.obj
+                url: data.obj,
               })
             } else {
               param.error({
-                msg: 'unable to upload.'
+                msg: 'unable to upload.',
               })
             }
           }
           return false
-        }
-      }
+        },
+      },
     }
 
     return (
@@ -168,7 +169,6 @@ class List extends React.Component {
       </div>
     )
   }
-
 }
 
 List.propTypes = {
@@ -177,7 +177,7 @@ List.propTypes = {
   location: PropTypes.object,
   form: PropTypes.object,
   onpublish: PropTypes.func,
-  typeOption: PropTypes.array
+  typeOption: PropTypes.array,
 }
 
 export default Form.create()(List)

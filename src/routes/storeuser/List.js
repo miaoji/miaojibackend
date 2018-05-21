@@ -1,14 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import styles from './List.less'
 import classnames from 'classnames'
-import AnimTableBody from '../../components/DataTable/AnimTableBody'
+import moment from 'moment'
 import { Link } from 'dva/router'
-import { time } from '../../utils'
+import styles from './List.less'
+import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-
-const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem, isMotion, location, ...tableProps }) => {
   const columns = [
     {
       title: '站点ID',
@@ -16,7 +15,7 @@ const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, lo
       key: 'id',
       render: (text) => {
         return <span>{text}</span>
-      }
+      },
     }, {
       title: '帐号',
       dataIndex: 'mobile',
@@ -27,27 +26,31 @@ const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, lo
       key: 'name',
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      }
+      },
     }, {
       title: '店铺级别',
       dataIndex: 'type',
       key: 'type',
-      render: (text) => <span>{text === '0'
-        ? '主帐号'
-        : '子帐号'}</span>,
+      render: (text) => {
+        return (<span>{text === '0'
+          ? '主帐号'
+          : '子帐号'}</span>)
+      },
     }, {
       title: '状态',
       dataIndex: 'isdelete',
       key: 'isdelete',
-      render: (text) => <span>{text === 0
-        ? '禁用'
-        : '启用'}</span>,
+      render: (text) => {
+        return (<span>{text === 0
+          ? '禁用'
+          : '启用'}</span>)
+      },
     }, {
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',
       render: (text) => {
-        const createtime = time.formatTime(text)
+        const createtime = text ? moment(text / 1).format('YYYY-MM-DD') : '未知时间'
         return <span>{createtime}</span>
       },
     },
@@ -69,15 +72,19 @@ const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, lo
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
-
+  const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const onExpandedRowsChange = () => {
+    queryColumnslist()
+  }
   return (
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
+        onExpandedRowsChange={onExpandedRowsChange}
+        expandRowByClick
+        className={classnames({ [styles.table]: true, [styles.motion]: false })}
         bordered
-        scroll={{ x: 767 }}
+        scroll={{ x: 1250 }}
         columns={columns}
         simple
         rowKey={record => record.id}
@@ -88,12 +95,13 @@ const List = ({ filter, toStoreorderinfo, onDeleteItem, onEditItem, isMotion, lo
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  isMotion: PropTypes.bool,
-  location: PropTypes.object,
-  toStoreorderinfo: PropTypes.func,
-  filter: PropTypes.object
+  onDeleteItem: PropTypes.func.isRequired,
+  onEditItem: PropTypes.func.isRequired,
+  isMotion: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  columnslist: PropTypes.array.isRequired,
+  queryColumnslist: PropTypes.func.isRequired,
+  filter: PropTypes.object,
 }
 
 export default List

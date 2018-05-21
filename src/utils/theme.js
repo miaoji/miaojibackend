@@ -10,5 +10,6 @@ module.exports = {
     borderSplit: '#f4f4f4',
     grass: '#d6fbb5',
     sky: '#c1e0fc',
+    origin: '#ff8e7b',
   },
 }

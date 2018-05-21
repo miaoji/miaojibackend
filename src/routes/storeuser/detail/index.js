@@ -25,7 +25,7 @@ const StoreUserDetail = ({ location, dispatch, storeUserDetail, loading }) => {
           realName: item.realName,
         },
       }))
-    }
+    },
   }
 
   const filterProps = {

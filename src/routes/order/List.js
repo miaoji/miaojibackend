@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import styles from './List.less'
 import classnames from 'classnames'
+import moment from 'moment'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { time } from '../../utils'
 
 const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
   const columns = [
@@ -119,7 +119,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'time',
       key: 'time',
       render: (text) => {
-        const createTime = time.formatTime(text)
+        const createTime = moment(text / 1).format('YYYY-MM-DD HH:mm:ss')
         return <span>{createTime}</span>
       },
     }, {
@@ -137,7 +137,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
     <div>

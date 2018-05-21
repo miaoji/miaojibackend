@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../../utils'
+
 const { api } = config
 const { expressfee } = api
 
@@ -12,7 +13,7 @@ export async function query (params) {
     url: expressfee.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }

@@ -99,7 +99,7 @@ const Blacklistdetail = ({ location, dispatch, blacklistdetail, loading }) => {
     onDownLoad() {
       dispatch({
         type: 'blacklistdetail/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

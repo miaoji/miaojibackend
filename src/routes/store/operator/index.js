@@ -76,8 +76,8 @@ const Operator = ({ location, dispatch, operator, loading }) => {
       dispatch({
         type: 'operator/download',
         payload: {
-          ...location.query
-        }
+          ...location.query,
+        },
       })
     },
     onFilterChange(value) {
@@ -89,7 +89,7 @@ const Operator = ({ location, dispatch, operator, loading }) => {
           idUser,
           realName,
           page: 1,
-          pageSize: 10
+          pageSize: 10,
         },
       }))
     },

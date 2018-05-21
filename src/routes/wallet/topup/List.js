@@ -1,53 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
-import styles from './List.less'
+import { Table } from 'antd'
 import classnames from 'classnames'
-import AnimTableBody from '../../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../../components'
-import { Link } from 'dva/router'
-import { time } from '../../../utils'
-
-const confirm = Modal.confirm
+import AnimTableBody from 'components/DataTable/AnimTableBody'
+import moment from 'moment'
+import styles from './List.less'
 
 const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      onEditItem(record)
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要删除这一条记录吗?',
-        onOk () {
-          onDeleteItem(record.id)
-        },
-      })
-    }
-  }
-
   const columns = [
     {
       title: '流水号',
       dataIndex: 'orderId',
       key: 'OrderId',
-      render: (text) => <span>{text || '空'}</span>,
+      render: (text) => {
+        return <span>{text || '空'}</span>
+      },
     }, {
       title: '金额',
       dataIndex: 'price',
       key: 'price',
-      render: (text) => <span>￥{text}</span>,
-    }, {
-      title: '时间',
-      dataIndex: 'createtime',
-      key: 'createtime',
       render: (text) => {
-        const createtime = time.formatTime(text)
-        return <span>{createtime}</span>
+        return <span>￥{text}</span>
       },
     }, {
       title: '充值人',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <span>{text || '空'}</span>,
+      render: (text) => {
+        return <span>{text || '空'}</span>
+      },
     }, {
       title: '充值状态',
       dataIndex: 'status',
@@ -57,9 +38,18 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
         { text: '成功', value: '1' },
       ],
       onFilter: (value, record) => Number(record.status) === Number(value),
-      render: (text) => <span>{text === 0
-            ? '失败'
-            : '成功'}</span>,
+      render: (text) => {
+        return (<span>{text === 0
+          ? '失败'
+          : '成功'}</span>)
+      },
+    }, {
+      title: '充值时间',
+      dataIndex: 'createtime',
+      key: 'createtime',
+      render: (text) => {
+        return <span>{text ? moment.unix(text / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span>
+      },
     },
   ]
 
@@ -68,7 +58,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
     <div>

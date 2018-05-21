@@ -1,15 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { time } from '../../../utils'
 import styles from './index.less'
 
-const { formatTime } = time
-const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
+const wxQrPrefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
 
 const Detail = ({ qrDetail }) => {
-  const { name, ticket, parameter, remark } = qrDetail
-  const imgSrc = wx_qr_prefix + ticket
+  const { name, ticket, remark } = qrDetail
+  const imgSrc = wxQrPrefix + ticket
 
   return (<div className="content-inner">
     <div className={styles.content}>
@@ -24,7 +22,6 @@ const Detail = ({ qrDetail }) => {
 
 Detail.propTypes = {
   qrDetail: PropTypes.object,
-  loading: PropTypes.bool,
 }
 
 export default connect(({ qrDetail, loading }) => ({ qrDetail, loading: loading.models.qrDetail }))(Detail)
