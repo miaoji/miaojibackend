@@ -1,14 +1,13 @@
 import React from 'react'
 import { DatePicker, Form, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 
 class DateRange extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      startValue: props.value[0] ? moment.unix(Math.round(props.value[0] / 1000)) : undefined,
-      endValue: props.value[1] ? moment.unix(Math.round(props.value[1] / 1000 - 86400)) : undefined,
+      startValue: props.value[0],
+      endValue: props.value[1],
       endOpen: false,
       size: props.size,
     }
@@ -79,7 +78,7 @@ class DateRange extends React.Component {
     return (
       <div>
         <Row>
-          <Col style={{ marginBottom: '14px' }} xs={{ span: 24, offset: 0 }} lg={{ span: 11 }}>
+          <Col style={{ marginBottom: '14px' }} xl={{ span: 11 }} md={{ span: 11 }} sm={{ span: 11 }}>
             <DatePicker
               disabledDate={this.disabledStartDate}
               format="YYYY-MM-DD"
@@ -92,7 +91,7 @@ class DateRange extends React.Component {
               onOpenChange={this.handleStartOpenChange}
             />
           </Col>
-          <Col style={{ marginBottom: '14px' }} xs={{ span: 24, offset: 0 }} lg={{ span: 11, offset: 2 }}>
+          <Col style={{ marginBottom: '14px' }} xl={{ span: 11, push: 1 }} md={{ span: 11, push: 2 }} sm={{ span: 11, push: 2 }}>
             <DatePicker
               disabledDate={this.disabledEndDate}
               showToday={false}
@@ -114,10 +113,8 @@ class DateRange extends React.Component {
 
 DateRange.propTypes = {
   onChange: PropTypes.func,
-  startValue: PropTypes.string,
-  endValue: PropTypes.string,
   size: PropTypes.string,
-  value: PropTypes.array
+  value: PropTypes.array,
 }
 
 export default Form.create()(DateRange)

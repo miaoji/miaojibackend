@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Tooltip } from 'antd'
 import { Link } from 'dva/router'
-import styles from './List.less'
 import classnames from 'classnames'
+import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
@@ -14,14 +14,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'idUser',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
-      }
+      },
     }, {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
-      }
+      },
     }, {
       title: '第一天签收量',
       dataIndex: 'todayqs',
@@ -39,14 +39,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
             <Link to={`/storeSignDetail?tr=1&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
           </Tooltip>
         )
-      }
+      },
     }, {
       title: '第一天签收率',
       dataIndex: 'qsPercentage',
       key: 'qsPercentage',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
-      }
+      },
     }, {
       title: '第二天签收量',
       dataIndex: 'tomorrowqs',
@@ -64,14 +64,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
             <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
           </Tooltip>
         )
-      }
+      },
     }, {
       title: '第二天签收率',
       dataIndex: 'tomorrowqsPercentage',
       key: 'tomorrowqsPercentage',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
-      }
+      },
     }, {
       title: '第三天天签收量',
       dataIndex: 'aftertomorrowqs',
@@ -89,14 +89,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
             <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
           </Tooltip>
         )
-      }
+      },
     }, {
       title: '第三天天签收率',
       dataIndex: 'afternoqsPercentage',
       key: 'afternoqsPercentage',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
-      }
+      },
     }, {
       title: '前三天未签收数',
       dataIndex: 'noSignTotal',
@@ -114,22 +114,22 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
             <Link to={`/storeSignDetail?tr=4&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
           </Tooltip>
         )
-      }
+      },
     }, {
       title: '前三未签收率',
       dataIndex: 'noqsPercentage',
       key: 'noqsPercentage',
       render: (text) => {
         return <span>{(text || text === 0) ? text : '暂无'}</span>
-      }
-    }
+      },
+    },
   ]
 
   const getBodyWrapperProps = {
     page: location.query.page,
     rows: tableProps.pagination.rows,
   }
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>

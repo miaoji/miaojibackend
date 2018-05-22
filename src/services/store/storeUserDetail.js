@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../../utils'
+
 const { api } = config
 const { storeUserDetail } = api
 
@@ -14,7 +15,7 @@ export async function query(params) {
     url: storeUserDetail.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }

@@ -118,7 +118,7 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
-  brandName: PropTypes.array
+  brandName: PropTypes.array,
 }
 
 export default Form.create()(modal)

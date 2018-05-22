@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../utils'
+
 const { api } = config
 const { ordernumber } = api
 
@@ -32,7 +33,7 @@ export async function update(data) {
   return request({
     url: ordernumber.update,
     method: 'post',
-    params: { param: data }
+    params: { param: data },
   })
 }
 

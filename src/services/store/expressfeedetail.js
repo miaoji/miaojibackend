@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../../utils'
+
 const { api } = config
 const { expressfeedetail } = api
 
@@ -12,8 +13,8 @@ export async function query (params) {
     url: expressfeedetail.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }
 
@@ -27,7 +28,7 @@ export async function download (params) {
     url: expressfeedetail.download,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }

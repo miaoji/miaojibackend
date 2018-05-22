@@ -5,31 +5,9 @@ import { connect } from 'dva'
 import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
 
 const Consume = ({ location, dispatch, consume, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = consume
-  const { pageSize } = pagination
-
-  const modalProps = {
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    maskClosable: false,
-    confirmLoading: loading.effects['consume/update'],
-    title: `${modalType === 'create' ? '创建门店' : '更新门店'}`,
-    wrapClassName: 'vertical-center-modal',
-    onOk (data) {
-      dispatch({
-        type: `consume/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel () {
-      dispatch({
-        type: 'consume/hideModal',
-      })
-    },
-  }
+  const { list, pagination, isMotion, selectedRowKeys } = consume
 
   const listProps = {
     dataSource: list,
@@ -40,7 +18,7 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page, filter) {
+    onChange(page, filter) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -52,19 +30,19 @@ const Consume = ({ location, dispatch, consume, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
+    onMarkItem(id) {
       dispatch({
         type: 'consume/markBlackList',
         payload: id,
       })
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'consume/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'consume/showModal',
         payload: {
@@ -73,7 +51,7 @@ const Consume = ({ location, dispatch, consume, loading }) => {
         },
       })
     },
-    onFilterStatus (value) {
+    onFilterStatus(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -92,7 +70,7 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -100,7 +78,7 @@ const Consume = ({ location, dispatch, consume, loading }) => {
         },
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'consume/showModal',
         payload: {
@@ -108,7 +86,7 @@ const Consume = ({ location, dispatch, consume, loading }) => {
         },
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'consume/switchIsMotion' })
     },
   }
@@ -126,18 +104,17 @@ const Consume = ({ location, dispatch, consume, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
+        selectedRowKeys.length > 0 &&
+        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+          <Col>
+            {`选中 ${selectedRowKeys.length} 个微信用户 `}
+            <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
+              <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
+            </Popconfirm>
+          </Col>
+        </Row>
       }
       <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }

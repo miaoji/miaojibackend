@@ -56,7 +56,7 @@ const Jd = ({ location, dispatch, jd, loading }) => {
   const listProps = {
     list,
     jdconfig,
-    loading: loading.effects['jd/query']
+    loading: loading.effects['jd/query'],
   }
 
   const filterProps = {
@@ -70,7 +70,7 @@ const Jd = ({ location, dispatch, jd, loading }) => {
     },
     onSetJdConfig() {
       dispatch({
-        type: 'jd/showJdModal'
+        type: 'jd/showJdModal',
       })
     },
     onFilterChange(value) {
@@ -97,7 +97,7 @@ const Jd = ({ location, dispatch, jd, loading }) => {
     onDownLoad(payload) {
       dispatch({
         type: 'jd/download',
-        payload
+        payload,
       })
     },
     onAdd() {

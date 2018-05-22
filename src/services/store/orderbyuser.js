@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../../utils'
+
 const { api } = config
 const { orderbyuser } = api
 
@@ -11,8 +12,8 @@ export async function query (params) {
     url: orderbyuser.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }
 
@@ -27,7 +28,7 @@ export async function download (params) {
     url: orderbyuser.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }

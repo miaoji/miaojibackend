@@ -4036,7 +4036,7 @@ const tree = (list) => {
     item = list[ii]
 
     if (!item) continue
-            /* jshint -W041 */
+    /* jshint -W041 */
     if (item.pid === undefined && item.parentId === undefined) {
       result.push(item)
       continue
@@ -4056,7 +4056,7 @@ let DICT_FIXED = (function () {
       let pid
       if (id.slice(2, 6) !== '0000') {
         pid = id.slice(4, 6) === '00' ? (`${id.slice(0, 2)}0000`) :
-        `${id.slice(0, 4)}00`
+          `${id.slice(0, 4)}00`
       }
       fixed.push({
         id,

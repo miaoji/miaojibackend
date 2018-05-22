@@ -59,7 +59,7 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
           showName,
           page: 1,
           pageSize: 10,
-          ...value
+          ...value,
         },
       }))
     },
@@ -77,7 +77,7 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
     onDownLoad() {
       dispatch({
         type: 'expressfeedetail/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

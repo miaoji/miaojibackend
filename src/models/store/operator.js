@@ -1,8 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
 import { query } from '../../services/store/operator'
-import { pageModel } from '../common'
-import { time } from '../../utils'
+import { pageModel } from '../system/common'
+import { time, initialCreateTime } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'operator',
@@ -15,7 +15,7 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/operator') {
           dispatch({
             type: 'query',
@@ -29,6 +29,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()
@@ -56,7 +57,7 @@ export default modelExtend(pageModel, {
       notification.success({
         message: '准备中...',
         description: '正在为您准备资源,请稍等!!!',
-        duration: 3
+        duration: 3,
       })
       let newpayload = {}
       if (!payload.startTime) {
@@ -73,19 +74,19 @@ export default modelExtend(pageModel, {
           notification.warn({
             message: '下载失败',
             description: '请关闭浏览阻止网页弹窗的功能!!!',
-            duration: 3
+            duration: 3,
           })
         } else {
           notification.warn({
             message: '正在下载',
             description: '请等待!!!',
-            duration: 3
+            duration: 3,
           })
         }
       } else {
         throw data.mess || '无法跟服务器建立有效连接'
       }
-    }
+    },
 
   },
 

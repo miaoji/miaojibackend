@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../../utils'
+
 const { api } = config
 const { storeSign } = api
 
@@ -11,8 +12,8 @@ export async function query (params) {
     url: storeSign.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }
 
@@ -25,7 +26,7 @@ export async function detailquery (params) {
     url: storeSign.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }

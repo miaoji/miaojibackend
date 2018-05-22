@@ -1,6 +1,8 @@
 import { color } from '../utils/theme'
+
 const Mock = require('mockjs')
 const config = require('../utils/config')
+
 const { apiPrefix } = config
 
 const Dashboard = Mock.mock({
@@ -12,15 +14,62 @@ const Dashboard = Mock.mock({
       'Electronics|300-550': 1,
     },
   ],
+  cpu: {
+    'usage|50-600': 1,
+    space: 825,
+    'cpu|40-90': 1,
+    'data|20': [
+      {
+        'cpu|20-80': 1,
+      },
+    ],
+  },
+  browser: [
+    {
+      name: 'Google Chrome',
+      percent: 43.3,
+      status: 1,
+    },
+    {
+      name: 'Mozilla Firefox',
+      percent: 33.4,
+      status: 2,
+    },
+    {
+      name: 'Apple Safari',
+      percent: 34.6,
+      status: 3,
+    },
+    {
+      name: 'Internet Explorer',
+      percent: 12.3,
+      status: 4,
+    },
+    {
+      name: 'Opera Mini',
+      percent: 3.3,
+      status: 1,
+    },
+    {
+      name: 'Chromium',
+      percent: 2.53,
+      status: 1,
+    },
+  ],
   user: {
-    name: '圈嘀',
-    email: 'quandi@gmail.com',
+    name: 'zuiidea',
+    email: 'zuiiidea@.gmail.com',
     sales: 3241,
     sold: 3556,
-    avatar () {
-      return Mock.Random.image('48x48', Mock.Random.color(), '#757575', 'png', 'Q')
-    },
+    avatar: 'http://tva4.sinaimg.cn/crop.0.0.996.996.180/6ee6a3a3jw8f0ks5pk7btj20ro0rodi0.jpg',
   },
+  'completed|12': [
+    {
+      'name|+1': 2008,
+      'Task complete|200-1000': 1,
+      'Cards Complete|200-1000': 1,
+    },
+  ],
   'comments|5': [
     {
       name: '@last',
@@ -46,28 +95,26 @@ const Dashboard = Mock.mock({
     },
   ],
   quote: {
-    name: '圈嘀',
-    title: '名言',
-    content: '逆水行舟，不进则退',
-    avatar () {
-      return Mock.Random.image('48x48', Mock.Random.color(), '#2CDFE5', 'png', 'T')
-    },
+    name: 'WINNER',
+    title: 'WINNERWLY',
+    content: '这是一个很简单的故事,只是不知道有没有人想听我讲讲',
+    avatar: '',
   },
   numbers: [
     {
       icon: 'pay-circle-o',
       color: color.green,
-      title: '今日收入',
+      title: '昨日收入',
       number: 2781,
     }, {
       icon: 'team',
       color: color.blue,
-      title: '新增用户',
+      title: '门店总数',
       number: 3241,
     }, {
       icon: 'message',
       color: color.purple,
-      title: '在线人数',
+      title: '微信用户',
       number: 253,
     }, {
       icon: 'shopping-cart',

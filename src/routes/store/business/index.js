@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
+import { Tabs } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import { Tabs } from 'antd'
 import { Page } from '../../../components'
 
 const { TabPane } = Tabs
@@ -71,7 +71,7 @@ const Business = ({ location, dispatch, business, loading }) => {
           ...value,
           mailtype: query.mailtype,
           page: 1,
-          pageSize: 10
+          pageSize: 10,
         },
       }))
     },
@@ -89,7 +89,7 @@ const Business = ({ location, dispatch, business, loading }) => {
     onDownLoad() {
       dispatch({
         type: 'business/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

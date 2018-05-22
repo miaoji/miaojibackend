@@ -7,7 +7,7 @@ import List from './List'
 import Filter from './Filter'
 
 const WithDraw = ({ location, dispatch, withdraw, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = withdraw
+  const { list, pagination, isMotion, selectedRowKeys } = withdraw
   const { pageSize } = pagination
 
   const listProps = {
@@ -16,7 +16,7 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
     pagination,
     location,
     isMotion,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -34,7 +34,7 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -44,7 +44,7 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/withdraw',
         query: {
@@ -70,15 +70,15 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
+        selectedRowKeys.length > 0 &&
+        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+          <Col>
+            {`选中 ${selectedRowKeys.length} 个微信用户 `}
+            <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
+              <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
+            </Popconfirm>
+          </Col>
+        </Row>
       }
       <List {...listProps} />
     </div>

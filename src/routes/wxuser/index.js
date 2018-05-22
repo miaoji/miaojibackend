@@ -7,45 +7,37 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const WxUser = ({ location, dispatch, wxUser, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = wxUser
+const Wxuser = ({ location, dispatch, wxuser, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = wxuser
   const { pageSize } = pagination
 
   const modalProps = {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['wxUser/update'],
-    title: `${modalType === 'create' ? '创建微信用户' : '更新微信用户--'}${currentItem.wxName}`,
+    confirmLoading: loading.effects['wxuser/update'],
+    title: `${modalType === 'create' ? 'Create wxuser' : 'Update wxuser'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
-        type: 'wxUser/markBlackList',
+        type: `wxuser/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
-        type: 'wxUser/hideModal',
+        type: 'wxuser/hideModal',
       })
     },
   }
-
   const listProps = {
     dataSource: list,
-    loading: loading.effects['wxUser/query'],
+    loading: loading.effects['wxuser/query'],
     pagination,
     location,
     isMotion,
-    onChange (page, filters) {
+    onChange(page) {
       const { query, pathname } = location
-      delete query.pagination
-      delete query.rownum
-      if (filters.subscribe && filters.subscribe.length===1) {
-        query.subscribe = filters.subscribe[0]
-      }else{
-        query.subscribe = undefined
-      }
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -55,26 +47,31 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
+    onDeleteItem(id) {
       dispatch({
-        type: 'wxUser/markBlackList',
-        payload: { id, blacklist: 1 },
-      })
-    },
-    onDeleteItem (id) {
-      dispatch({
-        type: 'wxUser/delete',
+        type: 'wxuser/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
-        type: 'wxUser/showModal',
+        type: 'wxuser/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
       })
+    },
+    rowSelection: {
+      selectedRowKeys,
+      onChange: (keys) => {
+        dispatch({
+          type: 'wxuser/updateState',
+          payload: {
+            selectedRowKeys: keys,
+          },
+        })
+      },
     },
   }
 
@@ -83,7 +80,7 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -93,33 +90,33 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/wxUser',
+        pathname: '/wxuser',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/wxUser',
+        pathname: '/wxuser',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
-        type: 'wxUser/showModal',
+        type: 'wxuser/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
-    switchIsMotion () {
-      dispatch({ type: 'wxUser/switchIsMotion' })
+    switchIsMotion() {
+      dispatch({ type: 'wxuser/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'wxUser/multiDelete',
+      type: 'wxuser/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -129,17 +126,28 @@ const WxUser = ({ location, dispatch, wxUser, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
+      {
+        selectedRowKeys.length > 0 &&
+        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
+          <Col>
+            {`Selected ${selectedRowKeys.length} items `}
+            <Popconfirm title={'Are you sure delete these items?'} placement="left" onConfirm={handleDeleteItems}>
+              <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
+            </Popconfirm>
+          </Col>
+        </Row>
+      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
-WxUser.propTypes = {
-  wxUser: PropTypes.object,
-  location: PropTypes.object,
-  dispatch: PropTypes.func,
-  loading: PropTypes.object,
+Wxuser.propTypes = {
+  wxuser: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.object.isRequired,
 }
 
-export default connect(({ wxUser, loading }) => ({ wxUser, loading }))(WxUser)
+export default connect(({ wxuser, loading }) => ({ wxuser, loading }))(Wxuser)

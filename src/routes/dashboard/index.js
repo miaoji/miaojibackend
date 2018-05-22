@@ -18,13 +18,15 @@ const bodyStyle = {
 function Dashboard (data) {
   const { receviceData, sendData, quote, user, income, storeTotal, weChatUser, shop } = data.dashboard
   const munArr = [income, storeTotal, weChatUser, shop]
-  const numberCards = munArr.map((item, key) => <Col key={key} lg={6} md={12}>
-    <NumberCard {...item} />
-  </Col>)
+  const numberCards = munArr.map((item, key) => {
+    return (<Col key={key} lg={6} md={12}>
+      <NumberCard {...item} />
+    </Col>)
+  })
 
   const lineProps = {
     receviceData,
-    sendData
+    sendData,
   }
 
   return (
@@ -43,11 +45,15 @@ function Dashboard (data) {
       <Col lg={6} md={24}>
         <Row gutter={24}>
           <Col lg={24} md={12}>
-            <Card bordered={false} className={styles.quote} bodyStyle={{
-              padding: 0,
-              height: 204,
-              background: color.peach,
-            }}>
+            <Card
+              bordered={false}
+              className={styles.quote}
+              bodyStyle={{
+                padding: 0,
+                height: 204,
+                background: color.peach,
+              }}
+            >
               <Quote {...quote} />
             </Card>
           </Col>

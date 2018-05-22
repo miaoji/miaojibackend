@@ -1,8 +1,11 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
+import { message, Select } from 'antd'
+import { initialCreateTime } from 'utils'
 import { query, create, update, showBrandName } from '../services/ordernumber'
-import { pageModel } from './common'
+import { pageModel } from './system/common'
+
+const { Option } = Select
 
 export default modelExtend(pageModel, {
   namespace: 'ordernumber',
@@ -10,25 +13,26 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     modalVisible: false,
-    modalType: 'create'
+    modalType: 'create',
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/ordernumber') {
           dispatch({
             type: 'query',
-            payload: location.query
+            payload: location.query,
           })
         }
       })
-    }
+    },
   },
 
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
         yield put({
@@ -54,7 +58,7 @@ export default modelExtend(pageModel, {
         start: payload.start,
         end: payload.end || '',
         length: payload.length,
-        mailType: payload.mailType
+        mailType: payload.mailType,
       }
       newOrderNumber = JSON.stringify(newOrderNumber)
       const data = yield call(create, newOrderNumber)
@@ -78,7 +82,7 @@ export default modelExtend(pageModel, {
         start: payload.start,
         end: payload.end,
         mailType: payload.mailType,
-        length: payload.length
+        length: payload.length,
       }
       orderNumber = JSON.stringify(orderNumber)
       const data = yield call(update, orderNumber)
@@ -91,10 +95,10 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete'({ payload }, { call, put }) {
+    *delete({ payload }, { call, put }) {
       let orderNumber = {
         id: payload,
-        state: 2
+        state: 2,
       }
       orderNumber = JSON.stringify(orderNumber)
       const data = yield call(update, orderNumber)
@@ -106,7 +110,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getBrandName({ payload }, { call, put }) {
+    *getBrandName(_, { call, put }) {
       const data = yield call(showBrandName)
       if (data.code === 200 && data.obj) {
         let children = []

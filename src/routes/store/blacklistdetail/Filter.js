@@ -4,7 +4,7 @@ import {
   Form, Button, Row, Col, Input,
 } from 'antd'
 import { DateRange } from '../../../components'
-import { handleFields, yesterTime } from '../../../utils'
+import { handleFields, defaultTime } from '../../../utils'
 
 const { Search } = Input
 
@@ -31,6 +31,7 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
+  filter = defaultTime(filter)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -76,18 +77,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { startTime, endTime, mobile, name } = filter
-
-  if (!startTime) startTime = yesterTime().startTime
-  if (!endTime) endTime = yesterTime().endTime
-
-  let initialCreateTime = []
-  if (startTime) {
-    initialCreateTime[0] = String(startTime)
-  }
-  if (endTime) {
-    initialCreateTime[1] = String(endTime)
-  }
+  let { createTime, mobile, name } = filter
 
   return (
     <Row gutter={24}>
@@ -100,7 +90,7 @@ const Filter = ({
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search onPressEnter={handleSubmit} placeholder="按手机号码搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+        {getFieldDecorator('createTime', { initialValue: createTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
@@ -122,7 +112,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  onDownLoad: PropTypes.func
+  onDownLoad: PropTypes.func,
 }
 
 export default Form.create()(Filter)

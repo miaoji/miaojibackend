@@ -1,4 +1,5 @@
 import { request, config, pageParams } from '../../utils'
+
 const { api } = config
 const { selectpjjeDetails } = api
 
@@ -13,8 +14,8 @@ export async function query (params) {
     url: selectpjjeDetails.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }
 
@@ -29,7 +30,7 @@ export async function download (params) {
     url: selectpjjeDetails.all,
     method: 'post',
     params: {
-      param: params
-    }
+      param: params,
+    },
   })
 }

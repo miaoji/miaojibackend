@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { pageModel } from './common'
+import { pageModel } from './system/common'
 import { color } from '../utils/theme'
 import { storage, time } from '../utils'
 import { getLineData, weChatUser, storeTotal, income } from '../services/dashboard'
@@ -53,7 +53,7 @@ export default modelExtend(pageModel, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/dashboard' || location.pathname === '/') {
           dispatch({
             type: 'query',
@@ -67,7 +67,7 @@ export default modelExtend(pageModel, {
     },
   },
   effects: {
-    *getIncome({ payload }, { call, put }) {
+    *getIncome(_, { call, put }) {
       const data = yield call(income)
       if (data.code === 200) {
         yield put({
@@ -78,14 +78,14 @@ export default modelExtend(pageModel, {
               color: color.green,
               title: '昨日收入',
               number: data.obj,
-            }
-          }
+            },
+          },
         })
       } else {
         throw data.mess || '网络连接失败'
       }
     },
-    *getStoreTotal({ payload }, { call, put }) {
+    *getStoreTotal(_, { call, put }) {
       const data = yield call(storeTotal)
       if (data.code === 200) {
         yield put({
@@ -95,15 +95,15 @@ export default modelExtend(pageModel, {
               icon: 'shop',
               color: color.blue,
               title: '门店总数',
-              number: data.obj
-            }
-          }
+              number: data.obj,
+            },
+          },
         })
       } else {
         throw data.mess || '网络连接失败'
       }
     },
-    *getWeChatUser({ payload }, { call, put }) {
+    *getWeChatUser(_, { call, put }) {
       const data = yield call(weChatUser)
       if (data.code === 200) {
         yield put({
@@ -113,17 +113,15 @@ export default modelExtend(pageModel, {
               icon: 'message',
               color: color.purple,
               title: '微信用户',
-              number: data.obj
-            }
-          }
+              number: data.obj,
+            },
+          },
         })
       } else {
         throw data.mess || '网络连接失败'
       }
     },
-    *query({
-      payload,
-    }, { call, put }) {
+    *query(_, { call, put }) {
       const storageData = JSON.parse(storage({ key: 'linedata' }))
       const todayStr = time.getToday(new Date().getTime())
       let receviceData = []
@@ -134,8 +132,8 @@ export default modelExtend(pageModel, {
           type: 'setStates',
           payload: {
             receviceData: storageData.receviceData,
-            sendData: storageData.sendData
-          }
+            sendData: storageData.sendData,
+          },
         })
         return
       }
@@ -151,19 +149,21 @@ export default modelExtend(pageModel, {
         })
 
         storage({
-          type: 'set', key: 'linedata', val: JSON.stringify({
+          type: 'set',
+          key: 'linedata',
+          val: JSON.stringify({
             time: todayStr,
             receviceData,
-            sendData
-          })
+            sendData,
+          }),
         })
 
         yield put({
           type: 'setStates',
           payload: {
             receviceData,
-            sendData
-          }
+            sendData,
+          },
         })
       }
     },

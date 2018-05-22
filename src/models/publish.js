@@ -1,10 +1,10 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { create } from '../services/publish'
-import { pageModel } from './common'
-import { storage } from '../utils'
-import { query } from '../services/storeusers'
+import { storage } from 'utils'
+import { create } from 'src/services/publish'
+import { query } from 'src/services/storeuser'
+import { pageModel } from './system/common'
 
 const { Option } = Select
 export default modelExtend(pageModel, {
@@ -14,12 +14,12 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
-    typeOption: []
+    typeOption: [],
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/publish') {
           dispatch({
             type: 'query',
@@ -31,10 +31,10 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query(_, { call, put }) {
+    * query(_, { call, put }) {
       const data = yield call(query, {
         current: 1,
-        pageSize: 10000
+        pageSize: 10000,
       })
       if (data.code === 200) {
         const option = data.obj.map((item) => {
@@ -47,14 +47,13 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'setStates',
           payload: {
-            typeOption: option
+            typeOption: option,
           },
         })
       }
     },
 
-    *create({ payload }, { call }) {
-      console.log('payload', payload)
+    * create({ payload }, { call }) {
       if (payload.title === '') {
         message.warning('请输入文章标题')
         return
@@ -71,12 +70,13 @@ export default modelExtend(pageModel, {
       const data = yield call(create, { ...payload, createId })
       if (data.code === 200) {
         message.success('文章发布成功')
+        /* eslint no-alert: 'off' */
         window.alert('文章发布成功')
         location.reload()
       } else {
         throw '网络故障，请稍后重试' || data.mess
       }
-    }
+    },
 
   },
 
@@ -84,7 +84,7 @@ export default modelExtend(pageModel, {
 
     setStates(state, { payload }) {
       return { ...state, ...payload }
-    }
+    },
 
-  }
+  },
 })

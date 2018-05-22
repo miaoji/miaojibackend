@@ -99,7 +99,7 @@ const StoreSign = ({ location, dispatch, storeSign, loading }) => {
     onDownLoad() {
       dispatch({
         type: 'storeSign/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

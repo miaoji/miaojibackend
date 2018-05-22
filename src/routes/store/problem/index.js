@@ -99,7 +99,7 @@ const Problem = ({ location, dispatch, problem, loading }) => {
     onDownLoad() {
       dispatch({
         type: 'problem/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

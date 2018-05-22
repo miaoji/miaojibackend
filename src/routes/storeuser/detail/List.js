@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styles from './index.less'
 import { Card, Col, Row } from 'antd'
+import styles from './index.less'
 
 const List = ({ list, filter, handleClick }) => {
   // const { data } = storeUserDetail

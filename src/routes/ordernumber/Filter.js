@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
 import { DateRange } from '../../components'
-import { time } from '../../utils'
 
 const Search = Input.Search
 
@@ -31,13 +31,11 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length === 2) {
-      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
-      const repairTime = time.repairTime(fields.createTime)
-      fields.startTime = repairTime.startTime
-      fields.endTime = repairTime.endTime
+    if (createTime && createTime.length && createTime[0] && createTime[1]) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    } else {
+      delete fields.createTime
     }
-    delete fields.createTime
     return fields
   }
 
@@ -51,7 +49,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({ ...filter, ...fields })
+    onFilterChange({ ...fields })
   }
 
   const handleReset = () => {
@@ -83,17 +81,17 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({ ...filter, ...fields })
+    onFilterChange({ ...fields })
   }
 
   const { brand } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = filter.createTime[0]
+    initialCreateTime[0] = moment(filter.createTime[0])
   }
   if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = filter.createTime[1]
+    initialCreateTime[1] = moment(filter.createTime[1])
   }
 
 

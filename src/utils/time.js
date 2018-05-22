@@ -1,30 +1,49 @@
-// 传入一个时间戳,转换成常见的时间格式
-// import { message } from 'antd'
+import moment from 'moment'
 
-export const formatTime = function (val) {
-  if (val == null || val === '' || val.length !== 13) {
-    return '未知时间'
+export function initialCreateTime(payload) {
+  payload = { ...payload }
+  const { createTime } = payload
+  if (createTime) {
+    let tmpTime = []
+    if (createTime[0]) {
+      tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
+    }
+    if (createTime[1]) {
+      tmpTime[1] = moment(`${createTime[1]} 23:59:59`).unix()
+    }
+    payload.startTime = `${tmpTime[0]}000`
+    payload.endTime = `${tmpTime[1]}999`
+    delete payload.createTime
   }
-  let date = new Date(parseInt(val, 10))
-  let y = date.getFullYear()
-  let m = date.getMonth() + 1
-  m = m > 9 ? m : `0${m}`
-  let d = date.getDate()
-  d = d > 9 ? d : `0${d}`
-  let h = date.getHours()
-  h = h > 9 ? h : `0${h}`
-  let mm = date.getMinutes()
-  mm = mm > 9 ? mm : `0${mm}`
-  let s = date.getSeconds()
-  s = s > 9 ? s : `0${s}`
-  return (`${y}/${m}/${d} ${h}:${mm}:${s}`)
+  return payload
 }
 
-
-// 弥补创建时间控件获取的时间戳是带当前时间的问题
-
-// @val  [type:number] 13的时间戳
-// @type [type:string] 要转换的时间是开始时间还是结束时间
+export function yesterTime() {
+  let dayCount = 1
+  const test = false
+  if (process.env.NODE_ENV !== 'development' || test) {
+    dayCount = 1
+    // if (window.location.search === '') {
+    //   message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
+    // }
+    const date = new Date()
+    const h = date.getHours()
+    const m = date.getMinutes()
+    const s = date.getSeconds()
+    const ms = date.getMilliseconds()
+    const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
+    const startTime = date.getTime() - 86400000 * dayCount - times
+    const endTime = date.getTime() - times - 1
+    return {
+      startTime,
+      endTime,
+    }
+  }
+  return {
+    startTime: 1519833600000,
+    endTime: 1519919999999,
+  }
+}
 
 export const repairTime = function (val) {
   if (val[0] !== null && val[1] !== null) {
@@ -51,34 +70,31 @@ export const repairTime = function (val) {
   }
 }
 
-export function yesterTime() {
-  let dayCount = 1
-  const test = false
-  if (process.env.NODE_ENV !== 'development' || test) {
-    dayCount = 1
-    // if (window.location.search === '') {
-    //   message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
-    // }
-    const date = new Date()
-    const h = date.getHours()
-    const m = date.getMinutes()
-    const s = date.getSeconds()
-    const ms = date.getMilliseconds()
-    const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
-    const startTime = date.getTime() - 86400000 * dayCount - times
-    const endTime = date.getTime() - times - 1
-    return {
-      startTime,
-      endTime
-    }
+
+export function handleFields(fields) {
+  const { createTime } = fields
+  if (createTime && createTime.length && createTime[0] && createTime[1]) {
+    fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+  } else {
+    delete fields.createTime
   }
-  return {
-    startTime: 1519833600000,
-    endTime: 1519920004096
-  }
+  return fields
 }
 
-// val 时间戳
+export function defaultTime(filters) {
+  filters = { ...filters }
+  const times = yesterTime()
+  if (!filters.createTime) {
+    filters.createTime = []
+    filters.createTime[0] = moment(times.startTime)
+    filters.createTime[1] = moment(times.endTime)
+  } else {
+    filters.createTime[0] = moment(filters.createTime[0])
+    filters.createTime[1] = moment(filters.createTime[1])
+  }
+  return filters
+}
+
 export function getToday(val) {
   let date = new Date(val)
   let y = date.getFullYear()
@@ -96,19 +112,4 @@ export function getLineTime() {
     date.unshift(getToday((new Date().getTime() - (86400000 * (i + 1)))))
   }
   return date
-}
-
-export function handleFields(fields) {
-  const { createTime } = fields
-  if (createTime.length === 2) {
-    const repairtime = repairTime(fields.createTime)
-    fields.startTime = repairtime.startTime
-    fields.endTime = repairtime.endTime
-  }
-  if (createTime && createTime[1] && createTime[1].length === 13) {
-    fields.startTime = createTime[0]
-    fields.endTime = createTime[1]
-  }
-  delete fields.createTime
-  return fields
 }

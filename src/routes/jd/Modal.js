@@ -3,17 +3,10 @@ import PropTypes from 'prop-types'
 import {
   Form,
   Input,
-  // InputNumber,
-  // Radio,
   Modal,
-  // Cascader,
-  Select,
 } from 'antd'
-// import city from '../../utils/city'
 
 const FormItem = Form.Item
-// const Option = Select.Option
-const { TextArea } = Input
 
 const formItemLayout = {
   labelCol: {
@@ -54,8 +47,6 @@ const modal = ({
     onOk: handleOk,
   }
 
-  const paramDisabled = type === 'update'
-
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
@@ -68,7 +59,7 @@ const modal = ({
                 message: '请输入您要填充的单号数量!',
               },
             ],
-          })(<Input placeholder="请输入您要填充的单号数量"/>)}
+          })(<Input placeholder="请输入您要填充的单号数量" />)}
         </FormItem>
       </Form>
     </Modal>

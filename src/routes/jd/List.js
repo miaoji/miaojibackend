@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import NumberCard from './item/numberCard'
 import { Row, Col } from 'antd'
+import NumberCard from './item/numberCard'
 import { color } from '../../utils/theme'
+
 const List = ({ list }) => {
   const countProps = {
     icon: 'database',
@@ -14,8 +15,8 @@ const List = ({ list }) => {
   const ratioProps = {
     icon: 'credit-card',
     color: color.green,
-    title: '京东分成比例',
-    number: list[1] ? `${Math.round(Number(list[1]) * 100)}%` : '暂无',
+    title: '京东分成比例(%)',
+    number: list[1] ? `${Math.round(Number(list[1]) * 100)}` : '暂无',
     // countUp
   }
   return (

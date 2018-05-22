@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Button } from 'antd'
-import styles from './List.less'
 import classnames from 'classnames'
+import moment from 'moment'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { time } from '../../utils'
 
-const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
   const handleUserClick = (record) => {
     const str = record.mobile.toString()
     let encryptNum = `${str.substr(0, 5)}****${str.substr(9, 10)}`
@@ -36,8 +36,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
       dataIndex: 'subscribeTime',
       key: 'subscribeTime',
       render: (text) => {
-        const createtime = time.formatTime(text)
-        return <span>{createtime}</span>
+        return <span>{text ? moment(text / 1).format('YYYY-MM-DD') : '未知时间'}</span>
       },
     }, {
       title: '消费金额',
@@ -63,7 +62,7 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
         }
         return <span>{realtext[text]}</span>
       },
-    }
+    },
   ]
 
   const getBodyWrapperProps = {
@@ -71,15 +70,15 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
+        className={classnames({ [styles.table]: true, [styles.motion]: false })}
         bordered
-        scroll={{ x: 760 }}
+        scroll={{ x: 1250 }}
         columns={columns}
         simple
         rowKey={record => record.id}
@@ -90,10 +89,10 @@ const List = ({ onMarkItem, onEditItem, isMotion, location, ...tableProps }) => 
 }
 
 List.propTypes = {
-  onMarkItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  isMotion: PropTypes.bool,
-  location: PropTypes.object,
+  onDeleteItem: PropTypes.func.isRequired,
+  onEditItem: PropTypes.func.isRequired,
+  isMotion: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default List

@@ -99,7 +99,7 @@ const Selectfenpai = ({ location, dispatch, selectfenpai, loading }) => {
     onDownLoad() {
       dispatch({
         type: 'selectfenpai/download',
-        payload: location.query
+        payload: location.query,
       })
     },
     onAdd() {

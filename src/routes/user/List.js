@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Modal } from 'antd'
-import styles from './List.less'
 import classnames from 'classnames'
-import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
+import { DropOption } from 'components'
 import { Link } from 'dva/router'
+import styles from './List.less'
+import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
 const confirm = Modal.confirm
 
@@ -15,8 +15,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       onEditItem(record)
     } else if (e.key === '2') {
       confirm({
-        title: '确定要删除这一条记录吗?',
-        onOk () {
+        title: 'Are you sure delete this record?',
+        onOk() {
           onDeleteItem(record.id)
         },
       })
@@ -30,14 +30,16 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'avatar',
       width: 64,
       className: styles.avatar,
-      render: (text) => <img alt={'avatar'} width={24} src={text} />,
+      render: (text) => {
+        return <img alt={'avatar'} width={24} src={text} />
+      },
     }, {
-      title: '姓名',
+      title: '昵称',
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
     }, {
-      title: '昵称',
+      title: '真实姓名',
       dataIndex: 'nickName',
       key: 'nickName',
     }, {
@@ -48,9 +50,9 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '性别',
       dataIndex: 'isMale',
       key: 'isMale',
-      render: (text) => <span>{text
-            ? 'Male'
-            : 'Female'}</span>,
+      render: (text) => {
+        return <span>{text ? 'Male' : 'Female'}</span>
+      },
     }, {
       title: '手机',
       dataIndex: 'phone',
@@ -72,7 +74,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -82,15 +84,15 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
+        className={classnames({ [styles.table]: true, [styles.motion]: false })}
         bordered
-        scroll={{ x: 767 }}
+        scroll={{ x: 1250 }}
         columns={columns}
         simple
         rowKey={record => record.id}
@@ -101,10 +103,10 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  isMotion: PropTypes.bool,
-  location: PropTypes.object,
+  onDeleteItem: PropTypes.func.isRequired,
+  onEditItem: PropTypes.func.isRequired,
+  isMotion: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default List

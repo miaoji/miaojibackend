@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Modal, Button } from 'antd'
-import styles from './List.less'
 import classnames from 'classnames'
+import moment from 'moment'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { time } from '../../utils'
 
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
@@ -31,6 +31,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const copyUrl = (record) => {
     const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
+    /* eslint no-alert: 'off' */
     window.prompt('请使用Ctrl+C复制到剪切板', href)
   }
 
@@ -65,12 +66,15 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '备注',
       dataIndex: 'remark',
       key: 'remark',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      },
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const createTime = time.formatTime(text.toString())
+        const createTime = moment(text).format('YYYY-MM-DD HH:mm:ss')
         return <span>{createTime}</span>
       },
     }, {
@@ -88,7 +92,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     rows: tableProps.pagination.rows,
   }
 
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>
