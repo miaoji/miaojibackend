@@ -56,9 +56,8 @@ const Filter = ({
         }
       }
     }
+    console.log('fiel2222ds', fields)
     setFieldsValue(fields)
-    filter.endTime = undefined
-    filter.startTime = undefined
     filter.page = undefined
     filter.pageSize = undefined
     handleSubmit()

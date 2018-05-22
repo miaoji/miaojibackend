@@ -3,7 +3,8 @@ import moment from 'moment'
 export function initialCreateTime(payload) {
   payload = { ...payload }
   const { createTime } = payload
-  if (createTime) {
+  console.log('createTi12123123me', createTime)
+  if (createTime && createTime.length && createTime[0] && createTime[1]) {
     let tmpTime = []
     if (createTime[0]) {
       tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
@@ -13,6 +14,8 @@ export function initialCreateTime(payload) {
     }
     payload.startTime = `${tmpTime[0]}000`
     payload.endTime = `${tmpTime[1]}999`
+    delete payload.createTime
+  } else {
     delete payload.createTime
   }
   return payload
@@ -73,10 +76,13 @@ export const repairTime = function (val) {
 
 export function handleFields(fields) {
   const { createTime } = fields
+  if (createTime && createTime[0] === null) {
+    fields.createTime = undefined
+  }
   if (createTime && createTime.length && createTime[0] && createTime[1]) {
     fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
   } else {
-    delete fields.createTime
+    fields.createTime = undefined
   }
   return fields
 }

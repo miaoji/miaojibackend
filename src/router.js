@@ -333,6 +333,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 黑名单订单详情
+          path: 'blacklistdetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/store/blacklistdetail'))
+              cb(null, require('./routes/store/blacklistdetail/'))
+            }, 'blacklistdetail')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent (nextState, cb) {
