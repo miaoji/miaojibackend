@@ -19,7 +19,6 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/articles') {
-          console.log('location.query', location.query)
           dispatch({
             type: 'query',
             payload: location.query,

@@ -17,7 +17,6 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/expressfeedetail') {
-          console.log(123123123)
           dispatch({
             type: 'query',
             payload: location.query,
@@ -30,7 +29,6 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      console.log(45454545)
       payload = initialCreateTime(payload)
       yield put({
         type: 'setStates',
@@ -75,7 +73,6 @@ export default modelExtend(pageModel, {
       } else {
         newpayload = { ...payload }
       }
-      console.log('payload', newpayload)
       const data = yield call(download, { ...newpayload, tc: 'maild', download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj

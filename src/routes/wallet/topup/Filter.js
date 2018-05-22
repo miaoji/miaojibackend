@@ -75,7 +75,6 @@ const Filter = ({
   if (filter.createTime && filter.createTime[1]) {
     initialCreateTime[1] = moment(filter.createTime[1])
   }
-  console.log('initialCreateTime', initialCreateTime)
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>

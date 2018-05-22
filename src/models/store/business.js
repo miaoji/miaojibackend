@@ -97,7 +97,6 @@ export default modelExtend(pageModel, {
 
     *getOperator({ payload }, { call, put, select }) {
       const idusers = yield select(({ business }) => business.iduser)
-      console.log('payloaddd', payload)
       if (payload.idUser === idusers || payload.idUser === undefined) {
         yield put({
           type: 'setSiteName',
@@ -118,7 +117,6 @@ export default modelExtend(pageModel, {
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
       const data = yield call(queryOperator, { mailtype: 0, ...newpayload, download: 0 })
       if (data.code === 200) {
-        console.log('data', data)
         yield put({
           type: 'setSiteName',
           payload: {

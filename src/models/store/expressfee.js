@@ -68,7 +68,6 @@ export default modelExtend(pageModel, {
       } else {
         newpayload = { ...payload }
       }
-      console.log('payload', newpayload)
       const data = yield call(download, { ...newpayload, tc: 'maild', download: 1 })
       if (data.code === 200 && data.obj) {
         const url = data.obj

@@ -3,7 +3,6 @@ import moment from 'moment'
 export function initialCreateTime(payload) {
   payload = { ...payload }
   const { createTime } = payload
-  console.log('createTi12123123me', createTime)
   if (createTime && createTime.length && createTime[0] && createTime[1]) {
     let tmpTime = []
     if (createTime[0]) {

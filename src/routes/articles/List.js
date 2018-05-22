@@ -7,7 +7,6 @@ import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
 const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
   const handleClick = (text) => {
-    console.log('text', text)
     const win = window.open('', '预览窗口', 'width=320,height=586')
     win.document.open()
     win.document.write(text)

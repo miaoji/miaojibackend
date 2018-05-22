@@ -56,7 +56,6 @@ const Filter = ({
         }
       }
     }
-    console.log('fiel2222ds', fields)
     setFieldsValue(fields)
     filter.page = undefined
     filter.pageSize = undefined
@@ -88,7 +87,6 @@ const Filter = ({
   const nameChange = (key) => {
     handleChange('name', key.target.value)
   }
-  console.log('initialCreateTime', initialCreateTime)
 
   return (
     <Row gutter={24}>

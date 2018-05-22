@@ -1,10 +1,22 @@
 const APIV1 = '/api/v1'
-const APIV2 = '/api/v2'
-const APIV3 = 'http://app.quandikeji.com:8288'
-const APIV4 = 'http://app.quandikeji.com/WeChatService'
+// const APIV2 = '/api/v2'
+
+let APIV3
 // 本地测试
 // 徐景阳
-// const APIV3 = 'http://192.168.231.232:8080'
+// APIV3 = 'http://192.168.231.232:8080'
+// 吴聪
+// APIV3 = 'http://192.168.231.231:8080'
+// 线上
+APIV3 = 'http://app.quandikeji.com:8288'
+
+// 生产环境时api固定为线上url
+if (process.env.NODE_ENV !== 'development') {
+  APIV3 = 'http://120.132.94.59'
+}
+
+let APIV4 = 'http://app.quandikeji.com/WeChatService'
+
 module.exports = {
   name: '妙寄后台管理系统',
   prefix: 'antdAdmin',
@@ -37,8 +49,6 @@ module.exports = {
       income: `${APIV3}/quandiExpressSiteManager/lineChart`,
     },
     menus: `${APIV1}/menus`,
-    v1test: `${APIV1}/test`,
-    v2test: `${APIV2}/test`,
     wxuser: {
       list: `${APIV3}/quandiExpressSiteManager/wechatuser`, // 微信用户分页
     },
