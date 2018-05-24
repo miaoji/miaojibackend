@@ -30,7 +30,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   }
 
   const copyUrl = (record) => {
-    const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
+    const href = `http://www.mijihome.cn:8083/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
     /* eslint no-alert: 'off' */
     window.prompt('请使用Ctrl+C复制到剪切板', href)
   }
