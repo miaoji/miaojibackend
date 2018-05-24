@@ -37,7 +37,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
-      title: '门店姓名',
+      title: '门店名',
       dataIndex: 'name',
       key: 'name',
     }, {
@@ -45,7 +45,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'sourceCount',
       key: 'sourceCount',
     }, {
-      title: '二维码参数',
+      title: '站点ID',
       dataIndex: 'parameter',
       key: 'parameter',
     }, {
