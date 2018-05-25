@@ -33,6 +33,14 @@ export default [
     icon: 'message',
     route: '/wxuser',
   },
+  {
+    id: '301',
+    bpid: '1',
+    mpid: '-1',
+    name: '微信用户',
+    icon: 'message',
+    route: '/wxuserdetail',
+  },
   // {
   //   id: '4',
   //   bpid: '1',

@@ -10,3 +10,11 @@ export async function query (params) {
     data: params,
   })
 }
+
+export async function queryById (params) {
+  return request({
+    url: wxuser.getById,
+    method: 'get',
+    data: params,
+  })
+}

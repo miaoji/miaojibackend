@@ -3,15 +3,19 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import styles from './index.less'
 
-const Detail = ({ userDetail }) => {
-  const { data } = userDetail
+const Detail = ({ wxuserdetail }) => {
+  console.log('wxuserdetail', wxuserdetail)
+  const { user } = wxuserdetail
   const content = []
-  for (let key in data) {
-    if ({}.hasOwnProperty.call(data, key)) {
-      content.push(<div key={key} className={styles.item}>
-        <div>{key}</div>
-        <div>{String(data[key])}</div>
-      </div>)
+
+  for (let key in user) {
+    if ({}.hasOwnProperty.call(user, key)) {
+      content.push(
+        <div key={key} className={styles.item}>
+          <div>{key}</div>
+          <div>{String(user[key])}</div>
+        </div>
+      )
     }
   }
   return (<div className="content-inner">
@@ -22,8 +26,7 @@ const Detail = ({ userDetail }) => {
 }
 
 Detail.propTypes = {
-  userDetail: PropTypes.object,
-  loading: PropTypes.bool,
+  wxuserdetail: PropTypes.object,
 }
 
-export default connect(({ userDetail, loading }) => ({ userDetail, loading: loading.models.userDetail }))(Detail)
+export default connect(({ wxuserdetail, loading }) => ({ wxuserdetail, loading: loading.models.wxuserdetail }))(Detail)

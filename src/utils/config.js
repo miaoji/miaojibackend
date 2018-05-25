@@ -57,6 +57,7 @@ module.exports = {
     menus: `${APIV1}/menus`,
     wxuser: {
       list: `${APIV3}/quandiExpressSiteManager/wechatuser`, // 微信用户分页
+      getById: `${APIV3}/quandiExpressSiteManager/received`, // 微信用户详细信息(没有的接口)
     },
     storeuser: {
       list: `${APIV3}/quandiExpressSiteManager/store`, // 门店用户
@@ -133,31 +134,6 @@ module.exports = {
     // 查询寄件及金额
     mailprice: {
       all: `${APIV3}/quandiExpressSiteManager/mailprice`,
-    },
-
-    // 门店到件总量 -- 上架
-    selectshelves: {
-      // all: `${APIV3}/quandiExpressSiteManager/selectshelves` 废除的接口地址
-      all: `${APIV3}/quandiExpressSiteManager/noSign`,
-    },
-    // 门店到件总量 -- 分派
-    sentalong: {
-      // all: `${APIV3}/quandiExpressSiteManager/sentAlong` 废除的接口地址
-      all: `${APIV3}/quandiExpressSiteManager/selectSendMail`,
-    },
-    // 门店订单汇总
-    storeordertotal: {
-      // all: `${APIV3}/quandiExpressSiteManager/orderSntotal` 废弃的接口地址
-      all: `${APIV3}/quandiExpressSiteManager/sendddMail`,
-    },
-    // 查询门店派件及金额
-    storeorderinfo: {
-      // all: `${APIV3}/quandiExpressSiteManager/sendMail101` 废弃的接口地址
-      all: `${APIV3}/quandiExpressSiteManager/sendddMailprice`,
-    },
-    // 查询门店分配信息
-    storeallot: {
-      // all: `${APIV3}/quandiExpressSiteManager/sendMail103` 废弃的接口地址
     },
     // 门店寄件金额
     expressfee: {

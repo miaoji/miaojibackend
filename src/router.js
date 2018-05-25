@@ -43,7 +43,7 @@ const Routers = function ({ history, app }) {
           },
         },
         {
-          // 也是页面
+          // 演示页面
           path: 'user',
           getComponent (nextState, cb) {
             require.ensure([], (require) => {
@@ -80,6 +80,16 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/wxuser'))
               cb(null, require('./routes/wxuser/'))
             }, 'wxuser')
+          },
+        },
+        {
+          // 微信用户页面子页
+          path: 'wxuserdetail',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/details/wxuserdetail'))
+              cb(null, require('./routes/wxuser/detail/'))
+            }, 'wxuser-detail')
           },
         },
         {
