@@ -16,7 +16,7 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['storeuser/update'],
-    title: `${modalType === 'create' ? 'Create storeuser' : 'Update storeuser'}`,
+    title: `${modalType === 'create' ? '新建' : '修改门店用户的通讯费'}`,
     wrapClassName: 'vertical-center-modal',
     onOk(data) {
       dispatch({

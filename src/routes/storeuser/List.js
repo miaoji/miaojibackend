@@ -6,8 +6,18 @@ import moment from 'moment'
 import { Link } from 'dva/router'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
+import { DropOption } from '../../components'
 
 const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem, isMotion, location, ...tableProps }) => {
+  const handleMenuClick = (record, e) => {
+    switch (e.key) {
+      case '1':
+        onEditItem(record)
+        break
+      default:
+        break
+    }
+  }
   const columns = [
     {
       title: '站点ID',
@@ -46,6 +56,13 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
           : '启用'}</span>)
       },
     }, {
+      title: '通讯费',
+      dataIndex: 'communicateFee',
+      key: 'communicateFee',
+      render: (text) => {
+        return (<span>{text || 0}元</span>)
+      },
+    }, {
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',
@@ -55,7 +72,7 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
       },
     },
     {
-      title: '操作',
+      title: '操作人',
       key: 'operation',
       width: 150,
       render: (text, record) => {
@@ -63,6 +80,14 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
           return <Link to={`/storeUserDetail?idUser=${record.id}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
         }
         return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看操作人详情</Link>
+      },
+    },
+    {
+      title: '操作',
+      key: 'operations',
+      width: 100,
+      render: (text, record) => {
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }]} />
       },
     },
   ]

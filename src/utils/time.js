@@ -2,14 +2,22 @@ import moment from 'moment'
 
 export function initialCreateTime(payload) {
   payload = { ...payload }
+  console.log('payload123123', payload)
   const { createTime } = payload
   if (createTime && createTime.length && createTime[0] && createTime[1]) {
     let tmpTime = []
-    if (createTime[0]) {
-      tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
-    }
-    if (createTime[1]) {
-      tmpTime[1] = moment(`${createTime[1]} 23:59:59`).unix()
+    /* eslint valid-typeof: 'off' */
+    console.log(typeof (createTime[0]))
+    if (typeof (createTime[0]) === 'object') {
+      tmpTime[0] = createTime[0].unix()
+      tmpTime[1] = createTime[1].unix()
+    } else {
+      if (createTime[0]) {
+        tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
+      }
+      if (createTime[1]) {
+        tmpTime[1] = moment(`${createTime[1]} 23:59:59`).unix()
+      }
     }
     payload.startTime = `${tmpTime[0]}000`
     payload.endTime = `${tmpTime[1]}999`
@@ -22,7 +30,7 @@ export function initialCreateTime(payload) {
 
 export function yesterTime() {
   let dayCount = 1
-  const test = false
+  const test = true
   if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
     // if (window.location.search === '') {

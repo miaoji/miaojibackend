@@ -89,7 +89,7 @@ const Business = ({ location, dispatch, business, loading }) => {
     onDownLoad() {
       dispatch({
         type: 'business/download',
-        payload: location.query,
+        payload: { ...location.query },
       })
     },
     onAdd() {
@@ -103,6 +103,10 @@ const Business = ({ location, dispatch, business, loading }) => {
   }
 
   const handleTabClick = (key) => {
+    if (location.query.createTime && location.query.createTime.length > 0) {
+      location.query.createTime[0] = location.query.createTime[0].format('YYYY-MM-DD')
+      location.query.createTime[1] = location.query.createTime[1].format('YYYY-MM-DD')
+    }
     dispatch(routerRedux.push({
       pathname,
       query: {

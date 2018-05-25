@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime } from 'utils'
-import { query } from '../services/storeuser'
+import { message } from 'antd'
+import { query, updateFee } from '../services/storeuser'
 import { pageModel } from './system/common'
 
 const { prefix } = config
@@ -60,6 +61,20 @@ export default modelExtend(pageModel, {
             columnslist: data.obj,
           },
         })
+      }
+    },
+
+    *update({ payload }, { call, put, select }) {
+      payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
+
+      console.log('select', payload)
+      const data = yield call(updateFee, payload)
+      if (data.code === 200) {
+        message.success('更新成功')
+        yield put({ type: 'query' })
+        yield put({ type: 'hideModal' })
+      } else {
+        message.success(data.mess || '网络错误')
       }
     },
 

@@ -10,3 +10,11 @@ export async function query(params) {
     params,
   })
 }
+
+export async function updateFee(params) {
+  return request({
+    url: storeuser.updateFee,
+    method: 'post',
+    params,
+  })
+}

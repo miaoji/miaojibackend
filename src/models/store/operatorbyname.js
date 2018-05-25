@@ -56,6 +56,7 @@ export default modelExtend(pageModel, {
     },
 
     *download({ payload }, { call }) {
+      payload = initialCreateTime(payload)
       notification.success({
         message: '准备中...',
         description: '正在为您准备资源,请稍等!!!',

@@ -66,6 +66,8 @@ export default modelExtend(pageModel, {
         description: '正在为您准备资源,请稍等!!!',
         duration: 3,
       })
+      delete payload.name
+      payload = initialCreateTime(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()
