@@ -1,5 +1,6 @@
 import React from 'react'
 import { DatePicker, Form, Row, Col } from 'antd'
+import locale from 'antd/lib/date-picker/locale/zh_CN'
 import PropTypes from 'prop-types'
 
 class DateRange extends React.Component {
@@ -80,6 +81,7 @@ class DateRange extends React.Component {
         <Row>
           <Col style={{ marginBottom: '14px' }} xl={{ span: 11 }} md={{ span: 11 }} sm={{ span: 11 }}>
             <DatePicker
+              locale={locale}
               disabledDate={this.disabledStartDate}
               format="YYYY-MM-DD"
               value={startValue}
@@ -93,6 +95,7 @@ class DateRange extends React.Component {
           </Col>
           <Col style={{ marginBottom: '14px' }} xl={{ span: 11, push: 1 }} md={{ span: 11, push: 2 }} sm={{ span: 11, push: 2 }}>
             <DatePicker
+              locale={locale}
               disabledDate={this.disabledEndDate}
               showToday={false}
               style={{ width: '100%' }}

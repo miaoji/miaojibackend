@@ -9,15 +9,14 @@ export function initialCreateTime(payload) {
     /* eslint valid-typeof: 'off' */
     console.log(typeof (createTime[0]))
     if (typeof (createTime[0]) === 'object') {
-      tmpTime[0] = createTime[0].unix()
-      tmpTime[1] = createTime[1].unix()
-    } else {
-      if (createTime[0]) {
-        tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
-      }
-      if (createTime[1]) {
-        tmpTime[1] = moment(`${createTime[1]} 23:59:59`).unix()
-      }
+      createTime[0] = createTime[0].format('YYYY-MM-DD')
+      createTime[1] = createTime[1].format('YYYY-MM-DD')
+    }
+    if (createTime[0]) {
+      tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
+    }
+    if (createTime[1]) {
+      tmpTime[1] = moment(`${createTime[1]} 23:59:59`).unix()
     }
     payload.startTime = `${tmpTime[0]}000`
     payload.endTime = `${tmpTime[1]}999`

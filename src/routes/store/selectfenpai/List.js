@@ -19,8 +19,11 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
+      render: (text, record) => {
+        if (filter.startTime) {
+          return <Link to={`/selectpjjeDetails?idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '暂无'}</Link>
+        }
+        return <Link to={`/selectpjjeDetails?idUser=${record.idUser}`}>{text || '暂无'}</Link>
       },
     }, {
       title: '分派数量',
