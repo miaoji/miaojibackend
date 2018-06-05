@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime } from 'utils'
 import { message } from 'antd'
-import { query, updateFee } from '../services/storeuser'
+import { query, updateFee, versionswitch } from '../services/storeuser'
 import { pageModel } from './system/common'
 
 const { prefix } = config
@@ -13,8 +13,9 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
-    selectedRowKeys: [],
+    expandedRowKeys: [],
     columnslist: [],
+    sonlist: [],
     isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
   },
 
@@ -34,8 +35,9 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      console.log('payload', payload)
       payload = initialCreateTime(payload)
-      const data = yield call(query, payload)
+      const data = yield call(query, { ...payload, type: 0 })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -51,28 +53,44 @@ export default modelExtend(pageModel, {
       }
     },
 
-    * queryColumnslist({ payload = {} }, { call, put }) {
-      // const list = yield select(({ storeuser }) => storeuser.list)
-      const data = yield call(query, payload)
-      if (data.code === 200) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            columnslist: data.obj,
-          },
-        })
-      }
-    },
-
     *update({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
-      console.log('select', payload)
       const data = yield call(updateFee, payload)
       if (data.code === 200) {
         message.success('更新成功')
         yield put({ type: 'query' })
         yield put({ type: 'hideModal' })
+      } else {
+        message.success(data.mess || '网络错误')
+      }
+    },
+
+    *versionswitch({ payload }, { call, put, select }) {
+      payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
+
+      const data = yield call(versionswitch, payload)
+
+      if (data.code === 200) {
+        message.success('切换成功')
+        yield put({ type: 'query' })
+        yield put({ type: 'hideModal' })
+      } else {
+        message.success(data.mess || '网络错误')
+      }
+    },
+
+    *unfold({ payload }, { call, put }) {
+      const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
+
+      if (data.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            sonlist: data.obj,
+            expandedRowKeys: [payload.superId],
+          },
+        })
       } else {
         message.success(data.mess || '网络错误')
       }

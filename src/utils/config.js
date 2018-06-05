@@ -8,7 +8,7 @@ let APIV3
 // APIV3 = 'http://192.168.231.232:8080'
 
 // 吴聪
-// APIV3 = 'http://192.168.231.231:8080'
+// APIV3 = 'http://192.168.231.231:8088'
 
 // 刘思远
 // APIV3 = 'http://192.168.126.1:8081'
@@ -62,6 +62,7 @@ module.exports = {
     storeuser: {
       list: `${APIV3}/quandiExpressSiteManager/store`, // 门店用户
       updateFee: `${APIV3}/quandiExpressSiteManager/updateFee`, // 修改门店用户通讯费
+      versionswitch: `${APIV3}/quandiExpressSiteManager/updateVersion`, // app版本切换
     },
     articles: {
       list: `${APIV3}/quandiExpressSiteManager/selectCollection`, // 文章分页数据

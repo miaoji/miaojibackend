@@ -18,3 +18,11 @@ export async function updateFee(params) {
     params,
   })
 }
+
+export async function versionswitch(params) {
+  return request({
+    url: storeuser.versionswitch,
+    method: 'post',
+    params,
+  })
+}

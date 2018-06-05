@@ -2,16 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
 const Storeuser = ({ location, dispatch, storeuser, loading }) => {
-  const { list, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = storeuser
+  const { list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys } = storeuser
   const { pageSize } = pagination
+  const { query, pathname } = location
 
   const modalProps = {
+    modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
@@ -34,13 +35,14 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
   const listProps = {
     dataSource: list,
     columnslist,
+    sonlist,
     filter: { ...location.query },
     loading: loading.effects['storeuser/query'],
     pagination,
     location,
+    expandedRowKeys,
     isMotion,
     onChange(page) {
-      const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -53,10 +55,11 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
     onDeleteItem(id) {
       dispatch({
         type: 'storeuser/delete',
-        payload: id,
+        payload: { id, query },
       })
     },
     onEditItem(item) {
+      console.log('query', query)
       dispatch({
         type: 'storeuser/showModal',
         payload: {
@@ -65,23 +68,39 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
         },
       })
     },
-    queryColumnslist() {
+    onVersionSwitching(item) {
       dispatch({
-        type: 'storeuser/queryColumnslist',
+        type: 'storeuser/showModal',
+        payload: {
+          modalType: 'versionswitch',
+          currentItem: item,
+        },
       })
     },
-    // 控制多选框的显示与隐藏
-    // rowSelection: {
-    //   selectedRowKeys,
-    //   onChange: (keys) => {
-    //     dispatch({
-    //       type: 'storeuser/updateState',
-    //       payload: {
-    //         selectedRowKeys: keys,
-    //       },
-    //     })
-    //   },
-    // },
+    // 控制可展开的行-执行展开操作但是不执行 原先的效果
+    onExpand(onOff, record) {
+      if (onOff === false) {
+        dispatch({
+          type: 'storeuser/updateState',
+          payload: {
+            expandedRowKeys: [],
+          },
+        })
+        return
+      }
+      dispatch({
+        type: 'storeuser/unfold',
+        payload: {
+          superId: record.id,
+        },
+      })
+      // dispatch({
+      //   type: 'storeuser/updateState',
+      //   payload: {
+      //     expandedRowKeys: [],
+      //   },
+      // })
+    },
   }
 
   const filterProps = {
@@ -123,29 +142,9 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
     },
   }
 
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'storeuser/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
-  }
-
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-        selectedRowKeys.length > 0 &&
-        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-          <Col>
-            {`Selected ${selectedRowKeys.length} items `}
-            <Popconfirm title={'Are you sure delete these items?'} placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
-            </Popconfirm>
-          </Col>
-        </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>

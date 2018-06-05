@@ -7,12 +7,16 @@ import { Link } from 'dva/router'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
+import SonTable from './SonTable'
 
-const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
         onEditItem(record)
+        break
+      case '2':
+        onVersionSwitching(record)
         break
       default:
         break
@@ -23,17 +27,20 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
       title: '站点ID',
       dataIndex: 'id',
       key: 'id',
+      width: 100,
       render: (text) => {
         return <span>{text}</span>
       },
     }, {
       title: '帐号',
+      width: 160,
       dataIndex: 'mobile',
       key: 'mobile',
     }, {
       title: '店铺名称',
       dataIndex: 'name',
       key: 'name',
+      width: 170,
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
@@ -41,6 +48,7 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
       title: '店铺级别',
       dataIndex: 'type',
       key: 'type',
+      width: 100,
       render: (text) => {
         return (<span>{text === '0'
           ? '主帐号'
@@ -50,6 +58,7 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
       title: '状态',
       dataIndex: 'isdelete',
       key: 'isdelete',
+      width: 70,
       render: (text) => {
         return (<span>{text === 0
           ? '禁用'
@@ -59,6 +68,7 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
       title: '通讯费',
       dataIndex: 'communicateFee',
       key: 'communicateFee',
+      width: 100,
       render: (text) => {
         return (<span>{text || 0}元</span>)
       },
@@ -66,6 +76,7 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
       title: 'APP版本',
       dataIndex: 'isBeta',
       key: 'isBeta',
+      width: 100,
       render: (text) => {
         const replText = {
           0: '正式版',
@@ -77,6 +88,7 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',
+      width: 150,
       render: (text) => {
         const createtime = text ? moment(text / 1).format('YYYY-MM-DD') : '未知时间'
         return <span>{createtime}</span>
@@ -98,7 +110,7 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
       key: 'operations',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
       },
     },
   ]
@@ -109,22 +121,23 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
   }
 
   const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
-  const onExpandedRowsChange = () => {
-    queryColumnslist()
-  }
+
   return (
     <div>
       <Table
         {...tableProps}
-        onExpandedRowsChange={onExpandedRowsChange}
         expandRowByClick
         className={classnames({ [styles.table]: true, [styles.motion]: false })}
         bordered
         scroll={{ x: 1250 }}
         columns={columns}
         simple
+        /* eslint react/jsx-no-duplicate-props: 'off' */
+        expandRowByClick={false}
+        // expandedRowRender={() => <p>123123123</p>}
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
+        expandedRowRender={record => <SonTable handleMenuClick={handleMenuClick} record={record} list={sonlist} filter={filter} />}
       />
     </div>
   )
@@ -136,8 +149,9 @@ List.propTypes = {
   isMotion: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   columnslist: PropTypes.array.isRequired,
-  queryColumnslist: PropTypes.func.isRequired,
+  onVersionSwitching: PropTypes.func.isRequired,
   filter: PropTypes.object,
+  sonlist: PropTypes.array,
 }
 
 export default List
