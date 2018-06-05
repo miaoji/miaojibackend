@@ -44,6 +44,10 @@ const StoreSign = ({ location, dispatch, storeSign, loading }) => {
     // },
     onChange(page, filter) {
       const { query, pathname } = location
+      if (query.createTime && query.createTime.length > 0) {
+        query.createTime[0] = query.createTime[0].format('YYYY-MM-DD')
+        query.createTime[1] = query.createTime[1].format('YYYY-MM-DD')
+      }
       dispatch(routerRedux.push({
         pathname,
         query: {

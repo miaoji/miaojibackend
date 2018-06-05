@@ -47,6 +47,10 @@ const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
     // onLink(iduser, query){
     // },
     onChange(page, filter) {
+      if (query.createTime && query.createTime.length > 0) {
+        query.createTime[0] = query.createTime[0].format('YYYY-MM-DD')
+        query.createTime[1] = query.createTime[1].format('YYYY-MM-DD')
+      }
       dispatch(routerRedux.push({
         pathname,
         query: {

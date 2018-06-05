@@ -63,6 +63,17 @@ const List = ({ filter, onDeleteItem, queryColumnslist, columnslist, onEditItem,
         return (<span>{text || 0}元</span>)
       },
     }, {
+      title: 'APP版本',
+      dataIndex: 'isBeta',
+      key: 'isBeta',
+      render: (text) => {
+        const replText = {
+          0: '正式版',
+          1: '点货版',
+        }
+        return (<span>{replText[text]}</span>)
+      },
+    }, {
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',

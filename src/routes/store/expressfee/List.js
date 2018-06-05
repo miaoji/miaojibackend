@@ -13,8 +13,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
-        if (filter.startTime) {
-          return <Link title="查看寄件详情" to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text || '暂无'}</Link>
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link title="查看寄件详情" to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text || '暂无'}</Link>
         }
         return <Link title="查看寄件详情" to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}`}>{text || '暂无'}</Link>
       },
@@ -58,8 +58,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'option',
       key: 'option',
       render: (text, record) => {
-        if (filter.startTime) {
-          return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看寄件详情</Link>
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看寄件详情</Link>
         }
         return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}`}>查看寄件详情</Link>
       },
