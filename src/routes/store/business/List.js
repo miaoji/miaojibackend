@@ -14,8 +14,8 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, ...tablePro
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
-        if (filter.startTime) {
-          return <Link target={'_blank'} to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{text}</Link>
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link target={'_blank'} to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
         }
         return <Link target={'_blank'} to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>{text}</Link>
       },
@@ -49,8 +49,8 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, ...tablePro
         if (!record.name) {
           return <span>该站点无法操作</span>
         }
-        if (filter.startTime) {
-          return <Link target={'_blank'} to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link target={'_blank'} to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看操作人详情</Link>
         }
         return <Link target={'_blank'} to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
       },

@@ -42,8 +42,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'option',
       width: 140,
       render: (text, record) => {
-        if (filter.startTime) {
-          return <Link to={`/orderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看快件详情</Link>
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link to={`/orderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[0]._i}`}>查看快件详情</Link>
         }
         return <Link to={`/orderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}`}>查看快件详情</Link>
       },

@@ -27,10 +27,10 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'todayqs',
       key: 'todayqs',
       render: (text, record) => {
-        if (filter.startTime) {
+        if (filter.createTime && filter.createTime.length > 0) {
           return (
             <Tooltip placement="top" title="查看订单详情">
-              <Link to={`/storeSignDetail?tr=1&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{(text || text === 0) ? text : '暂无'}</Link>
+              <Link to={`/storeSignDetail?tr=1&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{(text || text === 0) ? text : '暂无'}</Link>
             </Tooltip>
           )
         }
@@ -52,10 +52,10 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'tomorrowqs',
       key: 'tomorrowqs',
       render: (text, record) => {
-        if (filter.startTime) {
+        if (filter.createTime && filter.createTime.length > 0) {
           return (
             <Tooltip placement="top" title="查看订单详情">
-              <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{(text || text === 0) ? text : '暂无'}</Link>
+              <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{(text || text === 0) ? text : '暂无'}</Link>
             </Tooltip>
           )
         }
@@ -77,10 +77,10 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'aftertomorrowqs',
       key: 'aftertomorrowqs',
       render: (text, record) => {
-        if (filter.startTime) {
+        if (filter.createTime && filter.createTime.length > 0) {
           return (
             <Tooltip placement="top" title="查看订单详情">
-              <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{(text || text === 0) ? text : '暂无'}</Link>
+              <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{(text || text === 0) ? text : '暂无'}</Link>
             </Tooltip>
           )
         }
@@ -102,10 +102,10 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'noSignTotal',
       key: 'noSignTotal',
       render: (text, record) => {
-        if (filter.startTime) {
+        if (filter.createTime && filter.createTime.length > 0) {
           return (
             <Tooltip placement="top" title="查看订单详情">
-              <Link to={`/storeSignDetail?tr=4&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>{(text || text === 0) ? text : '暂无'}</Link>
+              <Link to={`/storeSignDetail?tr=4&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{(text || text === 0) ? text : '暂无'}</Link>
             </Tooltip>
           )
         }
