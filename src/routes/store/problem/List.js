@@ -1,13 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { Table } from 'antd'
+import { Table, Spin } from 'antd'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
+      title: '站点编号',
+      dataIndex: 'idUser',
+      key: 'idUser',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      },
+    }, {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
@@ -15,23 +22,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '品牌',
-      dataIndex: 'brand',
-      key: 'brand',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      },
-    }, {
-      title: '单号',
-      dataIndex: 'orderSn',
-      key: 'orderSn',
-      render: (text) => {
-        return <span>{text || 0}</span>
-      },
-    }, {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      title: '问题件数量',
+      dataIndex: 'count',
+      key: 'count',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
@@ -53,7 +46,21 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        expandedRowRender={(record) => {
+          if (record.brandList) {
+            return (<div>
+              <p style={{ margin: 0 }}>{record.brandList.map((item) => {
+                return `${item.count}---${item.brand}`
+              })}</p>
+            </div>)
+          }
+          return (
+            <div>
+              <Spin />
+            </div>
+          )
+        }}
+        rowKey={record => record.idUser}
         getBodyWrapper={getBodyWrapper}
       />
     </div>

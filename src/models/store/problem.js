@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { query } from '../../services/store/problem'
+import { query, gitBrandByIdUser } from '../../services/store/problem'
 import { pageModel } from '../system/common'
 import { time, initialCreateTime } from '../../utils'
 
@@ -10,6 +10,7 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    expandedRowKeys: [],
   },
 
   subscriptions: {
@@ -39,10 +40,15 @@ export default modelExtend(pageModel, {
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
       const data = yield call(query, { ...newpayload, download: 0 })
       if (data.obj) {
+        const list = data.obj
+        // list.forEach((item, index) => {
+        //   item.key = index
+        // })
+        // console.log('list', list)
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
@@ -51,6 +57,36 @@ export default modelExtend(pageModel, {
           },
         })
       }
+    },
+
+    *queryDetail({ payload }, { select, put, call }) {
+      const list = yield select(({ problem }) => problem.list)
+      payload = initialCreateTime(payload)
+      let newpayload = {}
+      if (!payload.startTime) {
+        const times = time.yesterTime()
+        newpayload = { ...times, ...payload }
+      } else {
+        newpayload = { ...payload }
+      }
+      // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
+      const data = yield call(gitBrandByIdUser, { ...newpayload })
+      console.log('datadetail', data)
+      list.forEach((item) => {
+        if (item.idUser === payload.idUser) {
+          if (data.code === 200 && data.obj && data.obj.length) {
+            item.brandList = data.obj
+          } else {
+            item.brandList = []
+          }
+        }
+      })
+      yield put({
+        type: 'querySuccess',
+        payload: {
+          list,
+        },
+      })
     },
 
   },

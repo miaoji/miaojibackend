@@ -2,8 +2,11 @@ const APIV1 = '/api/v1'
 // const APIV2 = '/api/v2'
 
 let APIV3
-// 本地测试
 
+// 线上
+APIV3 = 'http://app.quandikeji.com:8288'
+
+// 本地测试
 // 徐景阳
 // APIV3 = 'http://192.168.231.232:8080'
 
@@ -15,9 +18,6 @@ let APIV3
 
 // 张涛
 APIV3 = 'http://192.168.231.239:8066'
-
-// 线上
-// APIV3 = 'http://app.quandikeji.com:8288'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -190,6 +190,11 @@ module.exports = {
     },
     // 异常件页面
     problem: {
+      all: `${APIV3}/quandiExpressSiteManager/selectProblemPartsCount`,
+      gitBrandByIdUser: `${APIV3}/quandiExpressSiteManager/selectProblemPartsByBrand`,
+    },
+    // 异常件明细
+    problemdetail: {
       all: `${APIV3}/quandiExpressSiteManager/selectproblemParts`,
     },
   },

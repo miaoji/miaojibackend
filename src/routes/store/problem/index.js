@@ -8,7 +8,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Problem = ({ location, dispatch, problem, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = problem
+  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName, expandedRowKeys } = problem
   const { pageSize } = pagination
 
   const modalProps = {
@@ -36,6 +36,7 @@ const Problem = ({ location, dispatch, problem, loading }) => {
     filter: {
       ...location.query,
     },
+    expandedRowKeys,
     dataSource: list,
     loading: loading.effects['problem/query'],
     pagination,
@@ -72,6 +73,32 @@ const Problem = ({ location, dispatch, problem, loading }) => {
           currentItem: item,
         },
       })
+    },
+    // 控制可展开的行-执行展开操作但是不执行 原先的效果
+    onExpand(onOff, item) {
+      if (onOff) {
+        dispatch({
+          type: 'problem/queryDetail',
+          payload: {
+            idUser: item.idUser,
+            key: item.key,
+            ...location.query,
+          },
+        })
+        dispatch({
+          type: 'problem/updateState',
+          payload: {
+            expandedRowKeys: [item.key],
+          },
+        })
+      } else {
+        dispatch({
+          type: 'problem/updateState',
+          payload: {
+            expandedRowKeys: [],
+          },
+        })
+      }
     },
   }
 
