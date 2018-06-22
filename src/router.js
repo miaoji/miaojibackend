@@ -343,6 +343,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 门店问题件明细(子页)
+          path: 'problemdetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/store/problemdetail'))
+              cb(null, require('./routes/store/problemdetail/'))
+            }, 'problemdetail')
+          },
+        },
+        {
           // 黑名单订单详情
           path: 'blacklistdetail',
           getComponent(nextState, cb) {

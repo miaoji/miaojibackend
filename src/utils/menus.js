@@ -146,6 +146,13 @@ export default [
     name: '门店问题件',
     route: '/problem',
   },
+  {
+    id: '4016',
+    bpid: '4015',
+    mpid: '-1',
+    name: '门店问题件明细',
+    route: '/problemdetail',
+  },
   // //
   {
     id: '5',
