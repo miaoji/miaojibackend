@@ -55,7 +55,7 @@ module.exports = {
       // 获取门店总数
       storeTotal: `${APIV3}/quandiExpressSiteManager/homePageStoreTotal`,
       // 昨日收入
-      income: `${APIV3}/quandiExpressSiteManager/lineChart`,
+      income: `${APIV3}/quandiExpressSiteManager/homePageYesterdayInCome`,
     },
     menus: `${APIV1}/menus`,
     wxuser: {

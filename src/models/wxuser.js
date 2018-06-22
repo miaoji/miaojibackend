@@ -12,7 +12,7 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
+    isMotion: false,
   },
 
   subscriptions: {

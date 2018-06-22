@@ -68,7 +68,9 @@ export default modelExtend(pageModel, {
   },
   effects: {
     *getIncome(_, { call, put }) {
+      console.log('1231')
       const data = yield call(income)
+      console.log('data123123', data)
       if (data.code === 200) {
         yield put({
           type: 'setStates',
