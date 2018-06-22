@@ -11,16 +11,24 @@
     
     .ant-table-expanded-row > td {
       background-color: #fbfbfb;
-      border: none;
-    }
-    .ant-table-expanded-row > td:last-child {
-      padding: 0 48px 0 8px;
+      border: none!important;
     }
     
     .ant-table-expanded-row > td:last-child .ant-table-thead th {
       border: none;
       border-bottom: 1px #ccc solid;
       background-color: #fbfbfb;
+    }
+    .ant-table-expanded-row > td:last-child .ant-table-tbody> tr:last-child > td {
+      border-bottom: none;
+    }
+      .ant-table-expanded-row > td:last-child .ant-table-tbody td {
+      border: none;
+      border-bottom: 1px #ddd solid;
+      background-color: #fbfbfb;
+    }
+    .ant-table-expanded-row > td:last-child .ant-table-tbody > tr:hover > td {
+      background-color: #ecf6fd;
     }
     .ant-table-expanded-row {
       .ant-table-header > table,
