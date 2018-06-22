@@ -7,6 +7,7 @@ import moment from 'moment'
 import { DateRange } from '../../../components'
 import { handleFields, defaultTime } from '../../../utils'
 
+const Search = Input.Search
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -90,11 +91,8 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>站 点 名 : </span>
-        {getFieldDecorator('name', { initialValue: name })(
-          <Input onPressEnter={nameChange} size="large" style={{ width: '70%' }} placeholder="按站点名搜索" />
-        )}
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(<Search onPressEnter={nameChange} placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(

@@ -123,7 +123,10 @@ const Business = ({ location, dispatch, business, loading }) => {
   return (
     <Page inner>
       <Filter {...filterProps} />
-      <Tabs activeKey={query.mailtype || '0'} onTabClick={handleTabClick}>
+      <Tabs activeKey={query.mailtype || '9'} onTabClick={handleTabClick}>
+        <TabPane tab="全部" key={9}>
+          <List {...listProps} />
+        </TabPane>
         <TabPane tab="普通件" key={0}>
           <List {...listProps} />
         </TabPane>

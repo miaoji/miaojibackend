@@ -65,7 +65,7 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name } = filter
+  const { name, mobile } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -79,6 +79,9 @@ const Filter = ({
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />)}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按账号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="">
