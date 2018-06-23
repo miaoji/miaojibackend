@@ -50,7 +50,11 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
           if (record.brandList) {
             return (<div>
               <p style={{ margin: 0 }}>{record.brandList.map((item) => {
-                return `${item.count}---${item.brand}`
+                return (
+                  <div>
+                    {`${item.name}---${item.sjtotal}`}
+                  </div>
+                )
               })}</p>
             </div>)
           }

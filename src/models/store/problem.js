@@ -59,7 +59,10 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *queryDetail({ payload }, { select, put, call }) {
+    *queryDetail({ payload, rowItem }, { select, put, call }) {
+      if (rowItem.brandList instanceof Array) {
+        return
+      }
       const list = yield select(({ problem }) => problem.list)
       payload = initialCreateTime(payload)
       let newpayload = {}
@@ -71,7 +74,6 @@ export default modelExtend(pageModel, {
       }
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
       const data = yield call(gitBrandByIdUser, { ...newpayload })
-      console.log('datadetail', data)
       list.forEach((item) => {
         if (item.idUser === payload.idUser) {
           if (data.code === 200 && data.obj && data.obj.length) {

@@ -54,7 +54,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'ticket',
       render: (text, record) => {
         const href = `/qrdetail?ticket=${text}&name=${record.name}&parameter=${record.parameter}&remark=${record.remark}`
-        return <a href={href} target="_blank">点击查看</a>
+        return <a href={href} target="blank">点击查看</a>
       },
     }, {
       title: '复制图片路径',
