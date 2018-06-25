@@ -42,11 +42,11 @@ const List = ({ isMotion, location, ...tableProps }) => {
       title: '提现状态',
       dataIndex: 'status',
       key: 'status',
-      filters: [
-        { text: '失败', value: '0' },
-        { text: '成功', value: '1' },
-      ],
-      onFilter: (value, record) => record.status === value,
+      // filters: [
+      //   { text: '失败', value: '0' },
+      //   { text: '成功', value: '1' },
+      // ],
+      // onFilter: (value, record) => record.status === value,
       render: (text) => {
         return (<span>{text === 0
           ? '失败'

@@ -29,7 +29,7 @@ export function initialCreateTime(payload) {
 
 export function yesterTime() {
   let dayCount = 1
-  const test = true
+  const test = false
   if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
     // if (window.location.search === '') {
@@ -49,8 +49,8 @@ export function yesterTime() {
     }
   }
   return {
-    startTime: 1519833600000,
-    endTime: 1519919999999,
+    startTime: 1528992000000,
+    endTime: 1529078399999,
   }
 }
 

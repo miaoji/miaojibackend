@@ -76,10 +76,10 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按提现人搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按充值人搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <FilterItem label="创建时间">
+        <FilterItem>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
             <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}

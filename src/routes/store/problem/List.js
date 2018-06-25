@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { Link } from 'dva/router'
 import { Table, Spin } from 'antd'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
@@ -18,8 +19,11 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
+      render: (text, record) => {
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link to={`/problemdetail?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[0]._i}`}>{text || '暂无'}</Link>
+        }
+        return <Link to={`/problemdetail?idUser=${record.idUser}`}>{text || '暂无'}</Link>
       },
     }, {
       title: '问题件数量',
@@ -47,15 +51,26 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         columns={columns}
         simple
         expandedRowRender={(record) => {
+          if (record.brandList.length === 0) {
+            return (<div>
+              <div style={{ margin: 0 }}>
+                <div style={{ textAlign: 'left', margin: '10px' }}>
+                  暂无相关数据
+                </div>
+              </div>
+            </div>)
+          }
           if (record.brandList) {
             return (<div>
-              <p style={{ margin: 0 }}>{record.brandList.map((item) => {
-                return (
-                  <div>
-                    {`${item.name}---${item.sjtotal}`}
-                  </div>
-                )
-              })}</p>
+              <div style={{ margin: 0 }}>
+                {record.brandList.map((item) => {
+                  return (
+                    <div style={{ textAlign: 'left', margin: '10px' }}>
+                      {`快递品牌: ${item.brand}, 问题件数量: ${item.count}`}
+                    </div>
+                  )
+                })}
+              </div>
             </div>)
           }
           return (
