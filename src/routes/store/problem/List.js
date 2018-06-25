@@ -51,7 +51,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         columns={columns}
         simple
         expandedRowRender={(record) => {
-          if (record.brandList.length === 0) {
+          if (record.brandList && record.brandList.length === 0) {
             return (<div>
               <div style={{ margin: 0 }}>
                 <div style={{ textAlign: 'left', margin: '10px' }}>

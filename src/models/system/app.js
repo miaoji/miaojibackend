@@ -1,16 +1,21 @@
+import React from 'react'
 import { routerRedux } from 'dva/router'
 // import { parse } from 'qs'
 import config from 'config'
 // import { EnumRoleType } from 'enums'
 import menus from 'utils/menus'
 import { storage } from 'utils'
+import { Select } from 'antd'
 // import { query, logout } from '../services/system/app'
+import { query as queryStoreUser } from 'src/services/storeuser'
 
 const { prefix } = config
+const { Option } = Select
 
 export default {
   namespace: 'app',
   state: {
+    storeuserList: [],
     user: {},
     permissions: {
       visit: [],
@@ -33,6 +38,7 @@ export default {
 
     setup({ dispatch }) {
       dispatch({ type: 'query' })
+      dispatch({ type: 'queryStoreUser' })
       let tid
       window.onresize = () => {
         clearTimeout(tid)
@@ -45,7 +51,7 @@ export default {
   },
   effects: {
 
-    * query(_, { put }) {
+    *query(_, { put }) {
       const userInfo = storage({ key: 'user' })
       if (userInfo) {
         const user = JSON.parse(userInfo)
@@ -97,6 +103,30 @@ export default {
       const isNavbar = document.body.clientWidth < 769
       if (isNavbar !== app.isNavbar) {
         yield put({ type: 'handleNavbar', payload: isNavbar })
+      }
+    },
+
+    *queryStoreUser(_, { call, put }) {
+      const data = yield call(queryStoreUser, {
+        current: 1,
+        pageSize: 10000,
+      })
+      if (data.code === 200 && data.obj) {
+        const option = data.obj.map((item) => {
+          if (!item.name) {
+            return false
+          }
+          const val = `${item.id}///${item.name}`
+          return <Option key={val}>{item.name}</Option>
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            storeuserList: option,
+          },
+        })
+      } else {
+        throw '网络故障，请稍后重试' || data.mess
       }
     },
 

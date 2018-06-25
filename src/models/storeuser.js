@@ -37,7 +37,7 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       console.log('payload', payload)
       payload = initialCreateTime(payload)
-      const data = yield call(query, { ...payload, type: 0 })
+      const data = yield call(query, { ...payload, superId: -1 })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -80,6 +80,7 @@ export default modelExtend(pageModel, {
       }
     },
 
+    // 根据主账号查询子账号
     *unfold({ payload }, { call, put }) {
       const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
 
@@ -106,11 +107,6 @@ export default modelExtend(pageModel, {
 
     hideModal(state) {
       return { ...state, modalVisible: false }
-    },
-
-    switchIsMotion(state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
-      return { ...state, isMotion: !state.isMotion }
     },
 
   },

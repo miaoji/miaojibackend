@@ -100,9 +100,6 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  onAdd: PropTypes.func,
-  isMotion: PropTypes.bool,
-  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,

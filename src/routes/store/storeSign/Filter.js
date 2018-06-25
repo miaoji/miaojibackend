@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input,
+  Form, Button, Row, Col, Input, DatePicker,
 } from 'antd'
-import { DateRange } from '../../../components'
+import moment from 'moment'
+// import { DateRange } from '../../../components'
 import { handleFields, defaultTime } from '../../../utils'
 
 const ColProps = {
@@ -75,25 +76,35 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name, createTime } = filter
+  let { name } = filter
 
   const nameChange = (key) => {
     handleChange('name', key.target.value)
   }
 
+  const handleTimeChange = (key) => {
+    console.log('arg', `${key.unix()}000`)
+  }
+
+  function disabledDate(current) {
+    // Can not select days before today and today
+    return current && current > moment().endOf('day')
+  }
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>站点名 : </span>
         {getFieldDecorator('name', { initialValue: name })(
-          <Input onPressEnter={nameChange} size="large" style={{ width: '70%' }} placeholder="按站点名搜索" />
+          <Input onPressEnter={nameChange} size="large" style={{ width: '100%' }} placeholder="按站点名搜索" />
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: createTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
-        )}
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <DatePicker
+          disabledDate={disabledDate}
+          style={{ width: '100%' }}
+          size="large"
+          onChange={handleTimeChange}
+        />
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

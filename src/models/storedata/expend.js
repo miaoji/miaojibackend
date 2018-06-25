@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { config, initialCreateTime } from 'utils'
+import { config, initialCreateTime, time } from 'utils'
 import { pageModel } from 'src/models/system/common'
 import { query } from '../../services/storedata/expend'
 
@@ -9,12 +9,7 @@ export default modelExtend(pageModel, {
   namespace: 'expend',
 
   state: {
-    currentItem: {},
-    modalVisible: false,
-    modalType: 'create',
-    selectedRowKeys: [],
-    columnslist: [],
-    isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
+    isMotion: false,
   },
 
   subscriptions: {
@@ -34,7 +29,14 @@ export default modelExtend(pageModel, {
 
     * query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
-      const data = yield call(query, payload)
+      let newpayload = {}
+      if (!payload.startTime) {
+        const times = time.yesterTime()
+        newpayload = { ...times, ...payload }
+      } else {
+        newpayload = { ...payload }
+      }
+      const data = yield call(query, newpayload)
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -45,19 +47,6 @@ export default modelExtend(pageModel, {
               pageSize: Number(payload.pageSize) || 10,
               total: data.total,
             },
-          },
-        })
-      }
-    },
-
-    * queryColumnslist({ payload = {} }, { call, put }) {
-      // const list = yield select(({ storeuser }) => storeuser.list)
-      const data = yield call(query, payload)
-      if (data.code === 200) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            columnslist: data.obj,
           },
         })
       }

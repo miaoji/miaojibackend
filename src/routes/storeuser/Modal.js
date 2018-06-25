@@ -57,8 +57,8 @@ const modal = ({
               ],
             })(
               <RadioGroup>
-                <Radio value={'1'}>点货版</Radio>
-                <Radio value={'0'}>正式版</Radio>
+                <Radio value={1}>点货版</Radio>
+                <Radio value={0}>正式版</Radio>
               </RadioGroup>
             )}
           </FormItem>

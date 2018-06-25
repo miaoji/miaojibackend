@@ -2,13 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
 const Articles = ({ location, dispatch, articles, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = articles
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion } = articles
   const { pageSize } = pagination
 
   const modalProps = {
@@ -62,17 +61,6 @@ const Articles = ({ location, dispatch, articles, loading }) => {
         },
       })
     },
-    rowSelection: {
-      selectedRowKeys,
-      onChange: (keys) => {
-        dispatch({
-          type: 'articles/updateState',
-          payload: {
-            selectedRowKeys: keys,
-          },
-        })
-      },
-    },
   }
   const filterProps = {
     isMotion,
@@ -110,29 +98,9 @@ const Articles = ({ location, dispatch, articles, loading }) => {
     },
   }
 
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'articles/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
-  }
-
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-        selectedRowKeys.length > 0 &&
-        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-          <Col>
-            {`Selected ${selectedRowKeys.length} items `}
-            <Popconfirm title={'Are you sure delete these items?'} placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
-            </Popconfirm>
-          </Col>
-        </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>

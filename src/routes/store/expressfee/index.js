@@ -7,8 +7,9 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Expressfee = ({ location, dispatch, expressfee, loading }) => {
+const Expressfee = ({ location, dispatch, expressfee, app, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = expressfee
+  const { storeuserList } = app
 
   const modalProps = {
     type: modalType,
@@ -39,8 +40,6 @@ const Expressfee = ({ location, dispatch, expressfee, loading }) => {
     loading: loading.effects['expressfee/query'],
     pagination,
     location,
-    // onLink(iduser, query){
-    // },
     onChange(page, filter) {
       const { query, pathname } = location
       if (query.createTime && query.createTime.length > 0) {
@@ -78,6 +77,7 @@ const Expressfee = ({ location, dispatch, expressfee, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -126,9 +126,10 @@ const Expressfee = ({ location, dispatch, expressfee, loading }) => {
 
 Expressfee.propTypes = {
   expressfee: PropTypes.object,
+  app: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ expressfee, loading }) => ({ expressfee, loading }))(Expressfee)
+export default connect(({ expressfee, loading, app }) => ({ expressfee, loading, app }))(Expressfee)

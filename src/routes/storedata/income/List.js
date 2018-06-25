@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import AnimTableBody from 'components/DataTable/AnimTableBody'
 import styles from './List.less'
 
-const List = ({ onDeleteItem, queryColumnslist, columnslist, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ isMotion, location, ...tableProps }) => {
   const columns = [
     {
       title: '主体',
@@ -55,14 +55,11 @@ const List = ({ onDeleteItem, queryColumnslist, columnslist, onEditItem, isMotio
   }
 
   const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
-  const onExpandedRowsChange = () => {
-    queryColumnslist()
-  }
+
   return (
     <div>
       <Table
         {...tableProps}
-        onExpandedRowsChange={onExpandedRowsChange}
         expandRowByClick
         className={classnames({ [styles.table]: true, [styles.motion]: false })}
         bordered
@@ -77,12 +74,8 @@ const List = ({ onDeleteItem, queryColumnslist, columnslist, onEditItem, isMotio
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func.isRequired,
-  onEditItem: PropTypes.func.isRequired,
   isMotion: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
-  columnslist: PropTypes.array.isRequired,
-  queryColumnslist: PropTypes.func.isRequired,
 }
 
 export default List

@@ -9,12 +9,7 @@ export default modelExtend(pageModel, {
   namespace: 'income',
 
   state: {
-    currentItem: {},
-    modalVisible: false,
-    modalType: 'create',
-    selectedRowKeys: [],
-    columnslist: [],
-    isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
+    isMotion: false,
   },
 
   subscriptions: {
@@ -32,7 +27,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    * query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data.code === 200) {
@@ -45,19 +40,6 @@ export default modelExtend(pageModel, {
               pageSize: Number(payload.pageSize) || 10,
               total: data.total,
             },
-          },
-        })
-      }
-    },
-
-    * queryColumnslist({ payload = {} }, { call, put }) {
-      // const list = yield select(({ storeuser }) => storeuser.list)
-      const data = yield call(query, payload)
-      if (data.code === 200) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            columnslist: data.obj,
           },
         })
       }

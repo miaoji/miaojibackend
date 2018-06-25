@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input,
+  Form, Button, Row, Col, Input, Select,
 } from 'antd'
 import moment from 'moment'
 import { DateRange } from '../../../components'
@@ -26,6 +26,7 @@ const Filter = ({
   onFilterChange,
   onDownLoad,
   filter,
+  storeuserList,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -86,14 +87,33 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
   const nameChange = (key) => {
-    handleChange('name', key.target.value)
+    console.log('arg', arguments)
+    console.log('key', key)
+    handleChange('idUser', key.target.value)
   }
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search onPressEnter={nameChange} placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按店铺名称搜索"
+            size="large"
+          >
+            {storeuserList}
+          </Select>
+        )}
       </Col>
+      <div style={{ display: 'none' }}>
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+          {getFieldDecorator('name', { initialValue: name })(
+            <Search onPressEnter={nameChange} placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />
+          )}
+        </Col>
+      </div>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
@@ -119,6 +139,7 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   onDownLoad: PropTypes.func,
+  storeuserList: PropTypes.array,
 }
 
 export default Form.create()(Filter)

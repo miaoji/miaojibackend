@@ -47,6 +47,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{text ? `${text}元` : '0元'}</span>
       },
     }, {
+      title: '收款成功(合计)',
+      dataIndex: 'amount ',
+      key: 'amount ',
+      render: (text, record) => {
+        const amount = record.alipayPrice + record.weChatPrice + record.balance + record.cash
+        return <span>{amount ? `${amount}元` : '0元'}</span>
+      },
+    }, {
       title: '收款失败金额',
       dataIndex: 'failPrice',
       key: 'failPrice',

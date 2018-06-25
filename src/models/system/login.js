@@ -26,7 +26,8 @@ export default {
           yield put(routerRedux.push('/dashboard'))
         }
       } else {
-        throw data
+        yield put({ type: 'hideLoginLoading' })
+        throw data.mess
       }
       yield put({ type: 'hideLoginLoading' })
     },
