@@ -44,8 +44,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '第一天签收率',
       dataIndex: 'qsPercentage',
       key: 'qsPercentage',
-      render: (text) => {
-        return <span>{(text || text === 0) ? text : '暂无'}</span>
+      render: (text, record) => {
+        return <span>{(Number(record.todayqs) !== 0 && Number(record.todaysf) !== 0) ? `${((record.todayqs / record.todaysf) * 100).toFixed(2)}%` : '0%'}</span>
       },
     }, {
       title: '第二天签收量',
@@ -69,8 +69,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '第二天签收率',
       dataIndex: 'tomorrowqsPercentage',
       key: 'tomorrowqsPercentage',
-      render: (text) => {
-        return <span>{(text || text === 0) ? text : '暂无'}</span>
+      render: (text, record) => {
+        return <span>{(Number(record.tomorrowqs) !== 0 && Number(record.todaysf) !== 0) ? `${((record.tomorrowqs / record.todaysf) * 100).toFixed(2)}%` : '0%'}</span>
       },
     }, {
       title: '第三天天签收量',
@@ -94,8 +94,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '第三天天签收率',
       dataIndex: 'afternoqsPercentage',
       key: 'afternoqsPercentage',
-      render: (text) => {
-        return <span>{(text || text === 0) ? text : '暂无'}</span>
+      render: (text, record) => {
+        return <span>{(Number(record.aftertomorrowqs) !== 0 && Number(record.todaysf) !== 0) ? `${((record.aftertomorrowqs / record.todaysf) * 100).toFixed(2)}%` : '0%'}</span>
       },
     }, {
       title: '前三天未签收数',
@@ -119,8 +119,8 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '前三未签收率',
       dataIndex: 'noqsPercentage',
       key: 'noqsPercentage',
-      render: (text) => {
-        return <span>{(text || text === 0) ? text : '暂无'}</span>
+      render: (text, record) => {
+        return <span>{(Number(record.noSignTotal) !== 0 && Number(record.todaysf) !== 0) ? `${((record.noSignTotal / record.todaysf) * 100).toFixed(2)}%` : '0%'}</span>
       },
     },
   ]

@@ -27,7 +27,7 @@ export function initialCreateTime(payload) {
   return payload
 }
 
-export function yesterTime() {
+export function yesterTime(day = 0) {
   let dayCount = 1
   const test = false
   if (process.env.NODE_ENV !== 'development' || test) {
@@ -41,16 +41,16 @@ export function yesterTime() {
     const s = date.getSeconds()
     const ms = date.getMilliseconds()
     const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
-    const startTime = date.getTime() - 86400000 * dayCount - times
-    const endTime = date.getTime() - times - 1
+    const startTime = date.getTime() - 86400000 * dayCount - times - 86400000 * day
+    const endTime = date.getTime() - times - 1 - 86400000 * day
     return {
       startTime,
       endTime,
     }
   }
   return {
-    startTime: 1528992000000,
-    endTime: 1529078399999,
+    startTime: 1528992000000 - 86400000 * day,
+    endTime: 1529078399999 - 86400000 * day,
   }
 }
 
@@ -93,9 +93,9 @@ export function handleFields(fields) {
   return fields
 }
 
-export function defaultTime(filters) {
+export function defaultTime(filters, day) {
   filters = { ...filters }
-  const times = yesterTime()
+  const times = yesterTime(day)
   if (!filters.createTime) {
     filters.createTime = []
     filters.createTime[0] = moment(times.startTime)

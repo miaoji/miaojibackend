@@ -30,7 +30,7 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  filter = defaultTime(filter)
+  filter = defaultTime(filter, 3)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -76,18 +76,17 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name } = filter
+  let { name, createTime } = filter
 
   const nameChange = (key) => {
     handleChange('name', key)
   }
 
   const handleTimeChange = (key) => {
-    console.log('arg', `${key.unix()}000`)
+    handleChange('createTime', [key, key])
   }
 
   function disabledDate(current) {
-    // Can not select days before today and today
     return current && current > moment().endOf('day')
   }
 
@@ -107,12 +106,14 @@ const Filter = ({
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <DatePicker
-          disabledDate={disabledDate}
-          style={{ width: '100%' }}
-          size="large"
-          onChange={handleTimeChange}
-        />
+        {getFieldDecorator('createTime', { initialValue: createTime[0] })(
+          <DatePicker
+            disabledDate={disabledDate}
+            style={{ width: '100%' }}
+            size="large"
+            onChange={handleTimeChange}
+          />
+        )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
