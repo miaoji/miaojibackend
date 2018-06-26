@@ -69,7 +69,7 @@ const fetch = (options) => {
         params: cloneData || params,
         timeout: 180000,
       })
-    case 'post':
+    case 'parampost':
       return axios({
         url,
         method: 'post',
@@ -77,7 +77,7 @@ const fetch = (options) => {
         params,
         timeout: 180000,
       })
-    case 'parampost':
+    case 'post':
       /* eslint no-case-declarations: 'off' */
       let param = new URLSearchParams()
       /* eslint guard-for-in: 'off' */
@@ -102,7 +102,7 @@ const fetch = (options) => {
   }
 }
 
-export default function request (options) {
+export default function request(options) {
   return fetch(options).then((response) => {
     const { statusText, status } = response
     let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data

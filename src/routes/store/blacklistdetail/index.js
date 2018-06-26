@@ -2,35 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
 
-const Blacklistdetail = ({ location, dispatch, blacklistdetail, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = blacklistdetail
+const Blacklistdetail = ({ location, dispatch, blacklistdetail, loading, app }) => {
+  const { list, pagination } = blacklistdetail
   const { pageSize } = pagination
-
-  const modalProps = {
-    type: modalType,
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
-    wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk(data) {
-      dispatch({
-        type: `blacklistdetail/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel() {
-      dispatch({
-        type: 'blacklistdetail/hideModal',
-      })
-    },
-  }
+  const { storeuserList } = app
 
   const listProps = {
     filter: {
@@ -79,6 +57,7 @@ const Blacklistdetail = ({ location, dispatch, blacklistdetail, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -120,16 +99,16 @@ const Blacklistdetail = ({ location, dispatch, blacklistdetail, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
 Blacklistdetail.propTypes = {
+  app: PropTypes.object,
   blacklistdetail: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ blacklistdetail, loading }) => ({ blacklistdetail, loading }))(Blacklistdetail)
+export default connect(({ blacklistdetail, loading, app }) => ({ blacklistdetail, loading, app }))(Blacklistdetail)

@@ -11,7 +11,7 @@ export async function query (params) {
   params = JSON.stringify(params)
   return request({
     url: problem.all,
-    method: 'parampost',
+    method: 'post',
     params: {
       param: params,
     },
@@ -25,7 +25,7 @@ export async function gitBrandByIdUser (params) {
   params = JSON.stringify(params)
   return request({
     url: problem.gitBrandByIdUser,
-    method: 'parampost',
+    method: 'post',
     params: {
       param: params,
     },

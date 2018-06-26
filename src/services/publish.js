@@ -5,7 +5,7 @@ const { articles } = api
 export async function upload (params) {
   return request({
     url: articles.publish.upload,
-    method: 'post',
+    method: 'parampost',
     data: params,
   })
 }
@@ -13,7 +13,7 @@ export async function upload (params) {
 export async function create (params) {
   return request({
     url: articles.publish.send,
-    method: 'post',
+    method: 'parampost',
     data: params,
   })
 }

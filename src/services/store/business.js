@@ -11,7 +11,7 @@ export async function query (params) {
   params = JSON.stringify(params)
   return request({
     url: business.all,
-    method: 'parampost',
+    method: 'post',
     params: {
       param: params,
     },

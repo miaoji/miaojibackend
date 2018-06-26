@@ -14,7 +14,6 @@ const Expend = ({ location, dispatch, expend, app, loading }) => {
     dataSource: list,
     loading: loading.effects['expend/query'],
     pagination,
-    storeuserList,
     location,
     isMotion,
     onChange(page) {
@@ -35,6 +34,7 @@ const Expend = ({ location, dispatch, expend, app, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,

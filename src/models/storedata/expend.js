@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
-import { config, initialCreateTime, time } from 'utils'
-import { pageModel } from 'src/models/system/common'
+import { config, initialCreateTime, time, filterStoreSelect } from '../../utils'
+import { pageModel } from '../system/common'
 import { query } from '../../services/storedata/expend'
 
 const { prefix } = config
@@ -29,6 +29,7 @@ export default modelExtend(pageModel, {
 
     * query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
+      filterStoreSelect(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()

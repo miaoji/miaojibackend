@@ -14,7 +14,7 @@ export async function query (params) {
 export async function create (params) {
   return request({
     url: user.replace('/:id', ''),
-    method: 'post',
+    method: 'parampost',
     data: params,
   })
 }
