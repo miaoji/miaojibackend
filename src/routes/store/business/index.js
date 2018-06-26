@@ -9,9 +9,10 @@ import { Page } from '../../../components'
 
 const { TabPane } = Tabs
 
-const Business = ({ location, dispatch, business, loading }) => {
+const Business = ({ location, dispatch, business, app, loading }) => {
   const { list, sonlist, pagination, expandedRowKeys } = business
   const { query, pathname } = location
+  const { storeuserList } = app
 
   const listProps = {
     filter: {
@@ -68,6 +69,7 @@ const Business = ({ location, dispatch, business, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -143,9 +145,10 @@ const Business = ({ location, dispatch, business, loading }) => {
 
 Business.propTypes = {
   business: PropTypes.object,
+  app: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ business, loading }) => ({ business, loading }))(Business)
+export default connect(({ business, loading, app }) => ({ business, loading, app }))(Business)

@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { query, gitBrandByIdUser } from '../../services/store/problem'
 import { pageModel } from '../system/common'
-import { time, initialCreateTime } from '../../utils'
+import { time, initialCreateTime, filterStoreSelect } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'problem',
@@ -30,6 +30,7 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
+      filterStoreSelect(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()

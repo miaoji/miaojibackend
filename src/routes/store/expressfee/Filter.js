@@ -87,9 +87,7 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
   const nameChange = (key) => {
-    console.log('arg', arguments)
-    console.log('key', key)
-    handleChange('idUser', key.target.value)
+    handleChange('name', key)
   }
 
   return (

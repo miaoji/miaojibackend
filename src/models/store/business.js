@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
 import { query } from '../../services/store/business'
 import { pageModel } from '../system/common'
-import { time, initialCreateTime } from '../../utils'
+import { time, initialCreateTime, filterStoreSelect } from '../../utils'
 import { query as queryOperator } from '../../services/store/operatorbyname'
 import { download } from '../../services/store/expressfeedetail'
 
@@ -36,6 +36,7 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
+      filterStoreSelect(payload)
       if (Number(payload.mailtype) === 9) {
         payload.mailtype = undefined
       }

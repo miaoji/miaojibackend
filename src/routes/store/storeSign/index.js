@@ -2,35 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
 
-const StoreSign = ({ location, dispatch, storeSign, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = storeSign
+const StoreSign = ({ location, dispatch, storeSign, app, loading }) => {
+  const { list, pagination } = storeSign
   const { pageSize } = pagination
-
-  const modalProps = {
-    type: modalType,
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
-    wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk(data) {
-      dispatch({
-        type: `storeSign/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel() {
-      dispatch({
-        type: 'storeSign/hideModal',
-      })
-    },
-  }
+  const { storeuserList } = app
 
   const listProps = {
     filter: {
@@ -79,6 +57,7 @@ const StoreSign = ({ location, dispatch, storeSign, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -120,16 +99,16 @@ const StoreSign = ({ location, dispatch, storeSign, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
 StoreSign.propTypes = {
+  app: PropTypes.object,
   storeSign: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ storeSign, loading }) => ({ storeSign, loading }))(StoreSign)
+export default connect(({ storeSign, loading, app }) => ({ storeSign, loading, app }))(StoreSign)

@@ -5,32 +5,11 @@ import { connect } from 'dva'
 // import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
 
-const Problem = ({ location, dispatch, problem, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = problem
+const Problem = ({ location, dispatch, problem, app, loading }) => {
+  const { list, pagination } = problem
   const { pageSize } = pagination
-
-  const modalProps = {
-    type: modalType,
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
-    wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk(data) {
-      dispatch({
-        type: `problem/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel() {
-      dispatch({
-        type: 'problem/hideModal',
-      })
-    },
-  }
+  const { storeuserList } = app
 
   const listProps = {
     filter: {
@@ -106,6 +85,7 @@ const Problem = ({ location, dispatch, problem, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -147,16 +127,16 @@ const Problem = ({ location, dispatch, problem, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
 Problem.propTypes = {
+  app: PropTypes.object,
   problem: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
 }
 
-export default connect(({ problem, loading }) => ({ problem, loading }))(Problem)
+export default connect(({ problem, loading, app }) => ({ problem, loading, app }))(Problem)

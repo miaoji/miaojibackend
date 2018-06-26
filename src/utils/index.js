@@ -4,6 +4,8 @@ import config from './config'
 import request from './request'
 import { color } from './theme'
 import * as time from './time'
+import { filterStoreSelect } from './filter'
+
 
 const { localPrefix } = config
 const localStorage = window.localStorage
@@ -169,4 +171,5 @@ module.exports = {
   handleFields: time.handleFields,
   initialCreateTime: time.initialCreateTime,
   defaultTime: time.defaultTime,
+  filterStoreSelect,
 }

@@ -11,7 +11,7 @@ export async function query (params) {
   params = JSON.stringify(params)
   return request({
     url: expressfee.all,
-    method: 'post',
+    method: 'parampost',
     params: {
       param: params,
     },

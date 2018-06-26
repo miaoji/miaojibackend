@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
 import { query } from '../../services/store/expressfee'
 import { pageModel } from '../system/common'
-import { time, initialCreateTime } from '../../utils'
+import { time, initialCreateTime, filterStoreSelect } from '../../utils'
 import { download } from '../../services/store/expressfeedetail'
 
 export default modelExtend(pageModel, {
@@ -31,6 +31,7 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
+      filterStoreSelect(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()

@@ -2,16 +2,13 @@ import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
 import { query } from '../../services/store/selectfenpai'
 import { pageModel } from '../system/common'
-import { time, initialCreateTime } from '../../utils'
+import { time, initialCreateTime, filterStoreSelect } from '../../utils'
 import { download } from '../../services/store/selectpjjeDetails'
 
 export default modelExtend(pageModel, {
   namespace: 'selectfenpai',
 
   state: {
-    currentItem: {},
-    modalVisible: false,
-    modalType: 'create',
   },
 
   subscriptions: {
@@ -31,6 +28,7 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
+      filterStoreSelect(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input,
+  Form, Button, Row, Col, Input, Select,
 } from 'antd'
 import { DateRange, FilterItem } from '../../../components'
 import { handleFields, defaultTime } from '../../../utils'
@@ -21,7 +21,7 @@ const TwoColProps = {
 }
 
 const Filter = ({
-  // onAdd,
+  storeuserList,
   onFilterChange,
   filter,
   form: {
@@ -78,14 +78,24 @@ const Filter = ({
 
   let { name, brand, orderSn, createTime } = filter
 
+  const nameChange = (key) => {
+    handleChange('name', key)
+  }
+
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 5 }} lg={{ span: 5 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <FilterItem label="站点名">
-          {getFieldDecorator('name', { initialValue: name })(
-            <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按站点名搜索" />
-          )}
-        </FilterItem>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按店铺名称搜索"
+            size="large"
+          >
+            {storeuserList}
+          </Select>
+        )}
       </Col>
       <Col {...ColProps} xl={{ span: 5 }} md={{ span: 5 }} sm={{ span: 12 }}>
         <FilterItem label="快递品牌">
@@ -119,12 +129,10 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  onAdd: PropTypes.func,
-  switchIsMotion: PropTypes.func,
+  storeuserList: PropTypes.array,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  onDownLoad: PropTypes.func,
 }
 
 export default Form.create()(Filter)

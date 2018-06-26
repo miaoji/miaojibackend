@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input,
+  Form, Button, Row, Col, Select,
 } from 'antd'
 import { DateRange } from '../../../components'
 import { handleFields, defaultTime } from '../../../utils'
@@ -20,7 +20,7 @@ const TwoColProps = {
 }
 
 const Filter = ({
-  // onAdd,
+  storeuserList,
   onFilterChange,
   onDownLoad,
   filter,
@@ -79,16 +79,23 @@ const Filter = ({
   let { name, createTime } = filter
 
   const nameChange = (key) => {
-    handleChange('name', key.target.value)
+    handleChange('name', key)
   }
 
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>站点名 : </span>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(
-          <Input onPressEnter={nameChange} size="large" style={{ width: '70%' }} placeholder="按站点名搜索" />
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按店铺名称搜索"
+            size="large"
+          >
+            {storeuserList}
+          </Select>
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
@@ -110,8 +117,7 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  onAdd: PropTypes.func,
-  switchIsMotion: PropTypes.func,
+  storeuserList: PropTypes.array,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
