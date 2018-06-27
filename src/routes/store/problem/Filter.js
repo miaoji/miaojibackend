@@ -97,14 +97,14 @@ const Filter = ({
           </Select>
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 5 }} md={{ span: 5 }} sm={{ span: 12 }}>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         <FilterItem>
           {getFieldDecorator('brand', { initialValue: brand })(
             <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按快递品牌搜索" />
           )}
         </FilterItem>
       </Col>
-      <Col {...ColProps} xl={{ span: 5 }} md={{ span: 5 }} sm={{ span: 12 }}>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         <FilterItem>
           {getFieldDecorator('orderSn', { initialValue: orderSn })(
             <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按快递单号搜索" />
@@ -116,7 +116,7 @@ const Filter = ({
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 4 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>

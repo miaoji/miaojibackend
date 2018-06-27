@@ -21,22 +21,12 @@ const SonTable = ({ list, filter }) => {
       dataIndex: 'mobile',
       key: 'mobile',
     }, {
-      title: '店铺名称',
-      dataIndex: 'name',
-      key: 'name',
-      width: 170,
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      },
-    }, {
       title: '店铺级别',
       dataIndex: 'type',
       key: 'type',
       width: 100,
-      render: (text) => {
-        return (<span>{text === '0'
-          ? '主帐号'
-          : '子帐号'}</span>)
+      render: () => {
+        return (<span>子账号</span>)
       },
     }, {
       title: '状态',
