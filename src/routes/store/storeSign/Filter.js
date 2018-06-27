@@ -85,9 +85,8 @@ const Filter = ({
   const handleTimeChange = (key) => {
     handleChange('createTime', [key, key])
   }
-
   function disabledDate(current) {
-    return current && current > moment().endOf('day')
+    return current && current > moment(new Date().getTime() - 86400000 * 3)
   }
 
   return (
@@ -111,6 +110,7 @@ const Filter = ({
             disabledDate={disabledDate}
             style={{ width: '100%' }}
             size="large"
+            showToday={false}
             onChange={handleTimeChange}
           />
         )}

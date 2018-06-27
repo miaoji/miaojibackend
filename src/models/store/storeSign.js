@@ -29,7 +29,7 @@ export default modelExtend(pageModel, {
       filterStoreSelect(payload)
       let newpayload = {}
       if (!payload.startTime) {
-        const times = time.yesterTime()
+        const times = time.yesterTime(3)
         newpayload = { ...times, ...payload }
       } else {
         newpayload = { ...payload }

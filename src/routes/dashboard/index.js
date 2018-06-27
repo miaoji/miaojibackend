@@ -16,8 +16,8 @@ const bodyStyle = {
 }
 
 function Dashboard (data) {
-  const { receviceData, sendData, quote, user, income, storeTotal, weChatUser, shop } = data.dashboard
-  const munArr = [income, storeTotal, weChatUser, shop]
+  const { receviceData, sendData, quote, user, income, storeTotal, weChatUser, terminalTotal } = data.dashboard
+  const munArr = [income, storeTotal, weChatUser, terminalTotal]
   const numberCards = munArr.map((item, key) => {
     return (<Col key={key} lg={6} md={12}>
       <NumberCard {...item} />

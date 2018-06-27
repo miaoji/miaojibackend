@@ -52,3 +52,10 @@ export async function income() {
     method: 'post',
   })
 }
+
+export async function terminalTotal () {
+  return request({
+    url: dashboard.terminalTotal,
+    method: 'post',
+  })
+}

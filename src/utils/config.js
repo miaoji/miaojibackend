@@ -53,9 +53,11 @@ module.exports = {
       // 获取微信用户数据
       weChatUser: `${APIV3}/quandiExpressSiteManager/homePageWechatUserTotal`,
       // 获取门店总数
-      storeTotal: `${APIV3}/quandiExpressSiteManager/homePageStoreTotal`,
+      storeTotal: `${APIV3}/quandiExpressSiteManager/selectHomeSiteTotal`,
       // 昨日收入
       income: `${APIV3}/quandiExpressSiteManager/homePageYesterdayInCome`,
+      // 获取设备数量
+      terminalTotal: `${APIV3}/quandiExpressSiteManager/homePageStoreTotal`,
     },
     menus: `${APIV1}/menus`,
     wxuser: {

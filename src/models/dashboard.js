@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { pageModel } from './system/common'
 import { color } from '../utils/theme'
 import { storage, time } from '../utils'
-import { getLineData, weChatUser, storeTotal, income } from '../services/dashboard'
+import { getLineData, weChatUser, storeTotal, income, terminalTotal } from '../services/dashboard'
 
 export default modelExtend(pageModel, {
   namespace: 'dashboard',
@@ -34,10 +34,10 @@ export default modelExtend(pageModel, {
       title: '微信用户',
       number: 253,
     },
-    shop: {
-      icon: 'shopping-cart',
+    terminalTotal: {
+      icon: 'tablet',
       color: color.red,
-      title: '今日购买',
+      title: '终端总数',
       number: 4324,
     },
     recentSales: [],
@@ -62,15 +62,32 @@ export default modelExtend(pageModel, {
           dispatch({ type: 'getIncome' })
           dispatch({ type: 'getStoreTotal' })
           dispatch({ type: 'getWeChatUser' })
+          dispatch({ type: 'getTerminalTotal' })
         }
       })
     },
   },
   effects: {
+    *getTerminalTotal(_, { call, put }) {
+      const data = yield call(terminalTotal)
+      if (data.code === 200) {
+        yield put({
+          type: 'setStates',
+          payload: {
+            terminalTotal: {
+              icon: 'tablet',
+              color: color.red,
+              title: '终端总数',
+              number: data.obj,
+            },
+          },
+        })
+      } else {
+        throw data.mess || '网络连接失败'
+      }
+    },
     *getIncome(_, { call, put }) {
-      console.log('1231')
       const data = yield call(income)
-      console.log('data123123', data)
       if (data.code === 200) {
         yield put({
           type: 'setStates',

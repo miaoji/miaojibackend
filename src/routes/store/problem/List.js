@@ -61,16 +61,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
             </div>)
           }
           if (record.brandList) {
-            return (<div>
-              <div style={{ margin: 0 }}>
-                {record.brandList.map((item) => {
-                  return (
-                    <div style={{ textAlign: 'left', margin: '10px' }}>
-                      {`快递品牌: ${item.brand}, 问题件数量: ${item.count}`}
-                    </div>
-                  )
-                })}
-              </div>
+            return (<div className={classnames({ [styles.p]: true })}>
+              {record.brandList.map((item) => {
+                return (
+                  <p style={{ textAlign: 'left', margin: '10px' }}>
+                    {`快递品牌: ${item.brand}, 问题件数量: ${item.count}`}
+                  </p>
+                )
+              })}
             </div>)
           }
           return (

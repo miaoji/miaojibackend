@@ -98,14 +98,14 @@ const Filter = ({
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 5 }} md={{ span: 5 }} sm={{ span: 12 }}>
-        <FilterItem label="快递品牌">
+        <FilterItem>
           {getFieldDecorator('brand', { initialValue: brand })(
             <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按快递品牌搜索" />
           )}
         </FilterItem>
       </Col>
       <Col {...ColProps} xl={{ span: 5 }} md={{ span: 5 }} sm={{ span: 12 }}>
-        <FilterItem label="快递单号">
+        <FilterItem>
           {getFieldDecorator('orderSn', { initialValue: orderSn })(
             <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按快递单号搜索" />
           )}
