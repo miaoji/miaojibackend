@@ -155,26 +155,6 @@ export default [
   },
   // //
   {
-    id: '5',
-    bpid: '1',
-    name: '收支数据',
-    icon: 'eye-o',
-  },
-  {
-    id: '501',
-    mpid: '5',
-    bpid: '5',
-    name: '收入',
-    route: '/income',
-  },
-  {
-    id: '502',
-    mpid: '5',
-    bpid: '5',
-    name: '支出',
-    route: '/expend',
-  },
-  {
     id: '7',
     bpid: '1',
     name: '钱包管理',
@@ -217,25 +197,11 @@ export default [
     route: '/qrdetail',
   },
   {
-    id: '10',
-    bpid: '1',
-    name: '充值消费',
-    icon: 'credit-card',
-    route: '/consume',
-  },
-  {
     id: '11',
     bpid: '1',
     name: '黑名单',
     icon: 'code',
     route: '/blacklist',
-  },
-  {
-    id: '12',
-    bpid: '1',
-    name: '黑名单订单详情',
-    icon: 'code-o',
-    route: '/blacklistdetail',
   },
   {
     id: '13',
