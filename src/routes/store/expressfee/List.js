@@ -5,8 +5,53 @@ import classnames from 'classnames'
 import { Link } from 'dva/router'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
+import { DropOption } from '../../../components'
 
-const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ filter, location, onLink, ...tableProps }) => {
+  const handleMenuClick = (record, e) => {
+    switch (e.key) {
+      case '1':
+        if (filter.createTime && filter.createTime.length > 0) {
+          onLink({
+            path: '/expressfeedetail',
+            payload: {
+              showName: record.name,
+              idUser: record.idUser,
+              createTime: [filter.createTime[0]._i, filter.createTime[1]._i],
+            },
+          })
+        } else {
+          onLink({
+            path: '/expressfeedetail',
+            payload: {
+              showName: record.name,
+              idUser: record.idUser,
+            },
+          })
+        }
+        break
+      case '2':
+        if (filter.createTime && filter.createTime.length > 0) {
+          onLink({
+            path: '/storeUserDetail',
+            payload: {
+              idUser: record.idUser,
+              createTime: [filter.createTime[0]._i, filter.createTime[1]._i],
+            },
+          })
+        } else {
+          onLink({
+            path: '/storeUserDetail',
+            payload: {
+              idUser: record.idUser,
+            },
+          })
+        }
+        break
+      default:
+        break
+    }
+  }
   const columns = [
     {
       title: '站点名',
@@ -63,15 +108,23 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       },
     }, {
       title: '操作',
-      dataIndex: 'option',
-      key: 'option',
+      key: 'operation',
+      width: 100,
       render: (text, record) => {
-        if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看寄件详情</Link>
-        }
-        return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}`}>查看寄件详情</Link>
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '寄件详情' }, { key: '2', name: '操作人详情' }]} />
       },
     },
+    // {
+    //   title: '操作',
+    //   dataIndex: 'option',
+    //   key: 'option',
+    //   render: (text, record) => {
+    //     if (filter.createTime && filter.createTime.length > 0) {
+    //       return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看寄件详情</Link>
+    //     }
+    //     return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}`}>查看寄件详情</Link>
+    //   },
+    // },
   ]
 
   const getBodyWrapperProps = {
@@ -97,10 +150,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
   location: PropTypes.object,
   filter: PropTypes.object,
+  onLink: PropTypes.func,
 }
 
 export default List

@@ -2,35 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-// import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
 
 const Expressfee = ({ location, dispatch, expressfee, app, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = expressfee
+  const { list, pagination } = expressfee
   const { storeuserList } = app
-
-  const modalProps = {
-    type: modalType,
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
-    wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk(data) {
-      dispatch({
-        type: `expressfee/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel() {
-      dispatch({
-        type: 'expressfee/hideModal',
-      })
-    },
-  }
 
   const listProps = {
     filter: {
@@ -40,6 +17,14 @@ const Expressfee = ({ location, dispatch, expressfee, app, loading }) => {
     loading: loading.effects['expressfee/query'],
     pagination,
     location,
+    onLink({ path, payload }) {
+      dispatch(routerRedux.push({
+        pathname: path,
+        query: {
+          ...payload,
+        },
+      }))
+    },
     onChange(page, filter) {
       const { query, pathname } = location
       if (query.createTime && query.createTime.length > 0) {
@@ -55,21 +40,6 @@ const Expressfee = ({ location, dispatch, expressfee, app, loading }) => {
           pageSize: page.pageSize,
         },
       }))
-    },
-    onDeleteItem(id) {
-      dispatch({
-        type: 'expressfee/delete',
-        payload: id,
-      })
-    },
-    onEditItem(item) {
-      dispatch({
-        type: 'expressfee/showModal',
-        payload: {
-          modalType: 'update',
-          currentItem: item,
-        },
-      })
     },
   }
 
@@ -119,7 +89,6 @@ const Expressfee = ({ location, dispatch, expressfee, app, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }

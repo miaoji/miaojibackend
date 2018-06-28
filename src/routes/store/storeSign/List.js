@@ -80,13 +80,13 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         if (filter.createTime && filter.createTime.length > 0) {
           return (
             <Tooltip placement="top" title="查看订单详情">
-              <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{(text || text === 0) ? text : '暂无'}</Link>
+              <Link to={`/storeSignDetail?tr=3&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{(text || text === 0) ? text : '暂无'}</Link>
             </Tooltip>
           )
         }
         return (
           <Tooltip placement="top" title="查看订单详情">
-            <Link to={`/storeSignDetail?tr=2&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
+            <Link to={`/storeSignDetail?tr=3&idUser=${record.idUser}`}>{(text || text === 0) ? text : '暂无'}</Link>
           </Tooltip>
         )
       },

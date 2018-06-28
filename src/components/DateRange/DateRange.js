@@ -82,7 +82,7 @@ class DateRange extends React.Component {
           <Col style={{ marginBottom: '14px' }} xl={{ span: 11 }} md={{ span: 11 }} sm={{ span: 11 }}>
             <DatePicker
               locale={locale}
-              disabledDate={this.disabledStartDate}
+              // disabledDate={this.disabledStartDate}
               format="YYYY-MM-DD"
               value={startValue}
               placeholder="开始时间"
@@ -96,7 +96,7 @@ class DateRange extends React.Component {
           <Col style={{ marginBottom: '14px' }} xl={{ span: 11, push: 1 }} md={{ span: 11, push: 2 }} sm={{ span: 11, push: 2 }}>
             <DatePicker
               locale={locale}
-              disabledDate={this.disabledEndDate}
+              // disabledDate={this.disabledEndDate}
               showToday={false}
               style={{ width: '100%' }}
               format="YYYY-MM-DD"

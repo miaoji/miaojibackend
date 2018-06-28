@@ -22,7 +22,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{(text || text === 0) ? text : '暂无'}</span>
       },
     }, {
-      title: '创建时间',
+      title: '签收时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {

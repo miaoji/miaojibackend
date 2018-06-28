@@ -36,6 +36,12 @@ const Filter = ({
     let fields = getFieldsValue()
     fields = handleFields(fields)
     // 判断搜索提交的内容是否为空
+    if (fields.payType === '0') {
+      fields.payType = undefined
+    }
+    if (fields.status === '0') {
+      fields.status = undefined
+    }
     // 为空则等于undefined
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
@@ -50,15 +56,14 @@ const Filter = ({
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
-          fields[item] = []
+          // fields[item] = []
         } else {
           fields[item] = undefined
         }
       }
     }
-    setFieldsValue(fields)
-    filter.endTime = undefined
-    filter.startTime = undefined
+    console.log('fields', fields)
+    setFieldsValue({ ...fields, payType: '0', status: '0' })
     filter.page = undefined
     filter.pageSize = undefined
     handleSubmit()
@@ -92,7 +97,7 @@ const Filter = ({
     handleChange('status', key)
   }
   const brandChange = (key) => {
-    handleChange('brand', key.target.value)
+    handleChange('brand', key.target.value.trim())
   }
 
 

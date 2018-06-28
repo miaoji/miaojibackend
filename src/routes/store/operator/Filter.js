@@ -50,15 +50,13 @@ const Filter = ({
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
-          fields[item] = []
+          // fields[item] = []
         } else {
           fields[item] = undefined
         }
       }
     }
-    setFieldsValue(fields)
-    filter.endTime = undefined
-    filter.startTime = undefined
+    setFieldsValue({ ...fields, payType: '0' })
     filter.page = undefined
     filter.pageSize = undefined
     handleSubmit()
@@ -90,7 +88,7 @@ const Filter = ({
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按站点名搜索" />
+          <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按快递品牌搜索" />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>

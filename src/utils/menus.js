@@ -64,14 +64,14 @@ export default [
   },
   {
     id: '402',
-    bpid: '401',
+    bpid: '1',
     mpid: '-1',
     name: '门店操作人详情',
     route: '/storeuserDetail',
   },
   {
     id: '403',
-    bpid: '402',
+    bpid: '1',
     mpid: '-1',
     name: '操作人寄件汇总',
     route: '/operator',

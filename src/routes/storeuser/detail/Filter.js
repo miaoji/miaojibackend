@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col } from 'antd'
 import { DateRange } from '../../../components'
+import { defaultTime, handleFields } from '../../../utils'
 
 const ColProps = {
   xs: 24,
@@ -26,15 +27,7 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  const handleFields = (fields) => {
-    const { createTime } = fields
-    if (createTime && createTime.length && createTime[0] && createTime[1]) {
-      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    } else {
-      delete fields.createTime
-    }
-    return fields
-  }
+  filter = defaultTime(filter)
 
   const handleSubmit = () => {
     let fields = getFieldsValue()

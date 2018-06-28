@@ -16,12 +16,14 @@ const StoreUserDetail = ({ location, dispatch, storeUserDetail, loading }) => {
     },
     handleClick(item) {
       const { idUser } = location.query
+      if (item.createTime && item.createTime.length > 0) {
+        item.createTime = [item.createTime[0]._i, item.createTime[1]._i]
+      }
       dispatch(routerRedux.push({
         pathname: '/operator',
         query: {
-          endTime: item.endTime,
-          startTime: item.startTime,
           idUser,
+          createTime: item.createTime,
           realName: item.realName,
         },
       }))
