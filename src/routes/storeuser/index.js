@@ -59,7 +59,6 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
       })
     },
     onEditItem(item) {
-      console.log('query', query)
       dispatch({
         type: 'storeuser/showModal',
         payload: {

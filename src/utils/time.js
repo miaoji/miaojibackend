@@ -2,12 +2,9 @@ import moment from 'moment'
 
 export function initialCreateTime(payload) {
   payload = { ...payload }
-  console.log('payload123123', payload)
   const { createTime } = payload
   if (createTime && createTime.length && createTime[0] && createTime[1]) {
     let tmpTime = []
-    /* eslint valid-typeof: 'off' */
-    console.log(typeof (createTime[0]))
     if (typeof (createTime[0]) === 'object') {
       createTime[0] = createTime[0].format('YYYY-MM-DD')
       createTime[1] = createTime[1].format('YYYY-MM-DD')

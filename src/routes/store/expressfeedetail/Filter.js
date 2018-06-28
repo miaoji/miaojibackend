@@ -62,7 +62,6 @@ const Filter = ({
         }
       }
     }
-    console.log('fields', fields)
     setFieldsValue({ ...fields, payType: '0', status: '0' })
     filter.page = undefined
     filter.pageSize = undefined

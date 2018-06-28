@@ -45,7 +45,6 @@ export default modelExtend(pageModel, {
         // list.forEach((item, index) => {
         //   item.key = index
         // })
-        // console.log('list', list)
         yield put({
           type: 'querySuccess',
           payload: {

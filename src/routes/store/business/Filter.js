@@ -49,7 +49,7 @@ const Filter = ({
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
-          fields[item] = []
+          // fields[item] = []
         } else {
           fields[item] = undefined
         }

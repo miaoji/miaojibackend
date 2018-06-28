@@ -4,7 +4,6 @@ import { connect } from 'dva'
 import styles from './index.less'
 
 const Detail = ({ wxuserdetail }) => {
-  console.log('wxuserdetail', wxuserdetail)
   const { user } = wxuserdetail
   const content = []
 

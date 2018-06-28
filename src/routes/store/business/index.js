@@ -118,6 +118,8 @@ const Business = ({ location, dispatch, business, app, loading }) => {
       query: {
         ...location.query,
         mailtype: key,
+        page: 1,
+        pageSize: 10,
       },
     }))
   }

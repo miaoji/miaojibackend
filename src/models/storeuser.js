@@ -35,7 +35,6 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      console.log('payload', payload)
       payload = initialCreateTime(payload)
       const data = yield call(query, { ...payload, superId: -1 })
       if (data.code === 200) {
