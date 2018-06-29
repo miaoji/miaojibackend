@@ -72,6 +72,7 @@ export default modelExtend(pageModel, {
       })
       delete payload.name
       payload = initialCreateTime(payload)
+      filterStoreSelect(payload)
       let newpayload = {}
       if (!payload.startTime) {
         const times = time.yesterTime()
