@@ -168,6 +168,7 @@ module.exports = {
   api: config.api,
   pageParams,
   time,
+  APIV3: config.APIV3,
   handleFields: time.handleFields,
   initialCreateTime: time.initialCreateTime,
   defaultTime: time.defaultTime,

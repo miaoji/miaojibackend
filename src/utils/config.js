@@ -27,6 +27,7 @@ if (process.env.NODE_ENV !== 'development') {
 let APIV4 = 'http://app.quandikeji.com/WeChatService'
 
 module.exports = {
+  APIV3,
   name: '妙寄后台管理系统',
   prefix: 'antdAdmin',
   localPrefix: 'miaojipc_',

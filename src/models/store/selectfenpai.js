@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
 import { query } from '../../services/store/selectfenpai'
 import { pageModel } from '../system/common'
-import { time, initialCreateTime, filterStoreSelect } from '../../utils'
+import { APIV3, time, initialCreateTime, filterStoreSelect } from '../../utils'
 import { download } from '../../services/store/selectpjjeDetails'
 
 export default modelExtend(pageModel, {
@@ -69,7 +69,7 @@ export default modelExtend(pageModel, {
       }
       const data = yield call(download, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {
-        const url = data.obj
+        const url = APIV3 + data.obj
         const openUrl = window.open(url)
         if (openUrl === null) {
           notification.warn({

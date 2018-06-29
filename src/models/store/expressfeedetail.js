@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
 import { query, download } from '../../services/store/expressfeedetail'
 import { pageModel } from '../system/common'
-import { time, initialCreateTime } from '../../utils'
+import { APIV3, time, initialCreateTime } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'expressfeedetail',
@@ -76,7 +76,7 @@ export default modelExtend(pageModel, {
       }
       const data = yield call(download, { ...newpayload, tc: 'maild', download: 1 })
       if (data.code === 200 && data.obj) {
-        const url = data.obj
+        const url = APIV3 + data.obj
         const openUrl = window.open(url)
         if (openUrl === null) {
           notification.warn({

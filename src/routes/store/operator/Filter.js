@@ -23,7 +23,7 @@ const TwoColProps = {
 
 const Filter = ({
   onFilterChange,
-  handleDownLoad,
+  // handleDownLoad,
   filter,
   form: {
     getFieldDecorator,
@@ -113,7 +113,7 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            <Button type="primary" size="large" onClick={handleDownLoad}>下载</Button>
+            {/* <Button type="primary" size="large" onClick={handleDownLoad}>下载</Button> */}
           </div>
         </div>
       </Col>
