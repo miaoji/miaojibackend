@@ -36,6 +36,7 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
             path: '/storeUserDetail',
             payload: {
               idUser: record.idUser,
+              showName: record.name,
               createTime: [filter.createTime[0]._i, filter.createTime[1]._i],
             },
           })
@@ -43,6 +44,7 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
           onLink({
             path: '/storeUserDetail',
             payload: {
+              showName: record.name,
               idUser: record.idUser,
             },
           })

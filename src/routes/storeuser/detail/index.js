@@ -20,11 +20,12 @@ const StoreUserDetail = ({ location, dispatch, storeUserDetail, loading }) => {
         item.createTime = [item.createTime[0]._i, item.createTime[1]._i]
       }
       dispatch(routerRedux.push({
-        pathname: '/operator',
+        pathname: '/expressfeedetail',
         query: {
           idUser,
           createTime: item.createTime,
           realName: item.realName,
+          showName: location.query.showName,
         },
       }))
     },

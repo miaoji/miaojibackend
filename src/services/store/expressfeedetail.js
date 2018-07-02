@@ -7,6 +7,7 @@ export async function query (params) {
   params = pageParams(params)
   delete params.page
   delete params.pageSize
+  delete params.showName
   delete params.download
   params = JSON.stringify(params)
   return request({
