@@ -4,8 +4,7 @@ import {
   Form, Button, Row, Col, Select, DatePicker,
 } from 'antd'
 import moment from 'moment'
-// import { DateRange } from '../../../components'
-import { handleFields, defaultTime } from '../../../utils'
+import { defaultTime } from '../../../utils'
 
 const ColProps = {
   xs: 24,
@@ -31,6 +30,17 @@ const Filter = ({
   },
 }) => {
   filter = defaultTime(filter, 3)
+
+  const handleFields = (fields) => {
+    const { createTime } = fields
+    if (createTime) {
+      fields.createTime = [createTime.format('YYYY-MM-DD'), createTime.format('YYYY-MM-DD')]
+    } else {
+      fields.createTime = undefined
+    }
+    return fields
+  }
+
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -83,7 +93,7 @@ const Filter = ({
   }
 
   const handleTimeChange = (key) => {
-    handleChange('createTime', [key, key])
+    handleChange('createTime', key)
   }
   function disabledDate(current) {
     return current && current > moment(new Date().getTime() - 86400000 * 3)
