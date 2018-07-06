@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
-import { DateRange } from '../../components'
+import { DateRange } from '../../../components'
 
 const Search = Input.Search
 
@@ -49,6 +49,8 @@ const Filter = ({
         fields[item] = undefined
       }
     }
+    console.log('fields11', fields)
+    console.log('{ ...filter, ...fields }', { ...filter, ...fields })
     onFilterChange({ ...filter, ...fields })
   }
 
@@ -64,9 +66,10 @@ const Filter = ({
       }
     }
     filter.createTime = []
-    setFieldsValue(fields)
+    console.log('fields', fields)
     filter.page = undefined
     filter.pageSize = undefined
+    setFieldsValue(fields)
     handleSubmit()
   }
 
