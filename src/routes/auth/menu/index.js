@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, menu, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = menu
+  const { list, pagination, currentItem, modalVisible, modalType } = menu
   const { pageSize } = pagination
 
   const modalProps = {
@@ -15,9 +15,8 @@ const Modular = ({ location, dispatch, menu, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
+    title: `${modalType === 'create' ? '新增菜单信息' : '修改菜单信息'}`,
     wrapClassName: 'vertical-center-modal',
-    selectSiteName,
     onOk (data) {
       dispatch({
         type: `menu/${modalType}`,
@@ -61,9 +60,6 @@ const Modular = ({ location, dispatch, menu, loading }) => {
           currentItem: item,
         },
       })
-      dispatch({
-        type: 'menu/getSiteName',
-      })
     },
   }
 
@@ -81,26 +77,12 @@ const Modular = ({ location, dispatch, menu, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/menu',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/menu',
-      }))
-    },
     onAdd () {
       dispatch({
         type: 'menu/showModal',
         payload: {
           modalType: 'create',
         },
-      })
-      dispatch({
-        type: 'menu/getSiteName',
       })
     },
   }

@@ -30,31 +30,17 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
-      title: '昵称',
+      title: '角色名称',
       dataIndex: 'idUser',
       key: 'idUser',
     }, {
-      title: '用户名',
+      title: '管理权限',
       dataIndex: 'name',
       key: 'name',
     }, {
       title: '手机号',
       dataIndex: 'mobile',
       key: 'mobile',
-    }, {
-      title: '性别',
-      dataIndex: 'mobile1',
-      key: 'mobile1',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      },
-    }, {
-      title: '所在地区',
-      dataIndex: 'note',
-      key: 'note',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      },
     }, {
       title: '备注信息',
       dataIndex: 'remark',

@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, role, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = role
+  const { list, pagination, currentItem, modalVisible, modalType } = role
   const { pageSize } = pagination
 
   const modalProps = {
@@ -15,9 +15,8 @@ const Modular = ({ location, dispatch, role, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
+    title: `${modalType === 'create' ? '新增角色信息' : '修改角色信息'}`,
     wrapClassName: 'vertical-center-modal',
-    selectSiteName,
     onOk (data) {
       dispatch({
         type: `role/${modalType}`,
@@ -61,9 +60,6 @@ const Modular = ({ location, dispatch, role, loading }) => {
           currentItem: item,
         },
       })
-      dispatch({
-        type: 'role/getSiteName',
-      })
     },
   }
 
@@ -81,26 +77,12 @@ const Modular = ({ location, dispatch, role, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/role',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/role',
-      }))
-    },
     onAdd () {
       dispatch({
         type: 'role/showModal',
         payload: {
           modalType: 'create',
         },
-      })
-      dispatch({
-        type: 'role/getSiteName',
       })
     },
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select } from 'antd'
+import { Form, Input, Modal } from 'antd'
 
 const FormItem = Form.Item
 const { TextArea } = Input
@@ -17,7 +17,6 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
-  selectSiteName,
   form: {
     getFieldDecorator,
     validateFields,
@@ -49,17 +48,6 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="站点名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('idUser', {
-            initialValue: item.idUser,
-            rules: [
-              {
-                required: !paramDisabled,
-                message: '选择站点!',
-              },
-            ],
-          })(<Select showSearch disabled={paramDisabled} placeholder="输入站点名称或者IdUser可搜索" defaultValue="" style={{ width: 286 }}>{selectSiteName}</Select>)}
-        </FormItem>
         <FormItem label="手机号/单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('mobile', {
             initialValue: item.mobile,
@@ -94,7 +82,6 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
-  selectSiteName: PropTypes.array,
 }
 
 export default Form.create()(modal)

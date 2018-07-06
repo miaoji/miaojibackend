@@ -15,7 +15,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
+    title: `${modalType === 'create' ? '注册用户信息' : '修改用户信息'}`,
     wrapClassName: 'vertical-center-modal',
     selectSiteName,
     onOk (data) {
@@ -79,17 +79,6 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
           page: 1,
           pageSize,
         },
-      }))
-    },
-    onSearch (fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/adminuser',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/adminuser',
       }))
     },
     onAdd () {

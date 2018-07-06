@@ -117,7 +117,7 @@ const Filter = ({
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
           <div>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+            <Button size="large" type="primary" onClick={onAdd}>注册用户</Button>
           </div>
         </div>
       </Col>
