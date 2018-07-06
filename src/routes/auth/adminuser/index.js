@@ -14,7 +14,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
+    confirmLoading: loading.effects['adminuser/update'],
     title: `${modalType === 'create' ? '注册用户信息' : '修改用户信息'}`,
     wrapClassName: 'vertical-center-modal',
     selectSiteName,

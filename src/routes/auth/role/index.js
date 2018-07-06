@@ -14,28 +14,28 @@ const Modular = ({ location, dispatch, role, loading }) => {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
+    confirmLoading: loading.effects['role/update'],
     title: `${modalType === 'create' ? '新增角色信息' : '修改角色信息'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `role/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'role/hideModal',
       })
     },
   }
-
+  console.log('loading.effects[role/query],', loading.effects['role/query'])
   const listProps = {
     dataSource: list,
     loading: loading.effects['role/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -46,13 +46,13 @@ const Modular = ({ location, dispatch, role, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'role/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'role/showModal',
         payload: {
@@ -67,7 +67,7 @@ const Modular = ({ location, dispatch, role, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -77,7 +77,7 @@ const Modular = ({ location, dispatch, role, loading }) => {
         },
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'role/showModal',
         payload: {

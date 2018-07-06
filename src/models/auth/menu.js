@@ -47,13 +47,13 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      const newblacklist = {
+      const newmenu = {
         idUser: payload.idUser.split('/-/')[1],
         mobile: payload.mobile,
         note: payload.note,
         state: 1,
       }
-      const data = yield call(create, { state: 1, ...newblacklist })
+      const data = yield call(create, { state: 1, ...newmenu })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -64,12 +64,12 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ blacklist }) => blacklist.currentItem.id)
-      const newblacklist = {
+      const id = yield select(({ menu }) => menu.currentItem.id)
+      const newmenu = {
         note: payload.note,
         id,
       }
-      const data = yield call(update, newblacklist)
+      const data = yield call(update, newmenu)
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

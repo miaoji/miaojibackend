@@ -14,7 +14,7 @@ const Modular = ({ location, dispatch, menu, loading }) => {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
+    confirmLoading: loading.effects['menu/update'],
     title: `${modalType === 'create' ? '新增菜单信息' : '修改菜单信息'}`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
