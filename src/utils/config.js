@@ -17,7 +17,7 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.126.1:8081'
 
 // 张涛
-APIV3 = 'http://192.168.231.239:8066'
+// APIV3 = 'http://192.168.231.239:8066'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -199,6 +199,12 @@ module.exports = {
     // 异常件明细
     problemdetail: {
       all: `${APIV3}/quandiExpressSiteManager/selectproblemParts`,
+    },
+    adminuser: {
+      list: `${APIV1}/users`,
+      update: `${APIV1}/users`,
+      delete: `${APIV1}/users`,
+      create: `${APIV1}/users`,
     },
   },
 }

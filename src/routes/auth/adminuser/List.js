@@ -43,10 +43,15 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'mobile',
     }, {
       title: '性别',
-      dataIndex: 'mobile1',
-      key: 'mobile1',
+      dataIndex: 'sex',
+      key: 'sex',
       render: (text) => {
-        return <span>{text || '暂无'}</span>
+        const realText = {
+          0: '保密',
+          1: '男',
+          2: '女',
+        }
+        return <span>{realText[text]}</span>
       },
     }, {
       title: '所在地区',

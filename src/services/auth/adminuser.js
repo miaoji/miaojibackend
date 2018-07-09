@@ -1,20 +1,20 @@
 import { request, config, pageParams } from '../../utils'
 
 const { api } = config
-const { blacklist } = api
+const { adminuser } = api
 
 export async function query (params) {
   params = pageParams(params)
   return request({
-    url: blacklist.all,
-    method: 'post',
+    url: adminuser.list,
+    method: 'get',
     params,
   })
 }
 
 export async function create (params) {
   return request({
-    url: blacklist.add,
+    url: adminuser.create,
     method: 'post',
     params,
   })
@@ -22,23 +22,24 @@ export async function create (params) {
 
 export async function update (params) {
   return request({
-    url: blacklist.update,
+    url: adminuser.update,
     method: 'post',
     params,
   })
 }
 
 export async function remove (params) {
+  console.log('params', params)
   return request({
-    url: blacklist.update,
-    method: 'post',
+    url: adminuser.delete,
+    method: 'delete',
     params,
   })
 }
 
 export async function showSiteName () {
   return request({
-    url: blacklist.showSiteName,
+    url: adminuser.showSiteName,
     method: 'post',
   })
 }
