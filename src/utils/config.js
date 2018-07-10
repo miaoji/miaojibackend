@@ -1,4 +1,4 @@
-const APIV1 = '/api/v1'
+const APIV1 = 'http://127.0.0.1:8000/api/v1'
 // const APIV2 = '/api/v2'
 
 let APIV3
@@ -200,11 +200,25 @@ module.exports = {
     problemdetail: {
       all: `${APIV3}/quandiExpressSiteManager/selectproblemParts`,
     },
-    adminuser: {
-      list: `${APIV1}/users`,
-      update: `${APIV1}/users`,
-      delete: `${APIV1}/users`,
-      create: `${APIV1}/users`,
+    auth: {
+      adminuser: {
+        list: `${APIV1}/users`,
+        update: `${APIV1}/users`,
+        delete: `${APIV1}/users`,
+        create: `${APIV1}/users`,
+      },
+      menu: {
+        list: `${APIV1}/users`,
+        update: `${APIV1}/users`,
+        delete: `${APIV1}/users`,
+        create: `${APIV1}/users`,
+      },
+      role: {
+        list: `${APIV1}/users`,
+        update: `${APIV1}/users`,
+        delete: `${APIV1}/users`,
+        create: `${APIV1}/users`,
+      },
     },
   },
 }

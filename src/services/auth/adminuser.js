@@ -1,9 +1,8 @@
 import { request, config, pageParams } from '../../utils'
 
-const { api } = config
-const { adminuser } = api
+const { api: { auth: { adminuser } } } = config
 
-export async function query (params) {
+export async function query(params) {
   params = pageParams(params)
   return request({
     url: adminuser.list,
@@ -12,7 +11,7 @@ export async function query (params) {
   })
 }
 
-export async function create (params) {
+export async function create(params) {
   return request({
     url: adminuser.create,
     method: 'post',
@@ -20,7 +19,7 @@ export async function create (params) {
   })
 }
 
-export async function update (params) {
+export async function update(params) {
   return request({
     url: adminuser.update,
     method: 'post',
@@ -28,7 +27,7 @@ export async function update (params) {
   })
 }
 
-export async function remove (params) {
+export async function remove(params) {
   console.log('params', params)
   return request({
     url: adminuser.delete,
@@ -37,7 +36,7 @@ export async function remove (params) {
   })
 }
 
-export async function showSiteName () {
+export async function showSiteName() {
   return request({
     url: adminuser.showSiteName,
     method: 'post',
