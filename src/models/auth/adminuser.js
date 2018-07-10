@@ -67,12 +67,8 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ adminuser }) => adminuser.currentItem.id)
-      const newadminuser = {
-        note: payload.note,
-        id,
-      }
-      const data = yield call(update, newadminuser)
+      const menuId = yield select(({ adminuser }) => adminuser.currentItem.menuId)
+      const data = yield call(update, { ...payload, menuId })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

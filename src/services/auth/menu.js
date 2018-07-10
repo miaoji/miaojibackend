@@ -24,15 +24,15 @@ export async function create(params) {
 export async function update(params) {
   return request({
     url: menu.update,
-    method: 'post',
-    params,
+    method: 'parampost',
+    data: params,
   })
 }
 
 export async function remove(params) {
   return request({
     url: menu.delete,
-    method: 'delete',
-    params,
+    method: 'parampost',
+    data: params,
   })
 }

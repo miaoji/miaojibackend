@@ -96,7 +96,7 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put }) {
-      const data = yield call(remove, { ids: payload })
+      const data = yield call(remove, [payload])
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
