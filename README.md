@@ -82,3 +82,16 @@ dashboard设计稿：<https://dribbble.com/shots/3108122-Dashboard-Admin> （已
 ```
 
 本项目中使用了一些别名,在webpack.config.js配置
+
+```
+netstat -ntulp|grep nginx
+```
+查看nginx的运行情况
+
+```
+cd /usr/local/nginx/sbin/
+./nginx   // 运行
+./nginx -s stop
+./nginx -s quit  
+./nginx -s reload // 重启
+```

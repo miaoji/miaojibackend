@@ -4,6 +4,18 @@ import { message } from 'antd'
 import { query, create, update, remove } from '../../services/auth/menu'
 import { pageModel } from '../system/common'
 
+const reloadItem = (item) => {
+  if (item.children && item.children.length === 0) {
+    delete item.children
+  }
+  if (item.children && item.children.length > 0) {
+    item.children = item.children.map((items) => {
+      return reloadItem(items)
+    })
+  }
+  return item
+}
+
 export default modelExtend(pageModel, {
   namespace: 'menu',
 
@@ -32,6 +44,9 @@ export default modelExtend(pageModel, {
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
+        data.obj.map((item) => {
+          return reloadItem(item)
+        })
         yield put({
           type: 'querySuccess',
           payload: {
@@ -47,13 +62,14 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      const newmenu = {
-        idUser: payload.idUser.split('/-/')[1],
-        mobile: payload.mobile,
-        note: payload.note,
-        state: 1,
-      }
-      const data = yield call(create, { state: 1, ...newmenu })
+      // const newmenu = {
+      //   idUser: payload.idUser.split('/-/')[1],
+      //   mobile: payload.mobile,
+      //   note: payload.note,
+      //   state: 1,
+      // }
+      console.log('payload', payload)
+      const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -80,7 +96,7 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put }) {
-      const data = yield call(remove, { id: payload, state: 2 })
+      const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })

@@ -8,16 +8,16 @@ export async function query(params) {
   params = pageParams(params)
   return request({
     url: menu.list,
-    method: 'get',
-    params,
+    method: 'parampost',
+    data: params,
   })
 }
 
 export async function create(params) {
   return request({
-    url: menu.add,
-    method: 'post',
-    params,
+    url: menu.create,
+    method: 'parampost',
+    data: params,
   })
 }
 
@@ -31,7 +31,7 @@ export async function update(params) {
 
 export async function remove(params) {
   return request({
-    url: menu.update,
+    url: menu.delete,
     method: 'delete',
     params,
   })

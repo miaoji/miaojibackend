@@ -18,8 +18,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
-            onDeleteItem(record.id)
+          onOk() {
+            onDeleteItem(record.menuId)
           },
         })
         break
@@ -31,20 +31,24 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '菜单名称',
-      dataIndex: 'idUser',
-      key: 'idUser',
+      dataIndex: 'menuName',
+      key: 'menuName',
+      width: 200,
+      render: (text) => {
+        return <span style={{ width: '110px', display: 'inline-block' }}>{text}</span>
+      },
     }, {
       title: '菜单级别',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'menuLevel',
+      key: 'menuLevel',
     }, {
       title: '菜单对应路由',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      dataIndex: 'target',
+      key: 'target',
     }, {
       title: '菜单图标',
-      dataIndex: 'remark1',
-      key: 'remark1',
+      dataIndex: 'icon',
+      key: 'icon',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
@@ -57,8 +61,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       },
     }, {
       title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'menuCreateTime',
+      key: 'menuCreateTime',
       render: (text) => {
         const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
         return <span>{createTime}</span>
@@ -89,7 +93,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        rowKey={record => record.menuId}
         getBodyWrapper={getBodyWrapper}
       />
     </div>

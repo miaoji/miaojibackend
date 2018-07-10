@@ -48,20 +48,19 @@ const modal = ({
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="菜单名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+          {getFieldDecorator('menuName', {
+            initialValue: item.menuName,
             rules: [
               {
                 required: true,
-                pattern: /^[0-9a-zA-Z]*$/,
                 message: '请输入菜单名称!',
               },
             ],
           })(<Input placeholder="请输入菜单名称!" />)}
         </FormItem>
         <FormItem label="MPID" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('mpid', {
-            initialValue: item.mpid,
+          {getFieldDecorator('parentMenuId', {
+            initialValue: item.parentMenuId,
             rules: [
               {
                 required: true,
@@ -96,20 +95,31 @@ const modal = ({
           })(<Input placeholder="请输入ICON!" />)}
         </FormItem>
         <FormItem label="路由地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('route', {
-            initialValue: item.route,
+          {getFieldDecorator('target', {
+            initialValue: item.target,
             rules: [
               {
                 required: true,
-                pattern: /^[0-9a-zA-Z]*$/,
                 message: '请输入路由地址!',
               },
             ],
           })(<Input placeholder="请输入路由地址!" />)}
         </FormItem>
+        <FormItem label="排序" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('menuDesc', {
+            initialValue: item.menuDesc,
+            rules: [
+              {
+                required: true,
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入排序!',
+              },
+            ],
+          })(<Input placeholder="请输入排序!" />)}
+        </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('remark', {
-            initialValue: item.remark,
+          {getFieldDecorator('description', {
+            initialValue: item.description,
             rules: [
               {
                 required: true,
