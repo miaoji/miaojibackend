@@ -32,7 +32,7 @@ export async function update(params) {
 export async function remove(params) {
   return request({
     url: menu.update,
-    method: 'post',
+    method: 'delete',
     params,
   })
 }

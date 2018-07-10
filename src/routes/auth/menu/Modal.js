@@ -43,34 +43,81 @@ const modal = ({
     onOk: handleOk,
   }
 
-  const paramDisabled = type === 'update'
-
+  // const paramDisabled = type === 'update'
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="手机号/单号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('mobile', {
-            initialValue: item.mobile,
-            rules: [
-              {
-                required: !paramDisabled,
-                pattern: /^[0-9a-zA-Z]*$/,
-                message: '请输入手机号码/单号!',
-              },
-            ],
-          })(<Input placeholder="请输入手机号码/单号!" disabled={paramDisabled} />)}
-        </FormItem>
-        <FormItem label="理由" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('note', {
-            initialValue: item.note,
+        <FormItem label="菜单名称" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('name', {
+            initialValue: item.name,
             rules: [
               {
                 required: true,
-                message: '理由字数不能超过100!',
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入菜单名称!',
+              },
+            ],
+          })(<Input placeholder="请输入菜单名称!" />)}
+        </FormItem>
+        <FormItem label="MPID" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('mpid', {
+            initialValue: item.mpid,
+            rules: [
+              {
+                required: true,
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入MPID!',
+              },
+            ],
+          })(<Input placeholder="请输入MPID!" />)}
+        </FormItem>
+        <FormItem label="BPID" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('bpid', {
+            initialValue: item.bpid,
+            rules: [
+              {
+                required: true,
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入BPID!',
+              },
+            ],
+          })(<Input placeholder="请输入BPID!" />)}
+        </FormItem>
+        <FormItem label="ICON" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('icon', {
+            initialValue: item.icon,
+            rules: [
+              {
+                required: true,
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入ICON!',
+              },
+            ],
+          })(<Input placeholder="请输入ICON!" />)}
+        </FormItem>
+        <FormItem label="路由地址" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('route', {
+            initialValue: item.route,
+            rules: [
+              {
+                required: true,
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入路由地址!',
+              },
+            ],
+          })(<Input placeholder="请输入路由地址!" />)}
+        </FormItem>
+        <FormItem label="备注信息" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('remark', {
+            initialValue: item.remark,
+            rules: [
+              {
+                required: true,
+                message: '字数不能超过100!',
                 max: 100,
               },
             ],
-          })(<TextArea placeholder="请输入设置理由!" style={{ height: '50', width: '100%' }} />)}
+          })(<TextArea placeholder="请输入备注信息!" style={{ height: '50', width: '100%' }} />)}
         </FormItem>
       </Form>
     </Modal>

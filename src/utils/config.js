@@ -202,16 +202,16 @@ module.exports = {
     },
     auth: {
       adminuser: {
-        list: `${APIV1}/users`,
-        update: `${APIV1}/users`,
-        delete: `${APIV1}/users`,
-        create: `${APIV1}/users`,
+        list: `${APIV1}/adminuser`,
+        update: `${APIV1}/adminuser`,
+        delete: `${APIV1}/adminuser`,
+        create: `${APIV1}/adminuser`,
       },
       menu: {
-        list: `${APIV1}/users`,
-        update: `${APIV1}/users`,
-        delete: `${APIV1}/users`,
-        create: `${APIV1}/users`,
+        list: `${APIV1}/menus`,
+        update: `${APIV1}/menus`,
+        delete: `${APIV1}/menus`,
+        create: `${APIV1}/menus`,
       },
       role: {
         list: `${APIV1}/users`,
