@@ -19,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         confirm({
           title: '确定要删除吗?',
           onOk() {
-            onDeleteItem(record.menuId)
+            onDeleteItem(record.id)
           },
         })
         break
@@ -41,21 +41,33 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '菜单级别',
       dataIndex: 'menuLevel',
       key: 'menuLevel',
+      width: 100,
+      render: (text) => {
+        const realText = {
+          1: '|',
+          2: '|---|',
+          3: '|---|---|',
+        }
+        return <p style={{ textAlign: 'left' }}>{text ? realText[text] : '无'}</p>
+      },
     }, {
       title: '菜单对应路由',
       dataIndex: 'target',
       key: 'target',
+      render: (text) => {
+        return <span>{text || '无'}</span>
+      },
     }, {
       title: '菜单图标',
       dataIndex: 'icon',
       key: 'icon',
       render: (text) => {
-        return <span>{text || '暂无'}</span>
+        return <span>{text || '无'}</span>
       },
     }, {
       title: '备注信息',
-      dataIndex: 'remark',
-      key: 'remark',
+      dataIndex: 'description',
+      key: 'description',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
@@ -93,7 +105,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.menuId}
+        rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
       />
     </div>

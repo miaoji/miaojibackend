@@ -64,9 +64,7 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      console.log('id', 123123123123)
       const id = yield select(({ role }) => role.currentItem.id)
-      console.log('id', id)
       const newrole = {
         note: payload.note,
         id,

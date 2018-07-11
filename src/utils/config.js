@@ -214,6 +214,7 @@ module.exports = {
         update: `${APIV3}/quandiExpressSiteManager/menuEdit`,
         delete: `${APIV3}/quandiExpressSiteManager/menuDel`,
         create: `${APIV3}/quandiExpressSiteManager/menuAdd`,
+        getMenuByParentId: `${APIV3}/quandiExpressSiteManager/getMenuByParentId`,
       },
       role: {
         list: `${APIV1}/users`,

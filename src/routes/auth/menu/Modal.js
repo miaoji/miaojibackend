@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal } from 'antd'
+import { Form, Input, Modal, Radio, Select } from 'antd'
 
+const RadioGroup = Radio.Group
 const FormItem = Form.Item
 const { TextArea } = Input
 
@@ -17,10 +18,14 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  onUpdateState,
+  modalMenuLevel,
+  mpidOption,
   form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    setFieldsValue,
   },
   type,
   ...modalProps
@@ -38,12 +43,19 @@ const modal = ({
     })
   }
 
+  const handleMenuLevelChange = (e) => {
+    onUpdateState({ modalMenuLevel: e.target.value })
+    setFieldsValue({
+      parentMenuId: undefined,
+      bpid: undefined,
+    })
+  }
+
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
   }
-
-  // const paramDisabled = type === 'update'
+  const paramDisabled = modalMenuLevel === 1
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
@@ -58,37 +70,47 @@ const modal = ({
             ],
           })(<Input placeholder="请输入菜单名称!" />)}
         </FormItem>
-        <FormItem label="MPID" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('parentMenuId', {
-            initialValue: item.parentMenuId,
+        <FormItem label="菜单级别" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('menuLevel', {
+            initialValue: item.menuLevel || 1,
             rules: [
               {
                 required: true,
-                pattern: /^[0-9a-zA-Z]*$/,
-                message: '请输入MPID!',
+                message: '请输入菜单级别!',
               },
             ],
-          })(<Input placeholder="请输入MPID!" />)}
+          })(<RadioGroup onChange={handleMenuLevelChange}>
+            <Radio value={1}>一级菜单</Radio>
+            <Radio value={2}>二级菜单</Radio>
+            <Radio value={3}>三级菜单</Radio>
+          </RadioGroup>)}
         </FormItem>
-        <FormItem label="BPID" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('bpid', {
-            initialValue: item.bpid,
-            rules: [
-              {
-                required: true,
-                pattern: /^[0-9a-zA-Z]*$/,
-                message: '请输入BPID!',
-              },
-            ],
-          })(<Input placeholder="请输入BPID!" />)}
-        </FormItem>
-        <FormItem label="ICON" hasFeedback {...formItemLayout}>
+        <div style={{ display: paramDisabled ? 'none' : 'block' }}>
+          <FormItem label="父级菜单" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('parentMenuId', {
+              initialValue: item.parentMenuId,
+              rules: [
+                {
+                  required: !paramDisabled,
+                  message: '请输入父级菜单!',
+                },
+              ],
+            })(<Select
+              showSearch
+              filterOption={false}
+              style={{ width: '100%' }}
+              placeholder="请选择父级!"
+            >
+              {mpidOption}
+            </Select>)}
+          </FormItem>
+        </div>
+        <FormItem label="图标" hasFeedback {...formItemLayout}>
           {getFieldDecorator('icon', {
             initialValue: item.icon,
             rules: [
               {
-                required: true,
-                pattern: /^[0-9a-zA-Z]*$/,
+                required: false,
                 message: '请输入ICON!',
               },
             ],
@@ -99,7 +121,7 @@ const modal = ({
             initialValue: item.target,
             rules: [
               {
-                required: true,
+                required: false,
                 message: '请输入路由地址!',
               },
             ],
@@ -111,7 +133,6 @@ const modal = ({
             rules: [
               {
                 required: true,
-                pattern: /^[0-9a-zA-Z]*$/,
                 message: '请输入排序!',
               },
             ],
@@ -122,7 +143,7 @@ const modal = ({
             initialValue: item.description,
             rules: [
               {
-                required: true,
+                required: false,
                 message: '字数不能超过100!',
                 max: 100,
               },
@@ -139,6 +160,9 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  onUpdateState: PropTypes.func,
+  modalMenuLevel: PropTypes.number,
+  mpidOption: PropTypes.array,
 }
 
 export default Form.create()(modal)

@@ -177,7 +177,6 @@ module.exports = {
 
   [`DELETE ${apiPrefix}/users`](req, res) {
     const { id } = req.body
-    // console.log('id', id)
     // database = database.filter((item) => { return !id.some(_ => _ === item.id) })
     res.status(200).json({
       code: 200,

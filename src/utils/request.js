@@ -78,21 +78,28 @@ const fetch = (options) => {
         timeout: 180000,
       })
     case 'post':
-      /* eslint no-case-declarations: 'off' */
-      let param = new URLSearchParams()
-      /* eslint guard-for-in: 'off' */
-      for (let key in params) {
-        param.append(key, params[key])
-      }
       return axios({
         url,
         method: 'post',
-        data: param,
-        timeout: 200000,
-        headers: {
-          'content-Type': 'application/x-www-form-urlencoded',
-        },
+        data: cloneData,
+        params,
+        timeout: 180000,
       })
+      // /* eslint no-case-declarations: 'off' */
+      // let param = new URLSearchParams()
+      // /* eslint guard-for-in: 'off' */
+      // for (let key in params) {
+      //   param.append(key, params[key])
+      // }
+      // return axios({
+      //   url,
+      //   method: 'post',
+      //   data: param,
+      //   timeout: 200000,
+      //   headers: {
+      //     'content-Type': 'application/x-www-form-urlencoded',
+      //   },
+      // })
     case 'put':
       return axios.put(url, cloneData)
     case 'patch':

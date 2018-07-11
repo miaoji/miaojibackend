@@ -7,25 +7,42 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, menu, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = menu
+  const { list, pagination, currentItem, modalVisible, modalType, modalMenuLevel, mpidOption } = menu
   const { pageSize } = pagination
-
   const modalProps = {
     type: modalType,
+    modalMenuLevel,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['menu/update'],
     title: `${modalType === 'create' ? '新增菜单信息' : '修改菜单信息'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    mpidOption,
+    onOk(data) {
       dispatch({
         type: `menu/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'menu/hideModal',
+      })
+    },
+    onUpdateState(payload) {
+      if (payload.modalMenuLevel === 2 || payload.modalMenuLevel === 3) {
+        dispatch({
+          type: 'menu/queryMPidOption',
+          payload: {
+            menuLevel: payload.modalMenuLevel - 1,
+          },
+        })
+      }
+      dispatch({
+        type: 'menu/updateState',
+        payload: {
+          ...payload,
+        },
       })
     },
   }
@@ -35,7 +52,7 @@ const Modular = ({ location, dispatch, menu, loading }) => {
     loading: loading.effects['menu/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -46,18 +63,27 @@ const Modular = ({ location, dispatch, menu, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'menu/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
+      if (item.menuLevel === 2 || item.menuLevel === 3) {
+        dispatch({
+          type: 'menu/queryMPidOption',
+          payload: {
+            menuLevel: item.menuLevel - 1,
+          },
+        })
+      }
       dispatch({
         type: 'menu/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
+          modalMenuLevel: item.menuLevel || 1,
         },
       })
     },
@@ -67,7 +93,7 @@ const Modular = ({ location, dispatch, menu, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -77,11 +103,12 @@ const Modular = ({ location, dispatch, menu, loading }) => {
         },
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'menu/showModal',
         payload: {
           modalType: 'create',
+          modalMenuLevel: 1,
         },
       })
     },

@@ -29,7 +29,6 @@ const Modular = ({ location, dispatch, role, loading }) => {
       })
     },
   }
-  console.log('loading.effects[role/query],', loading.effects['role/query'])
   const listProps = {
     dataSource: list,
     loading: loading.effects['role/query'],

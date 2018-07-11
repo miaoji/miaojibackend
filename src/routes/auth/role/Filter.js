@@ -49,8 +49,6 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    console.log('fields11', fields)
-    console.log('{ ...filter, ...fields }', { ...filter, ...fields })
     onFilterChange({ ...filter, ...fields })
   }
 
@@ -66,7 +64,6 @@ const Filter = ({
       }
     }
     filter.createTime = []
-    console.log('fields', fields)
     filter.page = undefined
     filter.pageSize = undefined
     setFieldsValue(fields)

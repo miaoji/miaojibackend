@@ -49,8 +49,6 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    console.log('fields11', fields)
-    console.log('{ ...filter, ...fields }', { ...filter, ...fields })
     onFilterChange({ ...filter, ...fields })
   }
 
@@ -66,7 +64,6 @@ const Filter = ({
       }
     }
     filter.createTime = []
-    console.log('fields', fields)
     filter.page = undefined
     filter.pageSize = undefined
     setFieldsValue(fields)
@@ -86,7 +83,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name, mobile } = filter
+  const { menuName } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -100,10 +97,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('menuName', { initialValue: menuName })(<Search placeholder="按菜单名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(

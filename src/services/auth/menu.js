@@ -8,7 +8,7 @@ export async function query(params) {
   params = pageParams(params)
   return request({
     url: menu.list,
-    method: 'parampost',
+    method: 'post',
     data: params,
   })
 }
@@ -16,7 +16,7 @@ export async function query(params) {
 export async function create(params) {
   return request({
     url: menu.create,
-    method: 'parampost',
+    method: 'post',
     data: params,
   })
 }
@@ -24,7 +24,7 @@ export async function create(params) {
 export async function update(params) {
   return request({
     url: menu.update,
-    method: 'parampost',
+    method: 'post',
     data: params,
   })
 }
@@ -32,7 +32,15 @@ export async function update(params) {
 export async function remove(params) {
   return request({
     url: menu.delete,
-    method: 'parampost',
+    method: 'post',
+    data: params,
+  })
+}
+
+export async function getMenuByParentId (params) {
+  return request({
+    url: menu.getMenuByParentId,
+    method: 'post',
     data: params,
   })
 }

@@ -1,9 +1,11 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
-import { message } from 'antd'
-import { query, create, update, remove } from '../../services/auth/menu'
+import { message, Select } from 'antd'
+import { getMenuByParentId, query, create, update, remove } from '../../services/auth/menu'
 import { pageModel } from '../system/common'
 
+const { Option } = Select
 const reloadItem = (item) => {
   if (item.children && item.children.length === 0) {
     delete item.children
@@ -23,6 +25,8 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    modalMenuLevel: 1,
+    mpidOption: [],
   },
 
   subscriptions: {
@@ -42,7 +46,7 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
-      const data = yield call(query, payload)
+      const data = yield call(query, { ...payload })
       if (data) {
         data.obj.map((item) => {
           return reloadItem(item)
@@ -62,13 +66,6 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      // const newmenu = {
-      //   idUser: payload.idUser.split('/-/')[1],
-      //   mobile: payload.mobile,
-      //   note: payload.note,
-      //   state: 1,
-      // }
-      console.log('payload', payload)
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -81,11 +78,11 @@ export default modelExtend(pageModel, {
 
     *update({ payload }, { select, call, put }) {
       const id = yield select(({ menu }) => menu.currentItem.id)
-      const newmenu = {
-        note: payload.note,
-        id,
-      }
-      const data = yield call(update, newmenu)
+      // const newmenu = {
+      //   note: payload.note,
+      //   id,
+      // }
+      const data = yield call(update, { ...payload, id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -102,6 +99,21 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
       } else {
         throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
+      }
+    },
+
+    *queryMPidOption({ payload }, { call, put }) {
+      const data = yield call(getMenuByParentId, { page: 1, pageSize: 10000, menuLevel: payload.menuLevel })
+      if (data.code === 200) {
+        const option = data.obj.map((item) => {
+          return <Option key={item.id}>{item.menuName}</Option>
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            mpidOption: option,
+          },
+        })
       }
     },
 
