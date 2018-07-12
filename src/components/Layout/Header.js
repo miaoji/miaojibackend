@@ -30,14 +30,18 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
           <Icon type={siderFold ? 'menu-unfold' : 'menu-fold'} />
         </div>}
       <div className={styles.rightWarpper}>
+        <div className={styles.button}>
+          <Icon type="mail" />
+        </div>
         <Menu mode="horizontal" onClick={handleClickMenu}>
-          <SubMenu style={{
-            float: 'right',
-          }} title={< span > <Icon type="user" />
-            {user.userName} < /span>}
+          <SubMenu
+            style={{
+              float: 'right',
+            }}
+            title={<span> <Icon type="user" />{user.name} </span>}
           >
             <Menu.Item key="logout">
-              登出
+              退出登录
             </Menu.Item>
           </SubMenu>
         </Menu>

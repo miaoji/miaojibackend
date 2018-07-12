@@ -1,14 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
-import city from '../../utils/city'
+import { Form, Button, Row, Col, Input } from 'antd'
 import { DateRange } from '../../components'
-import { time } from '../../utils'
 
 const Search = Input.Search
-const { RangePicker } = DatePicker
 
 const ColProps = {
   xs: 24,
@@ -24,9 +20,6 @@ const TwoColProps = {
 }
 
 const Filter = ({
-  onAdd,
-  isMotion,
-  switchIsMotion,
   onFilterChange,
   filter,
   form: {
@@ -37,13 +30,11 @@ const Filter = ({
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime.length) {
-      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
-      const repairTime = time.repairTime(fields.createTime)
-      fields.startTime = repairTime.startTime
-      fields.endTime = repairTime.endTime
+    if (createTime && createTime.length && createTime[0] && createTime[1]) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    } else {
+      delete fields.createTime
     }
-    delete fields.createTime
     return fields
   }
 
@@ -92,10 +83,10 @@ const Filter = ({
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = filter.createTime[0]
+    initialCreateTime[0] = moment(filter.createTime[0])
   }
   if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = filter.createTime[1]
+    initialCreateTime[1] = moment(filter.createTime[1])
   }
 
   return (
@@ -107,9 +98,9 @@ const Filter = ({
         {getFieldDecorator('serialNumber', { initialValue: serialNumber })(<Search placeholder="按运单号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
-          )}
+        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+        )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -124,9 +115,6 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  onAdd: PropTypes.func,
-  isMotion: PropTypes.bool,
-  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,

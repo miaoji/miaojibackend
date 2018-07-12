@@ -3,41 +3,29 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import styles from './index.less'
 
-const detailCN = {
-  sendQuantity: '寄出数量',
-  numberOfReceipts: '收件数量',
-  price: '消费金额',
-}
-
-const Detail = ({ wxUserDetail }) => {
-  const { data, user } = wxUserDetail
+const Detail = ({ wxuserdetail }) => {
+  const { user } = wxuserdetail
   const content = []
-  for (let key in data) {
-    if ({}.hasOwnProperty.call(data, key)) {
-      content.push(<div key={key} className={styles.item}>
-        <div>{detailCN[key]} : </div>
-        <div>{String(data[key])}</div>
-      </div>)
+
+  for (let key in user) {
+    if ({}.hasOwnProperty.call(user, key)) {
+      content.push(
+        <div key={key} className={styles.item}>
+          <div>{key}</div>
+          <div>{String(user[key])}</div>
+        </div>
+      )
     }
   }
   return (<div className="content-inner">
     <div className={styles.content}>
-      <div className={styles.item}>
-        <div>用户名 : </div>
-        <div>{user.username}</div>
-      </div>
-      <div className={styles.item}>
-        <div>手 机 : </div>
-        <div>{user.usermobile}</div>
-      </div>
       {content}
     </div>
   </div>)
 }
 
 Detail.propTypes = {
-  userDetail: PropTypes.object,
-  loading: PropTypes.bool,
+  wxuserdetail: PropTypes.object,
 }
 
-export default connect(({ wxUserDetail, loading }) => ({ wxUserDetail, loading: loading.models.wxuserDetail }))(Detail)
+export default connect(({ wxuserdetail, loading }) => ({ wxuserdetail, loading: loading.models.wxuserdetail }))(Detail)

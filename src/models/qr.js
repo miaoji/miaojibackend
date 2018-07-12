@@ -1,10 +1,12 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
-import { create, update, remove } from '../services/qr'
-import * as bootsService from '../services/qrs'
-import { pageModel } from './common'
+import { message, Select } from 'antd'
+import { initialCreateTime } from 'utils'
+import { query, create, update, remove } from '../services/qr'
+import { query as queryParameterOption } from '../services/storeuser'
+import { pageModel } from './system/common'
 
-const { query } = bootsService
+const { Option } = Select
 
 export default modelExtend(pageModel, {
   namespace: 'qr',
@@ -13,11 +15,12 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    parameterOption: [],
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
-      history.listen(location => {
+    setup({ dispatch, history }) {
+      history.listen((location) => {
         if (location.pathname === '/qr') {
           dispatch({
             type: 'query',
@@ -30,9 +33,9 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
       const data = yield call(query, payload)
-      console.log('dadfafa', data)
       if (data) {
         yield put({
           type: 'querySuccess',
@@ -48,10 +51,10 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       const newQr = {
-        param: payload.parameter,
-        name: payload.name,
+        param: payload.parameter.split('///')[0],
+        name: payload.parameter.split('///')[1],
         remark: payload.remark,
       }
       const data = yield call(create, newQr)
@@ -64,7 +67,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ qr }) => qr.currentItem.id)
       const newQr = {
         name: payload.name,
@@ -81,7 +84,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *delete({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload })
       if (data.code === 200) {
         message.success('删除成功')
@@ -91,15 +94,39 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *getParameterOption(_, { call, put }) {
+      const data = yield call(queryParameterOption, {
+        page: 1,
+        pageSize: 10000,
+      })
+      if (data.code === 200) {
+        const option = data.obj.map((item) => {
+          if (!item.name) {
+            return false
+          }
+          const val = `${item.id}///${item.name}`
+          return <Option key={val}>{`${item.name}-ID:${item.id}`}</Option>
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            parameterOption: option,
+          },
+        })
+      } else {
+        throw data.mess || data
+      }
+    },
+
   },
 
   reducers: {
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 

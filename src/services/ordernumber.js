@@ -1,28 +1,27 @@
 import { request, config, pageParams } from '../utils'
+
 const { api } = config
 const { ordernumber } = api
 
-export async function query (data) {
+export async function query(data) {
   data = pageParams(data)
   data = JSON.stringify(data)
   return request({
     url: ordernumber.index,
-    method: 'parampost',
-    paramkey: 'param',
-    data,
+    method: 'post',
+    params: { param: data },
   })
 }
 
-export async function create (data) {
+export async function create(data) {
   return request({
     url: ordernumber.create,
-    method: 'parampost',
-    paramkey: 'param',
-    data,
+    method: 'post',
+    params: { param: data },
   })
 }
 
-export async function remove (params) {
+export async function remove(params) {
   return request({
     url: ordernumber.update,
     method: 'post',
@@ -30,16 +29,15 @@ export async function remove (params) {
   })
 }
 
-export async function update (data) {
+export async function update(data) {
   return request({
     url: ordernumber.update,
-    method: 'parampost',
-    paramkey: 'param',
-    data,
+    method: 'post',
+    params: { param: data },
   })
 }
 
-export async function showBrandName (params) {
+export async function showBrandName(params) {
   return request({
     url: ordernumber.showBrandName,
     method: 'post',

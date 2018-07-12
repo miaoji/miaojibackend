@@ -1,22 +1,26 @@
 import DataTable from './DataTable'
 import DropOption from './DropOption'
-import DateRange from './DateRange'
 import Iconfont from './Iconfont'
 import Search from './Search'
 import Editor from './Editor'
 import FilterItem from './FilterItem'
+import Loader from './Loader'
+import DateRange from './DateRange'
+import Page from './Page'
 import * as Layout from './Layout/index.js'
 
 import layer from './layer'
 
 export {
   Layout,
+  Page,
   DataTable,
   DropOption,
-  DateRange,
   Iconfont,
   Search,
   Editor,
   FilterItem,
+  DateRange,
+  Loader,
   layer,
- }
+}

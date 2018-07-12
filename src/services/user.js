@@ -1,4 +1,5 @@
-import { request, config } from '../utils'
+import { request, config } from 'utils'
+
 const { api } = config
 const { user } = api
 
@@ -13,7 +14,7 @@ export async function query (params) {
 export async function create (params) {
   return request({
     url: user.replace('/:id', ''),
-    method: 'post',
+    method: 'parampost',
     data: params,
   })
 }

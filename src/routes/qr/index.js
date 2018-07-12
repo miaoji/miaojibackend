@@ -2,17 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
 const Qr = ({ location, dispatch, qr, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = qr
+  const { list, parameterOption, pagination, currentItem, modalVisible, modalType } = qr
   const { pageSize } = pagination
 
   const modalProps = {
     type: modalType,
+    parameterOption,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['boot/update'],
@@ -96,19 +96,13 @@ const Qr = ({ location, dispatch, qr, loading }) => {
           modalType: 'create',
         },
       })
+      dispatch({
+        type: 'qr/getParameterOption',
+      })
     },
     switchIsMotion () {
       dispatch({ type: 'qr/switchIsMotion' })
     },
-  }
-
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'qr/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
   }
 
   return (

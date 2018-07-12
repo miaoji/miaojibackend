@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
-import styles from './List.less'
+import { Table, Modal, Button } from 'antd'
 import classnames from 'classnames'
+import moment from 'moment'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { time } from '../../utils'
 
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
@@ -19,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -29,14 +29,15 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     }
   }
 
-  const copyUrl = (record, e) => {
-    const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
+  const copyUrl = (record) => {
+    const href = `http://www.mijihome.cn:8083/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
+    /* eslint no-alert: 'off' */
     window.prompt('请使用Ctrl+C复制到剪切板', href)
   }
 
   const columns = [
     {
-      title: '门店姓名',
+      title: '门店名',
       dataIndex: 'name',
       key: 'name',
     }, {
@@ -44,7 +45,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'sourceCount',
       key: 'sourceCount',
     }, {
-      title: '二维码参数',
+      title: '站点ID',
       dataIndex: 'parameter',
       key: 'parameter',
     }, {
@@ -53,7 +54,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'ticket',
       render: (text, record) => {
         const href = `/qrdetail?ticket=${text}&name=${record.name}&parameter=${record.parameter}&remark=${record.remark}`
-        return <a href={href} target="_blank">点击查看</a>
+        return <a href={href} target="blank">点击查看</a>
       },
     }, {
       title: '复制图片路径',
@@ -65,12 +66,15 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '备注',
       dataIndex: 'remark',
       key: 'remark',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      },
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const createTime = time.formatTime(text.toString())
+        const createTime = moment(text).format('YYYY-MM-DD HH:mm:ss')
         return <span>{createTime}</span>
       },
     }, {
@@ -88,7 +92,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     rows: tableProps.pagination.rows,
   }
 
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>

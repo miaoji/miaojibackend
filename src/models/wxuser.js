@@ -1,15 +1,11 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update } from '../services/wxuser'
-import * as wxusersService from '../services/wxusers'
-import { pageModel } from './common'
-import { config } from '../utils'
-// import { gettimes } from '../utils/time'
+import { config, initialCreateTime } from 'utils'
+import { query } from '../services/wxuser'
+import { pageModel } from './system/common'
 
-const { query } = wxusersService
 const { prefix } = config
-
 export default modelExtend(pageModel, {
-  namespace: 'wxUser',
+  namespace: 'wxuser',
 
   state: {
     currentItem: {},
@@ -21,7 +17,7 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup ({ dispatch, history }) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.pathname === '/wxuser') {
           dispatch({
             type: 'query',
@@ -35,8 +31,9 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query ({ payload = {} }, { call, put }) {
-      let data = yield call(query, payload)
-      if (data.code === 200) {
+      payload = initialCreateTime(payload)
+      const data = yield call(query, payload)
+      if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -48,62 +45,6 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      } else {
-        throw data.mess || '网络不行了!!!'
-      }
-    },
-
-    *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
-      const { selectedRowKeys } = yield select(_ => _.user)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(wxusersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'markBlackList' ({ payload }, { call, put }) {
-      const newWxUser = payload
-      const data = yield call(update, newWxUser)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ wxUser }) => wxUser.currentItem.id)
-      const newWxUser = { ...payload, id }
-      const data = yield call(update, newWxUser)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
-      } else {
-        throw data
       }
     },
 

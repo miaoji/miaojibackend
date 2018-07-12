@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { FilterItem } from '../../components'
-import { Form, Button, Row, Col, DatePicker, Input, Cascader, Switch } from 'antd'
-import city from '../../utils/city'
-import { time } from '../../utils'
+import { Form, Button, Row, Col,
+  // Input
+} from 'antd'
 
-const Search = Input.Search
-const { RangePicker } = DatePicker
+// const Search = Input.Search
 
 const ColProps = {
   xs: 24,
@@ -27,20 +25,18 @@ const Filter = ({
   onFilterChange,
   filter,
   form: {
-    getFieldDecorator,
+    // getFieldDecorator,
     getFieldsValue,
     setFieldsValue,
   },
 }) => {
   const handleFields = (fields) => {
     const { createTime } = fields
-    if (createTime) {
-      // fields.createTime = [createTime[0]._d.getTime(), createTime[1]._d.getTime()]
-      const repairTime = time.repairTime(fields.createTime)
-      fields.startTime = repairTime.startTime
-      fields.endTime = repairTime.endTime
+    if (createTime && createTime.length && createTime[0] && createTime[1]) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    } else {
+      delete fields.createTime
     }
-    delete fields.createTime
     return fields
   }
 
@@ -65,13 +61,7 @@ const Filter = ({
     handleSubmit()
   }
 
-  const handleChange = (key, values) => {
-    let fields = getFieldsValue()
-    fields[key] = values
-    fields = handleFields(fields)
-    onFilterChange(fields)
-  }
-  const { name, address } = filter
+  // const { name } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -83,18 +73,18 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按推广人姓名搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
+      {/* <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按门店名搜索" size="large" onSearch={handleSubmit} />)}
+      </Col> */}
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            {/* <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button> */}
+            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+            <Button type="primary" size="large" onClick={onAdd}>新增</Button>
           </div>
-          <div>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
-          </div>
+          {/* <div>
+          </div> */}
         </div>
       </Col>
     </Row>

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
 
@@ -17,6 +16,7 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  parameterOption,
   form: {
     getFieldDecorator,
     validateFields,
@@ -44,11 +44,41 @@ const modal = ({
   }
 
   const paramDisabled = type === 'update'
-
+  if (type === 'create') {
+    return (
+      <Modal {...modalOpts}>
+        <Form layout="horizontal">
+          <FormItem label="站点" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('parameter', {
+              initialValue: item.parameter,
+              rules: [
+                {
+                  required: true,
+                  message: '请选择站点',
+                },
+              ],
+            })(<Select placeholder="请选择站点" style={{ width: '100%' }} showSearch disabled={paramDisabled} >{parameterOption}</Select>)}
+          </FormItem>
+          <FormItem label="备注" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('remark', {
+              initialValue: item.remark,
+              rules: [
+                {
+                  required: false,
+                  message: '备注字数不能超过100!',
+                  max: 100,
+                },
+              ],
+            })(<Input placeholder="请输入备注信息" />)}
+          </FormItem>
+        </Form>
+      </Modal>
+    )
+  }
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="门店姓名" hasFeedback {...formItemLayout}>
+        <FormItem label="门店名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
             initialValue: item.name,
             rules: [
@@ -60,14 +90,14 @@ const modal = ({
             ],
           })(<Input type="text" placeholder="请输入门店名" />)}
         </FormItem>
-        <FormItem label="二维码参数" hasFeedback {...formItemLayout}>
+        <FormItem label="站点ID" hasFeedback {...formItemLayout}>
           {getFieldDecorator('parameter', {
             initialValue: item.parameter,
             rules: [
               {
                 required: true,
                 pattern: /^[A-Za-z0-9]{0,}$/,
-                message: '请输入二维码参数!',
+                message: '请输入站点ID!',
               },
             ],
           })(<Input disabled={paramDisabled} />)}
@@ -82,7 +112,7 @@ const modal = ({
                 max: 100,
               },
             ],
-          })(<Input />)}
+          })(<Input placeholder="请输入备注信息" />)}
         </FormItem>
       </Form>
     </Modal>
@@ -94,6 +124,7 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  parameterOption: PropTypes.array,
 }
 
 export default Form.create()(modal)

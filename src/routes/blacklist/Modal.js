@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader, Select } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
-const Option = Select.Option
 const { TextArea } = Input
 
 const formItemLayout = {
@@ -68,7 +66,7 @@ const modal = ({
             rules: [
               {
                 required: !paramDisabled,
-                pattern: /^[0-9]{11}$/,
+                pattern: /^[0-9a-zA-Z]*$/,
                 message: '请输入手机号码/单号!',
               },
             ],
@@ -96,6 +94,7 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  selectSiteName: PropTypes.array,
 }
 
 export default Form.create()(modal)

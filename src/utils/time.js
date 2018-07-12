@@ -1,29 +1,55 @@
-// 传入一个时间戳,转换成常见的时间格式
+import moment from 'moment'
 
-export const formatTime = function (val) {
-  if (val == null || val == '' || val.length != 13) {
-    return '未知时间'
+export function initialCreateTime(payload) {
+  payload = { ...payload }
+  const { createTime } = payload
+  if (createTime && createTime.length && createTime[0] && createTime[1]) {
+    let tmpTime = []
+    if (typeof (createTime[0]) === 'object') {
+      createTime[0] = createTime[0].format('YYYY-MM-DD')
+      createTime[1] = createTime[1].format('YYYY-MM-DD')
+    }
+    if (createTime[0]) {
+      tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
+    }
+    if (createTime[1]) {
+      tmpTime[1] = moment(`${createTime[1]} 23:59:59`).unix()
+    }
+    payload.startTime = `${tmpTime[0]}000`
+    payload.endTime = `${tmpTime[1]}999`
+    delete payload.createTime
+  } else {
+    delete payload.createTime
   }
-  let date = new Date(parseInt(val))
-  let y = date.getFullYear()
-  let m = date.getMonth() + 1
-  m = m > 9 ? m : `0${m}`
-  let d = date.getDate()
-  d = d > 9 ? d : `0${d}`
-  let h = date.getHours()
-  h = h > 9 ? h : `0${h}`
-  let mm = date.getMinutes()
-  mm = mm > 9 ? mm : `0${mm}`
-  let s = date.getSeconds()
-  s = s > 9 ? s : `0${s}`
-  return (`${y}/${m}/${d} ${h}:${mm}:${s}`)
+  return payload
 }
 
-
-// 弥补创建时间控件获取的时间戳是带当前时间的问题
-
-// @val  [type:number] 13的时间戳
-// @type [type:string] 要转换的时间是开始时间还是结束时间
+export function yesterTime(day = 0) {
+  let dayCount = 1
+  const test = false
+  if (process.env.NODE_ENV !== 'development' || test) {
+    dayCount = 1
+    // if (window.location.search === '') {
+    //   message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
+    // }
+    const date = new Date()
+    const h = date.getHours()
+    const m = date.getMinutes()
+    const s = date.getSeconds()
+    const ms = date.getMilliseconds()
+    const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
+    const startTime = date.getTime() - 86400000 * dayCount - times - 86400000 * day
+    const endTime = date.getTime() - times - 1 - 86400000 * day
+    return {
+      startTime,
+      endTime,
+    }
+  }
+  return {
+    startTime: 1528992000000 - 86400000 * day,
+    endTime: 1529078399999 - 86400000 * day,
+  }
+}
 
 export const repairTime = function (val) {
   if (val[0] !== null && val[1] !== null) {
@@ -48,4 +74,51 @@ export const repairTime = function (val) {
     startTime,
     endTime,
   }
+}
+
+
+export function handleFields(fields) {
+  const { createTime } = fields
+  if (createTime && createTime[0] === null) {
+    fields.createTime = undefined
+  }
+  if (createTime && createTime.length && createTime[0] && createTime[1]) {
+    fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+  } else {
+    fields.createTime = undefined
+  }
+  return fields
+}
+
+export function defaultTime(filters, day) {
+  filters = { ...filters }
+  const times = yesterTime(day)
+  if (!filters.createTime) {
+    filters.createTime = []
+    filters.createTime[0] = moment(times.startTime)
+    filters.createTime[1] = moment(times.endTime)
+  } else {
+    filters.createTime[0] = moment(filters.createTime[0])
+    filters.createTime[1] = moment(filters.createTime[1])
+  }
+  return filters
+}
+
+export function getToday(val) {
+  let date = new Date(val)
+  let y = date.getFullYear()
+  let m = date.getMonth() + 1
+  m = m > 9 ? m : `0${m}`
+  let d = date.getDate()
+  d = d > 9 ? d : `0${d}`
+  return (`${y}-${m}-${d}`)
+}
+
+export function getLineTime() {
+  let date = []
+
+  for (let i = 0; i < 30; i++) {
+    date.unshift(getToday((new Date().getTime() - (86400000 * (i + 1)))))
+  }
+  return date
 }

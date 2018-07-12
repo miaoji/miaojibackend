@@ -1,28 +1,27 @@
 import modelExtend from 'dva-model-extend'
-import { create, remove, update, markBlack } from '../services/storeuser'
-import * as storeusersService from '../services/storeusers'
-import { pageModel } from './common'
-import { config } from '../utils'
-import { gettimes } from '../utils/time' // 转换时间戳的函数
+import { config, initialCreateTime } from 'utils'
+import { message } from 'antd'
+import { query, updateFee, versionswitch } from '../services/storeuser'
+import { pageModel } from './system/common'
 
-const { query } = storeusersService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
-  namespace: 'storeUser',
+  namespace: 'storeuser',
 
   state: {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
-    selectedRowKeys: [],
-    isMotion: false,
+    expandedRowKeys: [],
+    columnslist: [],
+    sonlist: [],
+    isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
   },
 
   subscriptions: {
-
-    setup ({ dispatch, history }) {
-      history.listen(location => {
+    setup({ dispatch, history }) {
+      history.listen((location) => {
         if (location.pathname === '/storeuser') {
           dispatch({
             type: 'query',
@@ -35,8 +34,9 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
-      let data = yield call(query, payload)
+    *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
+      const data = yield call(query, { ...payload, superId: -1 })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -49,62 +49,50 @@ export default modelExtend(pageModel, {
             },
           },
         })
-      } else {
-        throw data.mess || '网络不行了!!!'
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
-      const { selectedRowKeys } = yield select(_ => _.user)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
+    *update({ payload }, { call, put, select }) {
+      payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
+
+      const data = yield call(updateFee, payload)
+      if (data.code === 200) {
+        message.success('更新成功')
         yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'multiDelete' ({ payload }, { call, put }) {
-      const data = yield call(storeusersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-        yield put({ type: 'query' })
-      } else {
-        throw data
-      }
-    },
-
-    *'markBlackList' ({ payload }, { call, put, select }) {
-      const newUser = { status: 2, id: payload }
-      const data = yield call(update, newUser)
-      if (data.success) {
         yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
       } else {
-        throw data
+        message.success(data.mess || '网络错误')
       }
     },
 
-    *create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
+    *versionswitch({ payload }, { call, put, select }) {
+      payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
+
+      const data = yield call(versionswitch, payload)
+
+      if (data.code === 200) {
+        message.success('切换成功')
         yield put({ type: 'query' })
+        yield put({ type: 'hideModal' })
       } else {
-        throw data
+        message.success(data.mess || '网络错误')
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
-      const id = yield select(({ storeUser }) => storeUser.currentItem.id)
-      const newUser = { ...payload, id }
-      const data = yield call(update, newUser)
-      if (data.success) {
-        yield put({ type: 'hideModal' })
-        yield put({ type: 'query' })
+    // 根据主账号查询子账号
+    *unfold({ payload }, { call, put }) {
+      const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
+
+      if (data.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            sonlist: data.obj,
+            expandedRowKeys: [payload.superId],
+          },
+        })
       } else {
-        throw data
+        message.success(data.mess || '网络错误')
       }
     },
 
@@ -112,17 +100,12 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
-    },
-
-    switchIsMotion (state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
-      return { ...state, isMotion: !state.isMotion }
     },
 
   },

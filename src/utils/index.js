@@ -1,13 +1,14 @@
-import config from './config'
-import menu from './menu'
-import request from './request'
 import classnames from 'classnames'
-import { color } from './theme'
 import lodash from 'lodash'
+import config from './config'
+import request from './request'
+import { color } from './theme'
 import * as time from './time'
+import { filterStoreSelect } from './filter'
 
-const localStorage = window.localStorage
+
 const { localPrefix } = config
+const localStorage = window.localStorage
 
 // 连字符转驼峰
 String.prototype.hyphenToHump = function () {
@@ -102,20 +103,20 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
   })
   return result
 }
-
-
 /**
  * 对网络请求的params做处理，针对分页
  * @param   {params} Object
  * @return  {params} Object
  */
 const pageParams = function (params) {
-  params = params || {
+  params = { ...params } || {
     pagination: 1,
     rownum: 10,
   }
   params.pagination = params.page || 1
   params.rownum = params.pageSize || 10
+  delete params.page
+  delete params.pageSize
   return params
 }
 
@@ -157,14 +158,19 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
 
 module.exports = {
   config,
-  menu,
   request,
   color,
   classnames,
   queryURL,
   queryArray,
   arrayToTree,
+  storage,
+  api: config.api,
   pageParams,
   time,
-  storage,
+  APIV3: config.APIV3,
+  handleFields: time.handleFields,
+  initialCreateTime: time.initialCreateTime,
+  defaultTime: time.defaultTime,
+  filterStoreSelect,
 }

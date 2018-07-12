@@ -1,14 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
-import styles from './List.less'
+import { Table } from 'antd'
 import classnames from 'classnames'
+import moment from 'moment'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
-import { Link } from 'dva/router'
-import { time } from '../../utils'
-
-const confirm = Modal.confirm
 
 const realStatus = {
   success: '成功',
@@ -38,20 +34,7 @@ const realPaymentMethod = {
   4: '线下现金支付',
 }
 
-const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      onEditItem(record)
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要删除这一条记录吗?',
-        onOk () {
-          onDeleteItem(record.id)
-        },
-      })
-    }
-  }
-
+const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
   const columns = [
     {
       title: '名称',
@@ -123,7 +106,7 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
       dataIndex: 'createtime',
       key: 'createtime',
       render: (text) => {
-        const createTime = time.formatTime(text)
+        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
         return <span>{createTime}</span>
       },
     },
@@ -134,7 +117,7 @@ const List = ({ filter, onFilterStatus, onDeleteItem, onEditItem, isMotion, loca
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
     <div>

@@ -1,29 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
-import styles from './List.less'
+import { Table } from 'antd'
 import classnames from 'classnames'
+import moment from 'moment'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
-import { Link } from 'dva/router'
-import { time } from '../../utils'
-
-const confirm = Modal.confirm
 
 const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
-  const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      onEditItem(record)
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要删除这一条记录吗?',
-        onOk () {
-          onDeleteItem(record.id)
-        },
-      })
-    }
-  }
-
   const columns = [
     {
       title: '单号',
@@ -119,11 +102,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'state',
       render: (text) => {
         const newtext = {
+          1: '点货',
           101: '到件',
           102: '上架',
           103: '分派',
           201: '问题件',
           202: '移库',
+          299: '问题件',
           301: '签收',
           302: '退回',
         }
@@ -134,7 +119,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'time',
       key: 'time',
       render: (text) => {
-        const createTime = time.formatTime(text)
+        const createTime = moment(text / 1).format('YYYY-MM-DD HH:mm:ss')
         return <span>{createTime}</span>
       },
     }, {
@@ -152,7 +137,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
     <div>

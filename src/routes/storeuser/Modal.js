@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
-import city from '../../utils/city'
+import { Form, InputNumber, Modal, Radio } from 'antd'
 
+const RadioGroup = Radio.Group
 const FormItem = Form.Item
 
 const formItemLayout = {
@@ -33,7 +33,6 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      data.address = data.address.join(' ')
       onOk(data)
     })
   }
@@ -43,98 +42,44 @@ const modal = ({
     onOk: handleOk,
   }
 
+  if (modalProps.modalType === 'versionswitch') {
+    return (
+      <Modal {...modalOpts} title="版本切换">
+        <Form layout="horizontal">
+          <FormItem label="版本" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('isBeta', {
+              initialValue: item.isBeta,
+              rules: [
+                {
+                  required: true,
+                  message: '请选择版本',
+                },
+              ],
+            })(
+              <RadioGroup>
+                <Radio value={1}>点货版</Radio>
+                <Radio value={0}>正式版</Radio>
+              </RadioGroup>
+            )}
+          </FormItem>
+        </Form>
+      </Modal>
+    )
+  }
+
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="帐号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('accounts', {
-            initialValue: item.accounts,
+        <FormItem label="通讯费" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('fee', {
+            initialValue: item.communicateFee,
             rules: [
               {
                 required: true,
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入帐号!',
+                message: '请输入通讯费金额',
               },
             ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="密码" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('pwd', {
-            initialValue: item.pwd,
-            rules: [
-              {
-                required: true,
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入密码!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="经营者姓名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
-            rules: [
-              {
-                required: true,
-                message: '请输入经营者姓名!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="店铺名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('storename', {
-            initialValue: item.storename,
-            rules: [
-              {
-                required: true,
-                message: '请输入店铺名称!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="店铺级别" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('level', {
-            initialValue: item.level,
-            rules: [
-              {
-                required: true,
-                type: 'number',
-                message: '请选择店铺级别!',
-              },
-            ],
-          })(
-            <Radio.Group>
-              <Radio value={1}>主张号</Radio>
-              <Radio value={0}>子帐号</Radio>
-            </Radio.Group>
-          )}
-        </FormItem>
-        <FormItem label="所属上级" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('superior', {
-            initialValue: item.superior,
-            rules: [
-              {
-                required: (Number(item.superior) === 1),
-                pattern: /^1[34578]\d{9}$/,
-                message: '请输入所属上级!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="地址" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('address', {
-            initialValue: item.address && item.address.split(' '),
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Cascader
-            size="large"
-            style={{ width: '100%' }}
-            options={city}
-            placeholder="选择一个地址"
-          />)}
+          })(<InputNumber placeholder="请输入通讯费金额" style={{ width: '100%' }} />)}
         </FormItem>
       </Form>
     </Modal>
@@ -143,9 +88,9 @@ const modal = ({
 
 modal.propTypes = {
   form: PropTypes.object.isRequired,
-  type: PropTypes.string,
-  item: PropTypes.object,
-  onOk: PropTypes.func,
+  type: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
+  onOk: PropTypes.func.isRequired,
 }
 
 export default Form.create()(modal)

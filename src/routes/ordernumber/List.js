@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Table, Modal, Icon, message, Button } from 'antd'
-import styles from './List.less'
+import { Table, Modal } from 'antd'
 import classnames from 'classnames'
+import moment from 'moment'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { time } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -18,7 +18,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -26,11 +26,6 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       default:
         break
     }
-  }
-
-  const copyUrl = (record, e) => {
-    const href = `http://miaoji.didalive.net/qrdetail?ticket=${record.ticket}&name=${record.name}&parameter=${record.parameter}`
-    window.prompt('请使用Ctrl+C复制到剪切板', href)
   }
 
   const columns = [
@@ -46,6 +41,9 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '后缀',
       dataIndex: 'end',
       key: 'end',
+      render: (text) => {
+        return <span>{(text === '' || !text) ? '无' : text}</span>
+      },
     }, {
       title: '长度',
       dataIndex: 'length',
@@ -55,11 +53,24 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'brand',
       key: 'brand',
     }, {
+      title: '快递类型',
+      dataIndex: 'mailType',
+      key: 'mailType',
+      render: (text) => {
+        const replText = {
+          0: '普通件',
+          1: '到付件',
+          2: '代收货款件',
+          3: '通用',
+        }
+        return <span>{replText[text]}</span>
+      },
+    }, {
       title: '时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const createTime = time.formatTime(text.toString())
+        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
         return <span>{createTime}</span>
       },
     }, {
@@ -77,7 +88,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     rows: tableProps.pagination.rows,
   }
 
-  const getBodyWrapper = body => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
+  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
 
   return (
     <div>

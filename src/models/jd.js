@@ -1,22 +1,24 @@
-// import React from 'react'
+/* 京东单号管理 */
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { query, create, update, remove } from '../services/storeorderinfo'
-import { pageModel } from './common'
+import { findOrderSheetCount, setJDConfig, orderSheet, getJDConfig } from '../services/jd'
+import { pageModel } from './system/common'
 
 export default modelExtend(pageModel, {
-  namespace: 'storeorderinfo',
+  namespace: 'jd',
 
   state: {
     currentItem: {},
     modalVisible: false,
+    jdModalVisible: false,
     modalType: 'create',
+    list: [],
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
-      history.listen(location => {
-        if (location.pathname === '/storeorderinfo') {
+      history.listen((location) => {
+        if (location.pathname === '/jd') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -29,99 +31,51 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      // const newPayload = {
-      //   // feeType: 1,
-      //   // status: 'success',
-      //   // startTime: '1486310400000',
-      //   // endTime: '1486396800000',
-      //   download: 0,
-      //   // rownum: 1,
-      //   // pagination: 10,
-      // }
-      const data = yield call(query, { ...payload, download: 0 }) 
-      console.log('data', data)
-      if (data.obj) {
+      const data = yield call(findOrderSheetCount, payload)
+      const jdconfig = yield call(getJDConfig)
+
+      if (data.obj && jdconfig.obj) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj,
-            pagination: {
-              current: Number(payload.page) || 1,
-              pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
-            },
+            list: [data.obj, jdconfig.obj],
           },
         })
       }
     },
 
-    *create({ payload }, { call, put }) {
-      const newstoreorderinfo = {
-        idUser: payload.idUser.split('/-/')[1],
-        mobile: payload.mobile,
-        note: payload.note,
-        state: 1,
-      }
-      const data = yield call(create, { state: 1, ...newstoreorderinfo })
-      if (data.success && data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success(data.mess)
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
-      }
-    },
-
-    *update({ payload }, { select, call, put }) {
-      const id = yield select(({ storeorderinfo }) => storeorderinfo.currentItem.id)
-      const newstoreorderinfo = {
-        note: payload.note,
-        id,
-      }
-      const data = yield call(update, newstoreorderinfo)
+    *create({ payload = {} }, { call, put }) {
+      const data = yield call(orderSheet, payload)
       if (data.code === 200) {
-        yield put({ type: 'hideModal' })
-        message.success('更新成功')
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess || data
+        message.success('填充单号池已完成')
+        yield put({
+          type: 'query',
+        })
+        yield put({
+          type: 'hideModal',
+        })
       }
     },
 
-    *'delete'({ payload }, { call, put }) {
-      const data = yield call(remove, { id: payload, state: 2 })
+    *setjdconfig({ payload = {} }, { call, put }) {
+      // return
+      const item = JSON.stringify({ brandId: 20, config: Number(payload.number) / 100 })
+      const data = yield call(setJDConfig, { param: item })
       if (data.code === 200) {
-        message.success('删除成功')
-        yield put({ type: 'query' })
-      } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
-      }
-    },
-
-    *download({ payload }, { call }) {
-      console.log('payload', payload)
-      const data = yield call(query, {
-        feeType: 1,
-        status: 'success',
-        startTime: '1486310400000',
-        endTime: '1486396800000',
-        download: 1,
-        rownum: 1,
-        pagination: 10,
-      })
-      console.log('data', data)
-      if (data.code === 200 && data.obj) {
-        console.log('数据正在请求下载')
-      } else {
-        throw data.mess || '无法跟服务器建立有效连接'
+        message.success('设置京东分成比例已完成')
+        yield put({
+          type: 'hideJdModal',
+        })
+        yield put({
+          type: 'query',
+        })
       }
     },
 
   },
 
   reducers: {
-
-    setSiteName(state, { payload }) {
+    setState(state, { payload }) {
       return { ...state, ...payload }
     },
 
@@ -129,9 +83,18 @@ export default modelExtend(pageModel, {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal(state) {
-      return { ...state, modalVisible: false }
+    hideModal(state, { payload }) {
+      return { ...state, ...payload, modalVisible: false }
+    },
+
+    showJdModal(state, { payload }) {
+      return { ...state, ...payload, jdModalVisible: true }
+    },
+
+    hideJdModal(state, { payload }) {
+      return { ...state, ...payload, jdModalVisible: false }
     },
 
   },
+
 })

@@ -1,7 +1,11 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { message } from 'antd'
-import { query, create, update, remove, showBrandName } from '../services/ordernumber'
-import { pageModel } from './common'
+import { message, Select } from 'antd'
+import { initialCreateTime } from 'utils'
+import { query, create, update, showBrandName } from '../services/ordernumber'
+import { pageModel } from './system/common'
+
+const { Option } = Select
 
 export default modelExtend(pageModel, {
   namespace: 'ordernumber',
@@ -13,8 +17,8 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup ({ dispatch, history }) {
-      history.listen(location => {
+    setup({ dispatch, history }) {
+      history.listen((location) => {
         if (location.pathname === '/ordernumber') {
           dispatch({
             type: 'query',
@@ -27,7 +31,8 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query ({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
         yield put({
@@ -44,15 +49,16 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create ({ payload }, { call, put, select }) {
+    *create({ payload }, { call, put, select }) {
       const { userId } = yield select(_ => _.app.user)
       let newOrderNumber = {
         cname: userId,
         // brand: payload.brand.split('/-/')[0],
         brandId: payload.brand.split('/-/')[1],
         start: payload.start,
-        end: payload.end,
-        length: payload.length
+        end: payload.end || '',
+        length: payload.length,
+        mailType: payload.mailType,
       }
       newOrderNumber = JSON.stringify(newOrderNumber)
       const data = yield call(create, newOrderNumber)
@@ -65,7 +71,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update ({ payload }, { select, call, put }) {
+    *update({ payload }, { select, call, put }) {
       const id = yield select(({ ordernumber }) => ordernumber.currentItem.id)
       const { userId } = yield select(_ => _.app.user)
       let orderNumber = {
@@ -75,7 +81,8 @@ export default modelExtend(pageModel, {
         brandId: payload.brand.split('/-/')[1],
         start: payload.start,
         end: payload.end,
-        length: payload.length
+        mailType: payload.mailType,
+        length: payload.length,
       }
       orderNumber = JSON.stringify(orderNumber)
       const data = yield call(update, orderNumber)
@@ -88,10 +95,10 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *'delete' ({ payload }, { call, put, select }) {
+    *delete({ payload }, { call, put }) {
       let orderNumber = {
         id: payload,
-        state: 2
+        state: 2,
       }
       orderNumber = JSON.stringify(orderNumber)
       const data = yield call(update, orderNumber)
@@ -103,7 +110,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getBrandName ({}, { call, put }) {
+    *getBrandName(_, { call, put }) {
       const data = yield call(showBrandName)
       if (data.code === 200 && data.obj) {
         let children = []
@@ -126,15 +133,15 @@ export default modelExtend(pageModel, {
 
   reducers: {
 
-    showModal (state, { payload }) {
+    showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
     },
 
-    hideModal (state) {
+    hideModal(state) {
       return { ...state, modalVisible: false }
     },
 
-    setBrandName (state, { payload }) {
+    setBrandName(state, { payload }) {
       return { ...state, ...payload }
     },
 

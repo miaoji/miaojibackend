@@ -2,43 +2,47 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const StoreUser = ({ location, dispatch, storeUser, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = storeUser
+const Storeuser = ({ location, dispatch, storeuser, loading }) => {
+  const { list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys } = storeuser
   const { pageSize } = pagination
+  const { query, pathname } = location
 
   const modalProps = {
+    modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['storeUser/update'],
-    title: `${modalType === 'create' ? '创建门店' : '更新门店'}`,
+    confirmLoading: loading.effects['storeuser/update'],
+    title: `${modalType === 'create' ? '新建' : '修改门店用户的通讯费'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
-        type: `storeUser/${modalType}`,
+        type: `storeuser/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
-        type: 'storeUser/hideModal',
+        type: 'storeuser/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['storeUser/query'],
+    columnslist,
+    sonlist,
+    filter: { ...location.query },
+    loading: loading.effects['storeuser/query'],
     pagination,
     location,
+    expandedRowKeys,
     isMotion,
-    onChange (page) {
-      const { query, pathname } = location
+    onChange(page) {
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -48,38 +52,54 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         },
       }))
     },
-    onMarkItem (id) {
+    onDeleteItem(id) {
       dispatch({
-        type: 'storeUser/markBlackList',
-        payload: id,
+        type: 'storeuser/delete',
+        payload: { id, query },
       })
     },
-    onDeleteItem (id) {
+    onEditItem(item) {
       dispatch({
-        type: 'storeUser/delete',
-        payload: id,
-      })
-    },
-    onEditItem (item) {
-      dispatch({
-        type: 'storeUser/showModal',
+        type: 'storeuser/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
       })
     },
-    // rowSelection: {
-    //   selectedRowKeys,
-    //   onChange: (keys) => {
-    //     dispatch({
-    //       type: 'storeUser/updateState',
-    //       payload: {
-    //         selectedRowKeys: keys,
-    //       },
-    //     })
-    //   },
-    // },
+    onVersionSwitching(item) {
+      dispatch({
+        type: 'storeuser/showModal',
+        payload: {
+          modalType: 'versionswitch',
+          currentItem: item,
+        },
+      })
+    },
+    // 控制可展开的行-执行展开操作但是不执行 原先的效果
+    onExpand(onOff, record) {
+      if (onOff === false) {
+        dispatch({
+          type: 'storeuser/updateState',
+          payload: {
+            expandedRowKeys: [],
+          },
+        })
+        return
+      }
+      dispatch({
+        type: 'storeuser/unfold',
+        payload: {
+          superId: record.id,
+        },
+      })
+      // dispatch({
+      //   type: 'storeuser/updateState',
+      //   payload: {
+      //     expandedRowKeys: [],
+      //   },
+      // })
+    },
   }
 
   const filterProps = {
@@ -87,7 +107,7 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -97,64 +117,44 @@ const StoreUser = ({ location, dispatch, storeUser, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/storeUser',
+        pathname: '/storeuser',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/storeUser',
+        pathname: '/storeuser',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
-        type: 'storeUser/showModal',
+        type: 'storeuser/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
-    switchIsMotion () {
-      dispatch({ type: 'storeUser/switchIsMotion' })
+    switchIsMotion() {
+      dispatch({ type: 'storeuser/switchIsMotion' })
     },
-  }
-
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'storeUser/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
   }
 
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-         selectedRowKeys.length > 0 &&
-           <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-             <Col>
-               {`选中 ${selectedRowKeys.length} 个微信用户 `}
-               <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-                 <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-               </Popconfirm>
-             </Col>
-           </Row>
-      }
       <List {...listProps} />
       {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
 
-StoreUser.propTypes = {
-  storeUser: PropTypes.object,
-  location: PropTypes.object,
-  dispatch: PropTypes.func,
-  loading: PropTypes.object,
+Storeuser.propTypes = {
+  storeuser: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.object.isRequired,
 }
 
-export default connect(({ storeUser, loading }) => ({ storeUser, loading }))(StoreUser)
+export default connect(({ storeuser, loading }) => ({ storeuser, loading }))(Storeuser)

@@ -1,97 +1,118 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
-import styles from './List.less'
+import { Table } from 'antd'
 import classnames from 'classnames'
+import moment from 'moment'
+import { Link } from 'dva/router'
+import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { Link } from 'dva/router'
-import { time } from '../../utils'
+import SonTable from './SonTable'
 
-const confirm = Modal.confirm
-
-const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) => {
+const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
-    if (e.key === '1') {
-      onEditItem(record)
-    } else if (e.key === '2') {
-      confirm({
-        title: '确定要删除这一条记录吗?',
-        onOk () {
-          onDeleteItem(record.id)
-        },
-      })
+    switch (e.key) {
+      case '1':
+        onEditItem(record)
+        break
+      case '2':
+        onVersionSwitching(record)
+        break
+      default:
+        break
     }
   }
-
   const columns = [
     {
       title: '站点ID',
       dataIndex: 'id',
       key: 'id',
+      width: 100,
       render: (text) => {
-        return <span>{ text?text:'暂无' }</span>
-      }
+        return <span>{text}</span>
+      },
     }, {
       title: '帐号',
+      width: 160,
       dataIndex: 'mobile',
       key: 'mobile',
     }, {
       title: '店铺名称',
       dataIndex: 'name',
       key: 'name',
+      width: 170,
       render: (text) => {
-        return <span>{ text?text:'暂无'}</span>
-      }
+        return <span>{text || '暂无'}</span>
+      },
     }, {
       title: '店铺级别',
       dataIndex: 'type',
       key: 'type',
-      render: (text) => <span>{text === '0'
-            ? '主张号'
-            : '子帐号'}</span>,
+      width: 100,
+      render: (text) => {
+        return (<span>{text === '0'
+          ? '主帐号'
+          : '子帐号'}</span>)
+      },
     }, {
       title: '状态',
       dataIndex: 'isdelete',
       key: 'isdelete',
-      render: (text) => <span>{text === 0
-            ? '禁用'
-            : '启用'}</span>,
+      width: 70,
+      render: (text) => {
+        return (<span>{text === 0
+          ? '禁用'
+          : '启用'}</span>)
+      },
+    }, {
+      title: '通讯费',
+      dataIndex: 'communicateFee',
+      key: 'communicateFee',
+      width: 100,
+      render: (text) => {
+        return (<span>{text || 0}元</span>)
+      },
+    }, {
+      title: 'APP版本',
+      dataIndex: 'isBeta',
+      key: 'isBeta',
+      width: 100,
+      render: (text) => {
+        const replText = {
+          0: '正式版',
+          1: '点货版',
+        }
+        return (<span>{replText[text]}</span>)
+      },
     }, {
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',
+      width: 150,
       render: (text) => {
-        const createtime = time.formatTime(text)
+        const createtime = text ? moment(text / 1).format('YYYY-MM-DD') : '未知时间'
         return <span>{createtime}</span>
       },
     },
-    // {
-    //   title: '是否黑名单',
-    //   dataIndex: 'blacklist',
-    //   key: 'blacklist',
-    //   filters: [
-    //     { text: '否', value: '0' },
-    //     { text: '是', value: '1' }
-    //   ],
-    //   onFilter: (value, record) => Number(record.blacklist) === Number(value),
-    //   render: (text) => {
-    //     const realtext = {
-    //       '0': '否',
-    //       '1': '是',
-    //     }
-    //     const newtext = text?text:0
-    //     return <span>{realtext[newtext]}</span>
-    //   }
-    // },
-    // {
-    //   title: '操作',
-    //   key: 'operation',
-    //   width: 100,
-    //   render: (text, record) => {
-    //     return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }, { key: '2', name: '删除' }]} />
-    //   },
-    // },
+    {
+      title: '操作人',
+      key: 'operation',
+      width: 150,
+      render: (text, record) => {
+        if (filter.startTime) {
+          return <Link to={`/storeUserDetail?idUser=${record.id}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+        }
+        return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看操作人详情</Link>
+      },
+    },
+    {
+      title: '操作',
+      key: 'operations',
+      width: 100,
+      render: (text, record) => {
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
+      },
+    },
   ]
 
   const getBodyWrapperProps = {
@@ -99,29 +120,38 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     current: tableProps.pagination.current,
   }
 
-  const getBodyWrapper = body => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
+  const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
+        expandRowByClick
+        className={classnames({ [styles.table]: true, [styles.motion]: false })}
         bordered
-        scroll={{ x: 767 }}
+        scroll={{ x: 1250 }}
         columns={columns}
         simple
+        /* eslint react/jsx-no-duplicate-props: 'off' */
+        expandRowByClick={false}
+        // expandedRowRender={() => <p>123123123</p>}
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
+        expandedRowRender={record => <SonTable handleMenuClick={handleMenuClick} record={record} list={sonlist} filter={filter} />}
       />
     </div>
   )
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
-  isMotion: PropTypes.bool,
-  location: PropTypes.object,
+  onDeleteItem: PropTypes.func.isRequired,
+  onEditItem: PropTypes.func.isRequired,
+  isMotion: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  columnslist: PropTypes.array.isRequired,
+  onVersionSwitching: PropTypes.func.isRequired,
+  filter: PropTypes.object,
+  sonlist: PropTypes.array,
 }
 
 export default List

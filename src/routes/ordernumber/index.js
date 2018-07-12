@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
@@ -95,7 +94,7 @@ const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
         type: 'ordernumber/showModal',
         payload: {
           modalType: 'create',
-        }
+        },
       })
       dispatch({
         type: 'ordernumber/getBrandName',

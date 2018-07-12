@@ -1,35 +1,28 @@
-import { request, config } from '../utils'
-const { api } = config
+import { request, api, pageParams } from 'utils'
+
 const { storeuser } = api
 
-export async function query (params) {
+export async function query(params) {
+  params = pageParams(params)
   return request({
-    url: storeuser,
+    url: storeuser.list,
     method: 'get',
-    data: params,
+    params,
   })
 }
 
-export async function create (params) {
+export async function updateFee(params) {
   return request({
-    url: storeuser.replace('/:id', ''),
+    url: storeuser.updateFee,
     method: 'post',
-    data: params,
+    params,
   })
 }
 
-export async function remove (params) {
+export async function versionswitch(params) {
   return request({
-    url: storeuser,
-    method: 'delete',
-    data: params,
-  })
-}
-
-export async function update (params) {
-  return request({
-    url: storeuser,
-    method: 'patch',
-    data: params,
+    url: storeuser.versionswitch,
+    method: 'post',
+    params,
   })
 }
