@@ -28,7 +28,6 @@ export async function update(params) {
 }
 
 export async function remove(params) {
-  console.log('params', params)
   return request({
     url: role.delete,
     method: 'post',

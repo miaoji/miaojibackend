@@ -24,6 +24,7 @@ const modal = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    setFieldsValue,
   },
   type,
   ...modalProps
@@ -70,9 +71,10 @@ const modal = ({
     return <span style={{ color: '#ffc413' }}>暂无数据</span>
   }
 
-  const handleCheck = (key, ee) => {
-    console.log('key', key)
-    console.log('ee', ee)
+  const handleCheck = (key) => {
+    setFieldsValue({
+      menus: key,
+    })
   }
 
   return (
@@ -84,7 +86,7 @@ const modal = ({
             rules: [
               {
                 required: !paramDisabled,
-                pattern: /^[0-9a-zA-Z]*$/,
+                // pattern: /^[0-9a-zA-Z]*$/,
                 message: '请输入角色名称!',
               },
             ],
@@ -92,11 +94,10 @@ const modal = ({
         </FormItem>
         <FormItem label="权限" hasFeedback {...formItemLayout}>
           {getFieldDecorator('menus', {
-            initialValue: item.menus,
+            // initialValue: item.MENU_ID ? eval(item.MENU_ID) : [],
             rules: [
               {
                 required: false,
-                pattern: /^[0-9a-zA-Z]*$/,
                 message: '请选择能访问的菜单!',
               },
             ],
@@ -104,6 +105,7 @@ const modal = ({
             checkable
             showLine
             selectable={false}
+            defaultExpandedKeys={['12', '25', '26']}
             // onExpand={this.onExpand}
             // expandedKeys={this.state.expandedKeys}
             // autoExpandParent={this.state.autoExpandParent}
@@ -117,11 +119,11 @@ const modal = ({
           </Tree>)}
         </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('remark', {
-            initialValue: item.remark,
+          {getFieldDecorator('description', {
+            initialValue: item.description,
             rules: [
               {
-                required: false,
+                required: true,
                 message: '备注信息字数不能超过100!',
                 max: 100,
               },

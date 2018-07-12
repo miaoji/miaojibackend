@@ -223,7 +223,7 @@ module.exports = {
       role: {
         list: `${APIV3}/quandiExpressSiteManager/roleList`,
         update: `${APIV3}/quandiExpressSiteManager/roleUpdate`,
-        delete: `${APIV3}/quandiExpressSiteManager/menuDel`,
+        delete: `${APIV3}/quandiExpressSiteManager/roleDel`,
         create: `${APIV3}/quandiExpressSiteManager/roleAdd`,
         queryMenu: `${APIV3}/quandiExpressSiteManager/menuList`,
       },

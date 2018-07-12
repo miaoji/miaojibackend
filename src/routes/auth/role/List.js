@@ -19,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         confirm({
           title: '确定要删除吗?',
           onOk () {
-            onDeleteItem(record.ROLE_ID)
+            onDeleteItem(record.ID)
           },
         })
         break
@@ -31,24 +31,24 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'ROLE_ID',
-      key: 'ROLE_ID',
+      dataIndex: 'ID',
+      key: 'ID',
     }, {
       title: '角色名称',
       dataIndex: 'ROLE_NAME',
       key: 'ROLE_NAME',
     }, {
       title: '备注信息',
-      dataIndex: 'remark',
-      key: 'remark',
+      dataIndex: 'DESCRIPTION',
+      key: 'DESCRIPTION',
       width: 300,
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
     }, {
       title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'ROLE_CREATE_TIME',
+      key: 'ROLE_CREATE_TIME',
       width: 200,
       render: (text) => {
         const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'

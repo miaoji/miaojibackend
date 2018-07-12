@@ -56,6 +56,9 @@ const Modular = ({ location, dispatch, role, loading }) => {
     },
     onEditItem(item) {
       dispatch({
+        type: 'role/queryMenuList',
+      })
+      dispatch({
         type: 'role/showModal',
         payload: {
           modalType: 'update',
