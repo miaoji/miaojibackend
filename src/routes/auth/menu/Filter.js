@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
-import { DateRange } from '../../components'
+import { DateRange } from '../../../components'
 
 const Search = Input.Search
 
@@ -64,9 +64,9 @@ const Filter = ({
       }
     }
     filter.createTime = []
-    setFieldsValue(fields)
     filter.page = undefined
     filter.pageSize = undefined
+    setFieldsValue(fields)
     handleSubmit()
   }
 
@@ -83,7 +83,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name, mobile } = filter
+  const { menuName } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -97,10 +97,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('menuName', { initialValue: menuName })(<Search placeholder="按菜单名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(

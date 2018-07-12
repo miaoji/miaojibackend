@@ -363,6 +363,36 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 权限管理>用户管理
+          path: 'adminuser',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/auth/adminuser'))
+              cb(null, require('./routes/auth/adminuser/'))
+            }, 'adminuser')
+          },
+        },
+        {
+          // 权限管理>角色管理
+          path: 'role',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/auth/role'))
+              cb(null, require('./routes/auth/role/'))
+            }, 'role')
+          },
+        },
+        {
+          // 权限管理>菜单管理
+          path: 'menu',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/auth/menu'))
+              cb(null, require('./routes/auth/menu/'))
+            }, 'menu')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent (nextState, cb) {

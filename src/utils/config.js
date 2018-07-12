@@ -1,4 +1,4 @@
-const APIV1 = '/api/v1'
+const APIV1 = 'http://127.0.0.1:8000/api/v1'
 // const APIV2 = '/api/v2'
 
 let APIV3
@@ -11,7 +11,7 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.231.232:8080'
 
 // 吴聪
-// APIV3 = 'http://192.168.231.231:8088'
+// APIV3 = 'http://47.101.42.216:8088'
 
 // 刘思远
 // APIV3 = 'http://192.168.126.1:8081'
@@ -21,7 +21,8 @@ APIV3 = 'http://192.168.231.239:8066'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  APIV3 = 'http://app.quandikeji.com:8288'
+  // APIV3 = 'http://app.quandikeji.com:8288'
+  APIV3 = 'http://47.101.42.216:8088'
 }
 
 let APIV4 = 'http://app.quandikeji.com/WeChatService'
@@ -199,6 +200,33 @@ module.exports = {
     // 异常件明细
     problemdetail: {
       all: `${APIV3}/quandiExpressSiteManager/selectproblemParts`,
+    },
+    // 权限管理
+    auth: {
+      // 用户管理
+      adminuser: {
+        list: `${APIV1}/adminuser`,
+        update: `${APIV1}/adminuser`,
+        delete: `${APIV1}/adminuser`,
+        create: `${APIV1}/adminuser`,
+        showSiteName: `${APIV3}/quandiExpressSiteManager/store`,
+      },
+      // 菜单管理
+      menu: {
+        list: `${APIV3}/quandiExpressSiteManager/menuList`,
+        update: `${APIV3}/quandiExpressSiteManager/menuEdit`,
+        delete: `${APIV3}/quandiExpressSiteManager/menuDel`,
+        create: `${APIV3}/quandiExpressSiteManager/menuAdd`,
+        getMenuByParentId: `${APIV3}/quandiExpressSiteManager/getMenuByParentId`,
+      },
+      // 角色管理
+      role: {
+        list: `${APIV3}/quandiExpressSiteManager/roleList`,
+        update: `${APIV3}/quandiExpressSiteManager/roleUpdate`,
+        delete: `${APIV3}/quandiExpressSiteManager/menuDel`,
+        create: `${APIV3}/quandiExpressSiteManager/roleAdd`,
+        queryMenu: `${APIV3}/quandiExpressSiteManager/menuList`,
+      },
     },
   },
 }

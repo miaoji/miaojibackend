@@ -6,7 +6,7 @@ const { user, userLogout, userLogin } = api
 export async function login (params) {
   return request({
     url: userLogin,
-    method: 'parampost',
+    method: 'post',
     data: params,
   })
 }

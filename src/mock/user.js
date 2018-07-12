@@ -9,16 +9,18 @@ let usersListData = Mock.mock({
     {
       id: '@id',
       name: '@name',
+      'idUser|+1': 1001,
       nickName: '@last',
       phone: /^1[34578]\d{9}$/,
       'age|11-99': 1,
+      mobile: /^1[3-9][0-9]{9}$/,
+      'sex|0-2': 1,
+      note: '@city',
+      'remark|1': ['今天很累了', '今天不怎么想说话了'],
       address: '@county(true)',
       isMale: '@boolean',
       email: '@email',
-      createTime: '@datetime',
-      avatar() {
-        return Mock.Random.image('100x100', Mock.Random.color(), '#757575', 'png', this.nickName.substr(0, 1))
-      },
+      createTime: new Date().getTime(),
     },
   ],
 })
@@ -139,9 +141,9 @@ module.exports = {
 
   [`GET ${apiPrefix}/users`](req, res) {
     const { query } = req
-    let { pageSize, page, ...other } = query
-    pageSize = pageSize || 10
-    page = page || 1
+    let { rownum, pagination, ...other } = query
+    rownum = rownum || 10
+    pagination = pagination || 1
 
     let newData = database
     for (let key in other) {
@@ -168,15 +170,19 @@ module.exports = {
     }
 
     res.status(200).json({
-      data: newData.slice((page - 1) * pageSize, page * pageSize),
+      obj: newData.slice((pagination - 1) * rownum, pagination * rownum),
       total: newData.length,
     })
   },
 
   [`DELETE ${apiPrefix}/users`](req, res) {
-    const { ids } = req.body
-    database = database.filter((item) => { return !ids.some(_ => _ === item.id) })
-    res.status(204).end()
+    const { id } = req.body
+    // database = database.filter((item) => { return !id.some(_ => _ === item.id) })
+    res.status(200).json({
+      code: 200,
+      id,
+      msg: '删除成功',
+    })
   },
 
 

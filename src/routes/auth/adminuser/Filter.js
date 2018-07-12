@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
-import { DateRange } from '../../components'
+import { DateRange } from '../../../components'
 
 const Search = Input.Search
 
@@ -64,9 +64,9 @@ const Filter = ({
       }
     }
     filter.createTime = []
-    setFieldsValue(fields)
     filter.page = undefined
     filter.pageSize = undefined
+    setFieldsValue(fields)
     handleSubmit()
   }
 
@@ -114,7 +114,7 @@ const Filter = ({
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
           <div>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+            <Button size="large" type="primary" onClick={onAdd}>注册用户</Button>
           </div>
         </div>
       </Col>
