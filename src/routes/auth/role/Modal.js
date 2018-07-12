@@ -68,7 +68,7 @@ const modal = ({
         />)
       })
     }
-    return <span style={{ color: '#ffc413' }}>暂无数据</span>
+    return <TreeNode title="parent 1-0" key="0-0-0" disabled />
   }
 
   const handleCheck = (key) => {
@@ -77,6 +77,9 @@ const modal = ({
       menus: key,
     })
   }
+
+  const defaultCheckedKeys = item.MENU_ID
+  console.log('defaultCheckedKeys', defaultCheckedKeys)
 
   return (
     <Modal {...modalOpts}>
@@ -94,18 +97,12 @@ const modal = ({
         </FormItem>
         <FormItem label="权限" hasFeedback {...formItemLayout}>
           {getFieldDecorator('menus', {
-            rules: [
-              {
-                required: false,
-                message: '请选择能访问的菜单!',
-              },
-            ],
           })(<Tree
+            defaultCheckedKeys={defaultCheckedKeys}
             checkable
             showLine
-            defaultExpandAll={paramDisabled}
             selectable={false}
-            defaultCheckedKeys={item.MENU_ID}
+            defaultExpandAll={paramDisabled}
             onCheck={handleCheck}
           >
             {renderTreeNodes(menuList)}

@@ -83,7 +83,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { roleName, mobile } = filter
+  const { roleName, ID } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -97,7 +97,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('ID', { initialValue: ID })(<Search placeholder="按ID搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('roleName', { initialValue: roleName })(<Search placeholder="按角色名称搜索" size="large" onSearch={handleSubmit} />)}

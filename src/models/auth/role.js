@@ -58,6 +58,7 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/role') {
+          dispatch({ type: 'queryMenuList' })
           dispatch({
             type: 'query',
             payload: location.query,
@@ -106,12 +107,16 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ role }) => role.currentItem.id)
-      const newrole = {
-        note: payload.note,
-        id,
+      const ID = yield select(({ role }) => role.currentItem.ID)
+      console.log('paylo', payload)
+      if (payload.menus) {
+        const menuList = yield select(({ role }) => role.menuList)
+        payload.menuGroup = handleArrData({
+          list: menuList,
+          arr: payload.menus,
+        })
       }
-      const data = yield call(update, newrole)
+      const data = yield call(update, { ...payload, ID })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

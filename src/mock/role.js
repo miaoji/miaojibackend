@@ -79,11 +79,22 @@ module.exports = {
   },
 
   [`POST ${apiPrefix}/roleUpdate`](req, res) {
-    const { id } = req.query
-    database = database.filter(item => !(Number(id) === Number(item.id)))
+    const { ID, description, menus, roleName } = req.body
+    database = database.map((item) => {
+      if (item.ID === ID) {
+        return {
+          ID,
+          ROLE_NAME: roleName || item.ROLE_NAME,
+          MENU_ID: menus || item.MENU_ID,
+          DESCRIPTION: description || item.DESCRIPTION,
+          ROLE_CREATE_TIME: new Date().getTime(),
+        }
+      }
+      return item
+    })
     res.status(200).json({
       code: 200,
-      msg: '删除成功',
+      msg: '修改成功',
     })
   },
 
@@ -132,23 +143,21 @@ module.exports = {
   },
 
   [`POST ${apiPrefix}/roleAdd`](req, res) {
-    const { remark, roleName } = req.query
+    console.log(req.body)
+    const { description, menus, roleName } = req.body
+    database.unshift({
+      ID: 1001 + database.length,
+      ROLE_NAME: roleName,
+      MENU_ID: menus,
+      DESCRIPTION: description,
+      ROLE_CREATE_TIME: new Date().getTime(),
+    })
     res.status(200).json(
       {
         code: 200,
-        msg: '添加成功',
-        obj: [{
-          remark,
-          roleName,
-        }],
+        mess: '添加成功',
       }
     )
-    // const { id } = req.query
-    // database = database.filter(item => !(Number(id) === Number(item.id)))
-    // res.status(200).json({
-    //   code: 200,
-    //   msg: '删除成功',
-    // })
   },
 
 }
