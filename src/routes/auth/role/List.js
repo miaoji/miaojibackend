@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Modal } from 'antd'
-import classnames from 'classnames'
 import moment from 'moment'
+import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
@@ -19,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         confirm({
           title: '确定要删除吗?',
           onOk () {
-            onDeleteItem(record.id)
+            onDeleteItem(record.ROLE_ID)
           },
         })
         break
@@ -30,21 +30,18 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'ROLE_ID',
+      key: 'ROLE_ID',
+    }, {
       title: '角色名称',
-      dataIndex: 'idUser',
-      key: 'idUser',
-    }, {
-      title: '管理权限',
-      dataIndex: 'name',
-      key: 'name',
-    }, {
-      title: '手机号',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      dataIndex: 'ROLE_NAME',
+      key: 'ROLE_NAME',
     }, {
       title: '备注信息',
       dataIndex: 'remark',
       key: 'remark',
+      width: 300,
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
@@ -52,6 +49,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
+      width: 200,
       render: (text) => {
         const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
         return <span>{createTime}</span>
@@ -82,7 +80,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        rowKey={record => record.ROLE_ID}
         getBodyWrapper={getBodyWrapper}
       />
     </div>

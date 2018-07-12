@@ -1,8 +1,24 @@
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message } from 'antd'
-import { query, create, update, remove } from '../../services/auth/role'
+import { query, create, update, remove, queryMenu } from '../../services/auth/role'
 import { pageModel } from '../system/common'
+
+const reloadItem = (item) => {
+  if (item.children && item.children.length === 0) {
+    delete item.children
+  }
+  if (item.children && item.children.length > 0) {
+    item.children = item.children.map((items) => {
+      return reloadItem(items)
+    })
+  }
+  return {
+    title: item.menuName,
+    key: item.id,
+    children: item.children,
+  }
+}
 
 export default modelExtend(pageModel, {
   namespace: 'role',
@@ -11,6 +27,7 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    menuList: [],
   },
 
   subscriptions: {
@@ -31,7 +48,7 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -43,23 +60,19 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || '当前网络无法使用'
       }
     },
 
     *create({ payload }, { call, put }) {
-      const newrole = {
-        idUser: payload.idUser.split('/-/')[1],
-        mobile: payload.mobile,
-        note: payload.note,
-        state: 1,
-      }
-      const data = yield call(create, { state: 1, ...newrole })
+      const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
         yield put({ type: 'query' })
       } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
+        throw data.mess || '当前网络无法使用'
       }
     },
 
@@ -75,17 +88,35 @@ export default modelExtend(pageModel, {
         message.success('更新成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.mess || '当前网络无法使用'
       }
     },
 
     *delete({ payload }, { call, put }) {
-      const data = yield call(remove, { id: payload, state: 2 })
+      const data = yield call(remove, [payload])
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
+        throw data.mess || '当前网络无法使用'
+      }
+    },
+
+    *queryMenuList(_, { call, put }) {
+      const data = yield call(queryMenu, { parentMenuId: 0, page: 1, pageSize: 10000 })
+      if (data.code === 200 && data.obj) {
+        let option = []
+        if (data.obj instanceof Array) {
+          option = data.obj.map((item) => {
+            return reloadItem(item)
+          })
+        }
+        yield put({
+          type: 'updateState',
+          payload: {
+            menuList: option,
+          },
+        })
       }
     },
 

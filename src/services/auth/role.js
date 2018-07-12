@@ -6,16 +6,16 @@ export async function query(params) {
   params = pageParams(params)
   return request({
     url: role.list,
-    method: 'get',
-    params,
+    method: 'post',
+    data: params,
   })
 }
 
 export async function create(params) {
   return request({
-    url: role.add,
+    url: role.create,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
@@ -23,14 +23,24 @@ export async function update(params) {
   return request({
     url: role.update,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
 export async function remove(params) {
+  console.log('params', params)
   return request({
-    url: role.update,
+    url: role.delete,
     method: 'post',
-    params,
+    data: params,
+  })
+}
+
+export async function queryMenu (params) {
+  params = pageParams(params)
+  return request({
+    url: role.queryMenu,
+    method: 'post',
+    data: params,
   })
 }

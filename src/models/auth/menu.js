@@ -46,15 +46,18 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
-      const data = yield call(query, { ...payload })
-      if (data) {
-        data.obj.map((item) => {
-          return reloadItem(item)
-        })
+      const data = yield call(query, { parentMenuId: 0, ...payload })
+      if (data.code === 200 && data.obj) {
+        let list = []
+        if (data.obj.length > 0) {
+          list = data.obj.map((item) => {
+            return reloadItem(item)
+          })
+        }
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,

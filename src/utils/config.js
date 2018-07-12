@@ -11,7 +11,7 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.231.232:8080'
 
 // 吴聪
-APIV3 = 'http://47.101.42.216:8088'
+// APIV3 = 'http://47.101.42.216:8088'
 
 // 刘思远
 // APIV3 = 'http://192.168.126.1:8081'
@@ -201,7 +201,9 @@ module.exports = {
     problemdetail: {
       all: `${APIV3}/quandiExpressSiteManager/selectproblemParts`,
     },
+    // 权限管理
     auth: {
+      // 用户管理
       adminuser: {
         list: `${APIV1}/adminuser`,
         update: `${APIV1}/adminuser`,
@@ -209,6 +211,7 @@ module.exports = {
         create: `${APIV1}/adminuser`,
         showSiteName: `${APIV3}/quandiExpressSiteManager/store`,
       },
+      // 菜单管理
       menu: {
         list: `${APIV3}/quandiExpressSiteManager/menuList`,
         update: `${APIV3}/quandiExpressSiteManager/menuEdit`,
@@ -216,11 +219,13 @@ module.exports = {
         create: `${APIV3}/quandiExpressSiteManager/menuAdd`,
         getMenuByParentId: `${APIV3}/quandiExpressSiteManager/getMenuByParentId`,
       },
+      // 角色管理
       role: {
-        list: `${APIV1}/users`,
-        update: `${APIV1}/users`,
-        delete: `${APIV1}/users`,
-        create: `${APIV1}/users`,
+        list: `${APIV3}/quandiExpressSiteManager/roleList`,
+        update: `${APIV3}/quandiExpressSiteManager/roleUpdate`,
+        delete: `${APIV3}/quandiExpressSiteManager/menuDel`,
+        create: `${APIV3}/quandiExpressSiteManager/roleAdd`,
+        queryMenu: `${APIV3}/quandiExpressSiteManager/menuList`,
       },
     },
   },

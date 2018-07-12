@@ -4,7 +4,7 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let usersListData = Mock.mock({
-  'data|80-100': [
+  'data|9': [
     {
       'id|+1': 1001,
       name: '@name',
@@ -30,7 +30,7 @@ let database = usersListData.data
 
 module.exports = {
 
-  [`GET ${apiPrefix}/menus`](req, res) {
+  [`GET ${apiPrefix}/roles`](req, res) {
     const { query } = req
     let { rownum, pagination, ...other } = query
     rownum = rownum || 10
@@ -66,13 +66,45 @@ module.exports = {
     })
   },
 
-  [`DELETE ${apiPrefix}/menus`](req, res) {
+  [`POST ${apiPrefix}/delRoles`](req, res) {
     const { id } = req.query
-    const ids = [id]
-    database = database.filter(item => !ids.some(_ => _ === item.id))
+    // console.log('item', !ids.some(_ => _ === item.id))
+    database = database.filter(item => !(Number(id) === Number(item.id)))
     res.status(200).json({
       code: 200,
       msg: '删除成功',
     })
   },
+
+  [`POST ${apiPrefix}/updateRoles`](req, res) {
+    const { id } = req.query
+    // console.log('item', !ids.some(_ => _ === item.id))
+    database = database.filter(item => !(Number(id) === Number(item.id)))
+    res.status(200).json({
+      code: 200,
+      msg: '删除成功',
+    })
+  },
+
+  [`POST ${apiPrefix}/createRoles`](req, res) {
+    const { remark, roleName } = req.query
+    res.status(200).json(
+      {
+        code: 200,
+        msg: '添加成功',
+        obj: [{
+          remark,
+          roleName,
+        }],
+      }
+    )
+    // const { id } = req.query
+    // // console.log('item', !ids.some(_ => _ === item.id))
+    // database = database.filter(item => !(Number(id) === Number(item.id)))
+    // res.status(200).json({
+    //   code: 200,
+    //   msg: '删除成功',
+    // })
+  },
+
 }
