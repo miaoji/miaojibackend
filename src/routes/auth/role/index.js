@@ -10,8 +10,6 @@ const Modular = ({ location, dispatch, role, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, menuList } = role
   const { pageSize } = pagination
 
-  console.log('menuListindex', menuList)
-
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,

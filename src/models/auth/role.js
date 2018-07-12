@@ -21,25 +21,17 @@ const reloadItem = (item) => {
 }
 
 const handleArrData = ({ list, arr }) => {
-  console.log('list', list)
-  console.log('arr', arr)
   const tmp = []
   list.forEach((item) => {
-    console.log('item', item)
     const key = item.key
     if (item.children && item.children.length > 0) {
       item.children.forEach((j) => {
         const aa = j.key
-        console.log('key', key)
-        console.log('jkey', j.key)
         if (arr.indexOf(String(j.key)) >= 0) {
           tmp.push(key.toString())
         }
         if (j.children && j.children.length > 0) {
           j.children.forEach((i) => {
-            console.log('key', key)
-            console.log('arr', arr)
-            console.log('jkey', i.key)
             if (arr.indexOf(String(i.key)) >= 0) {
               tmp.push(key.toString())
               tmp.push(aa.toString())
@@ -49,7 +41,6 @@ const handleArrData = ({ list, arr }) => {
       })
     }
   })
-  console.log('tmp', tmp)
   return Array.from(new Set([...tmp, ...arr]))
 }
 
@@ -100,7 +91,6 @@ export default modelExtend(pageModel, {
 
     *create({ payload }, { call, put, select }) {
       const menuList = yield select(({ role }) => role.menuList)
-      console.log('payload.menus', payload.menus)
       payload.menuGroup = handleArrData({
         list: menuList,
         arr: payload.menus,

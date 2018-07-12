@@ -72,6 +72,7 @@ const modal = ({
   }
 
   const handleCheck = (key) => {
+    console.log('key', key)
     setFieldsValue({
       menus: key,
     })
@@ -82,11 +83,10 @@ const modal = ({
       <Form layout="horizontal">
         <FormItem label="角色名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('roleName', {
-            initialValue: item.roleName,
+            initialValue: item.ROLE_NAME,
             rules: [
               {
-                required: !paramDisabled,
-                // pattern: /^[0-9a-zA-Z]*$/,
+                required: true,
                 message: '请输入角色名称!',
               },
             ],
@@ -94,7 +94,6 @@ const modal = ({
         </FormItem>
         <FormItem label="权限" hasFeedback {...formItemLayout}>
           {getFieldDecorator('menus', {
-            // initialValue: item.MENU_ID ? eval(item.MENU_ID) : [],
             rules: [
               {
                 required: false,
@@ -104,15 +103,9 @@ const modal = ({
           })(<Tree
             checkable
             showLine
+            defaultExpandAll={paramDisabled}
             selectable={false}
-            defaultExpandedKeys={['12', '25', '26']}
-            // onExpand={this.onExpand}
-            // expandedKeys={this.state.expandedKeys}
-            // autoExpandParent={this.state.autoExpandParent}
-            // checkedKeys={this.state.checkedKeys}
-            // onSelect={this.onSelect}
-            // selectedKeys={this.state.selectedKeys}
-            // checkStrictly
+            defaultCheckedKeys={item.MENU_ID}
             onCheck={handleCheck}
           >
             {renderTreeNodes(menuList)}
@@ -120,7 +113,7 @@ const modal = ({
         </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('description', {
-            initialValue: item.description,
+            initialValue: item.DESCRIPTION,
             rules: [
               {
                 required: true,
