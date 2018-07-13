@@ -4,26 +4,18 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let usersListData = Mock.mock({
-  'data|19': [
+  'data|8': [
     {
       'ID|+1': 1001,
-      'id|+1': 1001,
-      name: '@name',
-      'ROLE_NAME|1': ['管理员', '市场', '门店', '超级管理员'],
+      name: '@cname',
+      number: /^1[34578]\d{9}$/,
+      'role|1': ['admin', 'user1', 'user2'],
+      'store|1': ['张江小店', '家门口小店', '闵行小店', '高行小店', '徐汇小店'],
       'idUser|+1': 1001,
-      MENU_ID: ['0-0-0', '0-0-1'],
-      nickName: '@last',
-      phone: /^1[34578]\d{9}$/,
-      'age|11-99': 1,
-      mobile: /^1[3-9][0-9]{9}$/,
-      'sex|0-2': 1,
+      mobile: /^1[34578]\d{9}$/,
       note: '@city',
-      'DESCRIPTION|1': ['今天很累了', '今天不怎么想说话了'],
-      address: '@county(true)',
-      isMale: '@boolean',
-      email: '@email',
+      'remark|1': ['今天很累了', '今天不怎么想说话了'],
       createTime: new Date().getTime(),
-      ROLE_CREATE_TIME: new Date().getTime(),
     },
   ],
 })
@@ -80,15 +72,28 @@ module.exports = {
   },
 
   [`POST ${apiPrefix}/operatorEdit`](req, res) {
-    const { ID, description, menus, roleName } = req.body
+    const {
+      idUser,
+      store,
+      mobile,
+      name,
+      number,
+      remark,
+      role,
+      ID,
+    } = req.body
     database = database.map((item) => {
       if (item.ID === ID) {
         return {
           ID,
-          ROLE_NAME: roleName || item.ROLE_NAME,
-          MENU_ID: menus || item.MENU_ID,
-          DESCRIPTION: description || item.DESCRIPTION,
-          ROLE_CREATE_TIME: new Date().getTime(),
+          name,
+          number,
+          role,
+          store,
+          idUser,
+          mobile,
+          remark,
+          createTime: new Date().getTime(),
         }
       }
       return item
@@ -99,58 +104,30 @@ module.exports = {
     })
   },
 
-  [`POST ${apiPrefix}/menuList`](req, res) {
-    res.status(200).json({
-      code: 200,
-      obj: [
-        {
-          menuName: '0-0',
-          id: '0-0',
-          children: [{
-            menuName: '0-0-0',
-            id: '0-0-0',
-            children: [
-              { menuName: '0-0-0-0', id: '0-0-0-0' },
-              { menuName: '0-0-0-1', id: '0-0-0-1' },
-              { menuName: '0-0-0-2', id: '0-0-0-2' },
-            ],
-          }, {
-            menuName: '0-0-1',
-            id: '0-0-1',
-            children: [
-              { menuName: '0-0-1-0', id: '0-0-1-0' },
-              { menuName: '0-0-1-1', id: '0-0-1-1' },
-              { menuName: '0-0-1-2', id: '0-0-1-2' },
-            ],
-          }, {
-            menuName: '0-0-2',
-            id: '0-0-2',
-          }],
-        }, {
-          menuName: '0-1',
-          id: '0-1',
-          children: [
-            { menuName: '0-1-0-0', id: '0-1-0-0' },
-            { menuName: '0-1-0-1', id: '0-1-0-1' },
-            { menuName: '0-1-0-2', id: '0-1-0-2' },
-          ],
-        }, {
-          menuName: '0-2',
-          id: '0-2',
-        },
-      ],
-      msg: '查询成功',
-    })
-  },
-
   [`POST ${apiPrefix}/operatorAdd`](req, res) {
-    const { description, menus, roleName } = req.body
+    const {
+      idUser,
+      store,
+      mobile,
+      name,
+      number,
+      password,
+      remark,
+      role,
+    } = req.body
+
     database.unshift({
       ID: 1001 + database.length,
-      ROLE_NAME: roleName,
-      MENU_ID: menus,
-      DESCRIPTION: description,
-      ROLE_CREATE_TIME: new Date().getTime(),
+      name,
+      number,
+      role,
+      store,
+      idUser,
+      mobile,
+      note: '上海',
+      remark,
+      password,
+      createTime: new Date().getTime(),
     })
     res.status(200).json(
       {

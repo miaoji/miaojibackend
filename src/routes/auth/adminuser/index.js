@@ -63,6 +63,15 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
         },
       })
     },
+    onResetPWD(item) {
+      dispatch({
+        type: 'adminuser/showModal',
+        payload: {
+          modalType: 'resetPWD',
+          currentItem: { id: item },
+        },
+      })
+    },
   }
 
   const filterProps = {

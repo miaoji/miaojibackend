@@ -9,7 +9,7 @@ import { DropOption } from '../../../components'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -18,10 +18,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.ID)
           },
         })
+        break
+      case '3':
+        onResetPWD(record.ID)
         break
       default:
         break
@@ -31,27 +34,30 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '昵称',
-      dataIndex: 'idUser',
-      key: 'idUser',
-    }, {
-      title: '用户名',
       dataIndex: 'name',
       key: 'name',
     }, {
-      title: '手机号',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      title: '登陆账户',
+      dataIndex: 'number',
+      key: 'number',
     }, {
-      title: '性别',
-      dataIndex: 'sex',
-      key: 'sex',
+      title: '角色',
+      dataIndex: 'role',
+      key: 'role',
       render: (text) => {
         const realText = {
-          0: '保密',
-          1: '男',
-          2: '女',
+          admin: '超级管理员',
+          user1: '市场部',
+          user2: '门店',
         }
         return <span>{realText[text]}</span>
+      },
+    }, {
+      title: '所属门店',
+      dataIndex: 'store',
+      key: 'store',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
       },
     }, {
       title: '所在地区',
@@ -60,6 +66,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
+    }, {
+      title: '联系方式',
+      dataIndex: 'mobile',
+      key: 'mobile',
     }, {
       title: '备注信息',
       dataIndex: 'remark',
@@ -80,7 +90,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '重置密码' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -111,6 +121,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
+  onResetPWD: PropTypes.func,
   location: PropTypes.object,
 }
 

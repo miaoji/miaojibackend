@@ -47,13 +47,12 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      const newadminuser = {
-        idUser: payload.idUser.split('/-/')[1],
-        mobile: payload.mobile,
-        note: payload.note,
-        state: 1,
+      console.log('payload', payload)
+      if (payload.idUser) {
+        payload.idUser = payload.idUser.split('///')[0]
+        payload.store = payload.idUser.split('///')[1]
       }
-      const data = yield call(create, { state: 1, ...newadminuser })
+      const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('新增成功')
@@ -64,8 +63,8 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const menuId = yield select(({ adminuser }) => adminuser.currentItem.menuId)
-      const data = yield call(update, { ...payload, menuId })
+      const ID = yield select(({ adminuser }) => adminuser.currentItem.ID)
+      const data = yield call(update, { ...payload, ID })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -83,6 +82,13 @@ export default modelExtend(pageModel, {
       } else {
         throw data.mess || '当前网络无法使用'
       }
+    },
+
+    *resetPWD({ payload }, { call, select }) {
+      const ID = yield select(({ adminuser }) => adminuser.currentItem.ID)
+      console.log('payload', payload)
+      const data = yield call(update, { password: payload.password, ID })
+      console.log('data', data)
     },
 
   },

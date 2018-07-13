@@ -205,6 +205,7 @@ module.exports = {
     auth: {
       // 用户管理
       adminuser: {
+        // list: `${APIV3}/quandiExpressSiteManager/operatorList`,
         list: `${APIV1}/operatorList`,
         update: `${APIV1}/operatorEdit`,
         delete: `${APIV1}/operatorDel`,
