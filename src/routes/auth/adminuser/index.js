@@ -6,9 +6,10 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Modular = ({ location, dispatch, adminuser, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = adminuser
+const Modular = ({ location, dispatch, adminuser, loading, app }) => {
+  const { list, pagination, currentItem, modalVisible, modalType } = adminuser
   const { pageSize } = pagination
+  const { storeuserList } = app
 
   const modalProps = {
     type: modalType,
@@ -17,14 +18,14 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     confirmLoading: loading.effects['adminuser/update'],
     title: `${modalType === 'create' ? '注册用户信息' : '修改用户信息'}`,
     wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk (data) {
+    selectSiteName: storeuserList,
+    onOk(data) {
       dispatch({
         type: `adminuser/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'adminuser/hideModal',
       })
@@ -36,7 +37,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     loading: loading.effects['adminuser/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -47,22 +48,19 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'adminuser/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'adminuser/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
-      })
-      dispatch({
-        type: 'adminuser/getSiteName',
       })
     },
   }
@@ -71,7 +69,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -81,15 +79,12 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
         },
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'adminuser/showModal',
         payload: {
           modalType: 'create',
         },
-      })
-      dispatch({
-        type: 'adminuser/getSiteName',
       })
     },
   }
@@ -108,6 +103,7 @@ Modular.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ adminuser, loading }) => ({ adminuser, loading }))(Modular)
+export default connect(({ adminuser, loading, app }) => ({ adminuser, loading, app }))(Modular)

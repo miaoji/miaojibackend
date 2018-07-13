@@ -19,7 +19,9 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/role') {
-          dispatch({ type: 'queryMenuList' })
+          dispatch({
+            type: 'queryMenuList',
+          })
           dispatch({
             type: 'query',
             payload: location.query,

@@ -35,5 +35,10 @@ export const handleArrData = ({ list, arr }) => {
       })
     }
   })
-  return Array.from(new Set([...tmp, ...arr]))
+
+  const tmpArr = Array.from(new Set([...tmp, ...arr]))
+
+  return tmpArr.map((item) => {
+    return Number(item)
+  })
 }

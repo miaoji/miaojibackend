@@ -19,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         confirm({
           title: '确定要删除吗?',
           onOk () {
-            onDeleteItem(record.id)
+            onDeleteItem(record.ID)
           },
         })
         break

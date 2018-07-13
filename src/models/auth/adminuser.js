@@ -1,11 +1,8 @@
-import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
-import { message, Select } from 'antd'
-import { query, create, update, remove, showSiteName } from '../../services/auth/adminuser'
+import { message } from 'antd'
+import { query, create, update, remove } from '../../services/auth/adminuser'
 import { pageModel } from '../system/common'
-
-const Option = Select
 
 export default modelExtend(pageModel, {
   namespace: 'adminuser',
@@ -59,10 +56,10 @@ export default modelExtend(pageModel, {
       const data = yield call(create, { state: 1, ...newadminuser })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
-        message.success(data.mess)
+        message.success('新增成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
+        throw data.mess || '当前网络无法使用'
       }
     },
 
@@ -74,36 +71,17 @@ export default modelExtend(pageModel, {
         message.success('更新成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess || data
+        throw data.mess || '当前网络无法使用'
       }
     },
 
     *delete({ payload }, { call, put }) {
-      const data = yield call(remove, { id: payload, state: 2 })
+      const data = yield call(remove, [payload])
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
       } else {
-        throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
-      }
-    },
-
-    *getSiteName(_, { call, put }) {
-      const data = yield call(showSiteName)
-      if (data.code === 200 && data.obj) {
-        let children = []
-        for (let i = 0; i < data.obj.length; i++) {
-          let item = data.obj[i]
-          children.push(<Option key={`${item.name}/-/${item.idUser}`}>{item.name}</Option>)
-        }
-        yield put({
-          type: 'setSiteName',
-          payload: {
-            selectSiteName: children,
-          },
-        })
-      } else {
-        throw data.mess || '无法跟服务器建立有效连接'
+        throw data.mess || '当前网络无法使用'
       }
     },
 

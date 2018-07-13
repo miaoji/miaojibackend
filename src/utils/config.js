@@ -205,11 +205,10 @@ module.exports = {
     auth: {
       // 用户管理
       adminuser: {
-        list: `${APIV1}/adminuser`,
-        update: `${APIV1}/adminuser`,
-        delete: `${APIV1}/adminuser`,
-        create: `${APIV1}/adminuser`,
-        showSiteName: `${APIV3}/quandiExpressSiteManager/store`,
+        list: `${APIV1}/operatorList`,
+        update: `${APIV1}/operatorEdit`,
+        delete: `${APIV1}/operatorDel`,
+        create: `${APIV1}/operatorAdd`,
       },
       // 菜单管理
       menu: {
@@ -226,11 +225,6 @@ module.exports = {
         delete: `${APIV3}/quandiExpressSiteManager/roleDel`,
         create: `${APIV3}/quandiExpressSiteManager/roleAdd`,
         queryMenu: `${APIV3}/quandiExpressSiteManager/menuList`,
-        // list: `${APIV1}/roleList`,
-        // update: `${APIV1}/roleEdit`,
-        // delete: `${APIV1}/roleDel`,
-        // create: `${APIV1}/roleAdd`,
-        // queryMenu: `${APIV1}/menuList`,
       },
     },
   },
