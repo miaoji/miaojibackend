@@ -53,9 +53,11 @@ const Modular = ({ location, dispatch, role, loading }) => {
       })
     },
     onEditItem(item) {
-      dispatch({
-        type: 'role/queryMenuList',
-      })
+      if (menuList.length === 0) {
+        dispatch({
+          type: 'role/queryMenuList',
+        })
+      }
       dispatch({
         type: 'role/showModal',
         payload: {
@@ -81,9 +83,11 @@ const Modular = ({ location, dispatch, role, loading }) => {
       }))
     },
     onAdd() {
-      dispatch({
-        type: 'role/queryMenuList',
-      })
+      if (menuList.length === 0) {
+        dispatch({
+          type: 'role/queryMenuList',
+        })
+      }
       dispatch({
         type: 'role/showModal',
         payload: {

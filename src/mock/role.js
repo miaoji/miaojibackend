@@ -78,7 +78,7 @@ module.exports = {
     })
   },
 
-  [`POST ${apiPrefix}/roleUpdate`](req, res) {
+  [`POST ${apiPrefix}/roleEdit`](req, res) {
     const { ID, description, menus, roleName } = req.body
     database = database.map((item) => {
       if (item.ID === ID) {
@@ -143,7 +143,6 @@ module.exports = {
   },
 
   [`POST ${apiPrefix}/roleAdd`](req, res) {
-    console.log(req.body)
     const { description, menus, roleName } = req.body
     database.unshift({
       ID: 1001 + database.length,

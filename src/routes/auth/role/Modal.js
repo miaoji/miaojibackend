@@ -72,14 +72,12 @@ const modal = ({
   }
 
   const handleCheck = (key) => {
-    console.log('key', key)
     setFieldsValue({
       menus: key,
     })
   }
 
-  const defaultCheckedKeys = item.MENU_ID
-  console.log('defaultCheckedKeys', defaultCheckedKeys)
+  const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : []
 
   return (
     <Modal {...modalOpts}>
@@ -93,7 +91,7 @@ const modal = ({
                 message: '请输入角色名称!',
               },
             ],
-          })(<Input placeholder="请输入角色名称!" disabled={paramDisabled} />)}
+          })(<Input placeholder="请输入角色名称!" />)}
         </FormItem>
         <FormItem label="权限" hasFeedback {...formItemLayout}>
           {getFieldDecorator('menus', {
@@ -113,7 +111,7 @@ const modal = ({
             initialValue: item.DESCRIPTION,
             rules: [
               {
-                required: true,
+                required: false,
                 message: '备注信息字数不能超过100!',
                 max: 100,
               },
