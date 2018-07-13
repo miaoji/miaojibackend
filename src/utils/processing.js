@@ -21,12 +21,12 @@ export const handleArrData = ({ list, arr }) => {
     if (item.children && item.children.length > 0) {
       item.children.forEach((j) => {
         const aa = j.key
-        if (arr.indexOf(String(j.key)) >= 0) {
+        if (arr.includes(String(j.key))) {
           tmp.push(key.toString())
         }
         if (j.children && j.children.length > 0) {
           j.children.forEach((i) => {
-            if (arr.indexOf(String(i.key)) >= 0) {
+            if (arr.includes(String(i.key))) {
               tmp.push(key.toString())
               tmp.push(aa.toString())
             }
