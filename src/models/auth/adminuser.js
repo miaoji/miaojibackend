@@ -84,20 +84,21 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *resetPWD({ payload }, { call, select }) {
+    *resetPWD({ payload }, { call, select, put }) {
       const ID = yield select(({ adminuser }) => adminuser.currentItem.ID)
-      console.log('payload', payload)
       const data = yield call(update, { password: payload.password, ID })
-      console.log('data', data)
+      if (data.code === 200) {
+        yield put({ type: 'hideModal' })
+        message.success('密码重置成功')
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess || '当前网络无法使用'
+      }
     },
 
   },
 
   reducers: {
-
-    setSiteName(state, { payload }) {
-      return { ...state, ...payload }
-    },
 
     showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select } from 'antd'
+import { Form, Input, Modal, Select, message } from 'antd'
 
 const FormItem = Form.Item
 const { TextArea } = Input
@@ -36,7 +36,11 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      onOk(data)
+      if (data.password !== data.repass) {
+        message.warn('两次输入的密码不一致')
+      } else {
+        onOk(data)
+      }
     })
   }
 
@@ -58,7 +62,7 @@ const modal = ({
                   message: '请填写用户登陆密码!',
                 },
               ],
-            })(<Input placeholder="请填写用户登陆密码!" />)}
+            })(<Input type="password" placeholder="请填写用户登陆密码!" />)}
           </FormItem>
           <FormItem label="确认密码" hasFeedback {...formItemLayout}>
             {getFieldDecorator('repass', {
@@ -69,7 +73,7 @@ const modal = ({
                   message: '请填写确认密码!',
                 },
               ],
-            })(<Input placeholder="请填写确认密码!" />)}
+            })(<Input type="password" placeholder="请填写确认密码!" />)}
           </FormItem>
         </Form>
       </Modal>
@@ -188,7 +192,7 @@ const modal = ({
             ],
           })(<Input placeholder="请填写用户登陆账号!" />)}
         </FormItem>
-        <FormItem label="登陆密码" hasFeedback {...formItemLayout}>
+        <FormItem type="password" label="登陆密码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('password', {
             initialValue: item.password,
             rules: [
@@ -208,7 +212,7 @@ const modal = ({
                 message: '请填写确认密码!',
               },
             ],
-          })(<Input placeholder="请填写确认密码!" />)}
+          })(<Input type="password" placeholder="请填写确认密码!" />)}
         </FormItem>
         <FormItem label="角色信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('role', {
