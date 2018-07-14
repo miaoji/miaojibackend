@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select, message } from 'antd'
+import { Form, Input, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
 const { TextArea } = Input
@@ -19,10 +19,13 @@ const modal = ({
   item = {},
   onOk,
   selectSiteName,
+  confirmDirty,
+  onEditConfirmDirty,
   form: {
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    getFieldValue,
   },
   type,
   ...modalProps
@@ -36,17 +39,33 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      if (data.password !== data.repass) {
-        message.warn('两次输入的密码不一致')
-      } else {
-        onOk(data)
-      }
+      onOk(data)
     })
   }
 
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
+  }
+
+  const validateToNextPassword = (_, value, callback) => {
+    if (value && confirmDirty) {
+      validateFields(['repass'], { force: true })
+    }
+    callback()
+  }
+
+  const compareToFirstPassword = (_, value, callback) => {
+    if (value && value !== getFieldValue('password')) {
+      callback('两次输入的密码不一致!')
+    } else {
+      callback()
+    }
+  }
+
+  const handleConfirmBlur = (e) => {
+    const value = e.target.value
+    onEditConfirmDirty({ confirmDirty: confirmDirty || !!value })
   }
 
   if (type === 'resetPWD') {
@@ -61,6 +80,9 @@ const modal = ({
                   required: true,
                   message: '请填写用户登陆密码!',
                 },
+                {
+                  validator: validateToNextPassword,
+                },
               ],
             })(<Input type="password" placeholder="请填写用户登陆密码!" />)}
           </FormItem>
@@ -72,8 +94,11 @@ const modal = ({
                   required: true,
                   message: '请填写确认密码!',
                 },
+                {
+                  validator: compareToFirstPassword,
+                },
               ],
-            })(<Input type="password" placeholder="请填写确认密码!" />)}
+            })(<Input type="password" placeholder="请填写确认密码!" onBlur={handleConfirmBlur} />)}
           </FormItem>
         </Form>
       </Modal>
@@ -192,7 +217,7 @@ const modal = ({
             ],
           })(<Input placeholder="请填写用户登陆账号!" />)}
         </FormItem>
-        <FormItem type="password" label="登陆密码" hasFeedback {...formItemLayout}>
+        <FormItem label="登陆密码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('password', {
             initialValue: item.password,
             rules: [
@@ -200,8 +225,11 @@ const modal = ({
                 required: true,
                 message: '请填写用户登陆密码!',
               },
+              {
+                validator: validateToNextPassword,
+              },
             ],
-          })(<Input placeholder="请填写用户登陆密码!" />)}
+          })(<Input type="password" placeholder="请填写用户登陆密码!" />)}
         </FormItem>
         <FormItem label="确认密码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('repass', {
@@ -211,8 +239,11 @@ const modal = ({
                 required: true,
                 message: '请填写确认密码!',
               },
+              {
+                validator: compareToFirstPassword,
+              },
             ],
-          })(<Input type="password" placeholder="请填写确认密码!" />)}
+          })(<Input type="password" placeholder="请填写确认密码!" onBlur={handleConfirmBlur} />)}
         </FormItem>
         <FormItem label="角色信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('role', {
@@ -281,6 +312,8 @@ modal.propTypes = {
   item: PropTypes.object,
   onOk: PropTypes.func,
   selectSiteName: PropTypes.array,
+  confirmDirty: PropTypes.bool,
+  onEditConfirmDirty: PropTypes.func,
 }
 
 export default Form.create()(modal)

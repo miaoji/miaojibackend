@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Button, Row, Form, Input } from 'antd'
+import { Button, Row, Form, Input, Icon } from 'antd'
 import { config } from 'utils'
 import styles from './index.less'
 
@@ -46,7 +46,7 @@ const Login = ({
                         message: '请输入用户名',
                       },
                     ],
-                  })(<Input size="large" onPressEnter={handleOk} placeholder="用户名" />)}
+                  })(<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.5)' }} />} size="large" onPressEnter={handleOk} placeholder="用户名" />)}
                 </FormItem>
                 <FormItem hasFeedback>
                   {getFieldDecorator('password', {
@@ -56,7 +56,13 @@ const Login = ({
                         message: '请输入密码',
                       },
                     ],
-                  })(<Input size="large" type="password" onPressEnter={handleOk} placeholder="密码" />)}
+                  })(<Input
+                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.5)' }} />}
+                    size="large"
+                    type="password"
+                    onPressEnter={handleOk}
+                    placeholder="密码"
+                  />)}
                 </FormItem>
                 <Row>
                   <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>

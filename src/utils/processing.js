@@ -1,3 +1,4 @@
+/* 用于调整权限管理>角色管理的添加和修改获取菜单列表的数据结构与项目所需字段不匹配的问题 */
 export const reloadItem = (item) => {
   if (item.children && item.children.length === 0) {
     delete item.children
@@ -14,6 +15,7 @@ export const reloadItem = (item) => {
   }
 }
 
+/* 用于调整权限管理>角色管理的添加和修改中tree无法识别节点树父级ID的问题 */
 export const handleArrData = ({ list, arr }) => {
   const tmp = []
   list.forEach((item) => {
@@ -35,9 +37,7 @@ export const handleArrData = ({ list, arr }) => {
       })
     }
   })
-
   const tmpArr = Array.from(new Set([...tmp, ...arr]))
-
   return tmpArr.map((item) => {
     return Number(item)
   })

@@ -11,6 +11,7 @@ export default modelExtend(pageModel, {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    confirmDirty: false,
   },
 
   subscriptions: {
@@ -105,7 +106,7 @@ export default modelExtend(pageModel, {
     },
 
     hideModal(state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, confirmDirty: false }
     },
 
   },

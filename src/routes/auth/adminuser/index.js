@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, adminuser, loading, app }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = adminuser
+  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty } = adminuser
   const { pageSize } = pagination
   const { storeuserList } = app
 
@@ -19,6 +19,7 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
     title: `${modalType === 'create' ? '注册用户信息' : '修改用户信息'}`,
     wrapClassName: 'vertical-center-modal',
     selectSiteName: storeuserList,
+    confirmDirty: confirmDirty || false,
     onOk(data) {
       dispatch({
         type: `adminuser/${modalType}`,
@@ -28,6 +29,12 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
     onCancel() {
       dispatch({
         type: 'adminuser/hideModal',
+      })
+    },
+    onEditConfirmDirty(payload) {
+      dispatch({
+        type: 'adminuser/updateState',
+        payload,
       })
     },
   }
