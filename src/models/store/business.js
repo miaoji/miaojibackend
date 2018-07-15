@@ -102,19 +102,20 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getOperator({ payload }, { call, put, select }) {
-      const idusers = yield select(({ business }) => business.iduser)
-      if (payload.idUser === idusers || payload.idUser === undefined) {
-        yield put({
-          type: 'setSiteName',
-          payload: {
-            expandedRowKeys: [payload.idUser],
-          },
-        })
-        return
-      }
+    *getOperator({ payload }, { call, put }) {
+      // const idusers = yield select(({ business }) => business.iduser)
+      // if (payload.idUser === idusers || payload.idUser === undefined) {
+      //   yield put({
+      //     type: 'setSiteName',
+      //     payload: {
+      //       expandedRowKeys: [payload.idUser],
+      //     },
+      //   })
+      //   return
+      // }
       message.success('信息正在加载，请稍等')
       let newpayload = {}
+      payload = initialCreateTime(payload)
       if (!payload.startTime) {
         const times = time.yesterTime()
         newpayload = { ...times, ...payload }
