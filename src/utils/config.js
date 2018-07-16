@@ -11,7 +11,7 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.231.232:8080'
 
 // 吴聪
-APIV3 = 'http://47.101.42.216:8088'
+// APIV3 = 'http://47.101.42.216:8088'
 
 // 刘思远
 // APIV3 = 'http://192.168.126.1:8081'
@@ -21,8 +21,8 @@ APIV3 = 'http://47.101.42.216:8088'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  // APIV3 = 'http://app.quandikeji.com:8288'
-  APIV3 = 'http://47.101.42.216:8088'
+  APIV3 = 'http://app.quandikeji.com:8288'
+  // APIV3 = 'http://47.101.42.216:8088'
 }
 
 let APIV4 = 'http://app.quandikeji.com/WeChatService'

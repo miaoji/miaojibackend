@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table } from 'antd'
+import { Table, Spin } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
 import { Link } from 'dva/router'
@@ -9,7 +9,7 @@ import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import SonTable from './SonTable'
 
-const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, ...tableProps }) => {
+const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -137,7 +137,21 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         // expandedRowRender={() => <p>123123123</p>}
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
-        expandedRowRender={record => <SonTable handleMenuClick={handleMenuClick} record={record} list={sonlist} filter={filter} />}
+        expandedRowRender={(record) => {
+          if (rowLoading) {
+            return <Spin />
+          }
+          if (sonlist && sonlist.length === 0) {
+            return (<div>
+              <div style={{ margin: 0 }}>
+                <div style={{ textAlign: 'center', margin: '10px', color: 'red' }}>
+                  暂无相关数据
+                </div>
+              </div>
+            </div>)
+          }
+          return <SonTable handleMenuClick={handleMenuClick} record={record} list={sonlist} filter={filter} />
+        }}
       />
     </div>
   )
@@ -152,6 +166,7 @@ List.propTypes = {
   onVersionSwitching: PropTypes.func.isRequired,
   filter: PropTypes.object,
   sonlist: PropTypes.array,
+  rowLoading: PropTypes.bool,
 }
 
 export default List

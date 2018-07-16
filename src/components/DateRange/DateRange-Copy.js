@@ -1,3 +1,4 @@
+// 这是一个早期版本的时间选择器, 再这里只做备份使用
 import React from 'react'
 import { DatePicker, Form, Row, Col } from 'antd'
 import locale from 'antd/lib/date-picker/locale/zh_CN'
@@ -10,7 +11,6 @@ class DateRange extends React.Component {
       startValue: props.value[0],
       endValue: props.value[1],
       endOpen: false,
-      endSelect: false,
       size: props.size,
     }
   }
@@ -24,36 +24,57 @@ class DateRange extends React.Component {
   }
 
   onStartChange = (value) => {
-    this.setState({
-      startValue: value,
-    })
+    this.onChange('startValue', value)
   }
 
   onEndChange = (value) => {
+    this.onChange('endValue', value)
+  }
+
+  onChange = (field, value) => {
     this.setState({
-      endValue: value,
-      endSelect: true,
+      [field]: value,
     })
-    this.props.onChange([this.state.startValue, value], 'createTime')
+
+    // 当用户清空了单个时间控件的值的时候同时清空两个控件的值,并发起一次页面请求
+    if (value === null) {
+      this.setState({ startValue: null, endValue: null })
+      this.props.onChange([null, null], 'createTime')
+      return
+    }
+
+    // 当用户进行了结束时间的选择的时候,发起一次页面请求
+    if (field === 'endValue') {
+      this.props.onChange([this.state.startValue, value], 'createTime')
+    }
+  }
+
+  disabledStartDate = (startValue) => {
+    const endValue = this.state.endValue
+    if (!startValue || !endValue) {
+      return false
+    }
+    return startValue.valueOf() > endValue.valueOf()
+  }
+
+  disabledEndDate = (endValue) => {
+    const startValue = this.state.startValue
+    if (!endValue || !startValue) {
+      return false
+    }
+    return endValue.valueOf() <= startValue.valueOf()
   }
 
   handleStartOpenChange = (open) => {
+    console.log('openStart', open)
     if (!open) {
       this.setState({ endOpen: true })
     }
   }
 
   handleEndOpenChange = (open) => {
+    console.log('openEnd', open)
     this.setState({ endOpen: open })
-    const _this = this
-    setTimeout(() => {
-      if (!open && _this.state.endValue && !_this.state.endSelect) {
-        _this.props.onChange([_this.state.startValue, _this.state.endValue], 'createTime')
-      }
-      _this.setState({
-        endSelect: false,
-      })
-    }, 100)
   }
 
   render() {
@@ -64,9 +85,9 @@ class DateRange extends React.Component {
           <Col style={{ marginBottom: '14px' }} xl={{ span: 11 }} md={{ span: 11 }} sm={{ span: 11 }}>
             <DatePicker
               locale={locale}
+              // disabledDate={this.disabledStartDate}
               format="YYYY-MM-DD"
               value={startValue}
-              allowClear={false}
               placeholder="开始时间"
               showToday={false}
               style={{ width: '100%' }}
@@ -78,9 +99,9 @@ class DateRange extends React.Component {
           <Col style={{ marginBottom: '14px' }} xl={{ span: 11, push: 1 }} md={{ span: 11, push: 2 }} sm={{ span: 11, push: 2 }}>
             <DatePicker
               locale={locale}
+              // disabledDate={this.disabledEndDate}
               showToday={false}
               style={{ width: '100%' }}
-              allowClear={false}
               format="YYYY-MM-DD"
               value={endValue}
               placeholder="结束时间"

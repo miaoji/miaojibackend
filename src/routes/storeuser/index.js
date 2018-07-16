@@ -38,6 +38,7 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
     sonlist,
     filter: { ...location.query },
     loading: loading.effects['storeuser/query'],
+    rowLoading: loading.effects['storeuser/unfold'],
     pagination,
     location,
     expandedRowKeys,

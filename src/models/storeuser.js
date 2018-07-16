@@ -82,12 +82,12 @@ export default modelExtend(pageModel, {
     // 根据主账号查询子账号
     *unfold({ payload }, { call, put }) {
       const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
-
+      console.log('data.obj', data.obj)
       if (data.code === 200) {
         yield put({
           type: 'updateState',
           payload: {
-            sonlist: data.obj,
+            sonlist: data.obj || [],
             expandedRowKeys: [payload.superId],
           },
         })

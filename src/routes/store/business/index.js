@@ -33,6 +33,7 @@ const Business = ({ location, dispatch, business, app, loading }) => {
     },
     dataSource: list,
     loading: loading.effects['business/query'],
+    rowLoading: loading.effects['business/getOperator'],
     pagination,
     location,
     onChange(page, filter) {

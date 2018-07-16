@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table } from 'antd'
+import { Table, Spin } from 'antd'
 import { Link } from 'dva/router'
 import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import SonTable from './SonTable'
 
-const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading, ...tableProps }) => {
   const columns = [
     {
       title: '站点名',
@@ -74,7 +74,21 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, ...tablePro
         simple
         rowKey={record => record.idUser}
         getBodyWrapper={getBodyWrapper}
-        expandedRowRender={record => <SonTable record={record} list={sonlist} filter={filter} />}
+        expandedRowRender={(record) => {
+          if (rowLoading) {
+            return <Spin />
+          }
+          if (sonlist && sonlist.length === 0) {
+            return (<div>
+              <div style={{ margin: 0 }}>
+                <div style={{ textAlign: 'center', margin: '10px', color: 'red' }}>
+                  暂无相关数据
+                </div>
+              </div>
+            </div>)
+          }
+          return <SonTable record={record} list={sonlist} filter={filter} />
+        }}
       />
     </div>
   )
@@ -86,6 +100,7 @@ List.propTypes = {
   location: PropTypes.object,
   filter: PropTypes.object,
   sonlist: PropTypes.array,
+  rowLoading: PropTypes.bool,
 }
 
 export default List

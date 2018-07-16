@@ -120,7 +120,6 @@ export default modelExtend(pageModel, {
         })
         return
       }
-      message.success('信息正在加载，请稍等')
       let newpayload = {}
       payload = initialCreateTime(payload)
       if (!payload.startTime) {
