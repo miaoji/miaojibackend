@@ -18,6 +18,7 @@ export default {
       const data = yield call(login, payload)
       if (data.success && data.code === 200) {
         storage({ type: 'set', key: 'user', val: JSON.stringify(data.obj[0]) })
+        storage({ type: 'set', key: 'loginTime', val: new Date().getTime() })
         const from = queryURL('from')
         yield put({ type: 'app/query' })
         if (from) {

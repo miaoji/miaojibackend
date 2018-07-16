@@ -21,12 +21,6 @@ export default modelExtend(pageModel, {
       history.listen((location) => {
         if (location.pathname === '/role') {
           dispatch({
-            type: 'queryLocation',
-          })
-          dispatch({
-            type: 'queryMenuList',
-          })
-          dispatch({
             type: 'query',
             payload: location.query,
           })
@@ -37,7 +31,20 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put, select }) {
+      const menuList = yield select(({ role }) => role.menuList)
+      const locationList = yield select(({ role }) => role.locationList)
+
+      if (!menuList.length) {
+        yield put({
+          type: 'queryMenuList',
+        })
+      }
+      if (!locationList.length) {
+        yield put({
+          type: 'queryLocation',
+        })
+      }
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data.code === 200) {

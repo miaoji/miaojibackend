@@ -38,7 +38,6 @@ export default {
 
     setup({ dispatch }) {
       dispatch({ type: 'query' })
-      dispatch({ type: 'queryStoreUser' })
       let tid
       window.onresize = () => {
         clearTimeout(tid)
@@ -52,8 +51,12 @@ export default {
   effects: {
 
     *query(_, { put }) {
+      const loginTime = new Date().getTime() - storage({ key: 'loginTime' })
       const userInfo = storage({ key: 'user' })
-      if (userInfo) {
+      if (userInfo && loginTime <= 21600000) {
+        yield put({
+          type: 'queryStoreUser',
+        })
         const user = JSON.parse(userInfo)
         const list = menus
         // const { permissions } = user

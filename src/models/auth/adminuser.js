@@ -2,6 +2,7 @@ import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
+import md5 from 'js-md5'
 import { query, create, update, remove, queryRoleList } from '../../services/auth/adminuser'
 import { pageModel } from '../system/common'
 
@@ -23,9 +24,6 @@ export default modelExtend(pageModel, {
       history.listen((location) => {
         if (location.pathname === '/adminuser') {
           dispatch({
-            type: 'queryRoleList',
-          })
-          dispatch({
             type: 'query',
             payload: location.query,
           })
@@ -36,7 +34,13 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put, select }) {
+      const roleList = yield select(({ adminuser }) => adminuser.roleList)
+      if (!roleList.length) {
+        yield put({
+          type: 'queryRoleList',
+        })
+      }
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
@@ -59,6 +63,8 @@ export default modelExtend(pageModel, {
         payload.idUser = payload.idUser.split('///')[0]
         payload.store = payload.idUser.split('///')[1]
       }
+      payload.password = md5(payload.password)
+      delete payload.repass
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -71,6 +77,8 @@ export default modelExtend(pageModel, {
 
     *update({ payload }, { select, call, put }) {
       const ID = yield select(({ adminuser }) => adminuser.currentItem.ID)
+      payload.password = md5(payload.password)
+      delete payload.repass
       const data = yield call(update, { ...payload, ID })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })

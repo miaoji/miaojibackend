@@ -70,9 +70,9 @@ const App = ({ children, dispatch, app, loading, location }) => {
   const breadProps = {
     menu,
   }
-  if (openPages && openPages.includes(pathname)) {
+  if (openPages && openPages.includes(pathname) || loading.effects['app/queryStoreUser']) {
     return (<div>
-      <Loader spinning={loading.effects['app/query']} />
+      <Loader spinning={loading.effects['app/queryStoreUser']} />
       {children}
     </div>)
   }
