@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Tree } from 'antd'
+import { Form, Input, Modal, Tree, Cascader } from 'antd'
+import city from '../../../utils/city'
 import './Modal.less'
 
-const TreeNode = Tree.TreeNode
 const FormItem = Form.Item
 const { TextArea } = Input
 
@@ -49,32 +49,14 @@ const modal = ({
 
   const paramDisabled = type === 'update'
 
-  const renderTreeNodes = (data) => {
-    if (data.length) {
-      return data.map((items) => {
-        if (items.children) {
-          return (
-            <TreeNode
-              title={items.title}
-              key={items.key}
-              dataRef={items}
-            >
-              {renderTreeNodes(items.children)}
-            </TreeNode>
-          )
-        }
-        return (<TreeNode
-          {...items}
-        />)
-      })
-    }
-    return <TreeNode title="parent 1-0" key="0-0-0" disabled />
-  }
-
   const handleCheck = (key) => {
     setFieldsValue({
       menus: key,
     })
+  }
+
+  const onChange = (key) => {
+    console.log('key', key)
   }
 
   const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : []
@@ -103,8 +85,19 @@ const modal = ({
             defaultExpandAll={paramDisabled}
             onCheck={handleCheck}
           >
-            {renderTreeNodes(menuList)}
+            {menuList}
           </Tree>)}
+        </FormItem>
+        <FormItem label="地区信息" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('city', {
+            initialValue: item.City,
+            rules: [
+              {
+                required: false,
+                message: '请输入地区信息!',
+              },
+            ],
+          })(<Cascader options={city} onChange={onChange} placeholder="请输入地区信息" />)}
         </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('description', {

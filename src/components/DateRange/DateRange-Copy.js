@@ -66,14 +66,12 @@ class DateRange extends React.Component {
   }
 
   handleStartOpenChange = (open) => {
-    console.log('openStart', open)
     if (!open) {
       this.setState({ endOpen: true })
     }
   }
 
   handleEndOpenChange = (open) => {
-    console.log('openEnd', open)
     this.setState({ endOpen: open })
   }
 

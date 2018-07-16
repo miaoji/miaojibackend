@@ -3,7 +3,7 @@ import { initialCreateTime } from 'utils'
 import { message } from 'antd'
 import { query, create, update, remove, queryMenu } from '../../services/auth/role'
 import { pageModel } from '../system/common'
-import { reloadItem, handleArrData } from '../../utils/processing'
+import { reloadItem, handleArrData, renderTreeNodes } from '../../utils/processing'
 
 export default modelExtend(pageModel, {
   namespace: 'role',
@@ -106,6 +106,7 @@ export default modelExtend(pageModel, {
           option = data.obj.map((item) => {
             return reloadItem(item)
           })
+          option = renderTreeNodes(option)
         }
         yield put({
           type: 'updateState',

@@ -1,8 +1,6 @@
 import { request, config, pageParams } from '../../utils'
 
 const { api: { auth: { menu } } } = config
-// const { auth } = api
-// const { menu } = auth
 
 export async function query(params) {
   params = pageParams(params)

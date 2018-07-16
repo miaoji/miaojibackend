@@ -21,7 +21,6 @@ const Business = ({ location, dispatch, business, app, loading }) => {
     sonlist,
     expandedRowKeys,
     onExpandedRowsChange(value) {
-      console.log('value', value)
       dispatch({
         type: 'business/getOperator',
         payload: {

@@ -1,3 +1,8 @@
+import React from 'react'
+import { Tree } from 'antd'
+
+const TreeNode = Tree.TreeNode
+
 /* 用于调整权限管理>角色管理的添加和修改获取菜单列表的数据结构与项目所需字段不匹配的问题 */
 export const reloadItem = (item) => {
   if (item.children && item.children.length === 0) {
@@ -41,4 +46,27 @@ export const handleArrData = ({ list, arr }) => {
   return tmpArr.map((item) => {
     return Number(item)
   })
+}
+
+/* 用户遍历Tree菜单选择组件 */
+export const renderTreeNodes = (data) => {
+  if (data.length) {
+    return data.map((items) => {
+      if (items.children) {
+        return (
+          <TreeNode
+            title={items.title}
+            key={items.key}
+            dataRef={items}
+          >
+            {renderTreeNodes(items.children)}
+          </TreeNode>
+        )
+      }
+      return (<TreeNode
+        {...items}
+      />)
+    })
+  }
+  return <TreeNode title="parent 1-0" key="0-0-0" disabled />
 }

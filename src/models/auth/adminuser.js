@@ -48,7 +48,6 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      console.log('payload', payload)
       if (payload.idUser) {
         payload.idUser = payload.idUser.split('///')[0]
         payload.store = payload.idUser.split('///')[1]
