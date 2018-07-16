@@ -34,3 +34,14 @@ export async function remove(params) {
     data: params,
   })
 }
+
+export async function queryRoleList() {
+  return request({
+    url: adminuser.queryRoleList,
+    method: 'post',
+    data: {
+      pagination: 1,
+      rownum: 100000,
+    },
+  })
+}

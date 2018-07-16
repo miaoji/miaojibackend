@@ -7,9 +7,11 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, adminuser, loading, app }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty } = adminuser
+  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty, roleList } = adminuser
   const { pageSize } = pagination
   const { storeuserList } = app
+
+  console.log('roleList', roleList)
 
   const modalProps = {
     type: modalType,
@@ -20,6 +22,7 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
     wrapClassName: 'vertical-center-modal',
     selectSiteName: storeuserList,
     confirmDirty: confirmDirty || false,
+    roleList,
     onOk(data) {
       dispatch({
         type: `adminuser/${modalType}`,

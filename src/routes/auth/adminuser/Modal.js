@@ -4,7 +4,6 @@ import { Form, Input, Modal, Select } from 'antd'
 
 const FormItem = Form.Item
 const { TextArea } = Input
-const { Option } = Select
 
 const formItemLayout = {
   labelCol: {
@@ -21,6 +20,7 @@ const modal = ({
   selectSiteName,
   confirmDirty,
   onEditConfirmDirty,
+  roleList,
   form: {
     getFieldDecorator,
     validateFields,
@@ -42,6 +42,8 @@ const modal = ({
       onOk(data)
     })
   }
+
+  console.log('roleList', roleList)
 
   const modalOpts = {
     ...modalProps,
@@ -109,20 +111,20 @@ const modal = ({
     return (
       <Modal {...modalOpts}>
         <Form layout="horizontal">
-          <FormItem label="昵称" hasFeedback {...formItemLayout}>
+          <FormItem label="姓名" hasFeedback {...formItemLayout}>
             {getFieldDecorator('name', {
               initialValue: item.name,
               rules: [
                 {
                   required: true,
-                  message: '请填写用户昵称!',
+                  message: '请填写用户姓名!',
                 },
               ],
-            })(<Input placeholder="请填写用户昵称!" />)}
+            })(<Input placeholder="请填写用户姓名!" />)}
           </FormItem>
           <FormItem label="登陆账号" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('number', {
-              initialValue: item.number,
+            {getFieldDecorator('accounts', {
+              initialValue: item.accounts,
               rules: [
                 {
                   required: true,
@@ -132,8 +134,8 @@ const modal = ({
             })(<Input placeholder="请填写用户登陆账号!" />)}
           </FormItem>
           <FormItem label="角色信息" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('role', {
-              initialValue: item.role,
+            {getFieldDecorator('roleId', {
+              initialValue: item.roleId,
               rules: [
                 {
                   required: true,
@@ -141,9 +143,7 @@ const modal = ({
                 },
               ],
             })(<Select placeholder="请填写角色!" >
-              <Option key="admin">超级管理员</Option>
-              <Option key="user1">市场部</Option>
-              <Option key="user2">门店</Option>
+              {roleList}
             </Select>)}
           </FormItem>
           <FormItem label="联系方式" hasFeedback {...formItemLayout}>
@@ -195,20 +195,20 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="昵称" hasFeedback {...formItemLayout}>
+        <FormItem label="姓名" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
             initialValue: item.name,
             rules: [
               {
                 required: true,
-                message: '请填写用户昵称!',
+                message: '请填写用户姓名!',
               },
             ],
-          })(<Input placeholder="请填写用户昵称!" />)}
+          })(<Input placeholder="请填写用户姓名!" />)}
         </FormItem>
         <FormItem label="登陆账号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('number', {
-            initialValue: item.number,
+          {getFieldDecorator('accounts', {
+            initialValue: item.accounts,
             rules: [
               {
                 required: true,
@@ -246,8 +246,8 @@ const modal = ({
           })(<Input type="password" placeholder="请填写确认密码!" onBlur={handleConfirmBlur} />)}
         </FormItem>
         <FormItem label="角色信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('role', {
-            initialValue: item.role,
+          {getFieldDecorator('roleId', {
+            initialValue: item.roleId,
             rules: [
               {
                 required: true,
@@ -255,9 +255,7 @@ const modal = ({
               },
             ],
           })(<Select placeholder="请填写角色!" >
-            <Option key="admin">超级管理员</Option>
-            <Option key="user1">市场部</Option>
-            <Option key="user2">门店</Option>
+            {roleList}
           </Select>)}
         </FormItem>
         <FormItem label="联系方式" hasFeedback {...formItemLayout}>
@@ -314,6 +312,7 @@ modal.propTypes = {
   selectSiteName: PropTypes.array,
   confirmDirty: PropTypes.bool,
   onEditConfirmDirty: PropTypes.func,
+  roleList: PropTypes.array,
 }
 
 export default Form.create()(modal)

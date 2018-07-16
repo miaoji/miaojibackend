@@ -19,12 +19,12 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         confirm({
           title: '确定要删除吗?',
           onOk() {
-            onDeleteItem(record.ID)
+            onDeleteItem(record.userId)
           },
         })
         break
       case '3':
-        onResetPWD(record.ID)
+        onResetPWD(record.userId)
         break
       default:
         break
@@ -38,8 +38,8 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       key: 'name',
     }, {
       title: '登陆账户',
-      dataIndex: 'number',
-      key: 'number',
+      dataIndex: 'accounts',
+      key: 'accounts',
     }, {
       title: '角色',
       dataIndex: 'role',
@@ -50,7 +50,7 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
           user1: '市场部',
           user2: '门店',
         }
-        return <span>{realText[text]}</span>
+        return <span>{text ? realText[text] : '暂无'}</span>
       },
     }, {
       title: '所属门店',

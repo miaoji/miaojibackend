@@ -35,11 +35,19 @@ export async function remove(params) {
   })
 }
 
-export async function queryMenu (params) {
+export async function queryMenu(params) {
   params = pageParams(params)
   return request({
     url: role.queryMenu,
     method: 'post',
     data: params,
+  })
+}
+
+
+export async function getLocation() {
+  return request({
+    url: role.getLocation,
+    method: 'get',
   })
 }

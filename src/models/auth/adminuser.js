@@ -1,8 +1,11 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
-import { message } from 'antd'
-import { query, create, update, remove } from '../../services/auth/adminuser'
+import { message, Select } from 'antd'
+import { query, create, update, remove, queryRoleList } from '../../services/auth/adminuser'
 import { pageModel } from '../system/common'
+
+const { Option } = Select
 
 export default modelExtend(pageModel, {
   namespace: 'adminuser',
@@ -12,12 +15,16 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     confirmDirty: false,
+    roleList: [],
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/adminuser') {
+          dispatch({
+            type: 'queryRoleList',
+          })
           dispatch({
             type: 'query',
             payload: location.query,
@@ -75,7 +82,7 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put }) {
-      const data = yield call(remove, [payload])
+      const data = yield call(remove, { id: payload })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
@@ -93,6 +100,21 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
       } else {
         throw data.mess || '当前网络无法使用'
+      }
+    },
+
+    *queryRoleList(_, { call, put }) {
+      const data = yield call(queryRoleList)
+      if (data.code === 200 && data.obj) {
+        const option = data.obj.map((item) => {
+          return <Option key={item.ID}>{item.ROLE_NAME}</Option>
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            roleList: option,
+          },
+        })
       }
     },
 

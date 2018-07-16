@@ -48,7 +48,7 @@ export const handleArrData = ({ list, arr }) => {
   })
 }
 
-/* 用户遍历Tree菜单选择组件 */
+/* 用户管理遍历Tree菜单选择组件 */
 export const renderTreeNodes = (data) => {
   if (data.length) {
     return data.map((items) => {
@@ -69,4 +69,21 @@ export const renderTreeNodes = (data) => {
     })
   }
   return <TreeNode title="parent 1-0" key="0-0-0" disabled />
+}
+
+/* 角色 管理页面遍历地址信息 */
+export const editLocation = (data) => {
+  if (data.children && data.children.length === 0) {
+    delete data.children
+  }
+  if (data.children && data.children.length > 0) {
+    data.children = data.children.map((items) => {
+      return editLocation(items)
+    })
+  }
+  return {
+    value: data.id || data.province || data.city || data.district,
+    label: data.province || data.city || data.district,
+    children: data.children,
+  }
 }

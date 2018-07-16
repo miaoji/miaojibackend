@@ -1,9 +1,9 @@
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message } from 'antd'
-import { query, create, update, remove, queryMenu } from '../../services/auth/role'
+import { query, create, update, remove, queryMenu, getLocation } from '../../services/auth/role'
 import { pageModel } from '../system/common'
-import { reloadItem, handleArrData, renderTreeNodes } from '../../utils/processing'
+import { reloadItem, handleArrData, renderTreeNodes, editLocation } from '../../utils/processing'
 
 export default modelExtend(pageModel, {
   namespace: 'role',
@@ -13,12 +13,16 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     menuList: [],
+    locationList: [],
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/role') {
+          dispatch({
+            type: 'queryLocation',
+          })
           dispatch({
             type: 'queryMenuList',
           })
@@ -112,6 +116,22 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             menuList: option,
+          },
+        })
+      }
+    },
+
+    *queryLocation(_, { call, put }) {
+      const data = yield call(getLocation)
+      let option = []
+      if (data.code === 200 && data.obj) {
+        option = data.obj.map((item) => {
+          return editLocation(item)
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            locationList: option,
           },
         })
       }

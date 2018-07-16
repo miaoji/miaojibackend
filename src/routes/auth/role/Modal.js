@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Modal, Tree, Cascader } from 'antd'
-import city from '../../../utils/city'
+// import city from '../../../utils/city'
 import './Modal.less'
 
 const FormItem = Form.Item
@@ -20,6 +20,7 @@ const modal = ({
   item = {},
   onOk,
   menuList,
+  locationList,
   form: {
     getFieldDecorator,
     validateFields,
@@ -97,7 +98,7 @@ const modal = ({
                 message: '请输入地区信息!',
               },
             ],
-          })(<Cascader options={city} onChange={onChange} placeholder="请输入地区信息" />)}
+          })(<Cascader options={locationList} onChange={onChange} placeholder="请输入地区信息" />)}
         </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('description', {
@@ -122,6 +123,7 @@ modal.propTypes = {
   item: PropTypes.object,
   onOk: PropTypes.func,
   menuList: PropTypes.array,
+  locationList: PropTypes.array,
 }
 
 export default Form.create()(modal)
