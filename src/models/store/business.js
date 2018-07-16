@@ -51,6 +51,13 @@ export default modelExtend(pageModel, {
       const data = yield call(query, { ...newpayload, download: 0 })
       if (data.obj) {
         yield put({
+          type: 'updateState',
+          payload: {
+            expandedRowKeys: [],
+            sonlist: [],
+          },
+        })
+        yield put({
           type: 'querySuccess',
           payload: {
             list: data.obj,
@@ -102,17 +109,17 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *getOperator({ payload }, { call, put }) {
-      // const idusers = yield select(({ business }) => business.iduser)
-      // if (payload.idUser === idusers || payload.idUser === undefined) {
-      //   yield put({
-      //     type: 'setSiteName',
-      //     payload: {
-      //       expandedRowKeys: [payload.idUser],
-      //     },
-      //   })
-      //   return
-      // }
+    *getOperator({ payload }, { call, put, select }) {
+      const idusers = yield select(({ business }) => business.iduser)
+      if (payload.idUser === idusers || payload.idUser === undefined) {
+        yield put({
+          type: 'setSiteName',
+          payload: {
+            expandedRowKeys: [payload.idUser],
+          },
+        })
+        return
+      }
       message.success('信息正在加载，请稍等')
       let newpayload = {}
       payload = initialCreateTime(payload)
