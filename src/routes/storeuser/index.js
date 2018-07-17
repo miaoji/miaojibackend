@@ -6,10 +6,11 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Storeuser = ({ location, dispatch, storeuser, loading }) => {
+const Storeuser = ({ location, dispatch, storeuser, app, loading }) => {
   const { list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys } = storeuser
   const { pageSize } = pagination
   const { query, pathname } = location
+  const { storeuserList } = app
 
   const modalProps = {
     modalType,
@@ -104,6 +105,7 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
 
   const filterProps = {
     isMotion,
+    storeuserList,
     filter: {
       ...location.query,
     },
@@ -152,9 +154,10 @@ const Storeuser = ({ location, dispatch, storeuser, loading }) => {
 
 Storeuser.propTypes = {
   storeuser: PropTypes.object.isRequired,
+  app: PropTypes.object,
   location: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   loading: PropTypes.object.isRequired,
 }
 
-export default connect(({ storeuser, loading }) => ({ storeuser, loading }))(Storeuser)
+export default connect(({ storeuser, loading, app }) => ({ storeuser, loading, app }))(Storeuser)
