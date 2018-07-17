@@ -17,7 +17,7 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.126.1:8081'
 
 // 张涛
-// APIV3 = 'http://192.168.231.239:8066'
+APIV3 = 'http://192.168.231.239:8066'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -205,16 +205,16 @@ module.exports = {
     auth: {
       // 用户管理
       adminuser: {
-        // list: `${APIV3}/quandiExpressSiteManager/operatorList`,
-        // update: `${APIV3}/quandiExpressSiteManager/operatorEdit`,
-        // delete: `${APIV3}/quandiExpressSiteManager/operatorDel`,
-        // create: `${APIV3}/quandiExpressSiteManager/operatorAdd`,
-        list: `${APIV1}/operatorList`,
-        update: `${APIV1}/operatorEdit`,
-        delete: `${APIV1}/operatorDel`,
-        create: `${APIV1}/operatorAdd`,
-        // queryRoleList: `${APIV3}/quandiExpressSiteManager/roleList`,
-        queryRoleList: `${APIV1}/roleList`,
+        list: `${APIV3}/quandiExpressSiteManager/operatorList`,
+        update: `${APIV3}/quandiExpressSiteManager/operatorEdit`,
+        delete: `${APIV3}/quandiExpressSiteManager/operatorDel`,
+        create: `${APIV3}/quandiExpressSiteManager/operatorAdd`,
+        queryRoleList: `${APIV3}/quandiExpressSiteManager/roleList`,
+        // list: `${APIV1}/operatorList`,
+        // update: `${APIV1}/operatorEdit`,
+        // delete: `${APIV1}/operatorDel`,
+        // create: `${APIV1}/operatorAdd`,
+        // queryRoleList: `${APIV1}/roleList`,
       },
       // 菜单管理
       menu: {

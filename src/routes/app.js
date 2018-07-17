@@ -70,7 +70,7 @@ const App = ({ children, dispatch, app, loading, location }) => {
   const breadProps = {
     menu,
   }
-  if (openPages && openPages.includes(pathname) || loading.effects['app/queryStoreUser']) {
+  if (openPages && openPages.includes(pathname)) {
     return (<div>
       <Loader spinning={loading.effects['app/queryStoreUser']} />
       {children}
@@ -78,6 +78,7 @@ const App = ({ children, dispatch, app, loading, location }) => {
   }
   return (
     <div>
+      <Loader spinning={loading.effects['app/queryStoreUser']} />
       <Helmet>
         <title>后台管理</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

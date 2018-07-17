@@ -11,8 +11,6 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
   const { pageSize } = pagination
   const { storeuserList } = app
 
-  console.log('roleList', roleList)
-
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
@@ -65,6 +63,7 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
       })
     },
     onEditItem(item) {
+      dispatch({ type: 'adminuser/queryRoleList' })
       dispatch({
         type: 'adminuser/showModal',
         payload: {
@@ -99,10 +98,12 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
       }))
     },
     onAdd() {
+      dispatch({ type: 'adminuser/queryRoleList' })
       dispatch({
         type: 'adminuser/showModal',
         payload: {
           modalType: 'create',
+          currentItem: {},
         },
       })
     },

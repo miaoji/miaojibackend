@@ -42,20 +42,15 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       key: 'accounts',
     }, {
       title: '角色',
-      dataIndex: 'role',
-      key: 'role',
+      dataIndex: 'roleName',
+      key: 'roleName',
       render: (text) => {
-        const realText = {
-          admin: '超级管理员',
-          user1: '市场部',
-          user2: '门店',
-        }
-        return <span>{text ? realText[text] : '暂无'}</span>
+        return <span>{text || '暂无'}</span>
       },
     }, {
       title: '所属门店',
-      dataIndex: 'store',
-      key: 'store',
+      dataIndex: 'siteName',
+      key: 'siteName',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
@@ -70,6 +65,9 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       title: '联系方式',
       dataIndex: 'mobile',
       key: 'mobile',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      },
     }, {
       title: '备注信息',
       dataIndex: 'remark',
@@ -79,10 +77,10 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       },
     }, {
       title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'createtime',
+      key: 'createtime',
       render: (text) => {
-        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
+        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '暂无'
         return <span>{createTime}</span>
       },
     }, {

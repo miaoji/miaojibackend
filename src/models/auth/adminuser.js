@@ -34,13 +34,7 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put, select }) {
-      const roleList = yield select(({ adminuser }) => adminuser.roleList)
-      if (!roleList.length) {
-        yield put({
-          type: 'queryRoleList',
-        })
-      }
+    *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
@@ -59,9 +53,17 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
+      console.log('payloa', payload)
       if (payload.idUser) {
-        payload.idUser = payload.idUser.split('///')[0]
-        payload.store = payload.idUser.split('///')[1]
+        payload.idUser = payload.idUser ? payload.idUser.split('///')[0] : undefined
+      }
+      if (payload.username) {
+        payload.name = payload.username
+        delete payload.username
+      }
+      if (payload.number) {
+        payload.mobile = payload.number
+        delete payload.number
       }
       payload.password = md5(payload.password)
       delete payload.repass
@@ -76,10 +78,20 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const ID = yield select(({ adminuser }) => adminuser.currentItem.ID)
-      payload.password = md5(payload.password)
+      console.log('payloa', payload)
+      const item = yield select(({ adminuser }) => adminuser.currentItem)
+      delete payload.password
       delete payload.repass
-      const data = yield call(update, { ...payload, ID })
+      if (payload.idUser === item.siteName) {
+        delete payload.idUser
+      } else {
+        payload.idUser = payload.idUser ? payload.idUser.split('///')[0] : undefined
+      }
+      if (payload.roleId === item.roleName) {
+        delete payload.roleId
+      }
+      console.log('payload', payload)
+      const data = yield call(update, { ...payload, id: item.userId })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

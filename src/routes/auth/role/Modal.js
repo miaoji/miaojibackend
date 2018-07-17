@@ -60,7 +60,7 @@ const modal = ({
     console.log('key', key)
   }
 
-  const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : []
+  const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : undefined
 
   return (
     <Modal {...modalOpts}>
@@ -90,8 +90,8 @@ const modal = ({
           </Tree>)}
         </FormItem>
         <FormItem label="地区信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('city', {
-            initialValue: item.City,
+          {getFieldDecorator('roleLocation', {
+            initialValue: item.ROLE_LOCATION ? eval(item.ROLE_LOCATION) : [],
             rules: [
               {
                 required: false,

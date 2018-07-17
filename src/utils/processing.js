@@ -82,7 +82,7 @@ export const editLocation = (data) => {
     })
   }
   return {
-    value: data.id || data.province || data.city || data.district,
+    value: data.province || data.city || `${data.district}///${data.id}`,
     label: data.province || data.city || data.district,
     children: data.children,
   }

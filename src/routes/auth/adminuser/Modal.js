@@ -39,11 +39,10 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
+      console.log('11', data)
       onOk(data)
     })
   }
-
-  console.log('roleList', roleList)
 
   const modalOpts = {
     ...modalProps,
@@ -135,7 +134,7 @@ const modal = ({
           </FormItem>
           <FormItem label="角色信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('roleId', {
-              initialValue: item.roleId,
+              initialValue: item.roleName,
               rules: [
                 {
                   required: true,
@@ -159,7 +158,7 @@ const modal = ({
           </FormItem>
           <FormItem label="所属站点" hasFeedback {...formItemLayout}>
             {getFieldDecorator('idUser', {
-              initialValue: item.idUser,
+              initialValue: item.siteName,
               rules: [
                 {
                   required: false,
@@ -192,116 +191,112 @@ const modal = ({
     )
   }
 
-  return (
-    <Modal {...modalOpts}>
-      <Form layout="horizontal">
-        <FormItem label="姓名" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
-            rules: [
-              {
-                required: true,
-                message: '请填写用户姓名!',
-              },
-            ],
-          })(<Input placeholder="请填写用户姓名!" />)}
-        </FormItem>
-        <FormItem label="登陆账号" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('accounts', {
-            initialValue: item.accounts,
-            rules: [
-              {
-                required: true,
-                message: '请填写用户登陆账号!',
-              },
-            ],
-          })(<Input placeholder="请填写用户登陆账号!" />)}
-        </FormItem>
-        <FormItem label="登陆密码" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('password', {
-            initialValue: item.password,
-            rules: [
-              {
-                required: true,
-                message: '请填写用户登陆密码!',
-              },
-              {
-                validator: validateToNextPassword,
-              },
-            ],
-          })(<Input type="password" placeholder="请填写用户登陆密码!" />)}
-        </FormItem>
-        <FormItem label="确认密码" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('repass', {
-            initialValue: item.repass,
-            rules: [
-              {
-                required: true,
-                message: '请填写确认密码!',
-              },
-              {
-                validator: compareToFirstPassword,
-              },
-            ],
-          })(<Input type="password" placeholder="请填写确认密码!" onBlur={handleConfirmBlur} />)}
-        </FormItem>
-        <FormItem label="角色信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('roleId', {
-            initialValue: item.roleId,
-            rules: [
-              {
-                required: true,
-                message: '请填写角色!',
-              },
-            ],
-          })(<Select placeholder="请填写角色!" >
-            {roleList}
-          </Select>)}
-        </FormItem>
-        <FormItem label="联系方式" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('mobile', {
-            initialValue: item.mobile,
-            rules: [
-              {
-                required: false,
-                message: '请填写联系方式!',
-              },
-            ],
-          })(<Input placeholder="请填写联系方式!" />)}
-        </FormItem>
-        <FormItem label="所属站点" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('idUser', {
-            initialValue: item.idUser,
-            rules: [
-              {
-                required: false,
-                message: '选择站点!',
-              },
-            ],
-          })(<Select
-            allowClear
-            showSearch
-            placeholder="输入站点名称或者IdUser可搜索"
-            style={{ width: '100%' }}
-          >
-            {selectSiteName}
-          </Select>)}
-        </FormItem>
-        <FormItem label="备注信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('remark', {
-            initialValue: item.remark,
-            rules: [
-              {
-                required: false,
-                message: '理由字数不能超过100!',
-                max: 100,
-              },
-            ],
-          })(<TextArea placeholder="请填写相关备注信息!" style={{ height: '50', width: '100%' }} />)}
-        </FormItem>
-      </Form>
-    </Modal>
-  )
+  if (type === 'create') {
+    return (
+      <Modal {...modalOpts}>
+        <Form layout="horizontal">
+          <FormItem label="姓名" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('username', {
+              rules: [
+                {
+                  required: true,
+                  message: '请填写用户姓名!',
+                },
+              ],
+            })(<Input placeholder="请填写用户姓名!" />)}
+          </FormItem>
+          <FormItem label="登陆账号" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('accounts', {
+              rules: [
+                {
+                  required: true,
+                  message: '请填写用户登陆账号!',
+                },
+              ],
+            })(<Input placeholder="请填写用户登陆账号!" />)}
+          </FormItem>
+          <FormItem label="登陆密码" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: '请填写用户登陆密码!',
+                },
+                {
+                  validator: validateToNextPassword,
+                },
+              ],
+            })(<Input type="password" placeholder="请填写用户登陆密码!" />)}
+          </FormItem>
+          <FormItem label="确认密码" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('repass', {
+              rules: [
+                {
+                  required: true,
+                  message: '请填写确认密码!',
+                },
+                {
+                  validator: compareToFirstPassword,
+                },
+              ],
+            })(<Input type="password" placeholder="请填写确认密码!" onBlur={handleConfirmBlur} />)}
+          </FormItem>
+          <FormItem label="角色信息" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('roleId', {
+              rules: [
+                {
+                  required: true,
+                  message: '请填写角色!',
+                },
+              ],
+            })(<Select placeholder="请填写角色!" >
+              {roleList}
+            </Select>)}
+          </FormItem>
+          <FormItem label="联系方式" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('number', {
+              rules: [
+                {
+                  required: false,
+                  message: '请填写联系方式!',
+                },
+              ],
+            })(<Input placeholder="请填写联系方式!" />)}
+          </FormItem>
+          <FormItem label="所属站点" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('idUser', {
+              rules: [
+                {
+                  required: false,
+                  message: '选择站点!',
+                },
+              ],
+            })(<Select
+              allowClear
+              showSearch
+              placeholder="输入站点名称或者IdUser可搜索"
+              style={{ width: '100%' }}
+            >
+              {selectSiteName}
+            </Select>)}
+          </FormItem>
+          <FormItem label="备注信息" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('remark', {
+              rules: [
+                {
+                  required: false,
+                  message: '理由字数不能超过100!',
+                  max: 100,
+                },
+              ],
+            })(<TextArea placeholder="请填写相关备注信息!" style={{ height: '50', width: '100%' }} />)}
+          </FormItem>
+        </Form>
+      </Modal>
+    )
+  }
+
+  return false
 }
 
 modal.propTypes = {
