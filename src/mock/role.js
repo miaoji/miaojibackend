@@ -1,3 +1,5 @@
+import city from '../utils/city'
+
 const Mock = require('mockjs')
 const config = require('../utils/config')
 
@@ -79,14 +81,15 @@ module.exports = {
   },
 
   [`POST ${apiPrefix}/roleEdit`](req, res) {
-    const { ID, description, menus, roleName } = req.body
+    const { ID, id, description, menus, roleName, roleLocation } = req.body
     database = database.map((item) => {
-      if (item.ID === ID) {
+      if (item.ID === ID || item.ID === id) {
         return {
-          ID,
+          ID: ID || id,
           ROLE_NAME: roleName || item.ROLE_NAME,
           MENU_ID: menus || item.MENU_ID,
           DESCRIPTION: description || item.DESCRIPTION,
+          ROLE_LOCATION: JSON.stringify(roleLocation),
           ROLE_CREATE_TIME: new Date().getTime(),
         }
       }
@@ -98,7 +101,15 @@ module.exports = {
     })
   },
 
-  [`POST ${apiPrefix}/menuList`](req, res) {
+  [`GET ${apiPrefix}/quandiExpressSiteManager/getLocation`](_, res) {
+    res.status(200).json({
+      code: 200,
+      obj: city,
+      msg: '查询成功',
+    })
+  },
+
+  [`POST ${apiPrefix}/menuList`](_, res) {
     res.status(200).json({
       code: 200,
       obj: [
@@ -143,13 +154,14 @@ module.exports = {
   },
 
   [`POST ${apiPrefix}/roleAdd`](req, res) {
-    const { description, menus, roleName } = req.body
+    const { description, menus, roleName, roleLocation } = req.body
     database.unshift({
       ID: 1001 + database.length,
       ROLE_NAME: roleName,
       MENU_ID: menus,
       DESCRIPTION: description,
       ROLE_CREATE_TIME: new Date().getTime(),
+      ROLE_LOCATION: JSON.stringify(roleLocation),
     })
     res.status(200).json(
       {

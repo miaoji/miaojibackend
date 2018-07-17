@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Tree, Cascader } from 'antd'
+import { Form, Input, Modal, Tree, Cascader, Select } from 'antd'
 // import city from '../../../utils/city'
 import './Modal.less'
 
@@ -21,6 +21,7 @@ const modal = ({
   onOk,
   menuList,
   locationList,
+  roleList,
   form: {
     getFieldDecorator,
     validateFields,
@@ -65,6 +66,24 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
+        <FormItem label="父级角色" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('roleId', {
+            initialValue: item.roleId,
+            rules: [
+              {
+                required: true,
+                message: '请输入父级角色!',
+              },
+            ],
+          })(<Select
+            showSearch
+            filterOption={false}
+            style={{ width: '100%' }}
+            placeholder="请输入父级角色!"
+          >
+            {roleList}
+          </Select>)}
+        </FormItem>
         <FormItem label="角色名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('roleName', {
             initialValue: item.ROLE_NAME,
@@ -124,6 +143,7 @@ modal.propTypes = {
   onOk: PropTypes.func,
   menuList: PropTypes.array,
   locationList: PropTypes.array,
+  roleList: PropTypes.array,
 }
 
 export default Form.create()(modal)

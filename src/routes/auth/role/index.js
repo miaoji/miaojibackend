@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, role, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, menuList, locationList } = role
+  const { list, pagination, currentItem, modalVisible, modalType, menuList, locationList, roleList } = role
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,6 +18,7 @@ const Modular = ({ location, dispatch, role, loading }) => {
     title: `${modalType === 'create' ? '新增角色信息' : '修改角色信息'}`,
     wrapClassName: 'vertical-center-modal',
     menuList,
+    roleList,
     locationList,
     onOk(data) {
       dispatch({
@@ -66,6 +67,9 @@ const Modular = ({ location, dispatch, role, loading }) => {
         })
       }
       dispatch({
+        type: 'role/queryRoleList',
+      })
+      dispatch({
         type: 'role/showModal',
         payload: {
           modalType: 'update',
@@ -100,6 +104,9 @@ const Modular = ({ location, dispatch, role, loading }) => {
           type: 'role/queryLocation',
         })
       }
+      dispatch({
+        type: 'role/queryRoleList',
+      })
       dispatch({
         type: 'role/showModal',
         payload: {

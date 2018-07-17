@@ -1,9 +1,12 @@
+import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
-import { message } from 'antd'
+import { message, Select } from 'antd'
 import { query, create, update, remove, queryMenu, getLocation } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 import { reloadItem, handleArrData, renderTreeNodes, editLocation } from '../../utils/processing'
+
+const { Option } = Select
 
 export default modelExtend(pageModel, {
   namespace: 'role',
@@ -14,6 +17,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     menuList: [],
     locationList: [],
+    roleList: [],
   },
 
   subscriptions: {
@@ -65,6 +69,10 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put, select }) {
+      if (!payload.menus || payload.menus !== []) {
+        message.warn('还没有选择菜单呢')
+        return
+      }
       const menuList = yield select(({ role }) => role.menuList)
       payload.menuGroup = handleArrData({
         list: menuList,
@@ -139,6 +147,22 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             locationList: option,
+          },
+        })
+      }
+    },
+
+    *queryRoleList(_, { call, put }) {
+      const data = yield call(query, { page: 1, pageSize: 1000000 })
+      let option = []
+      if (data.code === 200 && data.obj) {
+        option = data.obj.map((item) => {
+          return <Option key={item.ID}>{item.ROLE_NAME}</Option>
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            roleList: option,
           },
         })
       }

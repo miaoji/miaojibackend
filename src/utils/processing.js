@@ -82,8 +82,8 @@ export const editLocation = (data) => {
     })
   }
   return {
-    value: data.province || data.city || `${data.district}///${data.id}`,
-    label: data.province || data.city || data.district,
+    value: data.name || data.province || data.city || `${data.district}///${data.id}`,
+    label: data.name || data.province || data.city || data.district,
     children: data.children,
   }
 }
