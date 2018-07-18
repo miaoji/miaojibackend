@@ -69,7 +69,7 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put, select }) {
-      if (!payload.menus || payload.menus !== []) {
+      if (!payload.menus || payload.menus === []) {
         message.warn('还没有选择菜单呢')
         return
       }
