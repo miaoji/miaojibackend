@@ -53,6 +53,7 @@ const modal = ({
   const paramDisabled = type === 'update'
 
   const handleCheck = (key) => {
+    console.log('key', key)
     setFieldsValue({
       menus: key,
     })
@@ -76,7 +77,7 @@ const modal = ({
             initialValue: item.roleId,
             rules: [
               {
-                required: true,
+                // required: true,
                 message: '请输入父级角色!',
               },
             ],

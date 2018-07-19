@@ -91,13 +91,14 @@ export const editLocation = (data) => {
 /* 角色管理页面筛选当前角色能使用的菜单列表 */
 export const filterRoleList = (data, list) => {
   console.log('data', data)
-  console.log('list', list)
-  if (data.children && data.children.length === 0) {
-    delete data.children
-  }
-  if (data.children && data.children.length > 0) {
-    data.children = data.children.map((items) => {
-      return editLocation(items)
-    })
-  }
+  data = data.map((item) => {
+    if (list.some(_ => _ === item.id)) {
+      if (item.children && item.children.length > 0) {
+        item = filterRoleList(item.children, list)
+      }
+      return item
+    }
+    return undefined
+  })
+  return data
 }

@@ -4,7 +4,10 @@ import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
 import { query, create, update, remove, queryMenu, getLocation } from '../../services/auth/role'
 import { pageModel } from '../system/common'
-import { reloadItem, handleArrData, renderTreeNodes, editLocation, filterRoleList } from '../../utils/processing'
+import {
+  reloadItem, handleArrData, renderTreeNodes, editLocation,
+  filterRoleList,
+} from '../../utils/processing'
 
 const { Option } = Select
 
@@ -18,7 +21,7 @@ export default modelExtend(pageModel, {
     menuList: [],
     locationList: [],
     roleList: [],
-    roleListSpare: [],
+    menuListSpare: [],
   },
 
   subscriptions: {
@@ -37,6 +40,8 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put, select }) {
+      const menuListSpare = yield select(({ role }) => role.menuListSpare)
+      console.log('menuListSpare1234', menuListSpare)
       const menuList = yield select(({ role }) => role.menuList)
       const locationList = yield select(({ role }) => role.locationList)
 
@@ -122,16 +127,20 @@ export default modelExtend(pageModel, {
       const data = yield call(queryMenu, { parentMenuId: 0, page: 1, pageSize: 10000 })
       if (data.code === 200 && data.obj) {
         let option = []
-        if (data.obj instanceof Array) {
-          option = data.obj.map((item) => {
+        const menuListSpare = [].concat(data.obj)
+        const dataList = JSON.parse(JSON.stringify(data.obj))
+        if (dataList instanceof Array) {
+          option = dataList.map((item) => {
             return reloadItem(item)
           })
           option = renderTreeNodes(option)
         }
+        console.log('menuListSpare', menuListSpare)
         yield put({
           type: 'updateState',
           payload: {
             menuList: option,
+            menuListSpare,
           },
         })
       }
@@ -164,19 +173,30 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             roleList: option,
-            roleListSpare: data.obj,
           },
         })
       }
     },
 
-    *filterRoleList({ payload }, { put, select }) {
-      const roleListSpare = yield select(({ role }) => role.roleListSpare)
-      filterRoleList(roleListSpare, payload.MENU_GROUP_ID)
+    *filterRoleList({ payload }, { select, put }) {
+      const menuListSpare = yield select(({ role }) => role.menuListSpare)
+      console.log('menuListSparefilter', menuListSpare)
+      console.log('payload.MENU_GROUP_ID', payload.MENU_GROUP_ID)
+      const datalist = filterRoleList([...menuListSpare], eval(payload.MENU_GROUP_ID))
+      const data = [].concat(datalist)
+      console.log('data22', data)
+      let option = []
+      if (data instanceof Array) {
+        option = data.map((item) => {
+          return reloadItem(item)
+        })
+        option = renderTreeNodes(option)
+      }
+      console.log('option', option)
       yield put({
         type: 'updateState',
         payload: {
-          modalVisible: true,
+          menuList: option,
         },
       })
     },
