@@ -4,7 +4,7 @@ import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
 import { query, create, update, remove, queryMenu, getLocation } from '../../services/auth/role'
 import { pageModel } from '../system/common'
-import { reloadItem, handleArrData, renderTreeNodes, editLocation } from '../../utils/processing'
+import { reloadItem, handleArrData, renderTreeNodes, editLocation, filterRoleList } from '../../utils/processing'
 
 const { Option } = Select
 
@@ -18,6 +18,7 @@ export default modelExtend(pageModel, {
     menuList: [],
     locationList: [],
     roleList: [],
+    roleListSpare: [],
   },
 
   subscriptions: {
@@ -157,15 +158,27 @@ export default modelExtend(pageModel, {
       let option = []
       if (data.code === 200 && data.obj) {
         option = data.obj.map((item) => {
-          return <Option key={item.ID}>{item.ROLE_NAME}</Option>
+          return <Option key={JSON.stringify(item)}>{item.ROLE_NAME}</Option>
         })
         yield put({
           type: 'updateState',
           payload: {
             roleList: option,
+            roleListSpare: data.obj,
           },
         })
       }
+    },
+
+    *filterRoleList({ payload }, { put, select }) {
+      const roleListSpare = yield select(({ role }) => role.roleListSpare)
+      filterRoleList(roleListSpare, payload.MENU_GROUP_ID)
+      yield put({
+        type: 'updateState',
+        payload: {
+          modalVisible: true,
+        },
+      })
     },
 
   },

@@ -22,6 +22,7 @@ const modal = ({
   menuList,
   locationList,
   roleList,
+  onRoldSelect,
   form: {
     getFieldDecorator,
     validateFields,
@@ -61,6 +62,10 @@ const modal = ({
     console.log('key', key)
   }
 
+  const handleRoldSelect = (key) => {
+    onRoldSelect(JSON.parse(key))
+  }
+
   const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : undefined
 
   return (
@@ -79,6 +84,7 @@ const modal = ({
             showSearch
             filterOption={false}
             style={{ width: '100%' }}
+            onSelect={handleRoldSelect}
             placeholder="请输入父级角色!"
           >
             {roleList}
@@ -144,6 +150,7 @@ modal.propTypes = {
   menuList: PropTypes.array,
   locationList: PropTypes.array,
   roleList: PropTypes.array,
+  onRoldSelect: PropTypes.func,
 }
 
 export default Form.create()(modal)

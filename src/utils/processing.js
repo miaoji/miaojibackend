@@ -87,3 +87,17 @@ export const editLocation = (data) => {
     children: data.children,
   }
 }
+
+/* 角色管理页面筛选当前角色能使用的菜单列表 */
+export const filterRoleList = (data, list) => {
+  console.log('data', data)
+  console.log('list', list)
+  if (data.children && data.children.length === 0) {
+    delete data.children
+  }
+  if (data.children && data.children.length > 0) {
+    data.children = data.children.map((items) => {
+      return editLocation(items)
+    })
+  }
+}

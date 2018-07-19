@@ -112,8 +112,9 @@ export default modelExtend(pageModel, {
     },
 
     *resetPWD({ payload }, { call, select, put }) {
-      const ID = yield select(({ adminuser }) => adminuser.currentItem.ID)
-      const data = yield call(update, { password: payload.password, ID })
+      const id = yield select(({ adminuser }) => adminuser.currentItem.id)
+      payload.password = md5(payload.password)
+      const data = yield call(update, { password: payload.password, id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('密码重置成功')

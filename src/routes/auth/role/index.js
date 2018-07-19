@@ -20,6 +20,12 @@ const Modular = ({ location, dispatch, role, loading }) => {
     menuList,
     roleList,
     locationList,
+    onRoldSelect(payload) {
+      dispatch({
+        type: 'role/filterRoleList',
+        payload,
+      })
+    },
     onOk(data) {
       dispatch({
         type: `role/${modalType}`,
