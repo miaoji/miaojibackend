@@ -68,6 +68,37 @@ const modal = ({
   }
 
   const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : undefined
+  if (type === 'update') {
+    return (
+      <Modal {...modalOpts}>
+        <Form layout="horizontal">
+          <FormItem label="地区信息" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('roleLocation', {
+              initialValue: item.ROLE_LOCATION ? eval(item.ROLE_LOCATION) : [],
+              rules: [
+                {
+                  required: false,
+                  message: '请输入地区信息!',
+                },
+              ],
+            })(<Cascader options={locationList} onChange={onChange} placeholder="请输入地区信息" />)}
+          </FormItem>
+          <FormItem label="备注信息" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('description', {
+              initialValue: item.DESCRIPTION,
+              rules: [
+                {
+                  required: false,
+                  message: '备注信息字数不能超过100!',
+                  max: 100,
+                },
+              ],
+            })(<TextArea placeholder="请输入设置备注信息!" style={{ height: '50', width: '100%' }} />)}
+          </FormItem>
+        </Form>
+      </Modal>
+    )
+  }
 
   return (
     <Modal {...modalOpts}>
@@ -77,7 +108,7 @@ const modal = ({
             initialValue: item.roleId,
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入父级角色!',
               },
             ],
@@ -112,7 +143,7 @@ const modal = ({
             defaultExpandAll={paramDisabled}
             onCheck={handleCheck}
           >
-            {menuList}
+            {menuList.length > 0 ? menuList : <span style={{ color: 'red' }}>请指定父级角色</span>}
           </Tree>)}
         </FormItem>
         <FormItem label="地区信息" hasFeedback {...formItemLayout}>

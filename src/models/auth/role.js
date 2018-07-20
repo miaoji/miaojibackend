@@ -8,6 +8,7 @@ import {
   reloadItem, handleArrData, renderTreeNodes, editLocation,
   filterRoleList,
 } from '../../utils/processing'
+import { storage } from '../../utils'
 
 const { Option } = Select
 
@@ -21,7 +22,6 @@ export default modelExtend(pageModel, {
     menuList: [],
     locationList: [],
     roleList: [],
-    menuListSpare: [],
   },
 
   subscriptions: {
@@ -40,8 +40,6 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put, select }) {
-      const menuListSpare = yield select(({ role }) => role.menuListSpare)
-      console.log('menuListSpare1234', menuListSpare)
       const menuList = yield select(({ role }) => role.menuList)
       const locationList = yield select(({ role }) => role.locationList)
 
@@ -123,25 +121,13 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *queryMenuList(_, { call, put }) {
+    *queryMenuList(_, { call }) {
       const data = yield call(queryMenu, { parentMenuId: 0, page: 1, pageSize: 10000 })
       if (data.code === 200 && data.obj) {
-        let option = []
-        const menuListSpare = [].concat(data.obj)
-        const dataList = JSON.parse(JSON.stringify(data.obj))
-        if (dataList instanceof Array) {
-          option = dataList.map((item) => {
-            return reloadItem(item)
-          })
-          option = renderTreeNodes(option)
-        }
-        console.log('menuListSpare', menuListSpare)
-        yield put({
-          type: 'updateState',
-          payload: {
-            menuList: option,
-            menuListSpare,
-          },
+        storage({
+          type: 'set',
+          key: 'menuListSpare',
+          val: JSON.stringify([].concat(data.obj)),
         })
       }
     },
@@ -161,7 +147,7 @@ export default modelExtend(pageModel, {
         })
       }
     },
-
+    // 获取全部角色信息
     *queryRoleList(_, { call, put }) {
       const data = yield call(query, { page: 1, pageSize: 1000000 })
       let option = []
@@ -177,14 +163,12 @@ export default modelExtend(pageModel, {
         })
       }
     },
-
-    *filterRoleList({ payload }, { select, put }) {
-      const menuListSpare = yield select(({ role }) => role.menuListSpare)
-      console.log('menuListSparefilter', menuListSpare)
-      console.log('payload.MENU_GROUP_ID', payload.MENU_GROUP_ID)
+    // 手动过滤能显示的菜单信息
+    *filterRoleList({ payload }, { put }) {
+      const storageData = storage({ key: 'menuListSpare' })
+      const menuListSpare = JSON.parse(storageData)
       const datalist = filterRoleList([...menuListSpare], eval(payload.MENU_GROUP_ID))
       const data = [].concat(datalist)
-      console.log('data22', data)
       let option = []
       if (data instanceof Array) {
         option = data.map((item) => {
@@ -192,7 +176,6 @@ export default modelExtend(pageModel, {
         })
         option = renderTreeNodes(option)
       }
-      console.log('option', option)
       yield put({
         type: 'updateState',
         payload: {

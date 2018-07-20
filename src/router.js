@@ -393,6 +393,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 权限管理>机构管理
+          path: 'organize',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/auth/organize'))
+              cb(null, require('./routes/auth/organize/'))
+            }, 'organize')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent (nextState, cb) {

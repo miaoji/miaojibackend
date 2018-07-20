@@ -26,6 +26,13 @@ export default [
     route: '/adminuser',
   },
   {
+    id: '204',
+    mpid: '2',
+    bpid: '1',
+    name: '机构管理',
+    route: '/organize',
+  },
+  {
     id: '202',
     mpid: '2',
     bpid: '1',

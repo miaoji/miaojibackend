@@ -41,7 +41,10 @@ module.exports = {
   openPages: ['/login'],
   apiPrefix: '/api/v1',
   api: {
-    userLogin: `${APIV3}/quandiExpressSiteManager/signIn`,
+    userLogin: {
+      login: `${APIV3}/quandiExpressSiteManager/signIn`,
+      getMenus: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
+    },
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
@@ -238,6 +241,13 @@ module.exports = {
         // create: `${APIV1}/roleAdd`,
         // queryMenu: `${APIV1}/menuList`,
         // getLocation: `${APIV1}/quandiExpressSiteManager/getLocation`,
+      },
+      // 机构管理
+      organize: {
+        list: `${APIV1}/quandiExpressSiteManager/organizeList`,
+        update: `${APIV1}/quandiExpressSiteManager/organizeEdit`,
+        delete: `${APIV1}/quandiExpressSiteManager/organizeDel`,
+        create: `${APIV1}/quandiExpressSiteManager/organizeAdd`,
       },
     },
   },

@@ -6,7 +6,7 @@ const TreeNode = Tree.TreeNode
 /* 用于调整权限管理>角色管理的添加和修改获取菜单列表的数据结构与项目所需字段不匹配的问题 */
 export const reloadItem = (item) => {
   if (item.children && item.children.length === 0) {
-    delete item.children
+    item.children = undefined
   }
   if (item.children && item.children.length > 0) {
     item.children = item.children.map((items) => {
@@ -90,15 +90,27 @@ export const editLocation = (data) => {
 
 /* 角色管理页面筛选当前角色能使用的菜单列表 */
 export const filterRoleList = (data, list) => {
-  console.log('data', data)
-  data = data.map((item) => {
-    if (list.some(_ => _ === item.id)) {
-      if (item.children && item.children.length > 0) {
-        item = filterRoleList(item.children, list)
-      }
-      return item
+  data = data.filter((item) => {
+    if (item.children && item.children.length > 0) {
+      item.children = filterRoleList(item.children, list)
     }
-    return undefined
+    return list.some(_ => _ === item.id)
   })
   return data
+}
+
+/* 对菜单数据进行整理 */
+export const rebuildMenuData = (data) => {
+  const tmp = data.map((item) => {
+    return {
+      id: String(item.id),
+      mpid: item.parentMenuId === '0' ? undefined : item.parentMenuId,
+      bpid: '12',
+      name: item.menuName,
+      route: item.target,
+      icon: item.icon,
+    }
+  })
+
+  return tmp
 }
