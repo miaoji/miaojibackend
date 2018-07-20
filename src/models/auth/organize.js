@@ -98,7 +98,7 @@ export default modelExtend(pageModel, {
           if (!item.name) {
             return false
           }
-          option.push(<Option key={item.id} value={item.id}>{item.id}</Option>)
+          option.push(<Option key={item.id} value={item.name}>{item.name}</Option>)
           return false
         })
         yield put({

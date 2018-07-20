@@ -102,14 +102,20 @@ export const filterRoleList = (data, list) => {
 /* 对菜单数据进行整理 */
 export const rebuildMenuData = (data) => {
   const tmp = data.map((item) => {
-    return {
-      id: String(item.id),
-      mpid: item.parentMenuId === '0' ? undefined : item.parentMenuId,
-      bpid: '12',
+    console.log('item', item.target)
+    const tmpItem = {
+      id: item.id,
+      icon: item.icon,
+      mpid: Number(item.parentMenuId) > 0 ? item.parentMenuId : undefined,
       name: item.menuName,
       route: item.target,
-      icon: item.icon,
     }
+    for (const key in tmpItem) {
+      if (!tmpItem[key]) {
+        delete tmpItem[key]
+      }
+    }
+    return tmpItem
   })
 
   return tmp

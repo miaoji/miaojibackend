@@ -8,6 +8,7 @@ import { storage } from 'utils'
 import { Select } from 'antd'
 // import { query, logout } from '../services/system/app'
 import { query as queryStoreUser } from 'src/services/storeuser'
+import { rebuildMenuData } from 'src/utils/processing'
 
 const { prefix } = config
 const { Option } = Select
@@ -58,7 +59,18 @@ export default {
           type: 'queryStoreUser',
         })
         const user = JSON.parse(userInfo)
-        const list = menus
+        const menuList = user.menuList
+        console.log('menus12312', menus)
+        console.log('menuList', menuList)
+        console.log('123', rebuildMenuData(menuList))
+        const list = [...rebuildMenuData(menuList), {
+          id: '101',
+          mpid: '-1',
+          icon: 'laptop',
+          name: '首页',
+          route: '/',
+        }]
+        // const list = menus
         // const { permissions } = user
         let permissions = {}
         permissions.role = 'admin'
@@ -109,7 +121,7 @@ export default {
       }
     },
 
-    *queryStoreUser(_, { call, put }) {
+    * queryStoreUser(_, { call, put }) {
       const data = yield call(queryStoreUser, {
         current: 1,
         pageSize: 10000,

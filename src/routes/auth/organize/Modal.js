@@ -74,16 +74,18 @@ const modal = ({
           })(<Input placeholder="请输入角色信息!" />)}
         </FormItem>
         <FormItem label="站点信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('aaa', {
+          {getFieldDecorator('store', {
+            initialValue: item.store,
             rules: [
               {
-                // required: true,
+                required: true,
+                type: 'array',
                 message: '请输入站点信息!',
               },
             ],
           })(<Select
-            mode="tags"
-            // mode="multiple"
+            // mode="tags"
+            mode="multiple"
             style={{ width: '100%' }}
             placeholder="请输入站点信息!"
             onChange={handleChange}

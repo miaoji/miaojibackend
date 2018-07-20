@@ -18,6 +18,7 @@ const Modular = ({ location, dispatch, organize, loading }) => {
     title: `${modalType === 'create' ? '新增菜单信息' : '修改菜单信息'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
+    maskClosable: false,
     onOk(data) {
       dispatch({
         type: `organize/${modalType}`,

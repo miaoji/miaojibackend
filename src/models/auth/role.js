@@ -121,13 +121,32 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *queryMenuList(_, { call }) {
+    *queryMenuList(_, {
+      call,
+      put,
+    }) {
       const data = yield call(queryMenu, { parentMenuId: 0, page: 1, pageSize: 10000 })
       if (data.code === 200 && data.obj) {
         storage({
           type: 'set',
           key: 'menuListSpare',
           val: JSON.stringify([].concat(data.obj)),
+        })
+        let option = []
+        console.log('option', data.obj)
+        if (data.obj instanceof Array) {
+          option = data.obj.map((item) => {
+            return reloadItem(item)
+          })
+          console.log('option1', option)
+          option = renderTreeNodes(option)
+        }
+        console.log('option2', option)
+        yield put({
+          type: 'updateState',
+          payload: {
+            menuList: option,
+          },
         })
       }
     },

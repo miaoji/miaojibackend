@@ -11,13 +11,14 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.231.232:8080'
 
 // 吴聪
-// APIV3 = 'http://47.101.42.216:8088'
+APIV3 = 'http://47.101.42.216:8088'
 
 // 刘思远
 // APIV3 = 'http://192.168.126.1:8081'
 
 // 张涛
 APIV3 = 'http://192.168.231.239:8066'
+// APIV3 = 'http://117.50.23.22:8080'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -42,7 +43,8 @@ module.exports = {
   apiPrefix: '/api/v1',
   api: {
     userLogin: {
-      login: `${APIV3}/quandiExpressSiteManager/signIn`,
+      // login: `${APIV3}/quandiExpressSiteManager/signIn`,
+      login: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
       getMenus: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
     },
     userLogout: `${APIV1}/user/logout`,
