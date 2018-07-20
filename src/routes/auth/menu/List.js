@@ -44,11 +44,11 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       width: 100,
       render: (text) => {
         const realText = {
-          1: '|',
-          2: '|---|',
-          3: '|---|---|',
+          1: '一级菜单',
+          2: '二级菜单',
+          3: '三级菜单',
         }
-        return <p style={{ textAlign: 'left' }}>{text ? realText[text] : '无'}</p>
+        return <p>{text ? realText[text] : '无'}</p>
       },
     }, {
       title: '菜单对应路由',
@@ -61,6 +61,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '菜单图标',
       dataIndex: 'icon',
       key: 'icon',
+      render: (text) => {
+        return <span>{text || '无'}</span>
+      },
+    }, {
+      title: '排序',
+      dataIndex: 'menuDesc',
+      key: 'menuDesc',
       render: (text) => {
         return <span>{text || '无'}</span>
       },

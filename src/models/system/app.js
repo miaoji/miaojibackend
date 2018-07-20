@@ -4,6 +4,7 @@ import { routerRedux } from 'dva/router'
 import config from 'config'
 // import { EnumRoleType } from 'enums'
 import menus from 'utils/menus'
+import hideMenus from 'utils/hideMenus'
 import { storage } from 'utils'
 import { Select } from 'antd'
 // import { query, logout } from '../services/system/app'
@@ -60,17 +61,10 @@ export default {
         })
         const user = JSON.parse(userInfo)
         const menuList = user.menuList
-        console.log('menus12312', menus)
-        console.log('menuList', menuList)
-        console.log('123', rebuildMenuData(menuList))
-        const list = [...rebuildMenuData(menuList), {
-          id: '101',
-          mpid: '-1',
-          icon: 'laptop',
-          name: '首页',
-          route: '/',
-        }]
-        // const list = menus
+        let list = menus
+        if (process.env.NODE_ENV !== 'development') {
+          list = [...rebuildMenuData(menuList), ...hideMenus]
+        }
         // const { permissions } = user
         let permissions = {}
         permissions.role = 'admin'
