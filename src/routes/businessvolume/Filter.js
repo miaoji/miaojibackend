@@ -82,15 +82,13 @@ const Filter = ({
   }
 
   const nameChange = (key) => {
-    key = key.split('///')[0]
     handleChange('idUser', key)
   }
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('idUser', { initialValue: null })(
-        //  <Search placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />
+        {getFieldDecorator('idUser', { initialValue: undefined })(
           <Select
             showSearch
             style={{ width: '100%' }}

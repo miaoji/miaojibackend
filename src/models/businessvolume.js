@@ -43,6 +43,9 @@ export default modelExtend(pageModel, {
         payload.startTime = yesterdayDate.getTime()
         payload.endTime = new Date().getTime()
       }
+      if (payload.idUser) {
+        payload.idUser = payload.idUser.split('///')[0]
+      }
       const data = yield call(query, { ...payload })
       if (data.code === 200) {
         yield put({
