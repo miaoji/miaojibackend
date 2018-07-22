@@ -62,6 +62,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           10: '韵达',
           13: '顺丰',
           71: '高铁快运',
+          32: '其他',
         }
         text = text || '0'
         return <span>{newtext[text]}</span>
@@ -110,7 +111,10 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           202: '移库',
           299: '问题件',
           301: '签收',
+          305: '签收',
           302: '退回',
+          303: '退回',
+          304: '一件补签',
         }
         return <span>{newtext[text]}</span>
       },
