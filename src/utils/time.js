@@ -76,7 +76,6 @@ export const repairTime = function (val) {
   }
 }
 
-
 export function handleFields(fields) {
   const { createTime } = fields
   if (createTime && createTime[0] === null) {

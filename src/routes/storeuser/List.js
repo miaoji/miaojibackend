@@ -134,7 +134,6 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         simple
         /* eslint react/jsx-no-duplicate-props: 'off' */
         expandRowByClick={false}
-        // expandedRowRender={() => <p>123123123</p>}
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
         expandedRowRender={record => <SonTable handleMenuClick={handleMenuClick} record={record} list={sonlist} filter={filter} />}

@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Form, Button, Row, Col, Input } from 'antd'
-import { DateRange } from '../../components'
-
-const Search = Input.Search
+import { FilterItem, DateRange } from 'components'
+import { Form, Button, Row, Col, Select } from 'antd'
 
 const ColProps = {
   xs: 24,
@@ -22,6 +20,8 @@ const TwoColProps = {
 const Filter = ({
   onFilterChange,
   filter,
+  storeuserList,
+  onDownLoad,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -48,7 +48,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({ ...filter, ...fields })
+    onFilterChange(fields)
   }
 
   const handleReset = () => {
@@ -62,27 +62,16 @@ const Filter = ({
         }
       }
     }
-    filter.createTime = []
     setFieldsValue(fields)
-    filter.page = undefined
-    filter.pageSize = undefined
     handleSubmit()
   }
 
-  // 时间选择器change事件
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
-    for (let item in fields) {
-      if (/^\s*$/g.test(fields[item])) {
-        fields[item] = undefined
-      }
-    }
-    onFilterChange({ ...fields })
+    onFilterChange(fields)
   }
-
-  const { name, mobile } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -92,25 +81,40 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
+  const nameChange = (key) => {
+    key = key.split('///')[0]
+    handleChange('idUser', key)
+  }
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('idUser', { initialValue: null })(
+        //  <Search placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按店铺名称搜索"
+            size="large"
+          >
+            {storeuserList}
+          </Select>
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
+        <FilterItem label="">
+          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+          )}
+        </FilterItem>
+      </Col>
+      <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            <Button size="large" onClick={handleReset}>重置</Button>&nbsp;&nbsp;&nbsp;
+            <Button type="primary" size="large" onClick={onDownLoad}>下载Excel</Button>
           </div>
         </div>
       </Col>
@@ -119,10 +123,14 @@ const Filter = ({
 }
 
 Filter.propTypes = {
+  onAdd: PropTypes.func,
+  isMotion: PropTypes.bool,
   switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  storeuserList: PropTypes.array,
+  onDownLoad: PropTypes.func,
 }
 
 export default Form.create()(Filter)

@@ -393,6 +393,26 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 业务量 报表
+          path: 'businessvolume',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/businessvolume'))
+              cb(null, require('./routes/businessvolume'))
+            }, 'businessvolume')
+          },
+        },
+        {
+          // 业务量 报表 详情
+          path: 'businessvolumeDetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/details/businessvolume'))
+              cb(null, require('./routes/businessvolume/detail/'))
+            }, 'businessvolume-detail')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent (nextState, cb) {

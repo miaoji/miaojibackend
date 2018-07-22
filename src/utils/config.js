@@ -203,6 +203,13 @@ module.exports = {
     problemdetail: {
       all: `${APIV3}/quandiExpressSiteManager/selectproblemParts`,
     },
+    // 业务量
+    businessvolume: {
+      list: `${APIV3}/quandiExpressSiteManager/getPortfolio`,
+      detail: `${APIV3}/quandiExpressSiteManager/getOrderByBrand`,
+      count: `${APIV3}/quandiExpressSiteManager/getPortfolioByBrand`,
+      downloadExcel: `${APIV3}/quandiExpressSiteManager/downloadPortfolio`,
+    },
     // 权限管理
     auth: {
       // 用户管理

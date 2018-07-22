@@ -102,4 +102,18 @@ export default [
     icon: 'code',
     route: '/blacklist',
   },
+  {
+    id: '12',
+    bpid: '1',
+    name: '业务量',
+    icon: 'book',
+    route: '/businessvolume',
+  },
+  {
+    id: '1202',
+    bpid: '1',
+    mpid: '-1',
+    name: '业务量详情',
+    route: '/businessvolumeDetail',
+  },
 ]

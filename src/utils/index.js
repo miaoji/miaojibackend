@@ -113,8 +113,8 @@ const pageParams = function (params) {
     pagination: 1,
     rownum: 10,
   }
-  params.pagination = params.page || 1
-  params.rownum = params.pageSize || 10
+  params.pagination = Number(params.page) || 1
+  params.rownum = Number(params.pageSize) || 10
   delete params.page
   delete params.pageSize
   return params
