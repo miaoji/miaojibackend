@@ -18,6 +18,10 @@ export default {
       const data = yield call(login, payload)
       if (data.success && data.code === 200) {
         storage({ type: 'set', key: 'user', val: JSON.stringify(data.obj[0]) })
+        // 添加  expire token 过期时间 12小时后过期
+        let expireToken = new Date()
+        expireToken.setTime(expireToken.getTime() + 12 * 60 * 60 * 1000)
+        storage({ type: 'set', key: 'expire_token', val: expireToken.getTime() })
         const from = queryURL('from')
         yield put({ type: 'app/query' })
         if (from) {

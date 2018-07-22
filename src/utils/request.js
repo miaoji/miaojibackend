@@ -5,6 +5,7 @@ import jsonp from 'jsonp'
 import lodash from 'lodash'
 import pathToRegexp from 'path-to-regexp'
 import { message } from 'antd'
+import { storage } from 'utils'
 
 const fetch = (options) => {
   let {
@@ -110,6 +111,15 @@ const fetch = (options) => {
 }
 
 export default function request(options) {
+  // 判断如果不是登陆页 在localStorage 中expireToken过期的话  就跳转到login页面上
+  if (window.location.pathname !== '/login') {
+    const expireToken = storage({ key: 'expire_token' })
+    const nowDate = new Date().getTime()
+    if (!expireToken || expireToken === '' || nowDate > expireToken) {
+      window.localStorage.clear()
+      window.location.href = '/login'
+    }
+  }
   return fetch(options).then((response) => {
     const { statusText, status } = response
     let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data

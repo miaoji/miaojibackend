@@ -26,7 +26,7 @@ export function initialCreateTime(payload) {
 
 export function yesterTime(day = 0) {
   let dayCount = 1
-  const test = false
+  const test = true
   if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
     // if (window.location.search === '') {
