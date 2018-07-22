@@ -40,7 +40,15 @@ export default modelExtend(pageModel, {
       } else {
         newpayload = { ...payload }
       }
-      console.log('pay', newpayload)
+      if (payload.idUser) {
+        newpayload.idUser = payload.idUser.split('///')[0]
+      }
+      if (payload.state) {
+        newpayload.state = payload.state.split('///')[0]
+      }
+      if (!payload.orderSn) {
+        delete newpayload.orderSn
+      }
       const data = yield call(query, { ...newpayload })
       if (data.code === 200) {
         yield put({

@@ -76,12 +76,19 @@ const Filter = ({
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
     initialCreateTime[0] = moment(filter.createTime[0])
+  } else {
+    let yesterdayDate = new Date()
+    yesterdayDate.setTime(yesterdayDate.getTime() - 24 * 60 * 60 * 1000)
+    initialCreateTime[0] = moment(yesterdayDate)
   }
   if (filter.createTime && filter.createTime[1]) {
     initialCreateTime[1] = moment(filter.createTime[1])
+  } else {
+    initialCreateTime[1] = moment(new Date())
   }
 
   const nameChange = (key) => {
+    console.log('key', key)
     handleChange('idUser', key)
   }
 
@@ -90,9 +97,10 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('idUser', { initialValue: undefined })(
           <Select
+            allowClear
             showSearch
             style={{ width: '100%' }}
-            onSelect={nameChange}
+            onChange={nameChange}
             placeholder="按店铺名称搜索"
             size="large"
           >
@@ -103,7 +111,11 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange
+              style={{ width: '100%' }}
+              size="large"
+              onChange={handleChange.bind(null, 'createTime')}
+            />
           )}
         </FilterItem>
       </Col>

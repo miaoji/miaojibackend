@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
 import classnames from 'classnames'
-import { Link } from 'dva/router'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import Tab from './Tab'
@@ -16,7 +15,8 @@ const List = ({ onDeleteItem, onEditItem, sonlist, isMotion, location, ...tableP
       width: 100,
       render: (text) => {
         const { createTime } = location.query
-        return <Link to={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}, 点击查看详情</Link>
+        // return <Link to={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</Link>
+        return <a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
       },
     }, {
       title: '区',

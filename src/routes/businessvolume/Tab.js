@@ -10,23 +10,30 @@ const Tab = ({
   list,
 }) => {
   function callback(key) {
-    console.log('list', list)
     console.log('key', key)
   }
 
   return (
     <Tabs defaultActiveKey="1" onChange={callback} className={classnames({ [styles.tab]: true })}>
       <TabPane tab="点货数" key="1">
-        {list.scheduledReceipt}
+        <div>
+          {list.someCargo}
+        </div>
       </TabPane>
       <TabPane tab="入库数" key="2">
-        {list.someCargo}
+        <div>
+          {list.scheduledReceipt}
+        </div>
       </TabPane>
       <TabPane tab="签收数" key="3">
-        {list.signingVolume}
+        <div>
+          {list.signingVolume}
+        </div>
       </TabPane>
       <TabPane tab="退回数" key="4">
-        {list.returnAmount}
+        <div>
+          {list.returnAmount}
+        </div>
       </TabPane>
     </Tabs>
   )

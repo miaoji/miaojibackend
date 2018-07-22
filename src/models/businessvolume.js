@@ -1,11 +1,11 @@
 import React from 'react'
-import { message, notification } from 'antd'
+import { message, notification, Tag } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime } from 'utils'
 import { query, detail, count, downloadExcel as download } from '../services/businessvolume'
 import { pageModel } from './system/common'
 
-const { prefix, APIV3 } = config
+const { prefix, APIV3, brandReverse } = config
 
 export default modelExtend(pageModel, {
   namespace: 'businessvolume',
@@ -92,6 +92,7 @@ export default modelExtend(pageModel, {
           sonlist: {},
         },
       })
+      const { createTime } = payload
       payload = initialCreateTime(payload)
       const { idUser, startTime, endTime } = payload
       const data = yield call(count, {
@@ -100,8 +101,8 @@ export default modelExtend(pageModel, {
       if (data.code === 200) {
         let { obj } = data
         /**
-         * someCargo入库数
-         * scheduledReceipt点货数
+         * someCargo点货数
+         * scheduledReceipt入库数
          * signingVolume签收
          * returnAmount退回数
          */
@@ -111,14 +112,14 @@ export default modelExtend(pageModel, {
           signingVolume: [],
           someCargo: [],
         }
-        const text1 = '快递品牌:'
-        const text2 = ',数量:'
         for (let i = 0; i < obj.length; i++) {
           let item = obj[i]
-          list.returnAmount.push(<p>{text1}{item.brandName}{text2}{item.returnAmount}</p>)
-          list.scheduledReceipt.push(<p>{text1}{item.brandName}{text2}{item.scheduledReceipt}</p>)
-          list.signingVolume.push(<p>{text1}{item.brandName}{text2}{item.signingVolume}</p>)
-          list.someCargo.push(<p>{text1}{item.brandName}{text2}{item.someCargo}</p>)
+          const brandName = item.brandName
+          const brandData = `${brandReverse[brandName]}///${brandName}`
+          list.someCargo.push(<Tag color="#87d068"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=1///点货`}>{brandName}:{item.someCargo}</a></Tag>)
+          list.scheduledReceipt.push(<Tag color="#2db7f5"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=101///入库`}>{brandName}:{item.scheduledReceipt}</a></Tag>)
+          list.signingVolume.push(<Tag color="#108ee9"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=305///签收`}>{brandName}:{item.signingVolume}</a></Tag>)
+          list.returnAmount.push(<Tag color="#f50"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=303///退回`}>{brandName}:{item.returnAmount}</a></Tag>)
         }
         yield put({
           type: 'updateState',

@@ -89,6 +89,20 @@ export default [
     route: '/selectpjjeDetails',
   },
   {
+    id: '409',
+    bpid: '1',
+    mpid: '4',
+    name: '业务量',
+    route: '/businessvolume',
+  },
+  {
+    id: '4015',
+    bpid: '409',
+    mpid: '-1',
+    name: '业务量详情',
+    route: '/businessvolumeDetail',
+  },
+  {
     id: '8',
     bpid: '1',
     name: '运单管理',
@@ -101,19 +115,5 @@ export default [
     name: '黑名单',
     icon: 'code',
     route: '/blacklist',
-  },
-  {
-    id: '12',
-    bpid: '1',
-    name: '业务量',
-    icon: 'book',
-    route: '/businessvolume',
-  },
-  {
-    id: '1202',
-    bpid: '1',
-    mpid: '-1',
-    name: '业务量详情',
-    route: '/businessvolumeDetail',
   },
 ]

@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button, Row, Col, Select, Input } from 'antd'
+import { config } from 'utils'
 
 const { Option } = Select
+const { brand, orderTypeForBusiness } = config
 const Search = Input.Search
 
 const ColProps = {
@@ -19,6 +21,7 @@ const TwoColProps = {
 }
 
 const Filter = ({
+  filter,
   onFilterChange,
   form: {
     getFieldDecorator,
@@ -53,65 +56,66 @@ const Filter = ({
   }
 
   const brandChange = (key) => {
-    key = key.split('///')[0]
+    console.log('brand', key)
     handleChange('idBrand', key)
   }
 
-  const brandData = {
-    2: '优速',
-    3: '龙邦',
-    4: '速尔',
-    5: '快捷',
-    6: '全峰',
-    7: '百世快递',
-    8: '天天',
-    9: '中通',
-    11: '申通',
-    12: '圆通',
-    14: 'EMS',
-    15: '国通',
-    16: '蚂蚁帮',
-    17: '邮政小包',
-    18: '宅急送',
-    19: '跨越',
-    20: '京东',
-    21: '达达',
-    22: '万象',
-    23: '妙寄',
-    24: '中铁',
-    27: '品骏',
-    26: '安能',
-    28: '日日顺',
-    29: '如风达',
-    10: '韵达',
-    13: '顺丰',
-    71: '高铁快运',
-  }
   let brandList = []
-  for (let item in brandData) {
-    if (Object.prototype.hasOwnProperty.call(brandData, item)) {
-      let key = `${item}///${brandData[item]}`
-      let optionItem = <Option key={key}>{brandData[item]}</Option>
+  for (let item in brand) {
+    if (Object.prototype.hasOwnProperty.call(brand, item)) {
+      let key = `${item}///${brand[item]}`
+      let optionItem = <Option key={key}>{brand[item]}</Option>
       brandList.push(optionItem)
     }
   }
+
+  let typeList = []
+  for (let item in orderTypeForBusiness) {
+    if (Object.prototype.hasOwnProperty.call(orderTypeForBusiness, item)) {
+      let key = `${item}///${orderTypeForBusiness[item]}`
+      let optionItem = <Option key={key}>{orderTypeForBusiness[item]}</Option>
+      typeList.push(optionItem)
+    }
+  }
+
+  const stateChange = (key) => {
+    console.log('state', key)
+    handleChange('state', key)
+  }
+
+  const { idBrand, state, orderSn } = filter
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('idBrand', { initialValue: '' })(
+        {getFieldDecorator('idBrand', { initialValue: idBrand })(
           <Select
             showSearch
+            allowClear
             style={{ width: '100%' }}
-            onSelect={brandChange}
-            placeholder="按店铺名称搜索"
+            onChange={brandChange}
+            placeholder="按快递品牌搜索"
             size="large"
           >
             {brandList}
           </Select>
         )}
       </Col>
+      <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        {getFieldDecorator('state', { initialValue: state })(
+          <Select
+            showSearch
+            allowClear
+            style={{ width: '100%' }}
+            onChange={stateChange}
+            placeholder="按操作类型搜索"
+            size="large"
+          >
+            {typeList}
+          </Select>
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('orderSn', { initialValue: undefined })(<Search placeholder="按单号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('orderSn', { initialValue: orderSn })(<Search placeholder="按单号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

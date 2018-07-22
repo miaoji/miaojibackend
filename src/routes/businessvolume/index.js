@@ -94,18 +94,11 @@ const BusinessVolume = ({ location, dispatch, businessvolume, app, loading }) =>
     },
   }
 
-  let yesterdayDate = new Date()
-  yesterdayDate.setTime(yesterdayDate.getTime() - 24 * 60 * 60 * 1000)
-
   const filterProps = {
     isMotion,
     storeuserList,
     filter: {
       ...location.query,
-      createTime: [
-        yesterdayDate,
-        new Date(),
-      ],
     },
     onDownLoad() {
       dispatch({

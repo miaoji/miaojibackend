@@ -45,6 +45,9 @@ const BusinessvolumeDetail = ({ location, dispatch, businessvolumeDetail, loadin
 
   const filterProps = {
     isMotion,
+    filter: {
+      ...location.query,
+    },
     onDownLoad() {
       dispatch({
         type: 'businessvolume/download',
