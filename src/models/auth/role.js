@@ -2,10 +2,10 @@ import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
-import { query, create, update, remove, queryMenu, getLocation } from '../../services/auth/role'
+import { query, create, update, remove, queryMenu } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 import {
-  reloadItem, handleArrData, renderTreeNodes, editLocation,
+  reloadItem, handleArrData, renderTreeNodes,
   filterRoleList,
 } from '../../utils/processing'
 import { storage } from '../../utils'
@@ -20,7 +20,6 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     menuList: [],
-    locationList: [],
     roleList: [],
   },
 
@@ -41,16 +40,10 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put, select }) {
       const menuList = yield select(({ role }) => role.menuList)
-      const locationList = yield select(({ role }) => role.locationList)
 
       if (!menuList.length) {
         yield put({
           type: 'queryMenuList',
-        })
-      }
-      if (!locationList.length) {
-        yield put({
-          type: 'queryLocation',
         })
       }
       payload = initialCreateTime(payload)
@@ -143,22 +136,6 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             menuList: option,
-          },
-        })
-      }
-    },
-
-    *queryLocation(_, { call, put }) {
-      const data = yield call(getLocation)
-      let option = []
-      if (data.code === 200 && data.obj) {
-        option = data.obj.map((item) => {
-          return editLocation(item)
-        })
-        yield put({
-          type: 'updateState',
-          payload: {
-            locationList: option,
           },
         })
       }

@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, role, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, menuList, locationList, roleList } = role
+  const { list, pagination, currentItem, modalVisible, modalType, menuList, roleList } = role
   const { pageSize } = pagination
 
   const modalProps = {
@@ -19,7 +19,6 @@ const Modular = ({ location, dispatch, role, loading }) => {
     wrapClassName: 'vertical-center-modal',
     menuList,
     roleList,
-    locationList,
     onRoldSelect(payload) {
       dispatch({
         type: 'role/filterRoleList',
@@ -62,11 +61,6 @@ const Modular = ({ location, dispatch, role, loading }) => {
       })
     },
     onEditItem(item) {
-      if (locationList.length === 0) {
-        dispatch({
-          type: 'role/queryLocation',
-        })
-      }
       dispatch({
         type: 'role/showModal',
         payload: {
@@ -95,11 +89,6 @@ const Modular = ({ location, dispatch, role, loading }) => {
       if (menuList.length === 0) {
         dispatch({
           type: 'role/queryMenuList',
-        })
-      }
-      if (locationList.length === 0) {
-        dispatch({
-          type: 'role/queryLocation',
         })
       }
       dispatch({

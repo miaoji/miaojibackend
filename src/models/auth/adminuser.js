@@ -4,7 +4,7 @@ import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
 import md5 from 'js-md5'
 import { query, create, update, remove } from '../../services/auth/adminuser'
-import { query as queryRoleList } from '../../services/auth/role'
+import { query as queryOrangeizeList } from '../../services/auth/organize'
 import { pageModel } from '../system/common'
 
 const { Option } = Select
@@ -17,7 +17,6 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     confirmDirty: false,
-    roleList: [],
   },
 
   subscriptions: {
@@ -122,18 +121,24 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *queryRoleList(_, { call, put }) {
-      const data = yield call(queryRoleList, { page: 1, pageSize: 100000 })
-      if (data.code === 200 && data.obj) {
-        const option = data.obj.map((item) => {
-          return <Option key={item.ID}>{item.ROLE_NAME}</Option>
-        })
+    *queryOrangeizeList(_, { call, put }) {
+      const data = yield call(queryOrangeizeList, { page: 1, pageSize: 10000 })
+      console.log('data', data)
+      if (data.code === 200) {
+        let option = []
+        if (data.obj && data.obj.length > 0) {
+          option = data.obj.map((item) => {
+            return <Option key={item.id} value={item.id}>{item.oname}</Option>
+          })
+        }
         yield put({
           type: 'updateState',
           payload: {
-            roleList: option,
+            orangeizeList: option,
           },
         })
+      } else {
+        throw data.mess || '当前网络无法使用'
       }
     },
 

@@ -6,10 +6,9 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Modular = ({ location, dispatch, adminuser, loading, app }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty, roleList } = adminuser
+const Modular = ({ location, dispatch, adminuser, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty, orangeizeList } = adminuser
   const { pageSize } = pagination
-  const { storeuserList } = app
 
   const modalProps = {
     type: modalType,
@@ -18,9 +17,8 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
     confirmLoading: loading.effects['adminuser/update'],
     title: `${modalType === 'create' ? '注册用户信息' : '修改用户信息'}`,
     wrapClassName: 'vertical-center-modal',
-    selectSiteName: storeuserList,
     confirmDirty: confirmDirty || false,
-    roleList,
+    orangeizeList,
     onOk(data) {
       dispatch({
         type: `adminuser/${modalType}`,
@@ -63,7 +61,7 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
       })
     },
     onEditItem(item) {
-      dispatch({ type: 'adminuser/queryRoleList' })
+      dispatch({ type: 'adminuser/queryOrangeizeList' })
       dispatch({
         type: 'adminuser/showModal',
         payload: {
@@ -98,7 +96,7 @@ const Modular = ({ location, dispatch, adminuser, loading, app }) => {
       }))
     },
     onAdd() {
-      dispatch({ type: 'adminuser/queryRoleList' })
+      dispatch({ type: 'adminuser/queryOrangeizeList' })
       dispatch({
         type: 'adminuser/showModal',
         payload: {
@@ -123,7 +121,6 @@ Modular.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
-  app: PropTypes.object,
 }
 
-export default connect(({ adminuser, loading, app }) => ({ adminuser, loading, app }))(Modular)
+export default connect(({ adminuser, loading }) => ({ adminuser, loading }))(Modular)

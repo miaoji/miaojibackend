@@ -17,10 +17,9 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
-  selectSiteName,
   confirmDirty,
   onEditConfirmDirty,
-  roleList,
+  orangeizeList,
   form: {
     getFieldDecorator,
     validateFields,
@@ -131,19 +130,6 @@ const modal = ({
               ],
             })(<Input placeholder="请填写用户登陆账号!" />)}
           </FormItem>
-          <FormItem label="角色信息" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('roleId', {
-              initialValue: item.roleName,
-              rules: [
-                {
-                  required: true,
-                  message: '请填写角色!',
-                },
-              ],
-            })(<Select placeholder="请填写角色!" >
-              {roleList}
-            </Select>)}
-          </FormItem>
           <FormItem label="联系方式" hasFeedback {...formItemLayout}>
             {getFieldDecorator('mobile', {
               initialValue: item.mobile,
@@ -154,24 +140,6 @@ const modal = ({
                 },
               ],
             })(<Input placeholder="请填写联系方式!" />)}
-          </FormItem>
-          <FormItem label="所属站点" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('idUser', {
-              initialValue: item.siteName,
-              rules: [
-                {
-                  required: false,
-                  message: '选择站点!',
-                },
-              ],
-            })(<Select
-              allowClear
-              showSearch
-              placeholder="输入站点名称或者IdUser可搜索"
-              style={{ width: '100%' }}
-            >
-              {selectSiteName}
-            </Select>)}
           </FormItem>
           <FormItem label="备注信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('remark', {
@@ -240,16 +208,16 @@ const modal = ({
               ],
             })(<Input type="password" placeholder="请填写确认密码!" onBlur={handleConfirmBlur} />)}
           </FormItem>
-          <FormItem label="角色信息" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('roleId', {
+          <FormItem label="所属机构" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('orangeize', {
               rules: [
                 {
                   required: true,
-                  message: '请填写角色!',
+                  message: '请选择所属机构!',
                 },
               ],
-            })(<Select placeholder="请填写角色!" >
-              {roleList}
+            })(<Select placeholder="请选择所属机构!">
+              {orangeizeList}
             </Select>)}
           </FormItem>
           <FormItem label="联系方式" hasFeedback {...formItemLayout}>
@@ -261,23 +229,6 @@ const modal = ({
                 },
               ],
             })(<Input placeholder="请填写联系方式!" />)}
-          </FormItem>
-          <FormItem label="所属站点" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('idUser', {
-              rules: [
-                {
-                  required: false,
-                  message: '选择站点!',
-                },
-              ],
-            })(<Select
-              allowClear
-              showSearch
-              placeholder="输入站点名称或者IdUser可搜索"
-              style={{ width: '100%' }}
-            >
-              {selectSiteName}
-            </Select>)}
           </FormItem>
           <FormItem label="备注信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('remark', {
@@ -303,10 +254,9 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
-  selectSiteName: PropTypes.array,
   confirmDirty: PropTypes.bool,
   onEditConfirmDirty: PropTypes.func,
-  roleList: PropTypes.array,
+  orangeizeList: PropTypes.array,
 }
 
 export default Form.create()(modal)

@@ -229,13 +229,12 @@ module.exports = {
       },
       // 角色管理
       role: {
-        // list: `${APIV3}/quandiExpressSiteManager/roleList`,
+        list: `${APIV3}/quandiExpressSiteManager/roleList`,
         update: `${APIV3}/quandiExpressSiteManager/roleEdit`,
         delete: `${APIV3}/quandiExpressSiteManager/roleDel`,
         create: `${APIV3}/quandiExpressSiteManager/roleAdd`,
         queryMenu: `${APIV3}/quandiExpressSiteManager/menuList`,
-        getLocation: `${APIV3}/quandiExpressSiteManager/getLocation`,
-        list: `${APIV1}/roleList`,
+        // list: `${APIV1}/roleList`,
         // update: `${APIV1}/roleEdit`,
         // delete: `${APIV1}/roleDel`,
         // create: `${APIV1}/roleAdd`,

@@ -43,11 +43,3 @@ export async function queryMenu(params) {
     data: params,
   })
 }
-
-
-export async function getLocation() {
-  return request({
-    url: role.getLocation,
-    method: 'get',
-  })
-}

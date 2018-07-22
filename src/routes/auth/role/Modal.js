@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Tree, Cascader, Select } from 'antd'
+import { Form, Input, Modal, Tree, Select } from 'antd'
 // import city from '../../../utils/city'
 import './Modal.less'
 
@@ -20,7 +20,6 @@ const modal = ({
   item = {},
   onOk,
   menuList,
-  locationList,
   roleList,
   onRoldSelect,
   form: {
@@ -58,10 +57,6 @@ const modal = ({
     })
   }
 
-  const onChange = (key) => {
-    console.log('key', key)
-  }
-
   const handleRoldSelect = (key) => {
     onRoldSelect(JSON.parse(key))
   }
@@ -71,17 +66,6 @@ const modal = ({
     return (
       <Modal {...modalOpts}>
         <Form layout="horizontal">
-          <FormItem label="地区信息" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('roleLocation', {
-              initialValue: item.ROLE_LOCATION ? eval(item.ROLE_LOCATION) : [],
-              rules: [
-                {
-                  required: false,
-                  message: '请输入地区信息!',
-                },
-              ],
-            })(<Cascader options={locationList} onChange={onChange} placeholder="请输入地区信息" />)}
-          </FormItem>
           <FormItem label="备注信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('description', {
               initialValue: item.DESCRIPTION,
@@ -145,17 +129,6 @@ const modal = ({
             {menuList.length > 0 ? menuList : <span style={{ color: 'red' }}>请指定父级角色</span>}
           </Tree>)}
         </FormItem>
-        <FormItem label="地区信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('roleLocation', {
-            initialValue: item.ROLE_LOCATION ? eval(item.ROLE_LOCATION) : [],
-            rules: [
-              {
-                required: false,
-                message: '请输入地区信息!',
-              },
-            ],
-          })(<Cascader options={locationList} onChange={onChange} placeholder="请输入地区信息" />)}
-        </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('description', {
             initialValue: item.DESCRIPTION,
@@ -179,7 +152,6 @@ modal.propTypes = {
   item: PropTypes.object,
   onOk: PropTypes.func,
   menuList: PropTypes.array,
-  locationList: PropTypes.array,
   roleList: PropTypes.array,
   onRoldSelect: PropTypes.func,
 }
