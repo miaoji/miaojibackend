@@ -133,15 +133,12 @@ export default modelExtend(pageModel, {
           val: JSON.stringify([].concat(data.obj)),
         })
         let option = []
-        console.log('option', data.obj)
         if (data.obj instanceof Array) {
           option = data.obj.map((item) => {
             return reloadItem(item)
           })
-          console.log('option1', option)
           option = renderTreeNodes(option)
         }
-        console.log('option2', option)
         yield put({
           type: 'updateState',
           payload: {

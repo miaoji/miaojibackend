@@ -102,7 +102,6 @@ export const filterRoleList = (data, list) => {
 /* 对菜单数据进行整理 */
 export const rebuildMenuData = (data) => {
   const tmp = data.map((item) => {
-    console.log('item', item.target)
     const tmpItem = {
       id: item.id,
       icon: item.icon,

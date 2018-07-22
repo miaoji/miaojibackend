@@ -31,23 +31,23 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '机构名称',
-      dataIndex: 'menuName',
-      key: 'menuName',
+      dataIndex: 'oname',
+      key: 'oname',
       width: 200,
       render: (text) => {
         return <span style={{ width: '110px', display: 'inline-block' }}>{text}</span>
       },
     }, {
-      title: '管理门店',
-      dataIndex: 'target',
-      key: 'target',
+      title: '管理门店数量',
+      dataIndex: 'stroe',
+      key: 'stroe',
       render: (text) => {
         return <span>{text || '无'}</span>
       },
     }, {
       title: '所在区域',
-      dataIndex: 'icon',
-      key: 'icon',
+      dataIndex: 'city',
+      key: 'city',
       render: (text) => {
         return <span>{text || '无'}</span>
       },
@@ -60,8 +60,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       },
     }, {
       title: '创建时间',
-      dataIndex: 'menuCreateTime',
-      key: 'menuCreateTime',
+      dataIndex: 'createTime',
+      key: 'createTime',
       render: (text) => {
         const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
         return <span>{createTime}</span>

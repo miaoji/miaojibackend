@@ -39,7 +39,6 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      console.log('11', data)
       onOk(data)
     })
   }

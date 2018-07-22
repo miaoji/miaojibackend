@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select } from 'antd'
+import { Form, Input, Modal, Select, Cascader } from 'antd'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -18,6 +18,8 @@ const modal = ({
   item = {},
   onOk,
   storeuserList,
+  roleList,
+  locationList,
   form: {
     getFieldDecorator,
     validateFields,
@@ -56,7 +58,7 @@ const modal = ({
             initialValue: item.name,
             rules: [
               {
-                required: true,
+                required: false,
                 message: '请输入机构名称!',
               },
             ],
@@ -67,18 +69,25 @@ const modal = ({
             initialValue: item.role,
             rules: [
               {
-                required: true,
+                required: false,
                 message: '请输入角色信息!',
               },
             ],
-          })(<Input placeholder="请输入角色信息!" />)}
+          })(<Select
+            showSearch
+            style={{ width: '100%' }}
+            placeholder="请输入站点信息!"
+            onChange={handleChange}
+          >
+            {roleList}
+          </Select>)}
         </FormItem>
         <FormItem label="站点信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('store', {
             initialValue: item.store,
             rules: [
               {
-                required: true,
+                required: false,
                 type: 'array',
                 message: '请输入站点信息!',
               },
@@ -95,14 +104,14 @@ const modal = ({
         </FormItem>
         <FormItem label="地区信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('location', {
-            initialValue: item.location,
+            initialValue: item.location || [],
             rules: [
               {
-                required: true,
+                required: false,
                 message: '请输入地区信息!',
               },
             ],
-          })(<Input placeholder="请输入地区信息!" />)}
+          })(<Cascader options={locationList} onChange={handleChange} placeholder="请输入地区信息" />)}
         </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('description', {
@@ -128,6 +137,8 @@ modal.propTypes = {
   onOk: PropTypes.func,
   modalMenuLevel: PropTypes.number,
   storeuserList: PropTypes.array,
+  roleList: PropTypes.array,
+  locationList: PropTypes.array,
 }
 
 export default Form.create()(modal)

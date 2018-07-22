@@ -3,7 +3,8 @@ import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
 import md5 from 'js-md5'
-import { query, create, update, remove, queryRoleList } from '../../services/auth/adminuser'
+import { query, create, update, remove } from '../../services/auth/adminuser'
+import { query as queryRoleList } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 
 const { Option } = Select
@@ -53,7 +54,6 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      console.log('payloa', payload)
       if (payload.idUser) {
         payload.idUser = payload.idUser ? payload.idUser.split('///')[0] : undefined
       }
@@ -78,7 +78,6 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      console.log('payloa', payload)
       const item = yield select(({ adminuser }) => adminuser.currentItem)
       delete payload.password
       delete payload.repass
@@ -90,7 +89,6 @@ export default modelExtend(pageModel, {
       if (payload.roleId === item.roleName) {
         delete payload.roleId
       }
-      console.log('payload', payload)
       const data = yield call(update, { ...payload, id: item.userId })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -125,7 +123,7 @@ export default modelExtend(pageModel, {
     },
 
     *queryRoleList(_, { call, put }) {
-      const data = yield call(queryRoleList)
+      const data = yield call(queryRoleList, { page: 1, pageSize: 100000 })
       if (data.code === 200 && data.obj) {
         const option = data.obj.map((item) => {
           return <Option key={item.ID}>{item.ROLE_NAME}</Option>

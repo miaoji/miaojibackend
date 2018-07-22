@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, organize, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, storeuserList } = organize
+  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList } = organize
   const { pageSize } = pagination
 
   const modalProps = {
@@ -18,6 +18,8 @@ const Modular = ({ location, dispatch, organize, loading }) => {
     title: `${modalType === 'create' ? '新增菜单信息' : '修改菜单信息'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
+    roleList,
+    locationList,
     maskClosable: false,
     onOk(data) {
       dispatch({
@@ -81,6 +83,12 @@ const Modular = ({ location, dispatch, organize, loading }) => {
       }))
     },
     onAdd() {
+      dispatch({
+        type: 'organize/queryRoleList',
+      })
+      dispatch({
+        type: 'organize/queryLocation',
+      })
       dispatch({
         type: 'organize/showModal',
         payload: {

@@ -11,7 +11,7 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.231.232:8080'
 
 // 吴聪
-APIV3 = 'http://47.101.42.216:8088'
+// APIV3 = 'http://47.101.42.216:8088'
 
 // 刘思远
 // APIV3 = 'http://192.168.126.1:8081'
@@ -214,12 +214,10 @@ module.exports = {
         update: `${APIV3}/quandiExpressSiteManager/operatorEdit`,
         delete: `${APIV3}/quandiExpressSiteManager/operatorDel`,
         create: `${APIV3}/quandiExpressSiteManager/operatorAdd`,
-        queryRoleList: `${APIV3}/quandiExpressSiteManager/roleList`,
         // list: `${APIV1}/operatorList`,
         // update: `${APIV1}/operatorEdit`,
         // delete: `${APIV1}/operatorDel`,
         // create: `${APIV1}/operatorAdd`,
-        // queryRoleList: `${APIV1}/roleList`,
       },
       // 菜单管理
       menu: {
@@ -231,13 +229,13 @@ module.exports = {
       },
       // 角色管理
       role: {
-        list: `${APIV3}/quandiExpressSiteManager/roleList`,
+        // list: `${APIV3}/quandiExpressSiteManager/roleList`,
         update: `${APIV3}/quandiExpressSiteManager/roleEdit`,
         delete: `${APIV3}/quandiExpressSiteManager/roleDel`,
         create: `${APIV3}/quandiExpressSiteManager/roleAdd`,
         queryMenu: `${APIV3}/quandiExpressSiteManager/menuList`,
         getLocation: `${APIV3}/quandiExpressSiteManager/getLocation`,
-        // list: `${APIV1}/roleList`,
+        list: `${APIV1}/roleList`,
         // update: `${APIV1}/roleEdit`,
         // delete: `${APIV1}/roleDel`,
         // create: `${APIV1}/roleAdd`,
@@ -246,6 +244,7 @@ module.exports = {
       },
       // 机构管理
       organize: {
+        getLocation: `${APIV3}/quandiExpressSiteManager/getLocation`,
         list: `${APIV1}/quandiExpressSiteManager/organizeList`,
         update: `${APIV1}/quandiExpressSiteManager/organizeEdit`,
         delete: `${APIV1}/quandiExpressSiteManager/organizeDel`,

@@ -34,3 +34,10 @@ export async function remove(params) {
     data: params,
   })
 }
+
+export async function getLocation() {
+  return request({
+    url: organize.getLocation,
+    method: 'get',
+  })
+}

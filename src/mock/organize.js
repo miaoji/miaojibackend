@@ -8,23 +8,13 @@ const { apiPrefix } = config
 let usersListData = Mock.mock({
   'data|19': [
     {
-      'ID|+1': 1001,
-      name: '@name',
+      'id|+1': 1001,
+      'oname|1': ['机构1', '机构2', '机构3', '机构4', '机构5'],
+      'stroe|1-20': 1,
       'ROLE_NAME|1': ['管理员', '市场', '门店', '超级管理员'],
-      'idUser|+1': 1001,
-      MENU_ID: ['0-0-0', '0-0-1'],
-      nickName: '@last',
-      phone: /^1[34578]\d{9}$/,
-      'age|11-99': 1,
-      mobile: /^1[3-9][0-9]{9}$/,
-      'sex|0-2': 1,
-      note: '@city',
+      city: '@city',
       'DESCRIPTION|1': ['今天很累了', '今天不怎么想说话了'],
-      address: '@county(true)',
-      isMale: '@boolean',
-      email: '@email',
       createTime: new Date().getTime(),
-      ROLE_CREATE_TIME: new Date().getTime(),
     },
   ],
 })
@@ -73,7 +63,7 @@ module.exports = {
 
   [`POST ${apiPrefix}/quandiExpressSiteManager/organizeDel`](req, res) {
     const ids = req.body
-    database = database.filter(item => !ids.some(_ => Number(_) === Number(item.ID)))
+    database = database.filter(item => !ids.some(_ => Number(_) === Number(item.id)))
     res.status(200).json({
       code: 200,
       msg: '删除成功',

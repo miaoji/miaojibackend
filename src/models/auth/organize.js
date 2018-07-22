@@ -2,9 +2,11 @@ import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
-import { query as queryStoreUser } from 'src/services/storeuser'
-import { query, create, update, remove } from '../../services/auth/organize'
+import { query as queryStoreUser } from '../../services/storeuser'
+import { query, create, update, remove, getLocation } from '../../services/auth/organize'
+import { query as queryRoleList } from '../../services/auth/role'
 import { pageModel } from '../system/common'
+import { editLocation } from '../../utils/processing'
 
 const { Option } = Select
 
@@ -16,6 +18,7 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     storeuserList: [],
+    roleList: [],
   },
 
   subscriptions: {
@@ -98,7 +101,7 @@ export default modelExtend(pageModel, {
           if (!item.name) {
             return false
           }
-          option.push(<Option key={item.id} value={item.name}>{item.name}</Option>)
+          option.push(<Option key={item.id} value={item.id}>{item.name}</Option>)
           return false
         })
         yield put({
@@ -109,6 +112,37 @@ export default modelExtend(pageModel, {
         })
       } else {
         throw '网络故障，请稍后重试' || data.mess
+      }
+    },
+
+    *queryRoleList(_, { call, put }) {
+      const data = yield call(queryRoleList, { page: 1, pageSize: 1000000 })
+      if (data.code === 200 && data.obj) {
+        const option = data.obj.map((item) => {
+          return <Option key={item.ID}>{item.ROLE_NAME}</Option>
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            roleList: option,
+          },
+        })
+      }
+    },
+
+    *queryLocation(_, { call, put }) {
+      const data = yield call(getLocation)
+      let option = []
+      if (data.code === 200 && data.obj) {
+        option = data.obj.map((item) => {
+          return editLocation(item)
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            locationList: option,
+          },
+        })
       }
     },
 

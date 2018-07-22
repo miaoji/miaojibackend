@@ -105,8 +105,8 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
 }
 /**
  * 对网络请求的params做处理，针对分页
- * @param   {params} Object
- * @return  {params} Object
+ * @param   {Object} params 传入一个需要的对象
+ * @return  {Object} 返回一个处理好的对象
  */
 const pageParams = function (params) {
   params = { ...params } || {
@@ -126,7 +126,7 @@ const pageParams = function (params) {
  * @param  {String}  val    [存储的字段值]
  * @param  {Boolean} prefix [是否加前缀，默认为true]
  * @param  {String}  type   [localStorage的操作方式 get、set、remove、clear]
- * @return {String} res     [localStorage.getItem(key)时返回的值]
+ * @return {String}         [localStorage.getItem(key)时返回的值]
  */
 export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   let typeCheck = type === 'get'

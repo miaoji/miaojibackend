@@ -53,7 +53,6 @@ const modal = ({
   const paramDisabled = type === 'update'
 
   const handleCheck = (key) => {
-    console.log('key', key)
     setFieldsValue({
       menus: key,
     })

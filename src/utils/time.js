@@ -1,5 +1,9 @@
 import moment from 'moment'
-
+/**
+ * [将时间选择器选择得到的时间字符串转换成时间戳]
+ * @param {object} payload [需要过滤的对象]
+ * @return {object}        [过滤后的对象]
+ */
 export function initialCreateTime(payload) {
   payload = { ...payload }
   const { createTime } = payload
@@ -23,31 +27,33 @@ export function initialCreateTime(payload) {
   }
   return payload
 }
-
-export function yesterTime(day = 0) {
+/**
+ * [按照传入的参数生成一个时间粗数组]
+ * @param {number} frontDay [从多少天以前开始,0代表昨天一天]
+ * @param {number} distance [间隔的天数,结束时间=提前的天数-时间间隔]
+ * @return {array}          [一个包含两个时间戳的数组]
+ */
+export function yesterTime(frontDay = 0, distance = 0) {
   let dayCount = 1
   const test = false
   if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
-    // if (window.location.search === '') {
-    //   message.info(`默认查询截至昨天晚上12点, ${dayCount} 天内的数据`)
-    // }
     const date = new Date()
     const h = date.getHours()
     const m = date.getMinutes()
     const s = date.getSeconds()
     const ms = date.getMilliseconds()
     const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
-    const startTime = date.getTime() - 86400000 * dayCount - times - 86400000 * day
-    const endTime = date.getTime() - times - 1 - 86400000 * day
+    const startTime = date.getTime() - 86400000 * dayCount - times - 86400000 * frontDay
+    const endTime = date.getTime() - times - 1 - 86400000 * (frontDay - distance)
     return {
       startTime,
       endTime,
     }
   }
   return {
-    startTime: 1528992000000 - 86400000 * day,
-    endTime: 1529078399999 - 86400000 * day,
+    startTime: 1528992000000 - 86400000 * frontDay,
+    endTime: 1529078399999 - 86400000 * (frontDay - distance),
   }
 }
 
@@ -90,9 +96,16 @@ export function handleFields(fields) {
   return fields
 }
 
-export function defaultTime(filters, day) {
+/**
+ * [对时间选择器的初始化时间进行处理]
+ * @param {Object} filters  [要过滤的对象]
+ * @param {Number} frontDay [提前的时间]
+ * @param {Number} distance [时间间隔]
+ * @return {Object}            [加上初始化时间的过滤对象]
+ */
+export function defaultTime(filters, frontDay, distance) {
   filters = { ...filters }
-  const times = yesterTime(day)
+  const times = yesterTime(frontDay, distance)
   if (!filters.createTime) {
     filters.createTime = []
     filters.createTime[0] = moment(times.startTime)
