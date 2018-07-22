@@ -14,8 +14,8 @@ const Modular = ({ location, dispatch, organize, loading }) => {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['organize/update'],
-    title: `${modalType === 'create' ? '新增菜单信息' : '修改菜单信息'}`,
+    confirmLoading: loading.effects['organize/create'] || loading.effects['organize/update'],
+    title: `${modalType === 'create' ? '新增机构信息' : '修改机构信息'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
     roleList,
@@ -88,6 +88,9 @@ const Modular = ({ location, dispatch, organize, loading }) => {
       })
       dispatch({
         type: 'organize/queryLocation',
+      })
+      dispatch({
+        type: 'organize/queryStoreUser',
       })
       dispatch({
         type: 'organize/showModal',

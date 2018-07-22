@@ -23,6 +23,7 @@ const Filter = ({
   onAdd,
   onFilterChange,
   filter,
+  onUpdateAdminOrangeize,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -93,7 +94,6 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
-
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
@@ -105,15 +105,12 @@ const Filter = ({
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
-          </div>
-          <div>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
-          </div>
-        </div>
+        <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
+        <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+        <Button size="large" type="primary" className="margin-right" onClick={onAdd}>新增</Button>
+      </Col>
+      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
+        <Button size="large" type="dashed" ghost onClick={onUpdateAdminOrangeize}>将新菜单同步到最高权限</Button>
       </Col>
     </Row>
   )
@@ -125,6 +122,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  onUpdateAdminOrangeize: PropTypes.func,
 }
 
 export default Form.create()(Filter)

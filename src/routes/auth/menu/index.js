@@ -112,6 +112,11 @@ const Modular = ({ location, dispatch, menu, loading }) => {
         },
       })
     },
+    onUpdateAdminOrangeize() {
+      dispatch({
+        type: 'menu/updateAdminOrangeize',
+      })
+    },
   }
 
   return (

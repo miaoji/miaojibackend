@@ -2,7 +2,7 @@ import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
-import { getMenuByParentId, query, create, update, remove } from '../../services/auth/menu'
+import { getMenuByParentId, query, create, update, remove, updateAdminOrangeize } from '../../services/auth/menu'
 import { pageModel } from '../system/common'
 
 const { Option } = Select
@@ -118,6 +118,11 @@ export default modelExtend(pageModel, {
           },
         })
       }
+    },
+
+    *updateAdminOrangeize(_, { call }) {
+      const data = yield call(updateAdminOrangeize)
+      console.log('data', data)
     },
 
   },

@@ -37,9 +37,6 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      yield put({
-        type: 'queryStoreUser',
-      })
       payload = initialCreateTime(payload)
       const data = yield call(query, { parentorganizeId: 0, ...payload })
       if (data.code === 200 && data.obj) {

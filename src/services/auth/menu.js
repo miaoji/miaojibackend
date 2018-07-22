@@ -35,10 +35,23 @@ export async function remove(params) {
   })
 }
 
-export async function getMenuByParentId (params) {
+export async function getMenuByParentId(params) {
   return request({
     url: menu.getMenuByParentId,
     method: 'post',
     data: params,
+  })
+}
+
+export async function updateAdminOrangeize() {
+  return new Promise((resolve) => {
+    let aa = 1
+    // setTimeout(() => {
+    //   aa = 2
+    // }, 1000)
+    resolve()
+    return aa
+  }).then(() => {
+    console.log('promise2')
   })
 }

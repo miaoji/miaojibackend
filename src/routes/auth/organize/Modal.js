@@ -58,7 +58,7 @@ const modal = ({
             initialValue: item.name,
             rules: [
               {
-                required: false,
+                required: true,
                 message: '请输入机构名称!',
               },
             ],
@@ -69,7 +69,7 @@ const modal = ({
             initialValue: item.role,
             rules: [
               {
-                required: false,
+                required: true,
                 message: '请输入角色信息!',
               },
             ],
@@ -87,7 +87,7 @@ const modal = ({
             initialValue: item.store,
             rules: [
               {
-                required: false,
+                required: true,
                 type: 'array',
                 message: '请输入站点信息!',
               },
@@ -107,7 +107,7 @@ const modal = ({
             initialValue: item.location || [],
             rules: [
               {
-                required: false,
+                required: true,
                 message: '请输入地区信息!',
               },
             ],
