@@ -34,8 +34,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'menuName',
       key: 'menuName',
       width: 200,
-      render: (text) => {
-        return <span style={{ width: '110px', display: 'inline-block' }}>{text}</span>
+      render: (text, record) => {
+        const realText = {
+          1: '|-',
+          2: '|--',
+          3: '|---',
+        }
+        return <span style={{ width: '110px', display: 'inline-block', textAlign: 'left' }}>{realText[record.menuLevel]} {text}</span>
       },
     }, {
       title: '菜单级别',

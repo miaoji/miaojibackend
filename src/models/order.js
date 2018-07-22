@@ -44,6 +44,10 @@ export default modelExtend(pageModel, {
       } else {
         newpayload = { ...payload }
       }
+      if (payload.serialNumber) {
+        delete newpayload.startTime
+        delete newpayload.endTime
+      }
       let data = yield call(query, { ...newpayload })
       if (data.code === 200) {
         yield put({
