@@ -45,8 +45,8 @@ module.exports = {
   apiPrefix: '/api/v1',
   api: {
     userLogin: {
-      // login: `${APIV3}/quandiExpressSiteManager/signIn`,
-      login: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
+      login: `${APIV3}/quandiExpressSiteManager/signIn`,
+      // login: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
       getMenus: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
     },
     userLogout: `${APIV1}/user/logout`,

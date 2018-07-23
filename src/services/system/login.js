@@ -7,7 +7,7 @@ export async function login(data) {
   return request({
     url: userLogin.login,
     method: 'post',
-    data,
+    params: data,
   })
 }
 

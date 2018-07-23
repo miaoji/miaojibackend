@@ -62,7 +62,7 @@ export default {
         const user = JSON.parse(userInfo)
         const menuList = user.menuList
         let list = menus
-        if (process.env.NODE_ENV !== 'development') {
+        if (process.env.NODE_ENV === 'development1') {
           list = [...rebuildMenuData(menuList), ...hideMenus]
         }
         // const { permissions } = user
@@ -126,7 +126,7 @@ export default {
             return false
           }
           const val = `${item.id}///${item.name}`
-          return <Option key={val}>{item.name}</Option>
+          return <Option key={val}>{`${item.id}-${item.name}`}</Option>
         })
         yield put({
           type: 'updateState',
