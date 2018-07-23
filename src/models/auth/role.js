@@ -114,10 +114,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *queryMenuList(_, {
-      call,
-      put,
-    }) {
+    *queryMenuList(_, { call, put }) {
       const data = yield call(queryMenu, { parentMenuId: 0, page: 1, pageSize: 10000 })
       if (data.code === 200 && data.obj) {
         storage({
@@ -125,19 +122,21 @@ export default modelExtend(pageModel, {
           key: 'menuListSpare',
           val: JSON.stringify([].concat(data.obj)),
         })
-        let option = []
-        if (data.obj instanceof Array) {
-          option = data.obj.map((item) => {
-            return reloadItem(item)
+        if (process.env.NODE_ENV !== 'production') {
+          let option = []
+          if (data.obj instanceof Array) {
+            option = data.obj.map((item) => {
+              return reloadItem(item)
+            })
+            option = renderTreeNodes(option)
+          }
+          yield put({
+            type: 'updateState',
+            payload: {
+              menuList: option,
+            },
           })
-          option = renderTreeNodes(option)
         }
-        yield put({
-          type: 'updateState',
-          payload: {
-            menuList: option,
-          },
-        })
       }
     },
     // 获取全部角色信息
