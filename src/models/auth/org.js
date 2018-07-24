@@ -3,7 +3,7 @@ import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
 import { query as queryStoreUser } from '../../services/storeuser'
-import { query, create, update, remove, getLocation } from '../../services/auth/organize'
+import { query, create, update, remove, getLocation } from '../../services/auth/org'
 import { query as queryRoleList } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 import { editLocation } from '../../utils/processing'
@@ -11,7 +11,7 @@ import { editLocation } from '../../utils/processing'
 const { Option } = Select
 
 export default modelExtend(pageModel, {
-  namespace: 'organize',
+  namespace: 'org',
 
   state: {
     currentItem: {},
@@ -24,7 +24,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/organize') {
+        if (location.pathname === '/org') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -38,7 +38,7 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
-      const data = yield call(query, { parentorganizeId: 0, ...payload })
+      const data = yield call(query, { ...payload })
       if (data.code === 200 && data.obj) {
         yield put({
           type: 'querySuccess',
@@ -55,6 +55,9 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
+      payload.idUsers = payload.idUsers.toString()
+      payload.location = payload.location.toString()
+      payload.roleId = Number(payload.roleId)
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -66,7 +69,10 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ organize }) => organize.currentItem.id)
+      payload.idUsers = payload.idUsers.toString()
+      payload.location = payload.location.toString()
+      payload.roleId = Number(payload.roleId)
+      const id = yield select(({ org }) => org.currentItem.id)
       const data = yield call(update, { ...payload, id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })

@@ -31,30 +31,40 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '机构名称',
-      dataIndex: 'oname',
-      key: 'oname',
+      dataIndex: 'orgName',
+      key: 'orgName',
+      width: 200,
+      render: (text) => {
+        return <span style={{ width: '110px', display: 'inline-block' }}>{text}</span>
+      },
+    }, {
+      title: '角色名称',
+      dataIndex: 'roleName',
+      key: 'roleName',
       width: 200,
       render: (text) => {
         return <span style={{ width: '110px', display: 'inline-block' }}>{text}</span>
       },
     }, {
       title: '管理门店数量',
-      dataIndex: 'stroe',
-      key: 'stroe',
+      dataIndex: 'idUsers',
+      key: 'idUsers',
       render: (text) => {
-        return <span>{text || '无'}</span>
+        const count = text ? text.split(',').length : 0
+        return <span>{count}</span>
       },
     }, {
       title: '所在区域',
-      dataIndex: 'city',
-      key: 'city',
+      dataIndex: 'location',
+      key: 'location',
       render: (text) => {
-        return <span>{text || '无'}</span>
+        const newText = text ? text.replace(/(,)|(\/\/\/)|([0-9])/g, '') : '暂无'
+        return <span>{newText}</span>
       },
     }, {
       title: '备注信息',
-      dataIndex: 'description',
-      key: 'description',
+      dataIndex: 'remark',
+      key: 'remark',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },

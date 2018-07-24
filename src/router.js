@@ -394,12 +394,12 @@ const Routers = function ({ history, app }) {
         },
         {
           // 权限管理>机构管理
-          path: 'organize',
+          path: 'org',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/auth/organize'))
-              cb(null, require('./routes/auth/organize/'))
-            }, 'organize')
+              registerModel(app, require('./models/auth/org'))
+              cb(null, require('./routes/auth/org/'))
+            }, 'org')
           },
         },
         {

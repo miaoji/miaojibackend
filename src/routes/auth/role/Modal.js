@@ -66,6 +66,30 @@ const modal = ({
     return (
       <Modal {...modalOpts}>
         <Form layout="horizontal">
+          <FormItem label="角色名称" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('roleName', {
+              initialValue: item.ROLE_NAME,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入角色名称!',
+                },
+              ],
+            })(<Input placeholder="请输入角色名称!" />)}
+          </FormItem>
+          <FormItem label="权限" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('menus', {
+            })(<Tree
+              defaultCheckedKeys={defaultCheckedKeys}
+              checkable
+              showLine
+              selectable={false}
+              defaultExpandAll={paramDisabled}
+              onCheck={handleCheck}
+            >
+              {menuList.length > 0 ? menuList : <span style={{ color: 'red' }}>请指定父级角色</span>}
+            </Tree>)}
+          </FormItem>
           <FormItem label="备注信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('description', {
               initialValue: item.DESCRIPTION,

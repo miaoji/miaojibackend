@@ -104,6 +104,8 @@ const modal = ({
     )
   }
 
+  const initOrgId = Number(item.orgId) || ''
+
   if (type === 'update') {
     return (
       <Modal {...modalOpts}>
@@ -129,6 +131,19 @@ const modal = ({
                 },
               ],
             })(<Input placeholder="请填写用户登陆账号!" />)}
+          </FormItem>
+          <FormItem label="所属机构" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('orgId', {
+              initialValue: initOrgId,
+              rules: [
+                {
+                  required: true,
+                  message: '请选择所属机构!',
+                },
+              ],
+            })(<Select placeholder="请选择所属机构!">
+              {orangeizeList}
+            </Select>)}
           </FormItem>
           <FormItem label="联系方式" hasFeedback {...formItemLayout}>
             {getFieldDecorator('mobile', {
@@ -209,7 +224,7 @@ const modal = ({
             })(<Input type="password" placeholder="请填写确认密码!" onBlur={handleConfirmBlur} />)}
           </FormItem>
           <FormItem label="所属机构" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('orangeize', {
+            {getFieldDecorator('orgId', {
               rules: [
                 {
                   required: true,

@@ -17,9 +17,9 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.126.1:8081'
 
 // 张涛
+// APIV3 = 'http://106.14.212.146:8288'
 APIV3 = 'http://192.168.231.239:8066'
 // APIV3 = 'http://117.50.23.22:8080'
-APIV3 = 'http://106.14.212.146:8288'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -45,8 +45,8 @@ module.exports = {
   apiPrefix: '/api/v1',
   api: {
     userLogin: {
-      login: `${APIV3}/quandiExpressSiteManager/signIn`,
-      // login: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
+      // login: `${APIV3}/quandiExpressSiteManager/signIn`,
+      login: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
       getMenus: `${APIV3}/quandiExpressSiteManager/selectRoleByUserId`,
     },
     userLogout: `${APIV1}/user/logout`,
@@ -244,12 +244,12 @@ module.exports = {
         // getLocation: `${APIV1}/quandiExpressSiteManager/getLocation`,
       },
       // 机构管理
-      organize: {
+      org: {
         getLocation: `${APIV3}/quandiExpressSiteManager/getLocation`,
-        list: `${APIV1}/quandiExpressSiteManager/organizeList`,
-        update: `${APIV1}/quandiExpressSiteManager/organizeEdit`,
-        delete: `${APIV1}/quandiExpressSiteManager/organizeDel`,
-        create: `${APIV1}/quandiExpressSiteManager/organizeAdd`,
+        list: `${APIV3}/quandiExpressSiteManager/orgList`,
+        update: `${APIV3}/quandiExpressSiteManager/orgEdit`,
+        delete: `${APIV3}/quandiExpressSiteManager/orgDel`,
+        create: `${APIV3}/quandiExpressSiteManager/orgAdd`,
       },
     },
   },

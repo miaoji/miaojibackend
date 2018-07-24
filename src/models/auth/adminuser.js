@@ -4,7 +4,7 @@ import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
 import md5 from 'js-md5'
 import { query, create, update, remove } from '../../services/auth/adminuser'
-import { query as queryOrangeizeList } from '../../services/auth/organize'
+import { query as queryOrangeizeList } from '../../services/auth/org'
 import { pageModel } from '../system/common'
 
 const { Option } = Select
@@ -128,7 +128,7 @@ export default modelExtend(pageModel, {
         let option = []
         if (data.obj && data.obj.length > 0) {
           option = data.obj.map((item) => {
-            return <Option key={item.id} value={item.id}>{item.oname}</Option>
+            return <Option key={item.id} value={item.id}>{item.orgName}</Option>
           })
         }
         yield put({

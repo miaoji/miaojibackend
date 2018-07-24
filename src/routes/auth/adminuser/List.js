@@ -48,18 +48,19 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '所属门店',
-      dataIndex: 'siteName',
-      key: 'siteName',
+      title: '所属机构',
+      dataIndex: 'orgName',
+      key: 'orgName',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
     }, {
       title: '所在地区',
-      dataIndex: 'note',
-      key: 'note',
+      dataIndex: 'location',
+      key: 'location',
       render: (text) => {
-        return <span>{text || '暂无'}</span>
+        const newText = text ? text.replace(/(,)|(\/\/\/)|([0-9])/g, '') : '暂无'
+        return <span>{newText}</span>
       },
     }, {
       title: '联系方式',

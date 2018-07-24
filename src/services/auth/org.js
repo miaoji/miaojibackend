@@ -1,11 +1,11 @@
 import { request, config, pageParams } from '../../utils'
 
-const { api: { auth: { organize } } } = config
+const { api: { auth: { org } } } = config
 
 export async function query(params) {
   params = pageParams(params)
   return request({
-    url: organize.list,
+    url: org.list,
     method: 'post',
     data: params,
   })
@@ -13,7 +13,7 @@ export async function query(params) {
 
 export async function create(params) {
   return request({
-    url: organize.create,
+    url: org.create,
     method: 'post',
     data: params,
   })
@@ -21,7 +21,7 @@ export async function create(params) {
 
 export async function update(params) {
   return request({
-    url: organize.update,
+    url: org.update,
     method: 'post',
     data: params,
   })
@@ -29,7 +29,7 @@ export async function update(params) {
 
 export async function remove(params) {
   return request({
-    url: organize.delete,
+    url: org.delete,
     method: 'post',
     data: params,
   })
@@ -37,7 +37,7 @@ export async function remove(params) {
 
 export async function getLocation() {
   return request({
-    url: organize.getLocation,
+    url: org.getLocation,
     method: 'get',
   })
 }

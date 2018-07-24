@@ -6,15 +6,15 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Modular = ({ location, dispatch, organize, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList } = organize
+const Modular = ({ location, dispatch, org, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList } = org
   const { pageSize } = pagination
 
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['organize/create'] || loading.effects['organize/update'],
+    confirmLoading: loading.effects['org/create'] || loading.effects['org/update'],
     title: `${modalType === 'create' ? '新增机构信息' : '修改机构信息'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
@@ -23,20 +23,20 @@ const Modular = ({ location, dispatch, organize, loading }) => {
     maskClosable: false,
     onOk(data) {
       dispatch({
-        type: `organize/${modalType}`,
+        type: `org/${modalType}`,
         payload: data,
       })
     },
     onCancel() {
       dispatch({
-        type: 'organize/hideModal',
+        type: 'org/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['organize/query'],
+    loading: loading.effects['org/query'],
     pagination,
     location,
     onChange(page) {
@@ -52,17 +52,26 @@ const Modular = ({ location, dispatch, organize, loading }) => {
     },
     onDeleteItem(id) {
       dispatch({
-        type: 'organize/delete',
+        type: 'org/delete',
         payload: id,
       })
     },
     onEditItem(item) {
       dispatch({
-        type: 'organize/showModal',
+        type: 'org/queryRoleList',
+      })
+      dispatch({
+        type: 'org/queryLocation',
+      })
+      dispatch({
+        type: 'org/queryStoreUser',
+      })
+      dispatch({
+        type: 'org/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
-          modalorganizeLevel: item.organizeLevel || 1,
+          modalorgLevel: item.orgLevel || 1,
         },
       })
     },
@@ -84,16 +93,16 @@ const Modular = ({ location, dispatch, organize, loading }) => {
     },
     onAdd() {
       dispatch({
-        type: 'organize/queryRoleList',
+        type: 'org/queryRoleList',
       })
       dispatch({
-        type: 'organize/queryLocation',
+        type: 'org/queryLocation',
       })
       dispatch({
-        type: 'organize/queryStoreUser',
+        type: 'org/queryStoreUser',
       })
       dispatch({
-        type: 'organize/showModal',
+        type: 'org/showModal',
         payload: {
           modalType: 'create',
         },
@@ -111,11 +120,11 @@ const Modular = ({ location, dispatch, organize, loading }) => {
 }
 
 Modular.propTypes = {
-  organize: PropTypes.object,
+  org: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
   app: PropTypes.object,
 }
 
-export default connect(({ organize, loading, app }) => ({ organize, loading, app }))(Modular)
+export default connect(({ org, loading, app }) => ({ org, loading, app }))(Modular)

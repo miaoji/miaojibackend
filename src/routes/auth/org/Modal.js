@@ -50,12 +50,15 @@ const modal = ({
     onOk: handleOk,
   }
 
+  const initIdusers = item.idUsers ? item.idUsers.split(',').map(val => Number(val)) : []
+  const initLocation = item.location ? item.location.split(',') : []
+
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="机构名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+          {getFieldDecorator('orgName', {
+            initialValue: item.orgName,
             rules: [
               {
                 required: true,
@@ -65,8 +68,8 @@ const modal = ({
           })(<Input placeholder="请输入机构名称!" />)}
         </FormItem>
         <FormItem label="角色信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('role', {
-            initialValue: item.role,
+          {getFieldDecorator('roleId', {
+            initialValue: item.roleName,
             rules: [
               {
                 required: true,
@@ -83,8 +86,8 @@ const modal = ({
           </Select>)}
         </FormItem>
         <FormItem label="站点信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('store', {
-            initialValue: item.store,
+          {getFieldDecorator('idUsers', {
+            initialValue: initIdusers,
             rules: [
               {
                 required: true,
@@ -104,7 +107,7 @@ const modal = ({
         </FormItem>
         <FormItem label="地区信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('location', {
-            initialValue: item.location || [],
+            initialValue: initLocation,
             rules: [
               {
                 required: true,
@@ -114,8 +117,8 @@ const modal = ({
           })(<Cascader options={locationList} onChange={handleChange} placeholder="请输入地区信息" />)}
         </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('description', {
-            initialValue: item.description,
+          {getFieldDecorator('remark', {
+            initialValue: item.remark,
             rules: [
               {
                 required: false,
