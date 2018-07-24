@@ -42,7 +42,7 @@ export default modelExtend(pageModel, {
             return false
           }
           const val = `${item.id}///${item.name}`
-          return <Option key={val}>{item.name}</Option>
+          return <Option key={val}>{`${item.id}-${item.name}`}</Option>
         })
         yield put({
           type: 'setStates',

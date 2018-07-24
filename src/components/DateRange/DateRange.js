@@ -2,6 +2,7 @@ import React from 'react'
 import { DatePicker, Form, Row, Col } from 'antd'
 import locale from 'antd/lib/date-picker/locale/zh_CN'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 
 class DateRange extends React.Component {
   constructor(props) {
@@ -56,6 +57,10 @@ class DateRange extends React.Component {
     }, 100)
   }
 
+  disabledEndDate = (current) => {
+    return current && current > moment(new Date().getTime() - 86400000)
+  }
+
   render() {
     const { startValue, endValue, endOpen } = this.state
     return (
@@ -88,6 +93,7 @@ class DateRange extends React.Component {
               onChange={this.onEndChange}
               open={endOpen}
               onOpenChange={this.handleEndOpenChange}
+              disabledDate={this.disabledEndDate}
             />
           </Col>
         </Row>
