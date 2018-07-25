@@ -33,6 +33,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      payload.serialNumber = payload.serialNumber ? payload.serialNumber.trim() : undefined
       payload = initialCreateTime(payload)
       if (Number(payload.mailtype) === 9) {
         payload.mailtype = undefined

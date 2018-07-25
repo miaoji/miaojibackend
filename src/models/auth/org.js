@@ -3,7 +3,7 @@ import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
 import { query as queryStoreUser } from '../../services/storeuser'
-import { query, create, update, remove, getLocation } from '../../services/auth/org'
+import { query, create, update, remove, getLocation, getIdUsers } from '../../services/auth/org'
 import { query as queryRoleList } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 import { editLocation } from '../../utils/processing'
@@ -19,6 +19,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     storeuserList: [],
     roleList: [],
+    orgIdusers: [],
   },
 
   subscriptions: {
@@ -36,7 +37,16 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    *query({ payload = {} }, { call, put, select }) {
+      const locationList = yield select(({ org }) => org.locationList)
+      if (!locationList) {
+        yield put({
+          type: 'filterLocationList',
+          payload: {
+            locationType: payload.locationType || 1,
+          },
+        })
+      }
       payload = initialCreateTime(payload)
       const data = yield call(query, { ...payload })
       if (data.code === 200 && data.obj) {
@@ -139,6 +149,101 @@ export default modelExtend(pageModel, {
       if (data.code === 200 && data.obj) {
         option = data.obj.map((item) => {
           return editLocation(item)
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            locationList: option,
+          },
+        })
+      }
+    },
+
+    *getIdUsers({ payload }, { call, put, select }) {
+      let data = {}
+      console.log('payload111', payload)
+      switch (payload.location.length) {
+        case 1:
+          console.log(1)
+          data = yield call(getIdUsers, { province: payload.location[0] })
+          break
+        case 2:
+          console.log(2)
+          data = yield call(getIdUsers, { city: payload.location[1] })
+          break
+        case 3:
+          console.log(3)
+          data = yield call(getIdUsers, { idLocation: payload.location[2].split('///')[1] })
+          break
+        default:
+          console.log(4)
+          break
+      }
+      if (data.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            orgIdusers: data.obj,
+          },
+        })
+      } else if (data.code === 500 && data.mess === '未查询到信息') {
+        const currentItem = yield select(({ org }) => org.currentItem)
+        yield put({
+          type: 'updateState',
+          payload: {
+            currentItem: { ...currentItem, idUsers: '' },
+            orgIdusers: [],
+          },
+        })
+      } else {
+        throw data.mess || '当前网络异常'
+      }
+    },
+
+    *filterLocationList({ payload }, { call, put }) {
+      const data = yield call(getLocation)
+      let option = []
+      if (data.code === 200 && data.obj) {
+        option = data.obj.map((item) => {
+          // 第一层
+          if (item.children && item.children.length === 0) {
+            delete item.children
+          }
+          if (item.children && item.children.length > 0 && payload.locationType >= 2) {
+            item.children = item.children.map((i) => {
+              // 第二层
+              if (i.children && i.children.length === 0) {
+                delete i.children
+              }
+              if (i.children && i.children.length > 0 && payload.locationType === 3) {
+                i.children = i.children.map((j) => {
+                  // 第三层
+                  if (j.children && j.children.length === 0) {
+                    delete j.children
+                  }
+                  return {
+                    value: j.name || j.province || j.city || `${j.district}///${j.id}`,
+                    label: j.name || j.province || j.city || j.district,
+                    children: j.children,
+                  }
+                })
+              } else {
+                delete i.children
+              }
+              return {
+                value: i.name || i.province || i.city || `${i.district}///${i.id}`,
+                label: i.name || i.province || i.city || i.district,
+                children: i.children,
+              }
+            })
+          } else {
+            delete item.children
+          }
+          return {
+            value: item.name || item.province || item.city || `${item.district}///${item.id}`,
+            label: item.name || item.province || item.city || item.district,
+            children: item.children,
+          }
         })
         yield put({
           type: 'updateState',

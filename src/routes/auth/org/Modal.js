@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select, Cascader } from 'antd'
+import { Form, Input, Modal, Select, Cascader, Radio } from 'antd'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
+const RadioGroup = Radio.Group
 
 const formItemLayout = {
   labelCol: {
@@ -20,6 +21,9 @@ const modal = ({
   storeuserList,
   roleList,
   locationList,
+  orgIdusers,
+  onChangeLocationType,
+  onGetIdUsers,
   form: {
     getFieldDecorator,
     validateFields,
@@ -43,6 +47,7 @@ const modal = ({
 
   const handleChange = (key) => {
     console.log('key', key)
+    onGetIdUsers(key)
   }
 
   const modalOpts = {
@@ -50,8 +55,17 @@ const modal = ({
     onOk: handleOk,
   }
 
-  const initIdusers = item.idUsers ? item.idUsers.split(',').map(val => Number(val)) : []
+  let initIdusers = item.idUsers ? item.idUsers.split(',').map(val => Number(val)) : []
+
+  if (orgIdusers && orgIdusers.length > 0) {
+    initIdusers = orgIdusers
+  }
   const initLocation = item.location ? item.location.split(',') : []
+
+  const handleTypeChange = (key) => {
+    console.log('key', key)
+    onChangeLocationType(key.target.value)
+  }
 
   return (
     <Modal {...modalOpts}>
@@ -80,10 +94,38 @@ const modal = ({
             showSearch
             style={{ width: '100%' }}
             placeholder="请输入站点信息!"
-            onChange={handleChange}
+          // onChange={handleChange}
           >
             {roleList}
           </Select>)}
+        </FormItem>
+        <FormItem label="地区等级" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('locationType', {
+            initialValue: item.locationType || 1,
+            rules: [
+              {
+                required: true,
+                message: '请输入地区等级!',
+              },
+            ],
+          })(
+            <RadioGroup onChange={handleTypeChange}>
+              <Radio value={1}>省级</Radio>
+              <Radio value={2}>市级</Radio>
+              <Radio value={3}>县级</Radio>
+            </RadioGroup>
+          )}
+        </FormItem>
+        <FormItem label="地区信息" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('location', {
+            initialValue: initLocation,
+            rules: [
+              {
+                required: true,
+                message: '请输入地区信息!',
+              },
+            ],
+          })(<Cascader options={locationList} onChange={handleChange} placeholder="请输入地区信息" />)}
         </FormItem>
         <FormItem label="站点信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('idUsers', {
@@ -100,21 +142,10 @@ const modal = ({
             mode="multiple"
             style={{ width: '100%' }}
             placeholder="请输入站点信息!"
-            onChange={handleChange}
+          // onChange={handleChange}
           >
             {storeuserList}
           </Select>)}
-        </FormItem>
-        <FormItem label="地区信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('location', {
-            initialValue: initLocation,
-            rules: [
-              {
-                required: true,
-                message: '请输入地区信息!',
-              },
-            ],
-          })(<Cascader options={locationList} onChange={handleChange} placeholder="请输入地区信息" />)}
         </FormItem>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
@@ -142,6 +173,9 @@ modal.propTypes = {
   storeuserList: PropTypes.array,
   roleList: PropTypes.array,
   locationList: PropTypes.array,
+  onChangeLocationType: PropTypes.func,
+  onGetIdUsers: PropTypes.func,
+  orgIdusers: PropTypes.array,
 }
 
 export default Form.create()(modal)

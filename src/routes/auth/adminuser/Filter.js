@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
 import { DateRange } from '../../../components'
+import { handleFields } from '../../../utils'
 
 const Search = Input.Search
 
@@ -29,16 +30,6 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  const handleFields = (fields) => {
-    const { createTime } = fields
-    if (createTime && createTime.length && createTime[0] && createTime[1]) {
-      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    } else {
-      delete fields.createTime
-    }
-    return fields
-  }
-
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)

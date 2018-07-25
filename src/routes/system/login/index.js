@@ -26,9 +26,6 @@ const Login = ({
     })
   }
 
-  window.localStorage.clear()
-  // 清楚localStorage中的用户信息
-
   return (
 
     <div>

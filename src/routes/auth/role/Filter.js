@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
 import { DateRange } from '../../../components'
+import { handleFields } from '../../../utils'
+
 
 const Search = Input.Search
 
@@ -29,16 +31,6 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  const handleFields = (fields) => {
-    const { createTime } = fields
-    if (createTime && createTime.length && createTime[0] && createTime[1]) {
-      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    } else {
-      delete fields.createTime
-    }
-    return fields
-  }
-
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -83,7 +75,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { roleName, ID } = filter
+  const { roleName } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -96,9 +88,6 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('ID', { initialValue: ID })(<Search placeholder="按ID搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('roleName', { initialValue: roleName })(<Search placeholder="按角色名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>

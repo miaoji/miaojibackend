@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, org, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList } = org
+  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList, orgIdusers } = org
   const { pageSize } = pagination
 
   const modalProps = {
@@ -20,6 +20,7 @@ const Modular = ({ location, dispatch, org, loading }) => {
     storeuserList,
     roleList,
     locationList,
+    orgIdusers,
     maskClosable: false,
     onOk(data) {
       dispatch({
@@ -30,6 +31,22 @@ const Modular = ({ location, dispatch, org, loading }) => {
     onCancel() {
       dispatch({
         type: 'org/hideModal',
+      })
+    },
+    onChangeLocationType(val) {
+      dispatch({
+        type: 'org/filterLocationList',
+        payload: {
+          locationType: val,
+        },
+      })
+    },
+    onGetIdUsers(val) {
+      dispatch({
+        type: 'org/getIdUsers',
+        payload: {
+          location: val,
+        },
       })
     },
   }
@@ -57,11 +74,15 @@ const Modular = ({ location, dispatch, org, loading }) => {
       })
     },
     onEditItem(item) {
+      item.locationType = item.location.split(',').length
       dispatch({
-        type: 'org/queryRoleList',
+        type: 'org/filterLocationList',
+        payload: {
+          locationType: item.locationType,
+        },
       })
       dispatch({
-        type: 'org/queryLocation',
+        type: 'org/queryRoleList',
       })
       dispatch({
         type: 'org/queryStoreUser',
@@ -81,6 +102,15 @@ const Modular = ({ location, dispatch, org, loading }) => {
     filter: {
       ...location.query,
     },
+    locationList,
+    onChangeLocationType(val) {
+      dispatch({
+        type: 'org/filterLocationList',
+        payload: {
+          locationType: val,
+        },
+      })
+    },
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -95,9 +125,9 @@ const Modular = ({ location, dispatch, org, loading }) => {
       dispatch({
         type: 'org/queryRoleList',
       })
-      dispatch({
-        type: 'org/queryLocation',
-      })
+      // dispatch({
+      //   type: 'org/queryLocation',
+      // })
       dispatch({
         type: 'org/queryStoreUser',
       })

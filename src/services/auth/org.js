@@ -41,3 +41,11 @@ export async function getLocation() {
     method: 'get',
   })
 }
+
+export async function getIdUsers(data) {
+  return request({
+    url: org.getIdUsers,
+    method: 'post',
+    data,
+  })
+}
