@@ -22,26 +22,31 @@ export const reloadItem = (item) => {
 
 /* 用于调整权限管理>角色管理的添加和修改中tree无法识别节点树父级ID的问题 */
 export const handleArrData = ({ list, arr }) => {
+  console.log('list', list)
+  console.log('arr', arr)
   const tmp = []
   list.forEach((item) => {
-    const key = item.key
+    const key = item.id
     if (item.children && item.children.length > 0) {
       item.children.forEach((j) => {
-        const aa = j.key
-        if (arr.includes(String(j.key))) {
+        const tmpId = j.id
+        console.log(j.id, arr.includes(String(j.id)))
+        console.log('key', key)
+        if (arr.includes(String(j.id))) {
           tmp.push(key.toString())
         }
         if (j.children && j.children.length > 0) {
           j.children.forEach((i) => {
-            if (arr.includes(String(i.key))) {
+            if (arr.includes(String(i.id))) {
               tmp.push(key.toString())
-              tmp.push(aa.toString())
+              tmp.push(tmpId.toString())
             }
           })
         }
       })
     }
   })
+  console.log('tmp', tmp)
   const tmpArr = Array.from(new Set([...tmp, ...arr]))
   return tmpArr.map((item) => {
     return Number(item)
@@ -90,6 +95,7 @@ export const editLocation = (data) => {
 
 /* 角色管理页面筛选当前角色能使用的菜单列表 */
 export const filterRoleList = (data, list) => {
+  console.log('list', list)
   data = data.filter((item) => {
     if (item.children && item.children.length > 0) {
       item.children = filterRoleList(item.children, list)

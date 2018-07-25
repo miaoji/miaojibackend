@@ -79,11 +79,15 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
+      const currentItem = yield select(({ org }) => org.currentItem)
       payload.idUsers = payload.idUsers.toString()
       payload.location = payload.location.toString()
-      payload.roleId = Number(payload.roleId)
-      const id = yield select(({ org }) => org.currentItem.id)
-      const data = yield call(update, { ...payload, id })
+      if (payload.roleId === currentItem.roleName) {
+        delete payload.roleId
+      } else {
+        payload.roleId = Number(payload.roleId)
+      }
+      const data = yield call(update, { ...payload, id: currentItem.id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')

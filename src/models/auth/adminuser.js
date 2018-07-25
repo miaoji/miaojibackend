@@ -85,9 +85,9 @@ export default modelExtend(pageModel, {
       } else {
         payload.idUser = payload.idUser ? payload.idUser.split('///')[0] : undefined
       }
-      if (payload.roleId === item.roleName) {
-        delete payload.roleId
-      }
+      // if (payload.orgId === item.orgId) {
+      //   delete payload.orgId
+      // }
       const data = yield call(update, { ...payload, id: item.userId })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })

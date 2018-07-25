@@ -103,22 +103,6 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
   })
   return result
 }
-/**
- * 对网络请求的params做处理，针对分页
- * @param   {Object} params 传入一个需要的对象
- * @return  {Object} 返回一个处理好的对象
- */
-const pageParams = function (params) {
-  params = { ...params } || {
-    pagination: 1,
-    rownum: 10,
-  }
-  params.pagination = params.page ? Number(params.page) : 1
-  params.rownum = params.pageSize ? Number(params.pageSize) : 10
-  delete params.page
-  delete params.pageSize
-  return params
-}
 
 /**
  * [对localStorage操作进行封装]
@@ -156,7 +140,37 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   return false
 }
 
+const getOrgId = () => {
+  let orgId = ''
+  try {
+    const user = storage({ key: 'user' })
+    orgId = user ? JSON.parse(user).orgId : undefined
+  } catch (err) {
+    console.log(err)
+    orgId = undefined
+  }
+  return orgId
+}
+/**
+ * 对网络请求的params做处理，针对分页
+ * @param   {Object} params 传入一个需要的对象
+ * @return  {Object} 返回一个处理好的对象
+ */
+const pageParams = function (params) {
+  params = { ...params } || {
+    pagination: 1,
+    rownum: 10,
+  }
+  params.orgId = getOrgId()
+  params.pagination = params.page ? Number(params.page) : 1
+  params.rownum = params.pageSize ? Number(params.pageSize) : 10
+  delete params.page
+  delete params.pageSize
+  return params
+}
+
 module.exports = {
+  getOrgId,
   config,
   request,
   color,

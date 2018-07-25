@@ -58,6 +58,7 @@ const modal = ({
   }
 
   const handleRoldSelect = (key) => {
+    console.log('key11', key)
     onRoldSelect(JSON.parse(key))
   }
 
@@ -110,12 +111,23 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
+        <FormItem label="角色名称" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('roleName', {
+            initialValue: item.ROLE_NAME,
+            rules: [
+              {
+                required: true,
+                message: '请输入角色名称!',
+              },
+            ],
+          })(<Input placeholder="请输入角色名称!" />)}
+        </FormItem>
         <FormItem label="父级角色" hasFeedback {...formItemLayout}>
           {getFieldDecorator('roleId', {
             initialValue: item.roleId,
             rules: [
               {
-                // required: true,
+                required: true,
                 message: '请输入父级角色!',
               },
             ],
@@ -128,17 +140,6 @@ const modal = ({
           >
             {roleList}
           </Select>)}
-        </FormItem>
-        <FormItem label="角色名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('roleName', {
-            initialValue: item.ROLE_NAME,
-            rules: [
-              {
-                required: true,
-                message: '请输入角色名称!',
-              },
-            ],
-          })(<Input placeholder="请输入角色名称!" />)}
         </FormItem>
         <FormItem label="权限" hasFeedback {...formItemLayout}>
           {getFieldDecorator('menus', {

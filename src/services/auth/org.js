@@ -4,6 +4,7 @@ const { api: { auth: { org } } } = config
 
 export async function query(params) {
   params = pageParams(params)
+  delete params.orgId
   return request({
     url: org.list,
     method: 'post',

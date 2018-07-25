@@ -65,12 +65,13 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload }, { call, put, select }) {
+    *create({ payload }, { call, put }) {
       if (!payload.menus || payload.menus === []) {
         message.warn('还没有选择菜单呢')
         return
       }
-      const menuList = yield select(({ role }) => role.menuList)
+      const storageData = storage({ key: 'menuListSpare' })
+      const menuList = JSON.parse(storageData)
       payload.menuGroup = handleArrData({
         list: menuList,
         arr: payload.menus,
@@ -88,7 +89,8 @@ export default modelExtend(pageModel, {
     *update({ payload }, { select, call, put }) {
       const id = yield select(({ role }) => role.currentItem.ID)
       if (payload.menus) {
-        const menuList = yield select(({ role }) => role.menuList)
+        const storageData = storage({ key: 'menuListSpare' })
+        const menuList = JSON.parse(storageData)
         payload.menuGroup = handleArrData({
           list: menuList,
           arr: payload.menus,
@@ -185,7 +187,7 @@ export default modelExtend(pageModel, {
     },
 
     hideModal(state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, menuList: [] }
     },
 
   },
