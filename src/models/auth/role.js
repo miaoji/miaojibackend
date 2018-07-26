@@ -8,7 +8,7 @@ import {
   reloadItem, handleArrData, renderTreeNodes,
   filterRoleList,
 } from '../../utils/processing'
-import { storage } from '../../utils'
+import { storage, isSuperAdmin, getRoleId, getUserId } from '../../utils'
 
 const { Option } = Select
 
@@ -40,7 +40,6 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put, select }) {
       const menuList = yield select(({ role }) => role.menuList)
-
       if (!menuList.length) {
         yield put({
           type: 'queryMenuList',
@@ -70,6 +69,10 @@ export default modelExtend(pageModel, {
         message.warn('还没有选择菜单呢')
         return
       }
+      if (!isSuperAdmin()) {
+        payload.parentRoleId = getRoleId()
+      }
+      payload.createUserId = getUserId()
       const storageData = storage({ key: 'menuListSpare' })
       const menuList = JSON.parse(storageData)
       payload.menuGroup = handleArrData({
@@ -124,7 +127,7 @@ export default modelExtend(pageModel, {
           key: 'menuListSpare',
           val: JSON.stringify([].concat(data.obj)),
         })
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV === 'test') {
           let option = []
           if (data.obj instanceof Array) {
             option = data.obj.map((item) => {
@@ -142,11 +145,13 @@ export default modelExtend(pageModel, {
       }
     },
     // 获取全部角色信息
-    *queryRoleList(_, { call, put }) {
+    *queryRoleList({ payload = {} }, { call, put }) {
+      console.log('currentItem', payload)
       const data = yield call(query, { page: 1, pageSize: 1000000 })
       let option = []
       if (data.code === 200 && data.obj) {
-        option = data.obj.map((item) => {
+        const newdata = data.obj.filter(item => !payload.id || item.ID !== payload.id)
+        option = newdata.map((item) => {
           return <Option key={JSON.stringify(item)}>{item.ROLE_NAME}</Option>
         })
         yield put({
@@ -161,7 +166,14 @@ export default modelExtend(pageModel, {
     *filterRoleList({ payload }, { put }) {
       const storageData = storage({ key: 'menuListSpare' })
       const menuListSpare = JSON.parse(storageData)
-      const datalist = filterRoleList([...menuListSpare], eval(payload.MENU_GROUP_ID))
+      let menuGroupID = []
+      if (!isSuperAdmin()) {
+        const user = storage({ key: 'user' })
+        menuGroupID = JSON.parse(user).menuGroupId
+      } else {
+        menuGroupID = payload.MENU_GROUP_ID
+      }
+      const datalist = filterRoleList([...menuListSpare], eval(menuGroupID))
       const data = [].concat(datalist)
       let option = []
       if (data instanceof Array) {

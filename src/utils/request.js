@@ -108,6 +108,9 @@ const fetch = (options) => {
   }
 }
 
+/**
+ * [用于发起ajax请求的一个封装的方法]
+ */
 export default function request(options) {
   return fetch(options).then((response) => {
     const { statusText, status } = response

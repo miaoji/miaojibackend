@@ -6,9 +6,10 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Modular = ({ location, dispatch, org, loading }) => {
+const Modular = ({ location, dispatch, org, loading, app }) => {
   const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList, orgIdusers } = org
   const { pageSize } = pagination
+  const { storeTotal } = app
 
   const modalProps = {
     type: modalType,
@@ -56,6 +57,7 @@ const Modular = ({ location, dispatch, org, loading }) => {
     loading: loading.effects['org/query'],
     pagination,
     location,
+    storeTotal,
     onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({

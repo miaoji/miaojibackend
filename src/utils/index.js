@@ -5,6 +5,12 @@ import request from './request'
 import { color } from './theme'
 import * as time from './time'
 import { filterStoreSelect } from './filter'
+import {
+  getOrgId,
+  getRoleId,
+  getUserId,
+  isSuperAdmin,
+} from './getUserInfo'
 
 
 const { localPrefix } = config
@@ -139,18 +145,6 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   }
   return false
 }
-
-const getOrgId = () => {
-  let orgId = ''
-  try {
-    const user = storage({ key: 'user' })
-    orgId = user ? JSON.parse(user).orgId : undefined
-  } catch (err) {
-    console.log(err)
-    orgId = undefined
-  }
-  return orgId
-}
 /**
  * 对网络请求的params做处理，针对分页
  * @param   {Object} params 传入一个需要的对象
@@ -170,7 +164,6 @@ const pageParams = function (params) {
 }
 
 module.exports = {
-  getOrgId,
   config,
   request,
   color,
@@ -187,4 +180,8 @@ module.exports = {
   initialCreateTime: time.initialCreateTime,
   defaultTime: time.defaultTime,
   filterStoreSelect,
+  getOrgId,
+  getRoleId,
+  getUserId,
+  isSuperAdmin,
 }

@@ -5,6 +5,7 @@ import { connect } from 'dva'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import { isSuperAdmin } from '../../../utils'
 
 const Modular = ({ location, dispatch, role, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, menuList, roleList } = role
@@ -26,6 +27,8 @@ const Modular = ({ location, dispatch, role, loading }) => {
       })
     },
     onOk(data) {
+      data.parentRoleId = data.roleId ? JSON.parse(data.roleId).ID : ''
+      delete data.roleId
       dispatch({
         type: `role/${modalType}`,
         payload: data,
@@ -61,6 +64,22 @@ const Modular = ({ location, dispatch, role, loading }) => {
       })
     },
     onEditItem(item) {
+      if (menuList.length === 0) {
+        dispatch({
+          type: 'role/queryMenuList',
+        })
+      }
+      if (!isSuperAdmin()) {
+        dispatch({
+          type: 'role/filterRoleList',
+        })
+        dispatch({
+          type: 'role/queryRoleList',
+          payload: {
+            id: item.ID,
+          },
+        })
+      }
       dispatch({
         type: 'role/showModal',
         payload: {
@@ -91,9 +110,14 @@ const Modular = ({ location, dispatch, role, loading }) => {
           type: 'role/queryMenuList',
         })
       }
-      dispatch({
-        type: 'role/queryRoleList',
-      })
+      if (!isSuperAdmin()) {
+        dispatch({
+          type: 'role/filterRoleList',
+        })
+        dispatch({
+          type: 'role/queryRoleList',
+        })
+      }
       dispatch({
         type: 'role/showModal',
         payload: {

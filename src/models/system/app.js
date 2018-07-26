@@ -18,6 +18,7 @@ export default {
   namespace: 'app',
   state: {
     storeuserList: [],
+    storeTotal: 0,
     user: {},
     permissions: {
       visit: [],
@@ -132,6 +133,7 @@ export default {
           type: 'updateState',
           payload: {
             storeuserList: option,
+            storeTotal: data.total,
           },
         })
       } else {

@@ -3,8 +3,9 @@ import { request, config, pageParams } from '../../utils'
 const { api: { auth: { org } } } = config
 
 export async function query(params) {
+  // params.orgId = getOrgId()
   params = pageParams(params)
-  delete params.orgId
+  // delete params.orgId
   return request({
     url: org.list,
     method: 'post',

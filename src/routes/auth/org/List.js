@@ -9,7 +9,7 @@ import { DropOption } from '../../../components'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ storeTotal, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -49,7 +49,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '管理门店数量',
       dataIndex: 'idUsers',
       key: 'idUsers',
-      render: (text) => {
+      render: (text, record) => {
+        if (record.id === 1) {
+          return <span>{storeTotal}</span>
+        }
         const count = text ? text.split(',').length : 0
         return <span>{count}</span>
       },
@@ -113,6 +116,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   location: PropTypes.object,
+  storeTotal: PropTypes.number,
 }
 
 export default List

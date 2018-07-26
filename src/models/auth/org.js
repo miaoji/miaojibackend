@@ -7,6 +7,7 @@ import { query, create, update, remove, getLocation, getIdUsers } from '../../se
 import { query as queryRoleList } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 import { editLocation } from '../../utils/processing'
+import { getOrgId, getUserId } from '../../utils'
 
 const { Option } = Select
 
@@ -68,6 +69,8 @@ export default modelExtend(pageModel, {
       payload.idUsers = payload.idUsers.toString()
       payload.location = payload.location.toString()
       payload.roleId = Number(payload.roleId)
+      payload.parentId = getOrgId()
+      payload.createUserId = getUserId()
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -165,22 +168,17 @@ export default modelExtend(pageModel, {
 
     *getIdUsers({ payload }, { call, put, select }) {
       let data = {}
-      console.log('payload111', payload)
       switch (payload.location.length) {
         case 1:
-          console.log(1)
-          data = yield call(getIdUsers, { province: payload.location[0] })
+          data = yield call(getIdUsers, { province: payload.location[0], orgId: getOrgId() })
           break
         case 2:
-          console.log(2)
-          data = yield call(getIdUsers, { city: payload.location[1] })
+          data = yield call(getIdUsers, { city: payload.location[1], orgId: getOrgId() })
           break
         case 3:
-          console.log(3)
-          data = yield call(getIdUsers, { idLocation: payload.location[2].split('///')[1] })
+          data = yield call(getIdUsers, { idLocation: payload.location[2].split('///')[1], orgId: getOrgId() })
           break
         default:
-          console.log(4)
           break
       }
       if (data.code === 200) {

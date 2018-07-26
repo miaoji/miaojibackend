@@ -1,8 +1,9 @@
-import { request, config, pageParams } from '../../utils'
+import { request, config, pageParams, getRoleId } from '../../utils'
 
 const { api: { auth: { role } } } = config
 
 export async function query(params) {
+  params.roleId = getRoleId()
   params = pageParams(params)
   return request({
     url: role.list,

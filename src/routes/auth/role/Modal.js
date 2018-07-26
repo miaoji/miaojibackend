@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Modal, Tree, Select } from 'antd'
-// import city from '../../../utils/city'
+import { isSuperAdmin } from '../../../utils'
 import './Modal.less'
 
 const FormItem = Form.Item
@@ -63,7 +63,7 @@ const modal = ({
   }
 
   const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : undefined
-  if (type === 'update') {
+  if (isSuperAdmin()) {
     return (
       <Modal {...modalOpts}>
         <Form layout="horizontal">
@@ -77,6 +77,25 @@ const modal = ({
                 },
               ],
             })(<Input placeholder="请输入角色名称!" />)}
+          </FormItem>
+          <FormItem label="父级角色" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('roleId', {
+              initialValue: item.roleId,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入父级角色!',
+                },
+              ],
+            })(<Select
+              showSearch
+              filterOption={false}
+              style={{ width: '100%' }}
+              onSelect={handleRoldSelect}
+              placeholder="请输入父级角色!"
+            >
+              {roleList}
+            </Select>)}
           </FormItem>
           <FormItem label="权限" hasFeedback {...formItemLayout}>
             {getFieldDecorator('menus', {
@@ -121,25 +140,6 @@ const modal = ({
               },
             ],
           })(<Input placeholder="请输入角色名称!" />)}
-        </FormItem>
-        <FormItem label="父级角色" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('roleId', {
-            initialValue: item.roleId,
-            rules: [
-              {
-                required: true,
-                message: '请输入父级角色!',
-              },
-            ],
-          })(<Select
-            showSearch
-            filterOption={false}
-            style={{ width: '100%' }}
-            onSelect={handleRoldSelect}
-            placeholder="请输入父级角色!"
-          >
-            {roleList}
-          </Select>)}
         </FormItem>
         <FormItem label="权限" hasFeedback {...formItemLayout}>
           {getFieldDecorator('menus', {

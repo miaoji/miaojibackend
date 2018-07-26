@@ -6,6 +6,7 @@ import md5 from 'js-md5'
 import { query, create, update, remove } from '../../services/auth/adminuser'
 import { query as queryOrangeizeList } from '../../services/auth/org'
 import { pageModel } from '../system/common'
+import { getUserId } from '../../utils'
 
 const { Option } = Select
 
@@ -64,6 +65,8 @@ export default modelExtend(pageModel, {
         payload.mobile = payload.number
         delete payload.number
       }
+      payload.parentId = getUserId()
+      // payload.createUserId = getUserId()
       payload.password = md5(payload.password)
       delete payload.repass
       const data = yield call(create, { ...payload })

@@ -57,6 +57,9 @@ export function yesterTime(frontDay = 0, distance = 0) {
   }
 }
 
+/**
+ * [将时间数组格式话]
+ */
 export const repairTime = function (val) {
   if (val[0] !== null && val[1] !== null) {
     const date = new Date(val[0]._d)
@@ -64,7 +67,6 @@ export const repairTime = function (val) {
     const m = date.getMinutes()
     const s = date.getSeconds()
     const ms = date.getMilliseconds()
-
     const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
 
     const startTime = new Date(val[0]._d).getTime() - times
@@ -82,7 +84,9 @@ export const repairTime = function (val) {
   }
 }
 
-
+/**
+ * [过滤filter组件提交的数据]
+ */
 export function handleFields(fields) {
   const { createTime, location } = fields
   console.log('firlds', fields.bbbbb)
@@ -126,6 +130,10 @@ export function defaultTime(filters, frontDay, distance) {
   return filters
 }
 
+/**
+ * 将时间戳转为年月日时间
+ * @param {number} val 时间戳
+ */
 export function getToday(val) {
   let date = new Date(val)
   let y = date.getFullYear()
@@ -136,6 +144,9 @@ export function getToday(val) {
   return (`${y}-${m}-${d}`)
 }
 
+/**
+ * 获取从昨天起,到往前推30天的一个时间数组
+ */
 export function getLineTime() {
   let date = []
 

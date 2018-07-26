@@ -112,7 +112,7 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }}>
         {getFieldDecorator('locationType', { initialValue: 1 })(
-          <RadioGroup onChange={handleTypeChange}>
+          <RadioGroup size="large" onChange={handleTypeChange}>
             <Radio value={1}>按省筛选</Radio>
             <Radio value={2}>按市筛选</Radio>
             <Radio value={3}>按县筛选</Radio>
@@ -123,6 +123,7 @@ const Filter = ({
         {getFieldDecorator('location', { initialValue: initLocation })(
           <Cascader
             showSearch={{ filterLocation }}
+            size="large"
             options={locationList}
             onChange={handleLocationChange}
             placeholder="请输入地区信息"
