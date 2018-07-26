@@ -46,6 +46,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{text || '暂无'}</span>
       },
     }, {
+      title: '创建人',
+      dataIndex: 'createUserName',
+      key: 'createUserName',
+      render: (text) => {
+        return <span>{text || '无记录'}</span>
+      },
+    }, {
       title: '创建时间',
       dataIndex: 'ROLE_CREATE_TIME',
       key: 'ROLE_CREATE_TIME',
@@ -60,7 +67,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       width: 100,
       render: (text, record) => {
         if (record.ID === 1) {
-          return <span>此项无法操作</span>
+          return <span>无操作</span>
         }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },

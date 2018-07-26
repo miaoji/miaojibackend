@@ -9,7 +9,17 @@ import { pageModel } from '../system/common'
 import { getUserId } from '../../utils'
 
 const { Option } = Select
-
+const reloadItem = (item) => {
+  if (item.children && item.children.length === 0) {
+    delete item.children
+  }
+  if (item.children && item.children.length > 0) {
+    item.children = item.children.map((items) => {
+      return reloadItem(items)
+    })
+  }
+  return item
+}
 export default modelExtend(pageModel, {
   namespace: 'adminuser',
 
@@ -38,11 +48,17 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
+        let list = []
+        if (data.obj.length > 0) {
+          list = data.obj.map((item) => {
+            return reloadItem(item)
+          })
+        }
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
@@ -66,7 +82,7 @@ export default modelExtend(pageModel, {
         delete payload.number
       }
       payload.parentId = getUserId()
-      // payload.createUserId = getUserId()
+      payload.createUserId = getUserId()
       payload.password = md5(payload.password)
       delete payload.repass
       const data = yield call(create, { ...payload })

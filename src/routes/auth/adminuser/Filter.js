@@ -74,7 +74,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name, mobile } = filter
+  const { name, accounts } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -88,10 +88,10 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按姓名搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('accounts', { initialValue: accounts })(<Search placeholder="按账号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
@@ -99,15 +99,9 @@ const Filter = ({
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
-          </div>
-          <div>
-            <Button size="large" type="primary" onClick={onAdd}>注册用户</Button>
-          </div>
-        </div>
+        <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
+        <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+        <Button size="large" type="primary" className="margin-right" onClick={onAdd}>注册用户</Button>
       </Col>
     </Row>
   )

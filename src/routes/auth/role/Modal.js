@@ -63,6 +63,7 @@ const modal = ({
   }
 
   const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : undefined
+  const defaultRoleId = item.PARENT_ROLE_NAME
   if (isSuperAdmin()) {
     return (
       <Modal {...modalOpts}>
@@ -80,7 +81,7 @@ const modal = ({
           </FormItem>
           <FormItem label="父级角色" hasFeedback {...formItemLayout}>
             {getFieldDecorator('roleId', {
-              initialValue: item.roleId,
+              initialValue: defaultRoleId,
               rules: [
                 {
                   required: true,

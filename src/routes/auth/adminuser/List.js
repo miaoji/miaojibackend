@@ -33,7 +33,7 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
 
   const columns = [
     {
-      title: '昵称',
+      title: '姓名',
       dataIndex: 'name',
       key: 'name',
     }, {
@@ -77,6 +77,13 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         return <span>{text || '暂无'}</span>
       },
     }, {
+      title: '创建人',
+      dataIndex: 'createUserName',
+      key: 'createUserName',
+      render: (text) => {
+        return <span>{text || '无记录'}</span>
+      },
+    }, {
       title: '创建时间',
       dataIndex: 'createtime',
       key: 'createtime',
@@ -110,7 +117,7 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        rowKey={record => record.userId}
         getBodyWrapper={getBodyWrapper}
       />
     </div>

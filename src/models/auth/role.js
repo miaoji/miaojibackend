@@ -38,9 +38,8 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put, select }) {
-      const menuList = yield select(({ role }) => role.menuList)
-      if (!menuList.length) {
+    *query({ payload = {} }, { call, put }) {
+      if (!storage({ key: 'menuListSpare' })) {
         yield put({
           type: 'queryMenuList',
         })
@@ -90,7 +89,7 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      const id = yield select(({ role }) => role.currentItem.ID)
+      const currentItem = yield select(({ role }) => role.currentItem)
       if (payload.menus) {
         const storageData = storage({ key: 'menuListSpare' })
         const menuList = JSON.parse(storageData)
@@ -99,7 +98,10 @@ export default modelExtend(pageModel, {
           arr: payload.menus,
         })
       }
-      const data = yield call(update, { ...payload, id })
+      if (payload.roleId === currentItem.PARENT_ROLE_NAME) {
+        delete payload.roleId
+      }
+      const data = yield call(update, { ...payload, id: currentItem.id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -146,7 +148,6 @@ export default modelExtend(pageModel, {
     },
     // 获取全部角色信息
     *queryRoleList({ payload = {} }, { call, put }) {
-      console.log('currentItem', payload)
       const data = yield call(query, { page: 1, pageSize: 1000000 })
       let option = []
       if (data.code === 200 && data.obj) {
@@ -163,17 +164,22 @@ export default modelExtend(pageModel, {
       }
     },
     // 手动过滤能显示的菜单信息
-    *filterRoleList({ payload }, { put }) {
+    *filterRoleList({ payload = {} }, { put }) {
       const storageData = storage({ key: 'menuListSpare' })
       const menuListSpare = JSON.parse(storageData)
       let menuGroupID = []
+      let datalist = []
       if (!isSuperAdmin()) {
         const user = storage({ key: 'user' })
         menuGroupID = JSON.parse(user).menuGroupId
       } else {
         menuGroupID = payload.MENU_GROUP_ID
       }
-      const datalist = filterRoleList([...menuListSpare], eval(menuGroupID))
+      if (payload.MENU_GROUP_ID) {
+        datalist = filterRoleList([...menuListSpare], eval(menuGroupID))
+      } else {
+        datalist = [...menuListSpare]
+      }
       const data = [].concat(datalist)
       let option = []
       if (data instanceof Array) {

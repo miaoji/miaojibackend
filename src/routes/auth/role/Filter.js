@@ -97,15 +97,9 @@ const Filter = ({
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
-          </div>
-          <div>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
-          </div>
-        </div>
+        <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
+        <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+        <Button size="large" type="primary" className="margin-right" onClick={onAdd}>新增角色</Button>
       </Col>
     </Row>
   )
