@@ -101,7 +101,7 @@ export default modelExtend(pageModel, {
       if (payload.roleId === currentItem.PARENT_ROLE_NAME) {
         delete payload.roleId
       }
-      const data = yield call(update, { ...payload, id: currentItem.id })
+      const data = yield call(update, { ...payload, id: currentItem.ID })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
