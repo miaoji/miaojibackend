@@ -1,12 +1,10 @@
-import { request, config, pageParams } from '../../utils'
+import { request, config, pageParams, getOrgId } from '../../utils'
 
 const { api } = config
 const { expressfeedetail } = api
 
-export async function query (params) {
+export async function query(params) {
   params = pageParams(params)
-  delete params.page
-  delete params.pageSize
   delete params.showName
   delete params.download
   params = JSON.stringify(params)
@@ -19,10 +17,12 @@ export async function query (params) {
   })
 }
 
-export async function download (params) {
-  delete params.page
-  delete params.pageSize
+export async function download(params) {
+  params = pageParams(params)
   delete params.showName
+  delete params.pagination
+  delete params.rownum
+  params.orgId = getOrgId()
   params = JSON.stringify(params)
   return request({
     url: expressfeedetail.download,

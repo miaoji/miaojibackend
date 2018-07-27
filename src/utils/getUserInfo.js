@@ -1,6 +1,6 @@
 import { storage } from './index'
 /**
- * 获取用户的机构ID
+ * [获取用户的机构ID]
  */
 const getOrgId = () => {
   let orgId = ''
@@ -14,7 +14,7 @@ const getOrgId = () => {
   return orgId
 }
 /**
- * 获取用户的角色ID
+ * [获取用户的角色ID]
  */
 const getRoleId = () => {
   let roleId = ''
@@ -28,7 +28,7 @@ const getRoleId = () => {
   return roleId
 }
 /**
- * 获取用户的ID
+ * [获取用户的ID]
  */
 const getUserId = () => {
   let userId = ''
@@ -42,7 +42,7 @@ const getUserId = () => {
   return userId
 }
 /**
- * 查看是否是超级管理员(默认机构ID为1的时候是超级管理员)
+ * [查看是否是超级管理员(默认机构ID为1的时候是超级管理员)]
  */
 const isSuperAdmin = () => {
   let orgId = ''

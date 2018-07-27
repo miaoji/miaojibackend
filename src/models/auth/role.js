@@ -172,13 +172,14 @@ export default modelExtend(pageModel, {
       if (!isSuperAdmin()) {
         const user = storage({ key: 'user' })
         menuGroupID = JSON.parse(user).menuGroupId
-      } else {
-        menuGroupID = payload.MENU_GROUP_ID
-      }
-      if (payload.MENU_GROUP_ID) {
         datalist = filterRoleList([...menuListSpare], eval(menuGroupID))
       } else {
-        datalist = [...menuListSpare]
+        menuGroupID = payload.MENU_GROUP_ID
+        if (payload.MENU_GROUP_ID) {
+          datalist = filterRoleList([...menuListSpare], eval(menuGroupID))
+        } else {
+          datalist = [...menuListSpare]
+        }
       }
       const data = [].concat(datalist)
       let option = []

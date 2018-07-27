@@ -108,7 +108,7 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            <Button type="primary" size="large" onClick={onDownLoad}>下载所有门店点单上架签收明细</Button>
+            <Button type="primary" style={{ display: 'none' }} size="large" onClick={onDownLoad}>下载所有门店点单上架签收明细</Button>
           </div>
         </div>
       </Col>

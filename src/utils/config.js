@@ -52,11 +52,8 @@ module.exports = {
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
-    posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,
     dashboard: {
-      // 获取首页的本地数据
-      all: `${APIV1}/dashboard`,
       // 获取折线图数据
       echart: `${APIV3}/quandiExpressSiteManager/lineChart`,
       // 获取微信用户数据
@@ -118,7 +115,6 @@ module.exports = {
       all: `${APIV3}/quandiExpressSiteManager/blackList`, // 黑名单
       add: `${APIV3}/quandiExpressSiteManager/insertBlackList`,
       update: `${APIV3}/quandiExpressSiteManager/updateBlackList`,
-      showSiteName: `${APIV3}/quandiExpressSiteManager/idUser`,
     },
     // 单号规则配置
     ordernumber: {
@@ -250,6 +246,9 @@ module.exports = {
         update: `${APIV3}/quandiExpressSiteManager/orgEdit`,
         delete: `${APIV3}/quandiExpressSiteManager/orgDel`,
         create: `${APIV3}/quandiExpressSiteManager/orgAdd`,
+        /**
+         * 根据地址查询门店
+         */
         getIdUsers: `${APIV3}/quandiExpressSiteManager/selectIdUsers`,
       },
     },

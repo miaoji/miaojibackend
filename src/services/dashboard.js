@@ -1,41 +1,28 @@
-import { request, config } from '../utils'
+import { request, config, getOrgId } from '../utils'
 
 const { api } = config
 const { dashboard } = api
 
-export async function myCity (params) {
-  return request({
-    url: 'http://www.zuimeitianqi.com/zuimei/myCity',
-    data: params,
-  })
-}
-
-export async function queryWeather (params) {
-  return request({
-    url: 'http://www.zuimeitianqi.com/zuimei/queryWeather',
-    data: params,
-  })
-}
-
-export async function query (params) {
-  return request({
-    url: dashboard.all,
-    method: 'get',
-    data: params,
-  })
-}
-
-export async function getLineData() {
+/**
+ * [获取首页折线图数据]
+ */
+export async function getLineData(params = {}) {
+  params.orgId = getOrgId()
   return request({
     url: dashboard.echart,
     method: 'post',
+    params,
   })
 }
-
-export async function weChatUser() {
+/**
+ * [获取微信用户数量]
+ */
+export async function weChatUser(params = {}) {
+  params.orgId = getOrgId()
   return request({
     url: dashboard.weChatUser,
     method: 'post',
+    params,
   })
 }
 
@@ -45,17 +32,26 @@ export async function storeTotal() {
     method: 'post',
   })
 }
-
-export async function income() {
+/**
+ * [获取昨日收入]
+ */
+export async function income(params = {}) {
+  params.orgId = getOrgId()
   return request({
     url: dashboard.income,
     method: 'post',
+    params,
   })
 }
 
-export async function terminalTotal () {
+/**
+ * [获取设备总数]
+ */
+export async function terminalTotal(params = {}) {
+  params.orgId = getOrgId()
   return request({
     url: dashboard.terminalTotal,
     method: 'post',
+    params,
   })
 }

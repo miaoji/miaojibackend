@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
+import { getUserId } from '../../../utils'
 
 const confirm = Modal.confirm
 
@@ -38,19 +39,19 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'ROLE_NAME',
       key: 'ROLE_NAME',
     }, {
+      title: '创建人',
+      dataIndex: 'createUserName',
+      key: 'createUserName',
+      render: (text) => {
+        return <span>{text || '无记录'}</span>
+      },
+    }, {
       title: '备注信息',
       dataIndex: 'DESCRIPTION',
       key: 'DESCRIPTION',
       width: 300,
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      },
-    }, {
-      title: '创建人',
-      dataIndex: 'createUserName',
-      key: 'createUserName',
-      render: (text) => {
-        return <span>{text || '无记录'}</span>
       },
     }, {
       title: '创建时间',
@@ -66,8 +67,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        if (record.ID === 1) {
-          return <span>无操作</span>
+        if (record.ID === 1 || Number(record.CREATE_USER_ID) !== Number(getUserId())) {
+          return <span>无权操作</span>
         }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },

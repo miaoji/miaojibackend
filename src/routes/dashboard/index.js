@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
 import { NumberCard, Quote, User } from './components'
-// import { Quote, User } from './components'
 import styles from './index.less'
 import { color } from '../../utils'
 import SimpleChartComponent from './components/Echart/SimpleChartComponent'
@@ -15,12 +14,12 @@ const bodyStyle = {
   },
 }
 
-function Dashboard (data) {
+function Dashboard(data) {
   const { receviceData, sendData, quote, user, income, storeTotal, weChatUser, terminalTotal } = data.dashboard
   const munArr = [income, storeTotal, weChatUser, terminalTotal]
   const numberCards = munArr.map((item, key) => {
     return (<Col key={key} lg={6} md={12}>
-      <NumberCard {...item} />
+      <NumberCard {...item} data={munArr} />
     </Col>)
   })
 

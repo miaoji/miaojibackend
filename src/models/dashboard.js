@@ -1,8 +1,9 @@
 import modelExtend from 'dva-model-extend'
+import { query as queryStoreUser } from 'src/services/storeuser'
 import { pageModel } from './system/common'
 import { color } from '../utils/theme'
-import { storage, time } from '../utils'
-import { getLineData, weChatUser, storeTotal, income, terminalTotal } from '../services/dashboard'
+import { storage, time, isSuperAdmin } from '../utils'
+import { getLineData, weChatUser, income, terminalTotal } from '../services/dashboard'
 
 export default modelExtend(pageModel, {
   namespace: 'dashboard',
@@ -25,7 +26,7 @@ export default modelExtend(pageModel, {
     storeTotal: {
       icon: 'shop',
       color: color.blue,
-      title: '门店总数',
+      title: '管理门店总数',
       number: 0,
     },
     weChatUser: {
@@ -104,8 +105,11 @@ export default modelExtend(pageModel, {
         throw data.mess || '网络连接失败'
       }
     },
-    *getStoreTotal(_, { call, put }) {
-      const data = yield call(storeTotal)
+    *getStoreTotal({ payload = {} }, { call, put }) {
+      if (isSuperAdmin()) {
+        payload.superId = -1
+      }
+      const data = yield call(queryStoreUser, { page: 1, pageSize: 1, ...payload })
       if (data.code === 200) {
         yield put({
           type: 'setStates',
@@ -113,8 +117,8 @@ export default modelExtend(pageModel, {
             storeTotal: {
               icon: 'shop',
               color: color.blue,
-              title: '门店总数',
-              number: data.obj,
+              title: '管理门店总数',
+              number: data.total,
             },
           },
         })

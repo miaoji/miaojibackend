@@ -1,11 +1,9 @@
-import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
-import { message, Select } from 'antd'
-import { query, create, update, remove, showSiteName } from '../services/blacklist'
+import { message } from 'antd'
+import { query, create, update, remove } from '../services/blacklist'
 import { pageModel } from './system/common'
 
-const Option = Select
 
 export default modelExtend(pageModel, {
   namespace: 'blacklist',
@@ -51,7 +49,7 @@ export default modelExtend(pageModel, {
 
     *create({ payload }, { call, put }) {
       const newblacklist = {
-        idUser: payload.idUser.split('/-/')[1],
+        idUser: payload.idUser.split('///')[0],
         mobile: payload.mobile,
         note: payload.note,
         state: 1,
@@ -91,26 +89,6 @@ export default modelExtend(pageModel, {
         throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
       }
     },
-
-    *getSiteName(_, { call, put }) {
-      const data = yield call(showSiteName)
-      if (data.code === 200 && data.obj) {
-        let children = []
-        for (let i = 0; i < data.obj.length; i++) {
-          let item = data.obj[i]
-          children.push(<Option key={`${item.name}/-/${item.idUser}`}>{item.name}</Option>)
-        }
-        yield put({
-          type: 'setSiteName',
-          payload: {
-            selectSiteName: children,
-          },
-        })
-      } else {
-        throw data.mess || '无法跟服务器建立有效连接'
-      }
-    },
-
   },
 
   reducers: {

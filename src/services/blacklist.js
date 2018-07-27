@@ -35,10 +35,3 @@ export async function remove (params) {
     params,
   })
 }
-
-export async function showSiteName () {
-  return request({
-    url: blacklist.showSiteName,
-    method: 'post',
-  })
-}

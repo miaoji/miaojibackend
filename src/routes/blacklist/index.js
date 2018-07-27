@@ -6,9 +6,10 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Blacklist = ({ location, dispatch, blacklist, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = blacklist
+const Blacklist = ({ location, dispatch, blacklist, loading, app }) => {
+  const { list, pagination, currentItem, modalVisible, modalType } = blacklist
   const { pageSize } = pagination
+  const { storeuserList } = app
 
   const modalProps = {
     type: modalType,
@@ -17,14 +18,14 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
     confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk (data) {
+    storeuserList,
+    onOk(data) {
       dispatch({
         type: `blacklist/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'blacklist/hideModal',
       })
@@ -36,7 +37,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
     loading: loading.effects['blacklist/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -47,22 +48,19 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'blacklist/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'blacklist/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
         },
-      })
-      dispatch({
-        type: 'blacklist/getSiteName',
       })
     },
   }
@@ -71,7 +69,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -81,7 +79,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/blacklist',
         query: {
@@ -92,15 +90,12 @@ const Blacklist = ({ location, dispatch, blacklist, loading }) => {
         pathname: '/blacklist',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'blacklist/showModal',
         payload: {
           modalType: 'create',
         },
-      })
-      dispatch({
-        type: 'blacklist/getSiteName',
       })
     },
   }
@@ -119,6 +114,7 @@ Blacklist.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ blacklist, loading }) => ({ blacklist, loading }))(Blacklist)
+export default connect(({ blacklist, loading, app }) => ({ blacklist, loading, app }))(Blacklist)
