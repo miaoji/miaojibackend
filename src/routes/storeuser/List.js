@@ -6,7 +6,6 @@ import moment from 'moment'
 import { Link } from 'dva/router'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../components'
 import SonTable from './SonTable'
 
 const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, ...tableProps }) => {
@@ -103,14 +102,6 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
           return <Link to={`/storeUserDetail?idUser=${record.id}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
         }
         return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看操作人详情</Link>
-      },
-    },
-    {
-      title: '操作',
-      key: 'operations',
-      width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
       },
     },
   ]

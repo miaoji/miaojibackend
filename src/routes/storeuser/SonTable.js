@@ -49,17 +49,6 @@ const SonTable = ({
           : '启用'}</span>)
       },
     },
-    // {
-    //   title: '操作人',
-    //   key: 'operation',
-    //   width: 150,
-    //   render: (text, record) => {
-    //     if (filter.startTime) {
-    //       return <Link to={`/storeUserDetail?idUser=${record.id}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>详情</Link>
-    //     }
-    //     return <Link to={`/storeUserDetail?idUser=${record.id}`}>详情</Link>
-    //   },
-    // },
   ]
 
   return (

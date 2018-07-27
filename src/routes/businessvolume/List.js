@@ -33,13 +33,13 @@ const List = ({ onDeleteItem, onEditItem, sonlist, isMotion, location, ...tableP
       },
     }, {
       title: '点货数',
-      dataIndex: 'scheduledReceipt',
-      key: 'scheduledReceipt',
+      dataIndex: 'someCargo',
+      key: 'someCargo',
       width: 100,
     }, {
       title: '入库数',
-      dataIndex: 'someCargo',
-      key: 'someCargo',
+      dataIndex: 'scheduledReceipt',
+      key: 'scheduledReceipt',
       width: 70,
       render: (text) => {
         return (<span>{text}</span>)

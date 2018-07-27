@@ -77,14 +77,16 @@ const Filter = ({
   if (filter.createTime && filter.createTime[0]) {
     initialCreateTime[0] = moment(filter.createTime[0])
   } else {
-    let yesterdayDate = new Date()
-    yesterdayDate.setTime(yesterdayDate.getTime() - 24 * 60 * 60 * 1000)
-    initialCreateTime[0] = moment(yesterdayDate)
+    let date1 = new Date()
+    date1.setTime(date1.getTime() - 48 * 60 * 60 * 1000)
+    initialCreateTime[0] = moment(date1)
   }
   if (filter.createTime && filter.createTime[1]) {
     initialCreateTime[1] = moment(filter.createTime[1])
   } else {
-    initialCreateTime[1] = moment(new Date())
+    let yesterdayDate = new Date()
+    yesterdayDate.setTime(yesterdayDate.getTime() - 24 * 60 * 60 * 1000)
+    initialCreateTime[1] = moment(yesterdayDate)
   }
 
   const nameChange = (key) => {
@@ -92,6 +94,10 @@ const Filter = ({
     handleChange('idUser', key)
   }
 
+  function disabledDate(current) {
+    // Can not select days before today and today
+    return current && current < moment().endOf('day-7')
+  }
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
@@ -113,6 +119,7 @@ const Filter = ({
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
             <DateRange
               style={{ width: '100%' }}
+              disabledDate={disabledDate}
               size="large"
               onChange={handleChange.bind(null, 'createTime')}
             />
