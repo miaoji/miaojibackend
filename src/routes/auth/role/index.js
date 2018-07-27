@@ -114,6 +114,8 @@ const Modular = ({ location, dispatch, role, loading }) => {
         dispatch({
           type: 'role/filterRoleList',
         })
+      }
+      if (isSuperAdmin()) {
         dispatch({
           type: 'role/queryRoleList',
         })

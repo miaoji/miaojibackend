@@ -9,6 +9,7 @@ import { pageModel } from '../system/common'
 import { getUserId } from '../../utils'
 
 const { Option } = Select
+let count = 1
 const reloadItem = (item) => {
   if (item.children && item.children.length === 0) {
     delete item.children
@@ -18,6 +19,7 @@ const reloadItem = (item) => {
       return reloadItem(items)
     })
   }
+  item.key = count++
   return item
 }
 export default modelExtend(pageModel, {
@@ -54,6 +56,7 @@ export default modelExtend(pageModel, {
           list = data.obj.map((item) => {
             return reloadItem(item)
           })
+          console.log('list', list)
         }
         yield put({
           type: 'querySuccess',

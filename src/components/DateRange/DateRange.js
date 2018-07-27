@@ -78,6 +78,7 @@ class DateRange extends React.Component {
               size={this.state.size}
               onChange={this.onStartChange}
               onOpenChange={this.handleStartOpenChange}
+              disabledDate={this.disabledEndDate}
             />
           </Col>
           <Col style={{ marginBottom: '14px' }} xl={{ span: 11, push: 1 }} md={{ span: 11, push: 2 }} sm={{ span: 11, push: 2 }}>

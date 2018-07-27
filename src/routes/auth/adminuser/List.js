@@ -117,7 +117,7 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.userId}
+        rowKey={record => record.key}
         getBodyWrapper={getBodyWrapper}
       />
     </div>
