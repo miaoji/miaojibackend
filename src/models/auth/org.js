@@ -7,8 +7,9 @@ import { query, create, update, remove, getLocation, getIdUsers } from '../../se
 import { query as queryRoleList } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 import { editLocation } from '../../utils/processing'
+import { getLocation as getLocationArr } from '../../utils/getUserInfo'
 import { getOrgId, getUserId } from '../../utils'
-import { storage } from '../../utils/storage'
+// import { storage } from '../../utils/storage'
 
 const { Option } = Select
 
@@ -204,7 +205,8 @@ export default modelExtend(pageModel, {
     },
 
     *filterLocationList({ payload }, { call, put }) {
-      const location = JSON.parse(storage({ key: 'user' })).location.split(',')
+      const location = getLocationArr()
+      console.log('location', location)
       const data = yield call(getLocation)
       let option = []
       if (data.code === 200 && data.obj) {
@@ -249,7 +251,7 @@ export default modelExtend(pageModel, {
             children: item.children,
           }
         }).filter((item) => {
-          if (item.children && location.length > 0) {
+          if (item.children && location.length > 0 && location[0]) {
             item.children = item.children.filter((i) => {
               if (location.length > 1) {
                 return i.label === location[1]
@@ -257,11 +259,12 @@ export default modelExtend(pageModel, {
               return true
             })
           }
-          if (location.length > 0) {
+          if (location.length > 0 && location[0]) {
             return item.label === location[0]
           }
           return true
         })
+        console.log('loca', option)
         yield put({
           type: 'updateState',
           payload: {
@@ -280,7 +283,7 @@ export default modelExtend(pageModel, {
     },
 
     hideModal(state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, orgIdusers: [] }
     },
 
   },

@@ -22,6 +22,12 @@ const getLocation = () => {
     user = user ? JSON.parse(user) : undefined
     if (user && user.location) {
       userLocation = user.location.split(',')
+      if (!userLocation[0]) {
+        userLocation = []
+      }
+      if (userLocation[2]) {
+        userLocation[2] = userLocation[2].split('///')[0]
+      }
     }
   } catch (err) {
     console.info(err)

@@ -8,8 +8,9 @@ import { isSuperAdmin } from '../../../utils'
 function NumberCard({ icon, color, title, number, countUp, data }) {
   let num = number
   if (!isSuperAdmin() && title === '终端总数') {
-    num = data[1].number + data[3].number
+    // num = data[1].number + data[3].number
   }
+  console.log('data', data)
   return (
     <Card className={styles.numberCard} bordered={false} bodyStyle={{ padding: 0 }}>
       <Icon className={styles.iconWarp} style={{ color }} type={icon} />
