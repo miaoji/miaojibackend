@@ -8,6 +8,7 @@ import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import SonTable from './SonTable'
+import { isSuperAdmin } from '../../utils'
 
 const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
@@ -105,15 +106,19 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看操作人详情</Link>
       },
     },
-    {
-      title: '操作',
-      key: 'operations',
-      width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
-      },
-    },
   ]
+  if (isSuperAdmin()) {
+    columns.push(
+      {
+        title: '操作',
+        key: 'operations',
+        width: 100,
+        render: (text, record) => {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
+        },
+      },
+    )
+  }
 
   const getBodyWrapperProps = {
     page: location.query.page,

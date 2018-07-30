@@ -1,4 +1,4 @@
-import { storage } from './index'
+import { storage } from './storage'
 /**
  * [获取用户的机构ID]
  */

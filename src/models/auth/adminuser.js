@@ -2,11 +2,10 @@ import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
-import md5 from 'js-md5'
 import { query, create, update, remove } from '../../services/auth/adminuser'
 import { query as queryOrangeizeList } from '../../services/auth/org'
 import { pageModel } from '../system/common'
-import { getUserId } from '../../utils'
+import { getUserId, password } from '../../utils'
 
 const { Option } = Select
 let count = 1
@@ -86,7 +85,7 @@ export default modelExtend(pageModel, {
       }
       payload.parentId = getUserId()
       payload.createUserId = getUserId()
-      payload.password = md5(payload.password)
+      payload.password = password(payload.password)
       delete payload.repass
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
@@ -132,7 +131,7 @@ export default modelExtend(pageModel, {
 
     *resetPWD({ payload }, { call, select, put }) {
       const id = yield select(({ adminuser }) => adminuser.currentItem.id)
-      payload.password = md5(payload.password)
+      payload.password = password(payload.password)
       const data = yield call(update, { password: payload.password, id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
