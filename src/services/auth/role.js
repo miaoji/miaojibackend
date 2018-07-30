@@ -8,6 +8,7 @@ export async function query(params) {
     params.createUserId = getUserId()
   }
   params = pageParams(params)
+  delete params.location
   return request({
     url: role.list,
     method: 'post',

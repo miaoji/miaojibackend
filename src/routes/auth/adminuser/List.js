@@ -70,18 +70,18 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '备注信息',
-      dataIndex: 'remark',
-      key: 'remark',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      },
-    }, {
       title: '创建人',
       dataIndex: 'createUserName',
       key: 'createUserName',
       render: (text) => {
         return <span>{text || '无记录'}</span>
+      },
+    }, {
+      title: '备注信息',
+      dataIndex: 'remark',
+      key: 'remark',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
       },
     }, {
       title: '创建时间',

@@ -89,7 +89,6 @@ export const repairTime = function (val) {
  */
 export function handleFields(fields) {
   const { createTime, location } = fields
-  console.log('firlds', fields.bbbbb)
   for (let item in fields) {
     if (typeof fields[item] === 'string') {
       fields[item] = fields[item].trim()

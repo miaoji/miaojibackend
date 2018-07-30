@@ -55,7 +55,6 @@ export default modelExtend(pageModel, {
           list = data.obj.map((item) => {
             return reloadItem(item)
           })
-          console.log('list', list)
         }
         yield put({
           type: 'querySuccess',
@@ -144,7 +143,6 @@ export default modelExtend(pageModel, {
 
     *queryOrangeizeList(_, { call, put }) {
       const data = yield call(queryOrangeizeList, { page: 1, pageSize: 10000 })
-      console.log('data', data)
       if (data.code === 200) {
         let option = []
         if (data.obj && data.obj.length > 0) {

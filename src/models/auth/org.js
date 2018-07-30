@@ -8,6 +8,7 @@ import { query as queryRoleList } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 import { editLocation } from '../../utils/processing'
 import { getOrgId, getUserId } from '../../utils'
+import { storage } from '../../utils/storage'
 
 const { Option } = Select
 
@@ -66,7 +67,7 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      payload.idUsers = payload.idUsers.toString()
+      delete payload.idUsers
       payload.location = payload.location.toString()
       payload.roleId = Number(payload.roleId)
       payload.parentId = getOrgId()
@@ -83,7 +84,7 @@ export default modelExtend(pageModel, {
 
     *update({ payload }, { select, call, put }) {
       const currentItem = yield select(({ org }) => org.currentItem)
-      payload.idUsers = payload.idUsers.toString()
+      delete payload.idUsers
       payload.location = payload.location.toString()
       if (payload.roleId === currentItem.roleName) {
         delete payload.roleId
@@ -203,6 +204,7 @@ export default modelExtend(pageModel, {
     },
 
     *filterLocationList({ payload }, { call, put }) {
+      const location = JSON.parse(storage({ key: 'user' })).location.split(',')
       const data = yield call(getLocation)
       let option = []
       if (data.code === 200 && data.obj) {
@@ -246,6 +248,19 @@ export default modelExtend(pageModel, {
             label: item.name || item.province || item.city || item.district,
             children: item.children,
           }
+        }).filter((item) => {
+          if (item.children && location.length > 0) {
+            item.children = item.children.filter((i) => {
+              if (location.length > 1) {
+                return i.label === location[1]
+              }
+              return true
+            })
+          }
+          if (location.length > 0) {
+            return item.label === location[0]
+          }
+          return true
         })
         yield put({
           type: 'updateState',

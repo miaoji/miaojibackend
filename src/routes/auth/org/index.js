@@ -127,9 +127,12 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
       dispatch({
         type: 'org/queryRoleList',
       })
-      // dispatch({
-      //   type: 'org/queryLocation',
-      // })
+      dispatch({
+        type: 'org/filterLocationList',
+        payload: {
+          locationType: [],
+        },
+      })
       dispatch({
         type: 'org/queryStoreUser',
       })

@@ -58,7 +58,6 @@ const modal = ({
   }
 
   const handleRoldSelect = (key) => {
-    console.log('key11', key)
     onRoldSelect(JSON.parse(key))
   }
 

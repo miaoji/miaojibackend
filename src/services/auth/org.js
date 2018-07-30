@@ -1,11 +1,11 @@
-import { request, config, pageParams } from '../../utils'
+import { request, config, pageParams, getOrgId } from '../../utils'
 
 const { api: { auth: { org } } } = config
 
 export async function query(params) {
-  // params.orgId = getOrgId()
+  params.orgId = getOrgId()
   params = pageParams(params)
-  // delete params.orgId
+  delete params.location
   return request({
     url: org.list,
     method: 'post',

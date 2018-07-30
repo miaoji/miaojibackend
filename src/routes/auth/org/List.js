@@ -46,17 +46,6 @@ const List = ({ storeTotal, location, onEditItem, onDeleteItem, ...tableProps })
         return <span style={{ width: '110px', display: 'inline-block' }}>{text}</span>
       },
     }, {
-      title: '管理门店数量',
-      dataIndex: 'idUsers',
-      key: 'idUsers',
-      render: (text, record) => {
-        if (record.id === 1) {
-          return <span>{storeTotal}</span>
-        }
-        const count = text ? text.split(',').length : 0
-        return <span>{count}</span>
-      },
-    }, {
       title: '所在区域',
       dataIndex: 'location',
       key: 'location',
@@ -65,18 +54,18 @@ const List = ({ storeTotal, location, onEditItem, onDeleteItem, ...tableProps })
         return <span>{newText}</span>
       },
     }, {
-      title: '备注信息',
-      dataIndex: 'remark',
-      key: 'remark',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      },
-    }, {
       title: '创建人',
       dataIndex: 'createUserName',
       key: 'createUserName',
       render: (text) => {
         return <span>{text || '无记录'}</span>
+      },
+    }, {
+      title: '备注信息',
+      dataIndex: 'remark',
+      key: 'remark',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
       },
     }, {
       title: '创建时间',

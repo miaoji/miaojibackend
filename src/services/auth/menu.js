@@ -47,7 +47,6 @@ export async function updateAdminOrangeize() {
   return new Promise((resolve) => {
     setTimeout(resolve, 1000, 'done')
   }).then((value) => {
-    console.log(value)
     return value
   })
 }

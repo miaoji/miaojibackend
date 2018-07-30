@@ -46,7 +46,6 @@ const modal = ({
   }
 
   const handleChange = (key) => {
-    console.log('key', key)
     onGetIdUsers(key)
   }
 
@@ -63,7 +62,6 @@ const modal = ({
   const initLocation = item.location ? item.location.split(',') : []
 
   const handleTypeChange = (key) => {
-    console.log('key', key)
     onChangeLocationType(key.target.value)
   }
 
@@ -127,22 +125,21 @@ const modal = ({
             ],
           })(<Cascader options={locationList} onChange={handleChange} placeholder="请输入地区信息" />)}
         </FormItem>
-        <FormItem label="站点信息" hasFeedback {...formItemLayout}>
+        <FormItem label="站点信息确认" hasFeedback {...formItemLayout}>
           {getFieldDecorator('idUsers', {
             initialValue: initIdusers,
             rules: [
               {
-                required: true,
+                // required: true,
                 type: 'array',
                 message: '请输入站点信息!',
               },
             ],
           })(<Select
-            // mode="tags"
             mode="multiple"
             style={{ width: '100%' }}
-            placeholder="请输入站点信息!"
-          // onChange={handleChange}
+            placeholder="地址信息待选择!"
+            disabled
           >
             {storeuserList}
           </Select>)}

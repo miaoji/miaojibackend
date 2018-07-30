@@ -1,6 +1,5 @@
 import { routerRedux } from 'dva/router'
-import { queryURL, storage } from 'utils'
-import md5 from 'js-md5'
+import { queryURL, storage, password } from 'utils'
 import { login } from '../../services/system/login'
 
 export default {
@@ -13,7 +12,7 @@ export default {
     * login({
       payload,
     }, { put, call }) {
-      payload.password = md5(payload.password)
+      payload.password = password(payload.password)
       yield put({ type: 'showLoginLoading' })
       const data = yield call(login, payload)
       if (data.success && data.code === 200) {

@@ -8,10 +8,26 @@ const getOrgId = () => {
     const user = storage({ key: 'user' })
     orgId = user ? JSON.parse(user).orgId : undefined
   } catch (err) {
-    console.log(err)
+    console.info(err)
     orgId = undefined
   }
   return orgId
+}/**
+ * [获取用户所属区域信息]
+ */
+const getLocation = () => {
+  let userLocation = []
+  try {
+    let user = storage({ key: 'user' })
+    user = user ? JSON.parse(user) : undefined
+    if (user && user.location) {
+      userLocation = user.location.split(',')
+    }
+  } catch (err) {
+    console.info(err)
+    userLocation = []
+  }
+  return userLocation
 }
 /**
  * [获取用户的角色ID]
@@ -22,7 +38,7 @@ const getRoleId = () => {
     const user = storage({ key: 'user' })
     roleId = user ? JSON.parse(user).roleId : undefined
   } catch (err) {
-    console.log(err)
+    console.info(err)
     roleId = undefined
   }
   return roleId
@@ -36,7 +52,7 @@ const getUserId = () => {
     const user = storage({ key: 'user' })
     userId = user ? JSON.parse(user).userId : undefined
   } catch (err) {
-    console.log(err)
+    console.info(err)
     userId = undefined
   }
   return userId
@@ -50,7 +66,7 @@ const isSuperAdmin = () => {
     const user = storage({ key: 'user' })
     orgId = user ? JSON.parse(user).orgId : undefined
   } catch (err) {
-    console.log(err)
+    console.info(err)
     orgId = undefined
   }
   return orgId === 1
@@ -61,4 +77,5 @@ export {
   getRoleId,
   getUserId,
   isSuperAdmin,
+  getLocation,
 }

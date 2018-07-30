@@ -1,4 +1,4 @@
-import { request, config, pageParams, getOrgId } from '../../utils'
+import { request, config, pageParams } from '../../utils'
 
 const { api } = config
 const { expressfeedetail } = api
@@ -22,7 +22,6 @@ export async function download(params) {
   delete params.showName
   delete params.pagination
   delete params.rownum
-  params.orgId = getOrgId()
   params = JSON.stringify(params)
   return request({
     url: expressfeedetail.download,

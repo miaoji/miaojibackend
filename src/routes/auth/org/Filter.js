@@ -91,14 +91,12 @@ const Filter = ({
     return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }
   const handleLocationChange = (key) => {
-    console.log('key', key)
     handleChange('location', key)
     setFieldsValue({
       location: key,
     })
   }
   const handleTypeChange = (key) => {
-    console.log('key', key)
     onChangeLocationType(key.target.value)
   }
   const initLocation = location ? location.split(',') : undefined

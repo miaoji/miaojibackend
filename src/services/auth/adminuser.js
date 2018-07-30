@@ -1,11 +1,12 @@
-import { request, config, pageParams, getUserId } from '../../utils'
+import { request, config, pageParams, getUserId, getOrgId } from '../../utils'
 
 const { api: { auth: { adminuser } } } = config
 
 export async function query(params) {
   params.userId = getUserId()
-  delete params.orgId
+  params.orgId = getOrgId()
   params = pageParams(params)
+  delete params.location
   return request({
     url: adminuser.list,
     method: 'post',
