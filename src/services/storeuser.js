@@ -4,6 +4,9 @@ const { storeuser } = api
 
 export async function query(params) {
   params = pageParams(params)
+  if (params.rownum === 10000) {
+    delete params.location
+  }
   return request({
     url: storeuser.list,
     method: 'post',
