@@ -17,13 +17,14 @@ APIV3 = 'http://app.quandikeji.com:8288'
 // APIV3 = 'http://192.168.126.1:8081'
 
 // 张涛
-// APIV3 = 'http://106.14.212.146:8288'
-APIV3 = 'http://192.168.231.239:8066'
+APIV3 = 'http://106.14.212.146:8288'
+// APIV3 = 'http://192.168.231.239:8066'
+// APIV3 = 'http://192.168.231.239:8077'
 // APIV3 = 'http://117.50.23.22:8080'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  APIV3 = 'http://app.quandikeji.com:8288'
+  // APIV3 = 'http://app.quandikeji.com:8288'
   // APIV3 = 'http://47.101.42.216:8088'
   APIV3 = 'http://106.14.212.146:8288'
 }

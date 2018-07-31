@@ -69,6 +69,10 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
+      console.log('pay', payload)
+      if (payload.locationType === 4) {
+        payload.location = []
+      }
       delete payload.idUsers
       payload.location = payload.location.toString()
       payload.roleId = Number(payload.roleId)

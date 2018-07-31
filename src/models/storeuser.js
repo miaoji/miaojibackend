@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { config, initialCreateTime, isSuperAdmin } from '../utils'
+import { config, initialCreateTime } from '../utils'
 import { query, updateFee, versionswitch } from '../services/storeuser'
 import { pageModel } from './system/common'
 
@@ -36,9 +36,6 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
-      if (isSuperAdmin()) {
-        payload.superId = -1
-      }
       const data = yield call(query, { ...payload })
       if (data.code === 200) {
         yield put({

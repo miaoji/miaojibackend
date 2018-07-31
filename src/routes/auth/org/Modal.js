@@ -140,7 +140,7 @@ const modal = ({
               initialValue: initLocation,
               rules: [
                 {
-                  required: true,
+                  required: locationSelectShow,
                   message: '请输入地区信息!',
                 },
               ],
@@ -156,7 +156,7 @@ const modal = ({
               initialValue: initIdusers,
               rules: [
                 {
-                  required: true,
+                  required: locationSelectShow,
                   type: 'array',
                   message: '您选择的地址没有可以管理的站点!',
                 },

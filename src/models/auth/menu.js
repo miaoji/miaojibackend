@@ -140,7 +140,7 @@ export default modelExtend(pageModel, {
       const res = yield call(updateAdminMenus, {
         menuGroup: menus,
         menus: menus.map(i => String(i)),
-        id: 31,
+        id: 1,
       })
       if (res.code === 200) {
         message.success('更新成功')

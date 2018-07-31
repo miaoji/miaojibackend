@@ -7,6 +7,9 @@ export async function query(params) {
   if (params.rownum === 10000) {
     delete params.location
   }
+  if (!params.location) {
+    params.superId = -1
+  }
   return request({
     url: storeuser.list,
     method: 'post',

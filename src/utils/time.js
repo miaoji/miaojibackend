@@ -35,7 +35,7 @@ export function initialCreateTime(payload) {
  */
 export function yesterTime(frontDay = 0, distance = 0) {
   let dayCount = 1
-  const test = false
+  const test = true
   if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
     const date = new Date()
