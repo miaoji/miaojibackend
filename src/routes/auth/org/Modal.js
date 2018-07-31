@@ -30,6 +30,7 @@ const modal = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    setFieldsValue,
   },
   type,
   ...modalProps
@@ -64,6 +65,9 @@ const modal = ({
   const initLocation = item.location ? item.location.split(',') : []
 
   const handleTypeChange = (key) => {
+    setFieldsValue({
+      location: undefined,
+    })
     onChangeLocationType(key.target.value)
   }
 
@@ -152,15 +156,15 @@ const modal = ({
               initialValue: initIdusers,
               rules: [
                 {
-                  // required: true,
+                  required: true,
                   type: 'array',
-                  message: '请输入站点信息!',
+                  message: '您选择的地址没有可以管理的站点!',
                 },
               ],
             })(<Select
               mode="multiple"
               style={{ width: '100%' }}
-              placeholder="地址信息待选择!"
+              placeholder="暂无可以管理的站点!"
               disabled
             >
               {storeuserList}

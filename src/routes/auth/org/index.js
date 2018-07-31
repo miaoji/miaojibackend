@@ -37,6 +37,12 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     },
     onChangeLocationType(val) {
       dispatch({
+        type: 'org/updateState',
+        payload: {
+          orgIdusers: [],
+        },
+      })
+      dispatch({
         type: 'org/filterLocationList',
         payload: {
           locationType: val,
