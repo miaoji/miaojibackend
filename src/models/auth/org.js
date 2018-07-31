@@ -23,6 +23,7 @@ export default modelExtend(pageModel, {
     storeuserList: [],
     roleList: [],
     orgIdusers: [],
+    locationSelectShow: false,
   },
 
   subscriptions: {
@@ -84,6 +85,9 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
+      if (payload.locationType === 4) {
+        payload.location = []
+      }
       const currentItem = yield select(({ org }) => org.currentItem)
       delete payload.idUsers
       payload.location = payload.location.toString()
@@ -205,8 +209,17 @@ export default modelExtend(pageModel, {
     },
 
     *filterLocationList({ payload }, { call, put }) {
+      console.log('pay', payload)
+      if (payload.locationType === 4) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            locationSelectShow: false,
+          },
+        })
+        return
+      }
       const location = getLocationArr()
-      console.log('location', location)
       const data = yield call(getLocation)
       let option = []
       if (data.code === 200 && data.obj) {
@@ -264,11 +277,11 @@ export default modelExtend(pageModel, {
           }
           return true
         })
-        console.log('loca', option)
         yield put({
           type: 'updateState',
           payload: {
             locationList: option,
+            locationSelectShow: true,
           },
         })
       }
@@ -283,7 +296,7 @@ export default modelExtend(pageModel, {
     },
 
     hideModal(state) {
-      return { ...state, modalVisible: false, orgIdusers: [] }
+      return { ...state, modalVisible: false, orgIdusers: [], locationSelectShow: false }
     },
 
   },

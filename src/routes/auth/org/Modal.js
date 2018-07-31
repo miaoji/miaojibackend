@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Input, Modal, Select, Cascader, Radio } from 'antd'
+import { isSuperAdmin } from '../../../utils'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -23,6 +24,7 @@ const modal = ({
   locationList,
   orgIdusers,
   onChangeLocationType,
+  locationSelectShow,
   onGetIdUsers,
   form: {
     getFieldDecorator,
@@ -63,6 +65,24 @@ const modal = ({
 
   const handleTypeChange = (key) => {
     onChangeLocationType(key.target.value)
+  }
+
+  let LocationTypeOption = [
+    <Radio value={1}>省级</Radio>,
+    <Radio value={2}>市级</Radio>,
+    <Radio value={3}>县级</Radio>,
+  ]
+  if (isSuperAdmin()) {
+    LocationTypeOption = [
+      <Radio value={1}>省级</Radio>,
+      <Radio value={2}>市级</Radio>,
+      <Radio value={3}>县级</Radio>,
+      <Radio value={4}>全国</Radio>,
+    ]
+  }
+
+  const filterLocation = (inputValue, path) => {
+    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }
 
   return (
@@ -106,44 +126,47 @@ const modal = ({
                 message: '请输入地区等级!',
               },
             ],
-          })(
-            <RadioGroup onChange={handleTypeChange}>
-              <Radio value={1}>省级</Radio>
-              <Radio value={2}>市级</Radio>
-              <Radio value={3}>县级</Radio>
-            </RadioGroup>
-          )}
+          })(<RadioGroup onChange={handleTypeChange}>
+            {LocationTypeOption}
+          </RadioGroup>)}
         </FormItem>
-        <FormItem label="地区信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('location', {
-            initialValue: initLocation,
-            rules: [
-              {
-                required: true,
-                message: '请输入地区信息!',
-              },
-            ],
-          })(<Cascader options={locationList} onChange={handleChange} placeholder="请输入地区信息" />)}
-        </FormItem>
-        <FormItem label="站点信息确认" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('idUsers', {
-            initialValue: initIdusers,
-            rules: [
-              {
-                // required: true,
-                type: 'array',
-                message: '请输入站点信息!',
-              },
-            ],
-          })(<Select
-            mode="multiple"
-            style={{ width: '100%' }}
-            placeholder="地址信息待选择!"
-            disabled
-          >
-            {storeuserList}
-          </Select>)}
-        </FormItem>
+        <div style={{ display: locationSelectShow ? 'block' : 'none' }}>
+          <FormItem label="地区信息" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('location', {
+              initialValue: initLocation,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入地区信息!',
+                },
+              ],
+            })(<Cascader
+              showSearch={{ filterLocation }}
+              options={locationList}
+              onChange={handleChange}
+              placeholder="请输入地区信息"
+            />)}
+          </FormItem>
+          <FormItem label="站点信息确认" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('idUsers', {
+              initialValue: initIdusers,
+              rules: [
+                {
+                  // required: true,
+                  type: 'array',
+                  message: '请输入站点信息!',
+                },
+              ],
+            })(<Select
+              mode="multiple"
+              style={{ width: '100%' }}
+              placeholder="地址信息待选择!"
+              disabled
+            >
+              {storeuserList}
+            </Select>)}
+          </FormItem>
+        </div>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
             initialValue: item.remark,
@@ -173,6 +196,7 @@ modal.propTypes = {
   onChangeLocationType: PropTypes.func,
   onGetIdUsers: PropTypes.func,
   orgIdusers: PropTypes.array,
+  locationSelectShow: PropTypes.bool,
 }
 
 export default Form.create()(modal)

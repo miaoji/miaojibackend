@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, org, loading, app }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList, orgIdusers } = org
+  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList, orgIdusers, locationSelectShow } = org
   const { pageSize } = pagination
   const { storeTotal } = app
 
@@ -22,6 +22,7 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     roleList,
     locationList,
     orgIdusers,
+    locationSelectShow,
     maskClosable: false,
     onOk(data) {
       dispatch({
