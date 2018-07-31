@@ -7,7 +7,7 @@ export async function query(params) {
   if (params.rownum === 10000) {
     delete params.location
   }
-  if (!params.location) {
+  if (!params.location && !params.superId) {
     params.superId = -1
   }
   return request({
