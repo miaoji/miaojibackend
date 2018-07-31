@@ -69,7 +69,6 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      console.log('pay', payload)
       if (payload.locationType === 4) {
         payload.location = []
       }
@@ -213,7 +212,6 @@ export default modelExtend(pageModel, {
     },
 
     *filterLocationList({ payload }, { call, put }) {
-      console.log('pay', payload)
       if (payload.locationType === 4) {
         yield put({
           type: 'updateState',

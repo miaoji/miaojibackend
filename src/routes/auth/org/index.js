@@ -25,6 +25,7 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     locationSelectShow,
     maskClosable: false,
     onOk(data) {
+      console.log('data', data)
       dispatch({
         type: `org/${modalType}`,
         payload: data,
@@ -83,7 +84,7 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
       })
     },
     onEditItem(item) {
-      item.locationType = item.location.split(',').length
+      item.locationType = item.location ? item.location.split(',').length : 4
       dispatch({
         type: 'org/filterLocationList',
         payload: {

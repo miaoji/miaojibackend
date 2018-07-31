@@ -36,6 +36,7 @@ const modal = ({
   ...modalProps
 }) => {
   const handleOk = () => {
+    console.log(123, locationSelectShow)
     validateFields((errors) => {
       if (errors) {
         return
@@ -44,6 +45,7 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
+      console.log('data', data)
       onOk(data)
     })
   }

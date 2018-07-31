@@ -84,7 +84,6 @@ export default modelExtend(pageModel, {
 
     // 根据主账号查询子账号
     *unfold({ payload }, { call, put }) {
-      console.log('paylo', payload)
       const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
       if (data.code === 200) {
         yield put({

@@ -7,7 +7,6 @@ const { dashboard } = api
 /**
  * [获取首页折线图数据]
  */
-console.log('getLocation()', getLocation())
 export async function getLineData(params = {}) {
   params.location = getLocation().length ? `[${getLocation()}]` : undefined
   return request({

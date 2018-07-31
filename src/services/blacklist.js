@@ -3,7 +3,6 @@ import { request, config, pageParams } from '../utils'
 
 const { api } = config
 const { blacklist } = api
-console.log('getLocation', getLocation())
 export async function query(params) {
   params = pageParams(params)
   params.location = getLocation().length ? `[${getLocation()}]` : undefined
