@@ -14,7 +14,15 @@ const List = ({ onDeleteItem, onEditItem, sonlist, isMotion, location, ...tableP
       key: 'id',
       width: 100,
       render: (text) => {
-        const { createTime } = location.query
+        let { createTime } = location.query
+        if (!createTime) {
+          let yesterdayDate = new Date()
+          yesterdayDate.setTime(yesterdayDate.getTime() - 24 * 60 * 60 * 1000)
+          createTime = [
+            yesterdayDate,
+            new Date().getTime(),
+          ]
+        }
         // return <Link to={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</Link>
         return <a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
       },

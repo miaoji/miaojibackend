@@ -92,9 +92,20 @@ export default modelExtend(pageModel, {
           sonlist: {},
         },
       })
-      const { createTime } = payload
-      payload = initialCreateTime(payload)
-      const { idUser, startTime, endTime } = payload
+      let { createTime } = payload
+      let startTime
+      let endTime
+      if (!createTime) {
+        let yesterdayDate = new Date()
+        yesterdayDate.setTime(yesterdayDate.getTime() - 24 * 60 * 60 * 1000)
+        startTime = yesterdayDate.getTime()
+        endTime = new Date().getTime()
+      } else {
+        payload = initialCreateTime(payload)
+        startTime = payload.startTime
+        endTime = payload.endTime
+      }
+      let { idUser } = payload
       const data = yield call(count, {
         idUser, startTime, endTime,
       })
@@ -116,10 +127,17 @@ export default modelExtend(pageModel, {
           let item = obj[i]
           const brandName = item.brandName
           const brandData = `${brandReverse[brandName]}///${brandName}`
-          list.someCargo.push(<Tag color="#87d068"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=1///点货`}>{brandName}:{item.someCargo}</a></Tag>)
-          list.scheduledReceipt.push(<Tag color="#2db7f5"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=101///入库`}>{brandName}:{item.scheduledReceipt}</a></Tag>)
-          list.signingVolume.push(<Tag color="#108ee9"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=305///签收`}>{brandName}:{item.signingVolume}</a></Tag>)
-          list.returnAmount.push(<Tag color="#f50"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=303///退回`}>{brandName}:{item.returnAmount}</a></Tag>)
+          if (createTime) {
+            list.someCargo.push(<Tag color="#87d068"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=1///点货`}>{brandName}:{item.someCargo}</a></Tag>)
+            list.scheduledReceipt.push(<Tag color="#2db7f5"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=101///入库`}>{brandName}:{item.scheduledReceipt}</a></Tag>)
+            list.signingVolume.push(<Tag color="#108ee9"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=305///签收`}>{brandName}:{item.signingVolume}</a></Tag>)
+            list.returnAmount.push(<Tag color="#f50"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&createTime=${createTime[0]}&createTime=${createTime[1]}&state=303///退回`}>{brandName}:{item.returnAmount}</a></Tag>)
+          } else {
+            list.someCargo.push(<Tag color="#87d068"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&state=1///点货`}>{brandName}:{item.someCargo}</a></Tag>)
+            list.scheduledReceipt.push(<Tag color="#2db7f5"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&state=101///入库`}>{brandName}:{item.scheduledReceipt}</a></Tag>)
+            list.signingVolume.push(<Tag color="#108ee9"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&state=305///签收`}>{brandName}:{item.signingVolume}</a></Tag>)
+            list.returnAmount.push(<Tag color="#f50"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&state=303///退回`}>{brandName}:{item.returnAmount}</a></Tag>)
+          }
         }
         yield put({
           type: 'updateState',
