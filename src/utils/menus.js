@@ -165,6 +165,20 @@ export default [
     name: '门店问题件明细',
     route: '/problemdetail',
   },
+  {
+    id: '409',
+    bpid: '1',
+    mpid: '4',
+    name: '业务量',
+    route: '/businessvolume',
+  },
+  {
+    id: '4017',
+    bpid: '409',
+    mpid: '-1',
+    name: '业务量详情',
+    route: '/businessvolumeDetail',
+  },
   // //
   {
     id: '7',

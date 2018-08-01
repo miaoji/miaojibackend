@@ -63,7 +63,7 @@ export default {
         const user = JSON.parse(userInfo)
         const menuList = user.menuList
         let list = menus
-        if (process.env.NODE_ENV !== 'text') {
+        if (process.env.NODE_ENV === 'text') {
           list = [...rebuildMenuData(menuList), ...hideMenus]
         }
         // const { permissions } = user

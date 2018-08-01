@@ -1,33 +1,5 @@
 import moment from 'moment'
 /**
- * [将时间选择器选择得到的时间字符串转换成时间戳]
- * @param {object} payload [需要过滤的对象]
- * @return {object}        [过滤后的对象]
- */
-export function initialCreateTime(payload) {
-  payload = { ...payload }
-  const { createTime } = payload
-  if (createTime && createTime.length && createTime[0] && createTime[1]) {
-    let tmpTime = []
-    if (typeof (createTime[0]) === 'object') {
-      createTime[0] = createTime[0].format('YYYY-MM-DD')
-      createTime[1] = createTime[1].format('YYYY-MM-DD')
-    }
-    if (createTime[0]) {
-      tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
-    }
-    if (createTime[1]) {
-      tmpTime[1] = moment(`${createTime[1]} 23:59:59`).unix()
-    }
-    payload.startTime = `${tmpTime[0]}000`
-    payload.endTime = `${tmpTime[1]}999`
-    delete payload.createTime
-  } else {
-    delete payload.createTime
-  }
-  return payload
-}
-/**
  * [按照传入的参数生成一个时间粗数组]
  * @param {number} frontDay [从多少天以前开始,0代表昨天一天]
  * @param {number} distance [间隔的天数,结束时间=提前的天数-时间间隔]
@@ -56,6 +28,41 @@ export function yesterTime(frontDay = 0, distance = 0) {
     endTime: 1529078399999 - 86400000 * (frontDay - distance),
   }
 }
+/**
+ * [将时间选择器选择得到的时间字符串转换成时间戳]
+ * @param {object} payload [需要过滤的对象]
+ * @return {object}        [过滤后的对象]
+ */
+export function initialCreateTime(payload) {
+  payload = { ...payload }
+  const { createTime } = payload
+  if (createTime && createTime.length && createTime[0] && createTime[1]) {
+    let tmpTime = []
+    if (typeof (createTime[0]) === 'object') {
+      createTime[0] = createTime[0].format('YYYY-MM-DD')
+      createTime[1] = createTime[1].format('YYYY-MM-DD')
+    }
+    if (createTime[0]) {
+      tmpTime[0] = moment(`${createTime[0]} 00:00:00`).unix()
+    }
+    if (createTime[1]) {
+      tmpTime[1] = moment(`${createTime[1]} 23:59:59`).unix()
+    }
+    payload.startTime = `${tmpTime[0]}000` / 1
+    payload.endTime = `${tmpTime[1]}999` / 1
+    delete payload.createTime
+  } else {
+    delete payload.createTime
+  }
+  if (!payload.startTime) {
+    const times = yesterTime()
+    payload = { ...times, ...payload }
+  } else {
+    payload = { ...payload }
+  }
+  return payload
+}
+
 
 /**
  * [将时间数组格式话]
