@@ -1,7 +1,7 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
+import { initialCreateTime } from '../../utils'
 import { getMenuByParentId, query, create, update, remove } from '../../services/auth/menu'
 import { update as updateAdminMenus } from '../../services/auth/role'
 import { pageModel } from '../system/common'

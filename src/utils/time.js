@@ -31,9 +31,10 @@ export function yesterTime(frontDay = 0, distance = 0) {
 /**
  * [将时间选择器选择得到的时间字符串转换成时间戳]
  * @param {object} payload [需要过滤的对象]
+ * @param {boolean} isInit [是否对没有传入时间的对象经行初始化]
  * @return {object}        [过滤后的对象]
  */
-export function initialCreateTime(payload) {
+export function initialCreateTime(payload, isInit = false) {
   payload = { ...payload }
   const { createTime } = payload
   if (createTime && createTime.length && createTime[0] && createTime[1]) {
@@ -54,7 +55,7 @@ export function initialCreateTime(payload) {
   } else {
     delete payload.createTime
   }
-  if (!payload.startTime) {
+  if (!payload.startTime && isInit) {
     const times = yesterTime()
     payload = { ...times, ...payload }
   } else {

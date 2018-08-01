@@ -35,7 +35,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      payload = initialCreateTime(payload)
+      payload = initialCreateTime(payload, true)
       filterStoreSelect(payload)
       const data = yield call(query, { ...payload })
       if (data.code === 200) {
@@ -57,7 +57,7 @@ export default modelExtend(pageModel, {
 
     // 根据门店账号查询单号详细信息
     *infoId({ payload }, { call, put }) {
-      payload = initialCreateTime(payload)
+      payload = initialCreateTime(payload, true)
       const { idUser, startTime, endTime } = payload
       const data = yield call(detail, {
         idUser, startTime, endTime,
@@ -83,7 +83,7 @@ export default modelExtend(pageModel, {
           sonlist: {},
         },
       })
-      payload = initialCreateTime(payload)
+      payload = initialCreateTime(payload, true)
       let { startTime, endTime, idUser } = payload
       const data = yield call(count, {
         idUser, startTime, endTime,
@@ -121,7 +121,7 @@ export default modelExtend(pageModel, {
         description: '正在为您准备资源,请稍等!!!',
         duration: 3,
       })
-      payload = initialCreateTime(payload)
+      payload = initialCreateTime(payload, true)
       // filterStoreSelect(payload)
       const newpayload = {
         startTime: payload.startTime,

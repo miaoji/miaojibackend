@@ -61,4 +61,10 @@ export default [
     name: '二维码图片',
     route: '/qrdetail',
   },
+  {
+    id: '1011',
+    mpid: '-1',
+    name: '业务量详情',
+    route: '/businessvolumeDetail',
+  },
 ]
