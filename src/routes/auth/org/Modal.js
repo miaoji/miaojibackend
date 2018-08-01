@@ -69,6 +69,7 @@ const modal = ({
   const handleTypeChange = (key) => {
     setFieldsValue({
       location: undefined,
+      idUsers: undefined,
     })
     onChangeLocationType(key.target.value)
   }
