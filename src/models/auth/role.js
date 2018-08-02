@@ -151,6 +151,17 @@ export default modelExtend(pageModel, {
       const data = yield call(query, { page: 1, pageSize: 1000000 })
       let option = []
       if (data.code === 200 && data.obj) {
+        if (payload.id) {
+          console.log('payload.id', payload.id)
+          const menus = data.obj.filter(item => item.ID === payload.id)
+          console.log('MENU_GROUP_ID', menus)
+          yield put({
+            type: 'filterRoleList',
+            payload: {
+              MENU_GROUP_ID: menus[0].MENU_GROUP_ID,
+            },
+          })
+        }
         const newdata = data.obj.filter(item => !payload.id || item.ID !== payload.id)
         option = newdata.map((item) => {
           return <Option key={JSON.stringify(item)}>{item.ROLE_NAME}</Option>
@@ -165,6 +176,9 @@ export default modelExtend(pageModel, {
     },
     // 手动过滤能显示的菜单信息
     *filterRoleList({ payload = {} }, { put }) {
+      if (payload.item) {
+        console.log('ppp', payload.item)
+      }
       const storageData = storage({ key: 'menuListSpare' })
       const menuListSpare = JSON.parse(storageData)
       let menuGroupID = []

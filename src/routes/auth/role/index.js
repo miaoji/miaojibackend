@@ -27,7 +27,11 @@ const Modular = ({ location, dispatch, role, loading }) => {
       })
     },
     onOk(data) {
-      data.parentRoleId = data.roleId ? JSON.parse(data.roleId).ID : ''
+      if (data.roleId === currentItem.PARENT_ROLE_NAME) {
+        data.parentRoleId = undefined
+      } else {
+        data.parentRoleId = data.roleId ? JSON.parse(data.roleId).ID : ''
+      }
       delete data.roleId
       dispatch({
         type: `role/${modalType}`,
@@ -76,10 +80,11 @@ const Modular = ({ location, dispatch, role, loading }) => {
             id: item.ID,
           },
         })
+      } else {
+        dispatch({
+          type: 'role/filterRoleList',
+        })
       }
-      dispatch({
-        type: 'role/filterRoleList',
-      })
       dispatch({
         type: 'role/showModal',
         payload: {
