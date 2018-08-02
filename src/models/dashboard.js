@@ -109,7 +109,7 @@ export default modelExtend(pageModel, {
       if (isSuperAdmin()) {
         payload.superId = -1
       }
-      const data = yield call(queryStoreUser, { page: 1, pageSize: 1, ...payload })
+      const data = yield call(queryStoreUser, { page: 1, pageSize: 100000000, ...payload })
       if (data.code === 200) {
         yield put({
           type: 'setStates',

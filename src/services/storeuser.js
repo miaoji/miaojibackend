@@ -4,9 +4,9 @@ const { storeuser } = api
 
 export async function query(params) {
   params = pageParams(params)
-  if (params.rownum === 10000) {
-    delete params.location
-  }
+  // if (params.rownum === 10000) {
+  //   delete params.location
+  // }
   if (!params.location && !params.superId) {
     params.superId = -1
   }

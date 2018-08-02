@@ -69,7 +69,6 @@ const modal = ({
   const handleTypeChange = (key) => {
     setFieldsValue({
       location: undefined,
-      idUsers: undefined,
     })
     onChangeLocationType(key.target.value)
   }
@@ -161,7 +160,7 @@ const modal = ({
               initialValue: initIdusers,
               rules: [
                 {
-                  required: locationSelectShow,
+                  required: false,
                   type: 'array',
                   message: '您选择的地址没有可以管理的站点!',
                 },
