@@ -23,9 +23,9 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     locationList,
     orgIdusers,
     locationSelectShow,
+    locationLoading: loading.effects['org/filterLocationList'],
     maskClosable: false,
     onOk(data) {
-      console.log('data', data)
       dispatch({
         type: `org/${modalType}`,
         payload: data,

@@ -2,7 +2,6 @@ import { request, api, pageParams } from '../utils'
 
 const { businessvolume } = api
 
-console.log('businessvolume.list', businessvolume.list)
 export async function query(params) {
   params = pageParams(params)
   return request({

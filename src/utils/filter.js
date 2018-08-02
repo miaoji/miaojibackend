@@ -6,7 +6,6 @@
  */
 export function filterStoreSelect(payload) {
   if (payload.name) {
-    console.log('name', payload.name)
     payload.idUser = Number(payload.name.split('///')[0])
     delete payload.name
     // payload.name = payload.name.split('///')[1]

@@ -221,6 +221,12 @@ export default modelExtend(pageModel, {
         })
         return
       }
+      yield put({
+        type: 'updateState',
+        payload: {
+          locationSelectShow: true,
+        },
+      })
       const location = getLocationArr()
       const data = yield call(getLocation)
       let option = []
@@ -283,7 +289,6 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             locationList: option,
-            locationSelectShow: true,
           },
         })
       }

@@ -8,7 +8,6 @@ import styles from './List.less'
 const SonTable = ({
   list,
 }) => {
-  console.log('list', list)
   const columns = [
     {
       title: '点货数',

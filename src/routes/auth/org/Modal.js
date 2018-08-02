@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select, Cascader, Radio } from 'antd'
+import { Form, Input, Modal, Select, Cascader, Radio, Spin } from 'antd'
 import { isSuperAdmin } from '../../../utils'
+import style from './Modal.less'
 
 const FormItem = Form.Item
 const TextArea = Input.TextArea
@@ -26,6 +27,7 @@ const modal = ({
   onChangeLocationType,
   locationSelectShow,
   onGetIdUsers,
+  locationLoading,
   form: {
     getFieldDecorator,
     validateFields,
@@ -36,7 +38,6 @@ const modal = ({
   ...modalProps
 }) => {
   const handleOk = () => {
-    console.log(123, locationSelectShow)
     validateFields((errors) => {
       if (errors) {
         return
@@ -45,7 +46,6 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      console.log('data', data)
       onOk(data)
     })
   }
@@ -137,7 +137,8 @@ const modal = ({
             {LocationTypeOption}
           </RadioGroup>)}
         </FormItem>
-        <div style={{ display: locationSelectShow ? 'block' : 'none' }}>
+        <div className={style.location_box} style={{ display: locationSelectShow ? 'block' : 'none' }}>
+          {locationLoading ? <div className={style.location}><Spin /></div> : ''}
           <FormItem label="地区信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('location', {
               initialValue: initLocation,
@@ -148,6 +149,7 @@ const modal = ({
                 },
               ],
             })(<Cascader
+              disabled={locationLoading}
               showSearch={{ filterLocation }}
               options={locationList}
               onChange={handleChange}
@@ -173,6 +175,7 @@ const modal = ({
               {storeuserList}
             </Select>)}
           </FormItem>
+
         </div>
         <FormItem label="备注信息" hasFeedback {...formItemLayout}>
           {getFieldDecorator('remark', {
@@ -204,6 +207,7 @@ modal.propTypes = {
   onGetIdUsers: PropTypes.func,
   orgIdusers: PropTypes.array,
   locationSelectShow: PropTypes.bool,
+  locationLoading: PropTypes.bool,
 }
 
 export default Form.create()(modal)

@@ -56,7 +56,6 @@ const Filter = ({
   }
 
   const brandChange = (key) => {
-    console.log('brand', key)
     handleChange('idBrand', key)
   }
 
@@ -79,7 +78,6 @@ const Filter = ({
   }
 
   const stateChange = (key) => {
-    console.log('state', key)
     handleChange('state', key)
   }
 

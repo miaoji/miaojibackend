@@ -9,12 +9,8 @@ const TabPane = Tabs.TabPane
 const Tab = ({
   list,
 }) => {
-  function callback(key) {
-    console.log('key', key)
-  }
-
   return (
-    <Tabs defaultActiveKey="1" onChange={callback} className={classnames({ [styles.tab]: true })}>
+    <Tabs defaultActiveKey="1" className={classnames({ [styles.tab]: true })}>
       <TabPane tab="点货数" key="1">
         <div>
           {list.someCargo}
