@@ -6,10 +6,10 @@ const { order } = api
 
 export async function query(params) {
   params = pageParams(params)
-  params.location = getLocation().length ? `[${getLocation()}]` : undefined
+  params.location = getLocation().length ? getLocation() : undefined
   return request({
     url: order.list,
-    method: 'get',
+    method: 'post',
     data: params,
   })
 }
