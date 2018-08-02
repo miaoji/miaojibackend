@@ -43,6 +43,10 @@ const BusinessVolume = ({ location, dispatch, businessvolume, app, loading }) =>
     tabLoading: loading.effects['businessvolume/countInfo'],
     expandedRowKeys,
     onChange(page) {
+      if (query.createTime && query.createTime.length > 0) {
+        query.createTime[0] = query.createTime[0].format('YYYY-MM-DD')
+        query.createTime[1] = query.createTime[1].format('YYYY-MM-DD')
+      }
       dispatch(routerRedux.push({
         pathname,
         query: {
