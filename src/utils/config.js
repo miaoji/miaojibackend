@@ -158,10 +158,6 @@ module.exports = {
     storeUserDetail: {
       all: `${APIV3}/quandiExpressSiteManager/selectrealName`,
     },
-    // 操作人寄件详情
-    operator: {
-      all: `${APIV3}/quandiExpressSiteManager/selectRealNameDetails`,
-    },
     // 门店点单上架分派签收
     business: {
       all: `${APIV3}/quandiExpressSiteManager/selectdsfq`,

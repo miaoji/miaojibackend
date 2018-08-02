@@ -8,22 +8,22 @@ const { dashboard } = api
  * [获取首页折线图数据]
  */
 export async function getLineData(params = {}) {
-  params.location = getLocation().length ? `[${getLocation()}]` : undefined
+  params.location = getLocation().length ? getLocation() : undefined
   return request({
     url: dashboard.echart,
     method: 'post',
-    params,
+    data: params,
   })
 }
 /**
  * [获取微信用户数量]
  */
 export async function weChatUser(params = {}) {
-  params.location = getLocation().length ? `[${getLocation()}]` : undefined
+  params.location = getLocation().length ? getLocation() : undefined
   return request({
     url: dashboard.weChatUser,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
@@ -37,11 +37,11 @@ export async function storeTotal() {
  * [获取昨日收入]
  */
 export async function income(params = {}) {
-  params.location = getLocation().length ? `[${getLocation()}]` : undefined
+  params.location = getLocation().length ? getLocation() : undefined
   return request({
     url: dashboard.income,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
@@ -49,10 +49,10 @@ export async function income(params = {}) {
  * [获取设备总数]
  */
 export async function terminalTotal(params = {}) {
-  params.location = getLocation().length ? `[${getLocation()}]` : undefined
+  params.location = getLocation().length ? getLocation() : undefined
   return request({
     url: dashboard.terminalTotal,
     method: 'post',
-    params,
+    data: params,
   })
 }

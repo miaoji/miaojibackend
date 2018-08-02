@@ -7,27 +7,22 @@ export async function query(params) {
   params = pageParams(params)
   delete params.showName
   delete params.download
-  params = JSON.stringify(params)
+  delete params.location
   return request({
     url: expressfeedetail.all,
     method: 'post',
-    params: {
-      param: params,
-    },
+    data: params,
   })
 }
 
 export async function download(params) {
   params = pageParams(params)
-  delete params.showName
-  delete params.pagination
-  delete params.rownum
-  params = JSON.stringify(params)
+  if (params.idUser) {
+    delete params.location
+  }
   return request({
     url: expressfeedetail.download,
     method: 'post',
-    params: {
-      param: params,
-    },
+    data: params,
   })
 }

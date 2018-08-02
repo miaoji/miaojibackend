@@ -233,16 +233,6 @@ const Routers = function ({ history, app }) {
           },
         },
         {
-          // 门店用户>门店操作人详情>操作人寄件汇总
-          path: 'operator',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/store/operator'))
-              cb(null, require('./routes/store/operator/'))
-            }, 'operator')
-          },
-        },
-        {
           // 门店寄件金额
           path: 'expressfee',
           getComponent(nextState, cb) {

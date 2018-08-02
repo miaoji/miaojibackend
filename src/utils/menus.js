@@ -82,13 +82,6 @@ export default [
     route: '/storeuserDetail',
   },
   {
-    id: '403',
-    bpid: '1',
-    mpid: '-1',
-    name: '操作人寄件汇总',
-    route: '/operator',
-  },
-  {
     id: '404',
     bpid: '1',
     mpid: '4',
