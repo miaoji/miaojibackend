@@ -152,9 +152,7 @@ export default modelExtend(pageModel, {
       let option = []
       if (data.code === 200 && data.obj) {
         if (payload.id) {
-          console.log('payload.id', payload.id)
           const menus = data.obj.filter(item => item.ID === payload.id)
-          console.log('MENU_GROUP_ID', menus)
           yield put({
             type: 'filterRoleList',
             payload: {
@@ -176,9 +174,6 @@ export default modelExtend(pageModel, {
     },
     // 手动过滤能显示的菜单信息
     *filterRoleList({ payload = {} }, { put }) {
-      if (payload.item) {
-        console.log('ppp', payload.item)
-      }
       const storageData = storage({ key: 'menuListSpare' })
       const menuListSpare = JSON.parse(storageData)
       let menuGroupID = []

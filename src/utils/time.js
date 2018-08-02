@@ -5,9 +5,10 @@ import moment from 'moment'
  * @param {number} distance [间隔的天数,结束时间=提前的天数-时间间隔]
  * @return {array}          [一个包含两个时间戳的数组]
  */
-export function yesterTime(frontDay = 0, distance = 0) {
+export function yesterTime(frontDay = 1, distance = 0, isInit = false) {
+  const newfrontDay = frontDay - 1
   let dayCount = 1
-  const test = false
+  const test = true
   if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
     const date = new Date()
@@ -16,16 +17,21 @@ export function yesterTime(frontDay = 0, distance = 0) {
     const s = date.getSeconds()
     const ms = date.getMilliseconds()
     const times = (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000) + ms
-    const startTime = date.getTime() - 86400000 * dayCount - times - 86400000 * frontDay
-    const endTime = date.getTime() - times - 1 - 86400000 * (frontDay - distance)
+    const startTime = date.getTime() - 86400000 * dayCount - times - 86400000 * newfrontDay
+    let endTime
+    if (isInit) {
+      endTime = date.getTime() - times - 86400000 - 86400000 * (newfrontDay - distance)
+    } else {
+      endTime = date.getTime() - times - 1 - 86400000 * (newfrontDay - distance)
+    }
     return {
       startTime,
       endTime,
     }
   }
   return {
-    startTime: 1528992000000 - 86400000 * frontDay,
-    endTime: 1529078399999 - 86400000 * (frontDay - distance),
+    startTime: 1528992000000 - 86400000 * newfrontDay,
+    endTime: 1529078399999 - 86400000 * (newfrontDay - distance),
   }
 }
 /**
@@ -125,7 +131,7 @@ export function handleFields(fields) {
  */
 export function defaultTime(filters, frontDay, distance) {
   filters = { ...filters }
-  const times = yesterTime(frontDay, distance)
+  const times = yesterTime(frontDay, distance, true)
   if (!filters.createTime) {
     filters.createTime = []
     filters.createTime[0] = moment(times.startTime)

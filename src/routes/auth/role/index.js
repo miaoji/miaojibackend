@@ -77,14 +77,13 @@ const Modular = ({ location, dispatch, role, loading }) => {
         dispatch({
           type: 'role/queryRoleList',
           payload: {
-            id: item.ID,
+            id: item.PARENT_ROLE_ID,
           },
         })
-      } else {
-        dispatch({
-          type: 'role/filterRoleList',
-        })
       }
+      dispatch({
+        type: 'role/filterRoleList',
+      })
       dispatch({
         type: 'role/showModal',
         payload: {

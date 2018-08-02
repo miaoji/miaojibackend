@@ -57,8 +57,12 @@ class DateRange extends React.Component {
     }, 100)
   }
 
+  disabledStartDate = (current) => {
+    return current && current > moment(new Date().getTime())
+  }
+
   disabledEndDate = (current) => {
-    return current && current > moment(new Date().getTime() - 86400000)
+    return current && current > moment(new Date().getTime())
   }
 
   render() {
@@ -78,7 +82,7 @@ class DateRange extends React.Component {
               size={this.state.size}
               onChange={this.onStartChange}
               onOpenChange={this.handleStartOpenChange}
-              disabledDate={this.disabledEndDate}
+              disabledDate={this.disabledStartDate}
             />
           </Col>
           <Col style={{ marginBottom: '14px' }} xl={{ span: 11, push: 1 }} md={{ span: 11, push: 2 }} sm={{ span: 11, push: 2 }}>
