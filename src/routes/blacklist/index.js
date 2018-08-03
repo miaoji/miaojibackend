@@ -69,6 +69,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading, app }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,

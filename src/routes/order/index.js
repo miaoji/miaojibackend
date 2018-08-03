@@ -6,9 +6,10 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 
-const Order = ({ location, dispatch, order, loading }) => {
+const Order = ({ location, dispatch, order, loading, app }) => {
   const { list, pagination, isMotion, selectedRowKeys } = order
   const { pageSize } = pagination
+  const { storeuserList } = app
 
   const listProps = {
     dataSource: list,
@@ -70,6 +71,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -137,6 +139,7 @@ Order.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ order, loading }) => ({ order, loading }))(Order)
+export default connect(({ order, loading, app }) => ({ order, loading, app }))(Order)

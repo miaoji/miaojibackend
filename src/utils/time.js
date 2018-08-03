@@ -8,7 +8,7 @@ import moment from 'moment'
 export function yesterTime(frontDay = 1, distance = 0, isInit = false) {
   const newfrontDay = frontDay - 1
   let dayCount = 1
-  const test = true
+  const test = false
   if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
     const date = new Date()
@@ -29,9 +29,15 @@ export function yesterTime(frontDay = 1, distance = 0, isInit = false) {
       endTime,
     }
   }
+  if (isInit) {
+    return {
+      startTime: 1531584000000 - 86400000 * newfrontDay,
+      endTime: 1531584000000 - 86400000 * (newfrontDay - distance),
+    }
+  }
   return {
-    startTime: 1528992000000 - 86400000 * newfrontDay,
-    endTime: 1529078399999 - 86400000 * (newfrontDay - distance),
+    startTime: 1531584000000 - 86400000 * newfrontDay,
+    endTime: 1531670399999 - 86400000 * (newfrontDay - distance),
   }
 }
 /**
@@ -129,7 +135,7 @@ export function handleFields(fields) {
  * @param {Number} distance [时间间隔]
  * @return {Object}            [加上初始化时间的过滤对象]
  */
-export function defaultTime(filters, frontDay, distance) {
+export function defaultTime(filters, frontDay = 1, distance = 0) {
   filters = { ...filters }
   const times = yesterTime(frontDay, distance, true)
   if (!filters.createTime) {

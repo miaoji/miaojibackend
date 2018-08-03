@@ -78,7 +78,7 @@ const App = ({ children, dispatch, app, loading, location }) => {
   }
   return (
     <div>
-      <Loader spinning={loading.effects['app/query']} />
+      <Loader spinning={loading.effects['app/queryStoreUser']} />
       <Helmet>
         <title>后台管理</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 // import moment from 'moment'
-import { Form, Button, Row, Col, Input } from 'antd'
+import { Form, Button, Row, Col, Input, Select } from 'antd'
 import { DateRange } from '../../components'
 import { handleFields, defaultTime } from '../../utils'
 
@@ -22,6 +22,7 @@ const TwoColProps = {
 
 const Filter = ({
   onFilterChange,
+  storeuserList,
   filter,
   form: {
     getFieldDecorator,
@@ -73,10 +74,22 @@ const Filter = ({
   }
   const { name, serialNumber, createTime } = filter
 
+  const nameChange = (key) => {
+    handleChange('name', key)
+  }
+
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按站点名搜索"
+            size="large"
+          >{storeuserList}</Select>
+        )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('serialNumber', { initialValue: serialNumber })(<Search placeholder="按运单号搜索" size="large" onSearch={handleSubmit} />)}
@@ -102,6 +115,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  storeuserList: PropTypes.func,
 }
 
 export default Form.create()(Filter)

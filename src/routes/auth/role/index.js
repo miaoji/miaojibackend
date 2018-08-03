@@ -77,7 +77,8 @@ const Modular = ({ location, dispatch, role, loading }) => {
         dispatch({
           type: 'role/queryRoleList',
           payload: {
-            id: item.PARENT_ROLE_ID,
+            id: item.ID,
+            parent_id: item.PARENT_ROLE_ID,
           },
         })
       }

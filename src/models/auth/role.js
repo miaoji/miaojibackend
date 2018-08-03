@@ -152,7 +152,7 @@ export default modelExtend(pageModel, {
       let option = []
       if (data.code === 200 && data.obj) {
         if (payload.id) {
-          const menus = data.obj.filter(item => item.ID === payload.id)
+          const menus = data.obj.filter(item => item.ID === payload.parent_id)
           yield put({
             type: 'filterRoleList',
             payload: {

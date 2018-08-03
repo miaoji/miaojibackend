@@ -31,6 +31,7 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
+      payload.name ? payload.name = payload.name.split('///')[1] : undefined
       const data = yield call(query, payload)
       if (data) {
         yield put({
