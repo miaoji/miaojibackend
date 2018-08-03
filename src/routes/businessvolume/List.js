@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Spin } from 'antd'
+import { Link } from 'dva/router'
 import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import Tab from './Tab'
 
 const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, location, ...tableProps }) => {
+  const filter = location.query
   const columns = [
     {
       title: '站点ID',
@@ -14,17 +16,11 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
       key: 'id',
       width: 100,
       render: (text) => {
-        let { createTime } = location.query
-        if (!createTime) {
-          let yesterdayDate = new Date()
-          yesterdayDate.setTime(yesterdayDate.getTime() - 24 * 60 * 60 * 1000)
-          createTime = [
-            yesterdayDate,
-            new Date().getTime(),
-          ]
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link target={'_blank'} to={`/businessvolumeDetail?idUser=${text}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
         }
-        // return <Link to={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</Link>
-        return <a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
+        return <Link target={'_blank'} to={`/businessvolumeDetail?idUser=${text}`}>{text}</Link>
+        // return <a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
       },
     }, {
       title: '区',

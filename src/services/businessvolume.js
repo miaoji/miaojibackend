@@ -30,6 +30,8 @@ export async function count(params) {
 }
 
 export async function downloadExcel(params) {
+  delete params.page
+  delete params.pageSize
   return request({
     url: businessvolume.downloadExcel,
     method: 'post',

@@ -17,6 +17,8 @@ export async function query(params) {
 
 export async function download(params) {
   params = pageParams(params)
+  delete params.rownum
+  delete params.pagination
   if (params.idUser) {
     delete params.location
   }
