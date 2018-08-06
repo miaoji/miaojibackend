@@ -39,9 +39,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       // ],
       // onFilter: (value, record) => Number(record.status) === Number(value),
       render: (text) => {
-        return (<span>{text === 0
-          ? '失败'
-          : '成功'}</span>)
+        const replTexy = {
+          success: '成功',
+          wait: '等待',
+          cancel: '交易取消',
+          close: '交易关闭',
+        }
+        return (<span>{replTexy[text]}</span>)
       },
     }, {
       title: '充值时间',
