@@ -17,9 +17,9 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
       width: 100,
       render: (text) => {
         if (filter.createTime && filter.createTime.length > 0) {
-          return <Link target={'_blank'} to={`/businessvolumeDetail?idUser=${text}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
+          return <Link to={`/businessvolumeDetail?idUser=${text}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
         }
-        return <Link target={'_blank'} to={`/businessvolumeDetail?idUser=${text}`}>{text}</Link>
+        return <Link to={`/businessvolumeDetail?idUser=${text}`}>{text}</Link>
         // return <a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
       },
     }, {

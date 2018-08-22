@@ -8,7 +8,7 @@ import moment from 'moment'
 export function yesterTime(frontDay = 1, distance = 0, isInit = false) {
   const newfrontDay = frontDay - 1
   let dayCount = 1
-  const test = false
+  const test = true
   if (process.env.NODE_ENV !== 'development' || test) {
     dayCount = 1
     const date = new Date()

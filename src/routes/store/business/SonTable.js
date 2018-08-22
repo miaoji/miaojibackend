@@ -40,9 +40,9 @@ const SonTable = ({ record, list, filter }) => {
       width: 140,
       render: (text, info) => {
         if (filter.startTime) {
-          return <Link target={'_blank'} to={`/orderbyuser?realName=${info.name}&mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看快件详情</Link>
+          return <Link to={`/orderbyuser?realName=${info.name}&mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看快件详情</Link>
         }
-        return <Link target={'_blank'} to={`/orderbyuser?realName=${info.name}&mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}`}>查看快件详情</Link>
+        return <Link to={`/orderbyuser?realName=${info.name}&mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}`}>查看快件详情</Link>
       },
     },
   ]
