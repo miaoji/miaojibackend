@@ -19,7 +19,7 @@ APIV3 = 'http://106.14.212.146:8288'
 // APIV3 = 'http://192.168.126.1:8081'
 
 // 张涛
-APIV3 = 'http://192.168.231.239:8066'
+APIV3 = 'http://192.168.231.239:8077'
 
 
 // 生产环境时api固定为线上url
@@ -34,7 +34,7 @@ module.exports = {
   name: '妙寄后台管理系统',
   prefix: 'antdAdmin',
   localPrefix: 'miaojipc_',
-  footerText: '这是一段很简单的底部信息',
+  footerText: '妙寄后台 © 2018 妙寄科技',
   logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
