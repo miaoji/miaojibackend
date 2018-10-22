@@ -12,6 +12,7 @@ const fetch = (options) => {
     data,
     // paramkey,
     params,
+    timeout = 9999999999999999999999,
     fetchType,
     url,
   } = options
@@ -40,7 +41,7 @@ const fetch = (options) => {
       jsonp(url, {
         param: `${qs.stringify(data)}&callback`,
         name: `jsonp_${new Date().getTime()}`,
-        timeout: 180000,
+        timeout,
       }, (error, result) => {
         if (error) {
           reject(error)
@@ -59,14 +60,14 @@ const fetch = (options) => {
         url,
         method: 'get',
         params: cloneData || params,
-        timeout: 180000,
+        timeout,
       })
     case 'delete':
       return axios({
         url,
         method: 'delete',
         params: cloneData || params,
-        timeout: 180000,
+        timeout,
       })
     case 'parampost':
       return axios({
@@ -74,7 +75,7 @@ const fetch = (options) => {
         method: 'post',
         data: cloneData,
         params,
-        timeout: 180000,
+        timeout,
       })
     case 'post':
       return axios({
@@ -82,7 +83,7 @@ const fetch = (options) => {
         method: 'post',
         data: cloneData,
         params,
-        timeout: 180000,
+        timeout,
       })
     // /* eslint no-case-declarations: 'off' */
     // let param = new URLSearchParams()

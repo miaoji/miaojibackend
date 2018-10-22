@@ -64,6 +64,13 @@ npm run lint
 
 项目部署 [#269](https://github.com/zuiidea/antd-admin/issues/269)
 
+```
+location / {
+  index  index.html;
+  try_files $uri $uri/ /index.html;
+}
+```
+
 ## 参考
 
 用户列表：<https://github.com/dvajs/dva/tree/master/examples/user-dashboard>
