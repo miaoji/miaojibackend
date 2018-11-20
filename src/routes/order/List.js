@@ -74,19 +74,21 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text) => {
         return <span>{text || '手机号暂无'}</span>
       },
-    }, {
-      title: '快递类型',
-      dataIndex: 'iswrong',
-      key: 'iswrong',
-      render: (text) => {
-        const newtext = {
-          0: '正常件',
-          1: '问题件',
-        }
-        return <span>{newtext[text]}</span>
-      },
-    }, {
-      title: '快递状态',
+    },
+    // {
+    //   title: '快递类型',
+    //   dataIndex: 'iswrong',
+    //   key: 'iswrong',
+    //   render: (text) => {
+    //     const newtext = {
+    //       0: '正常件',
+    //       1: '问题件',
+    //     }
+    //     return <span>{newtext[text]}</span>
+    //   },
+    // },
+    {
+      title: '快件类型',
       dataIndex: 'expresStype',
       key: 'expresStype',
       render: (text) => {
