@@ -21,7 +21,6 @@ const modal = ({
   item = {},
   onOk,
   storeuserList,
-  roleList,
   locationList,
   orgIdusers,
   onChangeLocationType,
@@ -105,24 +104,6 @@ const modal = ({
             ],
           })(<Input placeholder="请输入机构名称!" />)}
         </FormItem>
-        <FormItem label="角色信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('roleId', {
-            initialValue: item.roleName,
-            rules: [
-              {
-                required: true,
-                message: '请输入角色信息!',
-              },
-            ],
-          })(<Select
-            showSearch
-            style={{ width: '100%' }}
-            placeholder="请输入站点信息!"
-          // onChange={handleChange}
-          >
-            {roleList}
-          </Select>)}
-        </FormItem>
         <FormItem label="地区等级" hasFeedback {...formItemLayout}>
           {getFieldDecorator('locationType', {
             initialValue: item.locationType || 1,
@@ -169,7 +150,6 @@ const modal = ({
               mode="multiple"
               style={{ width: '100%' }}
               placeholder="暂无可以管理的站点!"
-              disabled
             >
               {storeuserList}
             </Select>)}
@@ -200,7 +180,6 @@ modal.propTypes = {
   onOk: PropTypes.func,
   modalMenuLevel: PropTypes.number,
   storeuserList: PropTypes.array,
-  roleList: PropTypes.array,
   locationList: PropTypes.array,
   onChangeLocationType: PropTypes.func,
   onGetIdUsers: PropTypes.func,

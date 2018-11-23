@@ -20,6 +20,7 @@ const modal = ({
   confirmDirty,
   onEditConfirmDirty,
   orangeizeList,
+  roleList,
   form: {
     getFieldDecorator,
     validateFields,
@@ -145,6 +146,24 @@ const modal = ({
               {orangeizeList}
             </Select>)}
           </FormItem>
+          <FormItem label="角色信息" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('roleId', {
+              initialValue: item.roleName,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入角色信息!',
+                },
+              ],
+            })(<Select
+              showSearch
+              style={{ width: '100%' }}
+              placeholder="请输入站点信息!"
+            // onChange={handleChange}
+            >
+              {roleList}
+            </Select>)}
+          </FormItem>
           <FormItem label="联系方式" hasFeedback {...formItemLayout}>
             {getFieldDecorator('mobile', {
               initialValue: item.mobile,
@@ -235,6 +254,24 @@ const modal = ({
               {orangeizeList}
             </Select>)}
           </FormItem>
+          <FormItem label="角色信息" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('roleId', {
+              initialValue: item.roleName,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入角色信息!',
+                },
+              ],
+            })(<Select
+              showSearch
+              style={{ width: '100%' }}
+              placeholder="请输入站点信息!"
+            // onChange={handleChange}
+            >
+              {roleList}
+            </Select>)}
+          </FormItem>
           <FormItem label="联系方式" hasFeedback {...formItemLayout}>
             {getFieldDecorator('number', {
               rules: [
@@ -272,6 +309,7 @@ modal.propTypes = {
   confirmDirty: PropTypes.bool,
   onEditConfirmDirty: PropTypes.func,
   orangeizeList: PropTypes.array,
+  roleList: PropTypes.array,
 }
 
 export default Form.create()(modal)

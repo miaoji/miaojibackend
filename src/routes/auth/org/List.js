@@ -38,14 +38,6 @@ const List = ({ storeTotal, location, onEditItem, onDeleteItem, ...tableProps })
         return <span style={{ width: '110px', display: 'inline-block' }}>{text}</span>
       },
     }, {
-      title: '角色名称',
-      dataIndex: 'roleName',
-      key: 'roleName',
-      width: 200,
-      render: (text) => {
-        return <span style={{ width: '110px', display: 'inline-block' }}>{text}</span>
-      },
-    }, {
       title: '所在区域',
       dataIndex: 'location',
       key: 'location',

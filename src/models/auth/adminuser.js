@@ -6,6 +6,7 @@ import { query, create, update, remove } from '../../services/auth/adminuser'
 import { query as queryOrangeizeList } from '../../services/auth/org'
 import { pageModel } from '../system/common'
 import { getUserId, password } from '../../utils'
+import { query as queryRoleList } from '../../services/auth/role'
 
 const { Option } = Select
 let count = 1
@@ -21,6 +22,7 @@ const reloadItem = (item) => {
   item.key = count++
   return item
 }
+
 export default modelExtend(pageModel, {
   namespace: 'adminuser',
 
@@ -29,6 +31,7 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     confirmDirty: false,
+    roleList: [],
   },
 
   subscriptions: {
@@ -86,6 +89,7 @@ export default modelExtend(pageModel, {
       payload.createUserId = getUserId()
       payload.password = password(payload.password)
       delete payload.repass
+      console.log('payload', payload)
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -108,6 +112,7 @@ export default modelExtend(pageModel, {
       // if (payload.orgId === item.orgId) {
       //   delete payload.orgId
       // }
+      console.log('payload', payload)
       const data = yield call(update, { ...payload, id: item.userId })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -158,6 +163,21 @@ export default modelExtend(pageModel, {
         })
       } else {
         throw data.mess || '当前网络无法使用'
+      }
+    },
+
+    *queryRoleList(_, { call, put }) {
+      const data = yield call(queryRoleList, { page: 1, pageSize: 1000000 })
+      if (data.code === 200 && data.obj) {
+        const option = data.obj.map((item) => {
+          return <Option key={item.ID}>{item.ROLE_NAME}</Option>
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            roleList: option,
+          },
+        })
       }
     },
 

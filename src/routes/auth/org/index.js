@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, org, loading, app }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, roleList, locationList, orgIdusers, locationSelectShow } = org
+  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, locationList, orgIdusers, locationSelectShow } = org
   const { pageSize } = pagination
   const { storeTotal } = app
 
@@ -19,7 +19,6 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     title: `${modalType === 'create' ? '新增机构信息' : '修改机构信息'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
-    roleList,
     locationList,
     orgIdusers,
     locationSelectShow,

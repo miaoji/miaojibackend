@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, adminuser, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty, orangeizeList } = adminuser
+  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty, orangeizeList, roleList } = adminuser
   const { pageSize } = pagination
 
   const modalProps = {
@@ -19,6 +19,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     wrapClassName: 'vertical-center-modal',
     confirmDirty: confirmDirty || false,
     orangeizeList,
+    roleList,
     onOk(data) {
       dispatch({
         type: `adminuser/${modalType}`,
@@ -62,6 +63,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     },
     onEditItem(item) {
       dispatch({ type: 'adminuser/queryOrangeizeList' })
+      dispatch({ type: 'adminuser/queryRoleList' })
       dispatch({
         type: 'adminuser/showModal',
         payload: {
@@ -97,6 +99,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     },
     onAdd() {
       dispatch({ type: 'adminuser/queryOrangeizeList' })
+      dispatch({ type: 'adminuser/queryRoleList' })
       dispatch({
         type: 'adminuser/showModal',
         payload: {

@@ -4,12 +4,10 @@ import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
 import { query as queryStoreUser } from '../../services/storeuser'
 import { query, create, update, remove, getLocation, getIdUsers } from '../../services/auth/org'
-import { query as queryRoleList } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 import { editLocation } from '../../utils/processing'
 import { getLocation as getLocationArr } from '../../utils/getUserInfo'
 import { getOrgId, getUserId } from '../../utils'
-// import { storage } from '../../utils/storage'
 
 const { Option } = Select
 
@@ -21,7 +19,6 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     storeuserList: [],
-    roleList: [],
     orgIdusers: [],
     locationSelectShow: false,
   },
@@ -72,11 +69,11 @@ export default modelExtend(pageModel, {
       if (payload.locationType === 4) {
         payload.location = []
       }
-      delete payload.idUsers
+      // delete payload.idUsers
       payload.location = payload.location.toString()
-      payload.roleId = Number(payload.roleId)
       payload.parentId = getOrgId()
       payload.createUserId = getUserId()
+      payload.idUsers = payload.idUsers.toString()
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -92,13 +89,8 @@ export default modelExtend(pageModel, {
         payload.location = []
       }
       const currentItem = yield select(({ org }) => org.currentItem)
-      delete payload.idUsers
       payload.location = payload.location.toString()
-      if (payload.roleId === currentItem.roleName) {
-        delete payload.roleId
-      } else {
-        payload.roleId = Number(payload.roleId)
-      }
+      payload.idUsers = payload.idUsers.toString()
       const data = yield call(update, { ...payload, id: currentItem.id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -141,21 +133,6 @@ export default modelExtend(pageModel, {
         })
       } else {
         throw '网络故障，请稍后重试' || data.mess
-      }
-    },
-
-    *queryRoleList(_, { call, put }) {
-      const data = yield call(queryRoleList, { page: 1, pageSize: 1000000 })
-      if (data.code === 200 && data.obj) {
-        const option = data.obj.map((item) => {
-          return <Option key={item.ID}>{item.ROLE_NAME}</Option>
-        })
-        yield put({
-          type: 'updateState',
-          payload: {
-            roleList: option,
-          },
-        })
       }
     },
 
