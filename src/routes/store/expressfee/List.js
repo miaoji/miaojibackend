@@ -80,13 +80,6 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
         return <span>{text ? `${text}元` : '0元'}</span>
       },
     }, {
-      title: '余额',
-      dataIndex: 'balance',
-      key: 'balance',
-      render: (text) => {
-        return <span>{text ? `${text}元` : '0元'}</span>
-      },
-    }, {
       title: '现金',
       dataIndex: 'cash',
       key: 'cash',
