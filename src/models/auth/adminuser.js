@@ -57,8 +57,15 @@ export default modelExtend(pageModel, {
         if (data.obj.length > 0) {
           list = data.obj.map((item) => {
             return reloadItem(item)
+          }).map((item) => {
+            if (!item.children) return item
+            item.role = item.children.map((i) => {
+              return i.children[0]
+            })
+            return { ...item, children: undefined }
           })
         }
+        console.log('list11', list)
         yield put({
           type: 'querySuccess',
           payload: {

@@ -41,13 +41,6 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       dataIndex: 'accounts',
       key: 'accounts',
     }, {
-      title: '角色',
-      dataIndex: 'roleName',
-      key: 'roleName',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
-      },
-    }, {
       title: '所属机构',
       dataIndex: 'orgName',
       key: 'orgName',
@@ -117,8 +110,16 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.key}
+        rowKey={record => record.userId}
         getBodyWrapper={getBodyWrapper}
+        expandedRowRender={(record) => {
+          console.log('record', record)
+          if (!record.role) return <div>暂无相关信息</div>
+          const texts = record.role.map((item) => {
+            return <p>{item.roleName}</p>
+          })
+          return <div>{texts}</div>
+        }}
       />
     </div>
   )

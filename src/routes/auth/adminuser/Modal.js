@@ -157,6 +157,7 @@ const modal = ({
               ],
             })(<Select
               showSearch
+              mode="multiple"
               style={{ width: '100%' }}
               placeholder="请输入站点信息!"
             // onChange={handleChange}
