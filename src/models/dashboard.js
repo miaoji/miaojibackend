@@ -47,8 +47,8 @@ export default modelExtend(pageModel, {
     browser: [],
     cpu: {},
     user: {
-      name: '管理员',
-      email: 'winner@qq.com',
+      name: '',
+      email: '',
       avatar: 'http://pic.qbaobei.com/Uploads/Picture/2016-01-14/569781503c21f.jpg',
     },
   },

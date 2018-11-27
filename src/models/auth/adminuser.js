@@ -89,6 +89,7 @@ export default modelExtend(pageModel, {
       payload.createUserId = getUserId()
       payload.password = password(payload.password)
       delete payload.repass
+      payload.roleId = payload.roleId.toString()
       console.log('payload', payload)
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
@@ -109,9 +110,9 @@ export default modelExtend(pageModel, {
       } else {
         payload.idUser = payload.idUser ? payload.idUser.split('///')[0] : undefined
       }
-      // if (payload.orgId === item.orgId) {
-      //   delete payload.orgId
-      // }
+      if (payload.orgId === item.orgId) {
+        delete payload.orgId
+      }
       console.log('payload', payload)
       const data = yield call(update, { ...payload, id: item.userId })
       if (data.code === 200) {

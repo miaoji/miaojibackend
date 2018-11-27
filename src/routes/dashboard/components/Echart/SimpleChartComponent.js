@@ -10,7 +10,7 @@ const SimpleChartComponent = ({ receviceData, sendData }) => {
     backgroundColor: '#fff',
     color: ['#f0f', '#90f', '#09f', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
     title: {
-      text: '堆叠区域图',
+      text: '揽件派件统计',
     },
     tooltip: {
       trigger: 'axis',

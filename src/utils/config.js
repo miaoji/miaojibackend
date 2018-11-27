@@ -26,9 +26,9 @@ APIV3 = 'http://192.168.231.125:80'
 
 
 // 生产环境时api固定为线上url
-if (process.env.NODE_ENV !== 'development') {
-  APIV3 = 'http://106.14.212.146:8288'
-}
+// if (process.env.NODE_ENV !== 'development') {
+//   APIV3 = 'http://106.14.212.146:8288'
+// }
 
 let APIV4 = 'http://app.quandikeji.com/WeChatService'
 
