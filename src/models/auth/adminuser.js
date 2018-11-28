@@ -120,6 +120,7 @@ export default modelExtend(pageModel, {
       if (payload.orgId === item.orgId) {
         delete payload.orgId
       }
+      payload.roleId = payload.roleId.toString()
       console.log('payload', payload)
       const data = yield call(update, { ...payload, id: item.userId })
       if (data.code === 200) {

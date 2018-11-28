@@ -108,6 +108,7 @@ const modal = ({
   const initOrgId = Number(item.orgId) || ''
 
   if (type === 'update') {
+    const roleSelect = item.role ? item.role.map(i => String(i.id)) : []
     return (
       <Modal {...modalOpts}>
         <Form layout="horizontal">
@@ -148,7 +149,7 @@ const modal = ({
           </FormItem>
           <FormItem label="角色信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('roleId', {
-              initialValue: item.roleName,
+              initialValue: roleSelect,
               rules: [
                 {
                   required: true,
@@ -160,7 +161,6 @@ const modal = ({
               mode="multiple"
               style={{ width: '100%' }}
               placeholder="请输入站点信息!"
-            // onChange={handleChange}
             >
               {roleList}
             </Select>)}

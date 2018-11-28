@@ -78,8 +78,8 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       },
     }, {
       title: '创建时间',
-      dataIndex: 'createtime',
-      key: 'createtime',
+      dataIndex: 'createTime',
+      key: 'createTime',
       render: (text) => {
         const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '暂无'
         return <span>{createTime}</span>
@@ -113,12 +113,15 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         rowKey={record => record.userId}
         getBodyWrapper={getBodyWrapper}
         expandedRowRender={(record) => {
-          console.log('record', record)
-          if (!record.role) return <div>暂无相关信息</div>
-          const texts = record.role.map((item) => {
-            return <p>{item.roleName}</p>
-          })
-          return <div>{texts}</div>
+          let texts
+          if (!record.role) {
+            texts = <p>暂无相关信息</p>
+          } else {
+            texts = record.role.map((item) => {
+              return <p className={styles.item}>{item.roleName}</p>
+            })
+          }
+          return <div className={styles.rowRender}><p>角色信息:</p>{texts}</div>
         }}
       />
     </div>
