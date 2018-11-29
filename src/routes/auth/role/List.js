@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import moment from 'moment'
 import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
-import { getUserId, isSuperAdmin } from '../../../utils'
+// import { getUserId, isSuperAdmin } from '../../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ location, onEditItem, onDeleteItem, onReadAuth, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -27,6 +27,11 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       default:
         break
     }
+  }
+
+  const handleRaadAuth = (record) => {
+    console.log('dss', record)
+    onReadAuth(record)
   }
 
   const columns = [
@@ -63,13 +68,20 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         return <span>{createTime}</span>
       },
     }, {
+      title: '权限',
+      key: 'auth',
+      width: 100,
+      render(record) {
+        return <Button onClick={() => { handleRaadAuth(record) }} ghost style={{ color: '#0e77ca' }}>查看</Button>
+      },
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        if (Number(record.CREATE_USER_ID) !== Number(getUserId()) && !isSuperAdmin() || record.ID === 1) {
-          return <span>无权操作</span>
-        }
+        // if (Number(record.CREATE_USER_ID) !== Number(getUserId()) && !isSuperAdmin() || record.ID === 1) {
+        //   return <span>无权操作</span>
+        // }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },
@@ -102,6 +114,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   location: PropTypes.object,
+  onReadAuth: PropTypes.func,
 }
 
 export default List

@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, org, loading, app }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, locationList, orgIdusers, locationSelectShow } = org
+  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, locationList, orgIdusers, locationSelectShow, parentOrgList } = org
   const { pageSize } = pagination
   const { storeTotal } = app
 
@@ -18,12 +18,13 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     confirmLoading: loading.effects['org/create'] || loading.effects['org/update'],
     title: `${modalType === 'create' ? '新增机构信息' : '修改机构信息'}`,
     wrapClassName: 'vertical-center-modal',
+    locationLoading: loading.effects['org/filterLocationList'],
+    maskClosable: false,
     storeuserList,
     locationList,
     orgIdusers,
     locationSelectShow,
-    locationLoading: loading.effects['org/filterLocationList'],
-    maskClosable: false,
+    parentOrgList,
     onOk(data) {
       dispatch({
         type: `org/${modalType}`,
@@ -131,6 +132,7 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
       }))
     },
     onAdd() {
+      dispatch({ type: 'org/initParentOrgList' })
       dispatch({
         type: 'org/queryRoleList',
       })

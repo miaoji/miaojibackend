@@ -1,4 +1,5 @@
 import config from './config'
+import { decode, encode } from './base64'
 
 const { localPrefix } = config
 const localStorage = window.localStorage
@@ -19,9 +20,12 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
   switch (type) {
     case 'get':
       res = localStorage.getItem(key)
+      if (res) {
+        res = decode(res)
+      }
       break
     case 'set':
-      localStorage.setItem(key, val)
+      localStorage.setItem(key, encode(val))
       break
     case 'remove':
       localStorage.removeItem(key)

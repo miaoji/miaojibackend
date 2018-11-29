@@ -12,7 +12,8 @@ const getOrgId = () => {
     orgId = undefined
   }
   return orgId
-}/**
+}
+/**
  * [获取用户所属区域信息]
  */
 const getLocation = () => {
@@ -34,6 +35,23 @@ const getLocation = () => {
     userLocation = []
   }
   return userLocation
+}
+/**
+ * [获取用户查询范围]
+ */
+const getOrgIdUsers = () => {
+  let idUser = ''
+  try {
+    let user = storage({ key: 'user' })
+    user = user ? JSON.parse(user) : undefined
+    if (user && user.idUsers) {
+      idUser = user.idUsers
+    }
+  } catch (err) {
+    console.info(err)
+    idUser = ''
+  }
+  return idUser || undefined
 }
 /**
  * [获取用户的角色ID]
@@ -67,15 +85,15 @@ const getUserId = () => {
  * [查看是否是超级管理员(默认机构ID为1的时候是超级管理员)]
  */
 const isSuperAdmin = () => {
-  let orgId = ''
+  let userId = ''
   try {
     const user = storage({ key: 'user' })
-    orgId = user ? JSON.parse(user).orgId : undefined
+    userId = user ? JSON.parse(user).userId : undefined
   } catch (err) {
     console.info(err)
-    orgId = undefined
+    userId = undefined
   }
-  return orgId === 1
+  return userId === 1
 }
 
 export {
@@ -84,4 +102,5 @@ export {
   getUserId,
   isSuperAdmin,
   getLocation,
+  getOrgIdUsers,
 }

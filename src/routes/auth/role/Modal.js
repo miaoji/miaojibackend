@@ -63,6 +63,21 @@ const modal = ({
 
   const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : undefined
   const defaultRoleId = item.PARENT_ROLE_NAME
+
+  if (type === 'readAuth') {
+    return (
+      <Modal {...modalOpts} title="权限详情">
+        <Form layout="horizontal">
+          <FormItem hasFeedback>
+            <Tree showLine>
+              {menuList.length > 0 ? menuList : <span style={{ color: 'red' }}>请指定父级角色</span>}
+            </Tree>
+          </FormItem>
+        </Form>
+      </Modal>
+    )
+  }
+
   if (isSuperAdmin()) {
     return (
       <Modal {...modalOpts}>
@@ -74,6 +89,7 @@ const modal = ({
                 {
                   required: true,
                   message: '请输入角色名称!',
+                  whitespace: true,
                 },
               ],
             })(<Input placeholder="请输入角色名称!" />)}

@@ -27,6 +27,7 @@ const modal = ({
   locationSelectShow,
   onGetIdUsers,
   locationLoading,
+  parentOrgList,
   form: {
     getFieldDecorator,
     validateFields,
@@ -36,6 +37,7 @@ const modal = ({
   type,
   ...modalProps
 }) => {
+  console.log('parentOrgList', parentOrgList)
   const handleOk = () => {
     validateFields((errors) => {
       if (errors) {
@@ -77,6 +79,7 @@ const modal = ({
     <Radio value={2}>市级</Radio>,
     <Radio value={3}>县级</Radio>,
   ]
+
   if (isSuperAdmin()) {
     LocationTypeOption = [
       <Radio value={1}>省级</Radio>,
@@ -93,6 +96,17 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
+        <FormItem label="父级机构" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('parentId', {
+            initialValue: item.PARENT_ID,
+            rules: [
+              {
+                required: true,
+                message: '请选择父级机构',
+              },
+            ],
+          })(<Select placeholder="请选择父级机构">{parentOrgList}</Select>)}
+        </FormItem>
         <FormItem label="机构名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orgName', {
             initialValue: item.orgName,
@@ -186,6 +200,7 @@ modal.propTypes = {
   orgIdusers: PropTypes.array,
   locationSelectShow: PropTypes.bool,
   locationLoading: PropTypes.bool,
+  parentOrgList: PropTypes.array,
 }
 
 export default Form.create()(modal)

@@ -104,7 +104,7 @@ export const filterRoleList = (data, list) => {
     if (item.children && item.children.length > 0) {
       item.children = filterRoleList(item.children, list)
     }
-    return list.some(_ => _ === item.id)
+    return list.some(_ => String(_) === String(item.id))
   })
   return data
 }
@@ -115,7 +115,7 @@ export const filterRoleList = (data, list) => {
 export const rebuildMenuData = (data) => {
   const tmp = data.map((item) => {
     const tmpItem = {
-      id: item.id,
+      id: String(item.id),
       icon: item.icon,
       mpid: Number(item.parentMenuId) > 0 ? item.parentMenuId : undefined,
       name: item.menuName,
@@ -130,4 +130,11 @@ export const rebuildMenuData = (data) => {
   })
 
   return tmp
+}
+
+export const onlyMenus = (arr) => {
+  const ids = arr.map(item => item.id)
+  const onlyIds = Array.from(new Set(ids))
+  const onlyArr = onlyIds.map(id => arr.find(item => item.id === id))
+  return onlyArr
 }

@@ -21,6 +21,7 @@ export default modelExtend(pageModel, {
     storeuserList: [],
     orgIdusers: [],
     locationSelectShow: false,
+    parentOrgList: [],
   },
 
   subscriptions: {
@@ -69,13 +70,13 @@ export default modelExtend(pageModel, {
       if (payload.locationType === 4) {
         payload.location = []
       }
-      // delete payload.idUsers
       payload.location = payload.location.toString()
-      payload.parentId = getOrgId()
       payload.createUserId = getUserId()
       payload.idUsers = payload.idUsers.toString()
+
       const data = yield call(create, { ...payload })
-      if (data.success && data.code === 200) {
+
+      if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
         yield put({ type: 'query' })
@@ -168,6 +169,7 @@ export default modelExtend(pageModel, {
           break
       }
       if (data.code === 200) {
+        console.log('data', data)
         yield put({
           type: 'updateState',
           payload: {
@@ -266,6 +268,22 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             locationList: option,
+          },
+        })
+      }
+    },
+
+    *initParentOrgList(_, { put, call }) {
+      const data = yield call(query, { page: 1, pageSize: 10000, orgId: getOrgId() })
+      if (data.code === 200) {
+        const option = data.obj.map((item) => {
+          return <Option value={item.id}>{item.orgName}</Option>
+        })
+        console.log('dataParent', option)
+        yield put({
+          type: 'updateState',
+          payload: {
+            parentOrgList: option,
           },
         })
       }

@@ -78,7 +78,7 @@ export default modelExtend(pageModel, {
         list: menuList,
         arr: payload.menus,
       })
-      const data = yield call(create, { ...payload })
+      const data = yield call(create, { ...payload, menuGroup: payload.menuGroup.toString() })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -101,7 +101,7 @@ export default modelExtend(pageModel, {
       if (payload.roleId === currentItem.PARENT_ROLE_NAME) {
         delete payload.roleId
       }
-      const data = yield call(update, { ...payload, id: currentItem.ID })
+      const data = yield call(update, { ...payload, id: currentItem.ID, menuGroup: payload.menuGroup.toString() })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -153,10 +153,11 @@ export default modelExtend(pageModel, {
       if (data.code === 200 && data.obj) {
         if (payload.id) {
           const menus = data.obj.filter(item => item.ID === payload.parent_id)
+          console.log('menus[0]', menus[0])
           yield put({
             type: 'filterRoleList',
             payload: {
-              MENU_GROUP_ID: menus[0].MENU_GROUP_ID,
+              MENU_GROUP_ID: menus[0] ? menus[0].MENU_GROUP_ID : undefined,
             },
           })
         }
@@ -164,6 +165,7 @@ export default modelExtend(pageModel, {
         option = newdata.map((item) => {
           return <Option key={JSON.stringify(item)}>{item.ROLE_NAME}</Option>
         })
+        console.log('option', option)
         yield put({
           type: 'updateState',
           payload: {
@@ -174,6 +176,7 @@ export default modelExtend(pageModel, {
     },
     // 手动过滤能显示的菜单信息
     *filterRoleList({ payload = {} }, { put }) {
+      console.log('payload', payload)
       const storageData = storage({ key: 'menuListSpare' })
       const menuListSpare = JSON.parse(storageData)
       let menuGroupID = []
@@ -181,15 +184,17 @@ export default modelExtend(pageModel, {
       if (!isSuperAdmin()) {
         const user = storage({ key: 'user' })
         menuGroupID = JSON.parse(user).menuGroupId
-        datalist = filterRoleList([...menuListSpare], eval(menuGroupID))
+        datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
       } else {
         menuGroupID = payload.MENU_GROUP_ID
-        if (payload.MENU_GROUP_ID) {
-          datalist = filterRoleList([...menuListSpare], eval(menuGroupID))
+        console.log('menuGroupID.split', menuGroupID)
+        if (payload && payload.MENU_GROUP_ID) {
+          datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
         } else {
           datalist = [...menuListSpare]
         }
       }
+      console.log('datalist', datalist)
       const data = [].concat(datalist)
       let option = []
       if (data instanceof Array) {

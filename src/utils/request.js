@@ -1,58 +1,16 @@
 import axios from 'axios'
-import qs from 'qs'
-// import { YQL, CORS } from './config'
-import jsonp from 'jsonp'
 import lodash from 'lodash'
-import pathToRegexp from 'path-to-regexp'
-import { message } from 'antd'
 
 const fetch = (options) => {
   let {
     method = 'get',
     data,
-    // paramkey,
     params,
     timeout = 9999999999999999999999,
-    fetchType,
     url,
   } = options
 
   const cloneData = lodash.cloneDeep(data)
-  try {
-    let domin = ''
-    if (url.match(/[a-zA-z]+:\/\/[^/]*/)) {
-      domin = url.match(/[a-zA-z]+:\/\/[^/]*/)[0]
-      url = url.slice(domin.length)
-    }
-    const match = pathToRegexp.parse(url)
-    url = pathToRegexp.compile(url)(data)
-    for (let item of match) {
-      if (item instanceof Object && item.name in cloneData) {
-        delete cloneData[item.name]
-      }
-    }
-    url = domin + url
-  } catch (e) {
-    message.error(e.message)
-  }
-
-  if (fetchType === 'JSONP') {
-    return new Promise((resolve, reject) => {
-      jsonp(url, {
-        param: `${qs.stringify(data)}&callback`,
-        name: `jsonp_${new Date().getTime()}`,
-        timeout,
-      }, (error, result) => {
-        if (error) {
-          reject(error)
-        }
-        resolve({ statusText: 'OK', status: 200, data: result })
-      })
-    })
-  } else if (fetchType === 'YQL') {
-    url = `http://query.yahooapis.com/v1/public/yql?q=select * from json where url='${options.url}?${encodeURIComponent(qs.stringify(options.data))}'&format=json`
-    data = null
-  }
 
   switch (method.toLowerCase()) {
     case 'get':
@@ -69,14 +27,6 @@ const fetch = (options) => {
         params: cloneData || params,
         timeout,
       })
-    case 'parampost':
-      return axios({
-        url,
-        method: 'post',
-        data: cloneData,
-        params,
-        timeout,
-      })
     case 'post':
       return axios({
         url,
@@ -85,21 +35,6 @@ const fetch = (options) => {
         params,
         timeout,
       })
-    // /* eslint no-case-declarations: 'off' */
-    // let param = new URLSearchParams()
-    // /* eslint guard-for-in: 'off' */
-    // for (let key in params) {
-    //   param.append(key, params[key])
-    // }
-    // return axios({
-    //   url,
-    //   method: 'post',
-    //   data: param,
-    //   timeout: 200000,
-    //   headers: {
-    //     'content-Type': 'application/x-www-form-urlencoded',
-    //   },
-    // })
     case 'put':
       return axios.put(url, cloneData)
     case 'patch':
@@ -115,7 +50,7 @@ const fetch = (options) => {
 export default function request(options) {
   return fetch(options).then((response) => {
     const { statusText, status } = response
-    let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data
+    let data = response.data
     return {
       success: true,
       message: statusText,

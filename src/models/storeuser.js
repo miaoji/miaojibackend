@@ -39,6 +39,7 @@ export default modelExtend(pageModel, {
       if (payload.name) {
         payload.name = payload.name.split('///')[1]
       }
+      console.log('payload', payload)
       const data = yield call(query, { ...payload })
       if (data.code === 200) {
         yield put({

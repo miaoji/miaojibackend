@@ -93,6 +93,26 @@ const Modular = ({ location, dispatch, role, loading }) => {
         },
       })
     },
+    onReadAuth(item) {
+      if (menuList.length === 0) {
+        dispatch({
+          type: 'role/queryMenuList',
+        })
+      }
+      dispatch({
+        type: 'role/filterRoleList',
+        payload: {
+          MENU_GROUP_ID: item.MENU_GROUP_ID,
+        },
+      })
+      dispatch({
+        type: 'role/showModal',
+        payload: {
+          modalType: 'readAuth',
+          currentItem: item,
+        },
+      })
+    },
   }
 
   const filterProps = {

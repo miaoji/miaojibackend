@@ -1,5 +1,5 @@
 import lodash from 'lodash'
-import { getLocation } from './getUserInfo'
+import { getOrgIdUsers } from './getUserInfo'
 /**
  * 对网络请求的params做处理，针对分页
  * @param   {Object} params 传入一个需要的对象
@@ -10,7 +10,8 @@ export const pageParams = function (params) {
     pagination: 1,
     rownum: 10,
   }
-  params.location = getLocation().length ? getLocation() : undefined
+  // params.location = getLocation().length ? getLocation() : undefined
+  params.userIds = getOrgIdUsers()
   params.pagination = params.page ? Number(params.page) : 1
   params.rownum = params.pageSize ? Number(params.pageSize) : 10
   delete params.page
