@@ -30,7 +30,7 @@ APIV3 = 'http://192.168.231.125:80'
 //   APIV3 = 'http://106.14.212.146:8288'
 // }
 
-let APIV4 = 'http://app.quandikeji.com/WeChatService'
+let APIV4 = 'http://main.mijihome.cn/WeChatService'
 
 module.exports = {
   APIV3,

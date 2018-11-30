@@ -178,20 +178,20 @@ export default modelExtend(pageModel, {
       const menuListSpare = JSON.parse(storageData)
       let menuGroupID = []
       let datalist = []
-      if (!isSuperAdmin()) {
-        const user = storage({ key: 'user' })
-        menuGroupID = JSON.parse(user).menuGroupId
-        if (menuGroupID) {
-          datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
-        }
+      // if (!isSuperAdmin()) {
+      //   const user = storage({ key: 'user' })
+      //   menuGroupID = JSON.parse(user).menuGroupId
+      //   if (menuGroupID) {
+      //     datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
+      //   }
+      // } else {
+      menuGroupID = payload.MENU_GROUP_ID
+      if (payload && payload.MENU_GROUP_ID) {
+        datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
       } else {
-        menuGroupID = payload.MENU_GROUP_ID
-        if (payload && payload.MENU_GROUP_ID) {
-          datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
-        } else {
-          datalist = [...menuListSpare]
-        }
+        datalist = [...menuListSpare]
       }
+      // }
       const data = [].concat(datalist)
       let option = []
       if (data instanceof Array) {

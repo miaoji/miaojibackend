@@ -135,16 +135,16 @@ const Modular = ({ location, dispatch, role, loading }) => {
           type: 'role/queryMenuList',
         })
       }
-      if (!isSuperAdmin()) {
-        dispatch({
-          type: 'role/filterRoleList',
-        })
-      }
-      if (isSuperAdmin()) {
-        dispatch({
-          type: 'role/queryRoleList',
-        })
-      }
+      // if (!isSuperAdmin()) {
+      //   dispatch({
+      //     type: 'role/filterRoleList',
+      //   })
+      // }
+      // if (isSuperAdmin()) {
+      // }
+      dispatch({
+        type: 'role/queryRoleList',
+      })
       dispatch({
         type: 'role/showModal',
         payload: {
