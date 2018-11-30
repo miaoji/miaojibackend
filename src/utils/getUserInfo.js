@@ -85,15 +85,14 @@ const getUserId = () => {
  * [查看是否是超级管理员(默认机构ID为1的时候是超级管理员)]
  */
 const isSuperAdmin = () => {
-  let userId = ''
+  let roleIds = []
   try {
     const user = storage({ key: 'user' })
-    userId = user ? JSON.parse(user).userId : undefined
-  } catch (err) {
-    console.info(err)
-    userId = undefined
+    roleIds = user ? JSON.parse(user).roleIds : undefined
+  } catch (_) {
+    roleIds = undefined
   }
-  return userId === 1
+  return roleIds.some(item => Number(item) === 1)
 }
 
 export {

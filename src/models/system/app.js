@@ -1,15 +1,12 @@
 import React from 'react'
 import { routerRedux } from 'dva/router'
-// import { parse } from 'qs'
 import config from 'config'
-// import { EnumRoleType } from 'enums'
 import menus from 'utils/menus'
 import hideMenus from 'utils/hideMenus'
 import { storage } from 'utils'
 import { Select } from 'antd'
-// import { query, logout } from '../services/system/app'
 import { query as queryStoreUser } from 'src/services/storeuser'
-import { rebuildMenuData, onlyMenus } from 'src/utils/processing'
+import { rebuildMenuData } from 'src/utils/processing'
 
 const { prefix } = config
 const { Option } = Select
@@ -61,28 +58,11 @@ export default {
           type: 'queryStoreUser',
         })
         const user = JSON.parse(userInfo)
-        console.log('userInfo', user)
-        const tmpList = user.menuList.map((item) => {
-          try {
-            return item.children[0].children
-          } catch (e) {
-            return null
-          }
-        })
-        console.log('menuList', tmpList)
-        let menuList = []
-        tmpList.forEach((item) => {
-          if (item && item.length > 0) {
-            menuList = [...menuList, ...item]
-          }
-        })
-        console.log('tmpList', menuList)
-        menuList = onlyMenus(menuList)
-        console.log('nwqtmpList', menuList)
+        console.log('APP-userInfo', user)
+        const menuList = user.userMenus
         let list = menus
         if (process.env.NODE_ENV !== 'text') {
           list = [...rebuildMenuData(menuList), ...hideMenus]
-          console.log('list', list)
         }
         let permissions = {}
         permissions.role = 'admin'

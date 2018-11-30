@@ -70,12 +70,14 @@ export default modelExtend(pageModel, {
       if (payload.locationType === 4) {
         payload.location = []
       }
+      if (!payload.parentId) {
+        payload.parentId = getOrgId()
+      }
       payload.location = payload.location.toString()
       payload.createUserId = getUserId()
       payload.idUsers = payload.idUsers.toString()
 
       const data = yield call(create, { ...payload })
-
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -89,9 +91,13 @@ export default modelExtend(pageModel, {
       if (payload.locationType === 4) {
         payload.location = []
       }
+      if (!payload.parentId) {
+        payload.parentId = getOrgId()
+      }
       const currentItem = yield select(({ org }) => org.currentItem)
       payload.location = payload.location.toString()
       payload.idUsers = payload.idUsers.toString()
+
       const data = yield call(update, { ...payload, id: currentItem.id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -169,7 +175,6 @@ export default modelExtend(pageModel, {
           break
       }
       if (data.code === 200) {
-        console.log('data', data)
         yield put({
           type: 'updateState',
           payload: {
@@ -279,7 +284,6 @@ export default modelExtend(pageModel, {
         const option = data.obj.map((item) => {
           return <Option value={item.id}>{item.orgName}</Option>
         })
-        console.log('dataParent', option)
         yield put({
           type: 'updateState',
           payload: {

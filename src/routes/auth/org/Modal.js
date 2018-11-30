@@ -96,17 +96,19 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="父级机构" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('parentId', {
-            initialValue: item.PARENT_ID,
-            rules: [
-              {
-                required: true,
-                message: '请选择父级机构',
-              },
-            ],
-          })(<Select placeholder="请选择父级机构">{parentOrgList}</Select>)}
-        </FormItem>
+        <div style={{ display: isSuperAdmin() ? 'block' : 'none' }}>
+          <FormItem label="父级机构" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('parentId', {
+              initialValue: item.PARENT_ID,
+              rules: [
+                {
+                  required: isSuperAdmin(),
+                  message: '请选择父级机构',
+                },
+              ],
+            })(<Select placeholder="请选择父级机构">{parentOrgList}</Select>)}
+          </FormItem>
+        </div>
         <FormItem label="机构名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('orgName', {
             initialValue: item.orgName,

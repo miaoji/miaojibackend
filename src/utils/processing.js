@@ -132,9 +132,50 @@ export const rebuildMenuData = (data) => {
   return tmp
 }
 
-export const onlyMenus = (arr) => {
-  const ids = arr.map(item => item.id)
+const onlyMenus = (list) => {
+  let menuList = []
+  const tmpList = list.map((item) => {
+    try {
+      return item.children[0].children
+    } catch (e) {
+      return null
+    }
+  })
+  tmpList.forEach((item) => {
+    if (item && item.length > 0) {
+      menuList = [...menuList, ...item]
+    }
+  })
+
+  const ids = menuList.map(item => item.id)
   const onlyIds = Array.from(new Set(ids))
-  const onlyArr = onlyIds.map(id => arr.find(item => item.id === id))
+  const onlyArr = onlyIds.map(id => menuList.find(item => item.id === id))
   return onlyArr
+}
+
+/**
+ * [对登录获取的用户信息处理,得到用户的一些角色信息]
+ */
+export const initUserInfo = (userInfo) => {
+  // 菜单列表信息
+  const menuList = onlyMenus(userInfo.menuList)
+  // 角色ID
+  const roleIds = userInfo.menuList.map((item) => {
+    return item.id
+  })
+  // 菜单id集合(页面用)
+  const menuIds = userInfo.menuList.map((item) => {
+    return item.children[0].menuId
+  })
+  // 菜单id集合(后台用)
+  const menuGroupIds = userInfo.menuList.map((item) => {
+    return item.children[0].menuGroupId
+  })
+  return {
+    ...userInfo,
+    userMenus: menuList,
+    roleIds,
+    menuIds,
+    menuGroupIds,
+  }
 }

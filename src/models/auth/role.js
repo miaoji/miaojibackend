@@ -153,7 +153,6 @@ export default modelExtend(pageModel, {
       if (data.code === 200 && data.obj) {
         if (payload.id) {
           const menus = data.obj.filter(item => item.ID === payload.parent_id)
-          console.log('menus[0]', menus[0])
           yield put({
             type: 'filterRoleList',
             payload: {
@@ -165,7 +164,6 @@ export default modelExtend(pageModel, {
         option = newdata.map((item) => {
           return <Option key={JSON.stringify(item)}>{item.ROLE_NAME}</Option>
         })
-        console.log('option', option)
         yield put({
           type: 'updateState',
           payload: {
@@ -176,7 +174,6 @@ export default modelExtend(pageModel, {
     },
     // 手动过滤能显示的菜单信息
     *filterRoleList({ payload = {} }, { put }) {
-      console.log('payload', payload)
       const storageData = storage({ key: 'menuListSpare' })
       const menuListSpare = JSON.parse(storageData)
       let menuGroupID = []
@@ -184,17 +181,17 @@ export default modelExtend(pageModel, {
       if (!isSuperAdmin()) {
         const user = storage({ key: 'user' })
         menuGroupID = JSON.parse(user).menuGroupId
-        datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
+        if (menuGroupID) {
+          datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
+        }
       } else {
         menuGroupID = payload.MENU_GROUP_ID
-        console.log('menuGroupID.split', menuGroupID)
         if (payload && payload.MENU_GROUP_ID) {
           datalist = filterRoleList([...menuListSpare], menuGroupID.split(','))
         } else {
           datalist = [...menuListSpare]
         }
       }
-      console.log('datalist', datalist)
       const data = [].concat(datalist)
       let option = []
       if (data instanceof Array) {

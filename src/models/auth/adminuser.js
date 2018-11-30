@@ -65,7 +65,6 @@ export default modelExtend(pageModel, {
             return { ...item, children: undefined }
           })
         }
-        console.log('list11', list)
         yield put({
           type: 'querySuccess',
           payload: {
@@ -97,7 +96,6 @@ export default modelExtend(pageModel, {
       payload.password = password(payload.password)
       delete payload.repass
       payload.roleId = payload.roleId.toString()
-      console.log('payload', payload)
       const data = yield call(create, { ...payload })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -121,7 +119,6 @@ export default modelExtend(pageModel, {
         delete payload.orgId
       }
       payload.roleId = payload.roleId.toString()
-      console.log('payload', payload)
       const data = yield call(update, { ...payload, id: item.userId })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
