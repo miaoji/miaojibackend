@@ -10,7 +10,7 @@ import '../themes/index.less'
 import './app.less'
 import Error from './system/error'
 
-const { prefix, openPages } = config
+const { prefix, openPages, title } = config
 
 const { Header, Bread, Footer, Sider, styles } = Layout
 let lastHref
@@ -80,7 +80,7 @@ const App = ({ children, dispatch, app, loading, location }) => {
     <div>
       <Loader spinning={loading.effects['app/queryStoreUser']} />
       <Helmet>
-        <title>后台管理</title>
+        <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href={logo} type="image/x-icon" />
         {iconFontJS && <script src={iconFontJS} />}

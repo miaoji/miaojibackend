@@ -88,7 +88,10 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       title: '操作',
       key: 'operation',
       width: 100,
-      render: (text, record) => {
+      render: (_, record) => {
+        if (record.userId === 1) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '重置密码' }]} />
+        }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '重置密码' }, { key: '2', name: '删除' }]} />
       },
     },

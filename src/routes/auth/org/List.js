@@ -72,6 +72,9 @@ const List = ({ storeTotal, location, onEditItem, onDeleteItem, ...tableProps })
       key: 'operation',
       width: 100,
       render: (text, record) => {
+        if (record.id === 1) {
+          return <div>/</div>
+        }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },
