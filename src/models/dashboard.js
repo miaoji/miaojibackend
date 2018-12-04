@@ -3,7 +3,7 @@ import { query as queryStoreUser } from 'src/services/storeuser'
 import { pageModel } from './system/common'
 import { color } from '../utils/theme'
 import { storage, time, isSuperAdmin } from '../utils'
-import { getLineData, weChatUser, income, terminalTotal } from '../services/dashboard'
+import { getLineData, weChatUser, income, terminalTotal, businessvolumecount } from '../services/dashboard'
 
 export default modelExtend(pageModel, {
   namespace: 'dashboard',
@@ -41,6 +41,11 @@ export default modelExtend(pageModel, {
       title: '终端总数',
       number: 0,
     },
+    trafficVolume: {
+      someCargo: 123,
+      scheduledReceipt: 3232,
+      signingVolume: 223,
+    },
     recentSales: [],
     comments: [],
     completed: [],
@@ -64,11 +69,28 @@ export default modelExtend(pageModel, {
           dispatch({ type: 'getStoreTotal' })
           dispatch({ type: 'getWeChatUser' })
           dispatch({ type: 'getTerminalTotal' })
+          dispatch({ type: 'getbusinessvolumecount' })
         }
       })
     },
   },
   effects: {
+    *getbusinessvolumecount(_, { call, put }) {
+      const data = yield call(businessvolumecount)
+      if (data.code === 200) {
+        yield put({
+          type: 'setStates',
+          payload: {
+            trafficVolume: {
+              someCargo: data.obj[0].someCargo,
+              scheduledReceipt: data.obj[0].scheduledReceipt,
+              signingVolume: data.obj[0].signingVolume,
+            },
+          },
+        })
+      }
+    },
+
     *getTerminalTotal(_, { call, put }) {
       const data = yield call(terminalTotal)
       if (data.code === 200) {

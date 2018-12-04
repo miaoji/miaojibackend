@@ -67,6 +67,8 @@ module.exports = {
       income: `${APIV3}/homePageYesterdayInCome`,
       // 获取设备数量
       terminalTotal: `${APIV3}/homePageStoreTotal`,
+      // 获取业务量总数
+      businessvolumecount: `${APIV3}/getTrafficVolume`,
     },
     menus: `${APIV1}/menus`,
     wxuser: {
@@ -258,6 +260,14 @@ module.exports = {
       detail: `${APIV3}/getOrderByBrand`,
       count: `${APIV3}/getPortfolioByBrand`,
       downloadExcel: `${APIV3}/downloadPortfolio`,
+    },
+    // 品牌统计
+    brandcount: {
+      list: `${APIV3}/simpleList`,
+    },
+    // 分派人
+    assignment: {
+      list: `${APIV3}/assignList`,
     },
   },
   brand: {

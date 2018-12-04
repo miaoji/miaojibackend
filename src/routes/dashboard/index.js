@@ -7,7 +7,7 @@ import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 import PieChart from './components/Echart/PieChart'
 
 function Dashboard({ dashboard }) {
-  const { receviceData, sendData, income, storeTotal, weChatUser, terminalTotal, user } = dashboard
+  const { receviceData, sendData, income, storeTotal, weChatUser, terminalTotal, user, trafficVolume } = dashboard
   const munArr = [income, storeTotal, weChatUser, terminalTotal]
   const numberCards = munArr.map((item, key) => {
     return (<Col key={key} lg={6} md={12}>
@@ -30,7 +30,7 @@ function Dashboard({ dashboard }) {
       </Col>
       <Col lg={12} md={12} style={{ marginTop: '24px' }}>
         <Card>
-          <PieChart />
+          <PieChart data={trafficVolume} />
         </Card>
       </Col>
       <Col lg={12} md={12} style={{ marginTop: '24px' }}>

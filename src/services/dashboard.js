@@ -56,3 +56,13 @@ export async function terminalTotal(params = {}) {
     data: params,
   })
 }
+/**
+ * [获取业务量数据]
+ */
+export function businessvolumecount() {
+  return request({
+    url: dashboard.businessvolumecount,
+    method: 'post',
+    data: {},
+  })
+}

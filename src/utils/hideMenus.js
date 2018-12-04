@@ -1,6 +1,12 @@
 export default [
   {
     id: '1001',
+    mpid: '1',
+    icon: 'laptop',
+    name: '首页',
+    route: '/assignment',
+  }, {
+    id: '1001',
     mpid: '-1',
     icon: 'laptop',
     name: '首页',
