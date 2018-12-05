@@ -1,26 +1,19 @@
 import modelExtend from 'dva-model-extend'
-import { query } from 'src/services/order'
+import { query, orderInfo } from 'src/services/orderdetails'
 import { pageModel } from './system/common'
-import { config, initialCreateTime, time } from '../utils'
-
-const { prefix } = config
 
 export default modelExtend(pageModel, {
   namespace: 'orderdetails',
 
   state: {
-    currentItem: {},
-    modalVisible: false,
-    modalType: 'create',
-    selectedRowKeys: [],
-    isMotion: false,
+    orderInfos: [],
+    expandedRowKeys: [],
   },
 
   subscriptions: {
-
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/order') {
+        if (location.pathname === '/order' && location.query.serialNumber) {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -31,26 +24,20 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
+    *getOrderInfo({ payload = {} }, { call, put }) {
+      const data = yield call(orderInfo, payload)
+      if (data.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            orderInfos: data.obj,
+          },
+        })
+      }
+    },
 
     *query({ payload = {} }, { call, put }) {
-      payload.name ? payload.name = payload.name.split('///')[1] : undefined
-      payload.serialNumber = payload.serialNumber ? payload.serialNumber.trim() : undefined
-      payload = initialCreateTime(payload)
-      if (Number(payload.mailtype) === 9) {
-        payload.mailtype = undefined
-      }
-      let newpayload = {}
-      if (!payload.startTime) {
-        const times = time.yesterTime(7, 7)
-        newpayload = { ...times, ...payload }
-      } else {
-        newpayload = { ...payload }
-      }
-      if (payload.serialNumber) {
-        delete newpayload.startTime
-        delete newpayload.endTime
-      }
-      let data = yield call(query, { ...newpayload })
+      let data = yield call(query, { page: 1, pageSize: 10, ...payload })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -64,26 +51,22 @@ export default modelExtend(pageModel, {
           },
         })
       } else {
+        yield put({
+          type: 'querySuccess',
+          payload: {
+            list: [{ id: 1 }, { id: 2 }],
+            pagination: {
+              current: Number(payload.page) || 1,
+              pageSize: Number(payload.pageSize) || 10,
+              total: 20,
+            },
+          },
+        })
         throw data.mess || '网络不行了!!!'
       }
     },
 
   },
 
-  reducers: {
-
-    showModal(state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
-    },
-
-    hideModal(state) {
-      return { ...state, modalVisible: false }
-    },
-
-    switchIsMotion(state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
-      return { ...state, isMotion: !state.isMotion }
-    },
-
-  },
+  reducers: {},
 })

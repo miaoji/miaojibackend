@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import classnames from 'classnames'
 import moment from 'moment'
 import styles from './index.less'
 
@@ -124,7 +123,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       dataIndex: 'time',
       key: 'time',
       render: (text) => {
-        const createTime = moment(text / 1).format('YYYY-MM-DD HH:mm:ss')
+        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '/'
         return <span>{createTime}</span>
       },
     }, {
@@ -141,12 +140,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
+        className={styles.table}
         bordered
         scroll={{ x: 767 }}
         columns={columns}
         simple
         rowKey={record => record.id}
+        expandedRowRender={record => <p style={{ margin: 0 }}>{record.description || 123123}</p>}
       />
     </div>
   )

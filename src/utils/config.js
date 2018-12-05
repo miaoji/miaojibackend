@@ -105,6 +105,7 @@ module.exports = {
     },
     order: {
       list: `${APIV3}/waybillStatus`, // 运单管理
+      orderInfo: `${APIV3}/waybillStatusInfo`, // 订单详情
     },
     qr: { // 二维码推广接口
       create: `${APIV4}/api/qr/createQr`,

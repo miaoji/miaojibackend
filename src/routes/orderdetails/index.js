@@ -6,12 +6,15 @@ import List from './List'
 import Filter from './Filter'
 
 const OrderDetails = ({ location, dispatch, orderdetails, loading }) => {
-  const { list } = orderdetails
+  const { list, pagination, expandedRowKeys } = orderdetails
+  console.log('orderdetails', orderdetails)
 
   const listProps = {
     dataSource: list,
     loading: loading.effects['orderdetails/query'],
     location,
+    expandedRowKeys,
+    pagination,
     onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
@@ -22,6 +25,14 @@ const OrderDetails = ({ location, dispatch, orderdetails, loading }) => {
           pageSize: page.pageSize,
         },
       }))
+    },
+    onExpandedRowsChange(key) {
+      dispatch({
+        type: 'orderdetails/updateState',
+        payload: {
+          expandedRowKeys: [key.pop()],
+        },
+      })
     },
   }
 
