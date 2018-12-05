@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 import PropTypes from 'prop-types'
+import { Spin } from 'antd'
 import './theme/macarons.js'
 import { time } from '../../../../utils'
 
-const SimpleChartComponent = ({ receviceData, sendData }) => {
+const SimpleChartComponent = ({ receviceData, sendData, loading }) => {
   const dataname = time.getLineTime()
   const option = {
     backgroundColor: '#fff',
@@ -80,12 +81,14 @@ const SimpleChartComponent = ({ receviceData, sendData }) => {
   return (
     <div className="examples">
       <div className="parent" style={{ minWidth: '1200px' }}>
-        <ReactEcharts
-          option={option}
-          style={{ height: '350px', width: '100%' }}
-          className="react_for_echarts"
-          theme="default"
-        />
+        <Spin spinning={loading} tip="数据加载中,请稍等...">
+          <ReactEcharts
+            option={option}
+            style={{ height: '350px', width: '100%' }}
+            className="react_for_echarts"
+            theme="default"
+          />
+        </Spin>
       </div>
     </div>
   )
@@ -93,6 +96,7 @@ const SimpleChartComponent = ({ receviceData, sendData }) => {
 SimpleChartComponent.propTypes = {
   receviceData: PropTypes.array,
   sendData: PropTypes.array,
+  loading: PropTypes.bool,
 }
 
 export default SimpleChartComponent

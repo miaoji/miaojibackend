@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 import PropTypes from 'prop-types'
+import { Spin } from 'antd'
 import './theme/macarons.js'
 
-const PieChart = ({ data }) => {
-  console.log('data', data)
+const PieChart = ({ data, loading }) => {
   const optionData = [
     { value: data.someCargo, name: '点货数' },
     { value: data.scheduledReceipt, name: '入库数' },
@@ -54,12 +54,14 @@ const PieChart = ({ data }) => {
   return (
     <div className="examples">
       <div className="parent">
-        <ReactEcharts
-          option={option}
-          style={{ height: '350px', width: '100%' }}
-          className="react_for_echarts"
-          theme="default"
-        />
+        <Spin spinning={loading} tip="数据加载中,请稍等...">
+          <ReactEcharts
+            option={option}
+            style={{ height: '350px', width: '100%' }}
+            className="react_for_echarts"
+            theme="default"
+          />
+        </Spin>
       </div>
     </div>
   )
@@ -67,6 +69,7 @@ const PieChart = ({ data }) => {
 
 PieChart.propTypes = {
   data: PropTypes.object,
+  loading: PropTypes.bool,
 }
 
 export default PieChart

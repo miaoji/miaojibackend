@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend'
 import { query as queryStoreUser } from 'src/services/storeuser'
 import { pageModel } from './system/common'
 import { color } from '../utils/theme'
-import { storage, time, isSuperAdmin } from '../utils'
+import { storage, time, isSuperAdmin, getOrgIdUsers } from '../utils'
 import { getLineData, weChatUser, income, terminalTotal, businessvolumecount } from '../services/dashboard'
 
 export default modelExtend(pageModel, {
@@ -42,9 +42,9 @@ export default modelExtend(pageModel, {
       number: 0,
     },
     trafficVolume: {
-      someCargo: 123,
-      scheduledReceipt: 3232,
-      signingVolume: 223,
+      someCargo: 0,
+      scheduledReceipt: 0,
+      signingVolume: 0,
     },
     recentSales: [],
     comments: [],
@@ -76,16 +76,32 @@ export default modelExtend(pageModel, {
   },
   effects: {
     *getbusinessvolumecount(_, { call, put }) {
+      const todayStr = time.getToday(new Date().getTime())
+      let cacheDate = storage({ key: 'trafficVolume' })
+      if (cacheDate) {
+        cacheDate = JSON.parse(cacheDate)
+        if (cacheDate.time === todayStr) {
+          yield put({
+            type: 'setStates',
+            payload: {
+              trafficVolume: { ...cacheDate },
+            },
+          })
+          return
+        }
+      }
       const data = yield call(businessvolumecount)
       if (data.code === 200) {
+        const trafficVolume = {
+          someCargo: data.obj[0].someCargo,
+          scheduledReceipt: data.obj[0].scheduledReceipt,
+          signingVolume: data.obj[0].signingVolume,
+        }
+        storage({ type: 'set', key: 'trafficVolume', val: JSON.stringify({ ...trafficVolume, time: todayStr }) })
         yield put({
           type: 'setStates',
           payload: {
-            trafficVolume: {
-              someCargo: data.obj[0].someCargo,
-              scheduledReceipt: data.obj[0].scheduledReceipt,
-              signingVolume: data.obj[0].signingVolume,
-            },
+            trafficVolume,
           },
         })
       }
@@ -128,6 +144,21 @@ export default modelExtend(pageModel, {
       }
     },
     *getStoreTotal({ payload = {} }, { call, put }) {
+      const userIds = getOrgIdUsers()
+      if (userIds) {
+        yield put({
+          type: 'setStates',
+          payload: {
+            storeTotal: {
+              icon: 'shop',
+              color: color.blue,
+              title: '管理门店总数',
+              number: userIds.split(',').length,
+            },
+          },
+        })
+        return
+      }
       if (isSuperAdmin()) {
         payload.superId = -1
       }

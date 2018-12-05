@@ -9,6 +9,7 @@ import {
   getRoleId,
   getUserId,
   isSuperAdmin,
+  getOrgIdUsers,
 } from './getUserInfo'
 import { pageParams, queryURL, queryArray, arrayToTree } from './toolkit'
 import password from './password'
@@ -36,4 +37,5 @@ module.exports = {
   getRoleId,
   getUserId,
   isSuperAdmin,
+  getOrgIdUsers,
 }

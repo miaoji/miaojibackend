@@ -157,9 +157,9 @@ const Routers = function ({ history, app }) {
           path: 'order',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/order'))
-              cb(null, require('./routes/order/'))
-            }, 'order')
+              registerModel(app, require('./models/orderdetails'))
+              cb(null, require('./routes/orderdetails/'))
+            }, 'orderdetails')
           },
         },
         {
