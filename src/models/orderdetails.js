@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { query, orderInfo } from 'src/services/orderdetails'
+import key from 'src/utils/key'
 import { pageModel } from './system/common'
 
 export default modelExtend(pageModel, {
@@ -8,6 +9,7 @@ export default modelExtend(pageModel, {
   state: {
     orderInfos: [],
     expandedRowKeys: [],
+    rowData: [],
   },
 
   subscriptions: {
@@ -25,12 +27,19 @@ export default modelExtend(pageModel, {
 
   effects: {
     *getOrderInfo({ payload = {} }, { call, put }) {
-      const data = yield call(orderInfo, payload)
+      const data = yield call(orderInfo, { orderSn: payload.serialNumber })
       if (data.code === 200) {
         yield put({
           type: 'updateState',
           payload: {
-            orderInfos: data.obj,
+            rowData: data.obj,
+          },
+        })
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            rowData: [],
           },
         })
       }
@@ -39,6 +48,7 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       let data = yield call(query, { page: 1, pageSize: 10, ...payload })
       if (data.code === 200) {
+        data.obj = data.obj.map(item => ({ ...item, key: key() }))
         yield put({
           type: 'querySuccess',
           payload: {

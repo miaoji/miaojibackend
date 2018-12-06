@@ -1,12 +1,33 @@
 .filter {
   padding: 30px;
-  display: flex;
-  // flex-direction: column;
+  display: flex; // flex-direction: column;
   text-align: center;
-  max-width: 560px;
-  // margin: auto;
+  max-width: 560px; // margin: auto;
   .filter_title {
     font-size: 20px;
     line-height: 50px;
+  }
+}
+
+.flex {
+  display: flex;
+  padding: 10px;
+  background-color: #fff;
+  margin-bottom: 5px;
+  &:hover {
+    box-shadow: 0px 0px 9px #888888;
+  }
+  &:last-child {
+    margin-bottom: 0px;
+  }
+  :global {
+    p {
+      margin-left: 10px;
+      min-width: 100px;
+      text-align: left;
+      span {
+        color: #de5510;
+      }
+    }
   }
 }
