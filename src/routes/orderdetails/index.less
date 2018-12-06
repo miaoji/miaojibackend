@@ -7,6 +7,22 @@
     font-size: 20px;
     line-height: 50px;
   }
+  position: relative;
+  transition: all 0.3s;
+  left: 0;
+}
+
+.isData {
+  position: absolute;
+  left: 50%;
+  display: block;
+  width: 600px;
+  margin-left: -300px;
+  :global {
+    .input {
+      margin: 20px auto;
+    }
+  }
 }
 
 .flex {
@@ -14,6 +30,7 @@
   padding: 10px;
   background-color: #fff;
   margin-bottom: 5px;
+  transition: all 0.3s;
   &:hover {
     box-shadow: 0px 0px 9px #888888;
   }
