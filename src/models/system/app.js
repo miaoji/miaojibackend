@@ -58,7 +58,9 @@ export default {
           type: 'queryStoreUser',
         })
         const user = JSON.parse(userInfo)
-        console.log('APP-userInfo', user)
+        if (process.env.NODE_ENV === 'development') {
+          console.log('App-userInfo', user)
+        }
         const menuList = user.userMenus
         let list = menus
         if (process.env.NODE_ENV !== 'text') {

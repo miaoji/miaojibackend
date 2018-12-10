@@ -86,12 +86,14 @@ const getUserId = () => {
  */
 const isSuperAdmin = () => {
   let roleIds = []
+  let user = {}
   try {
-    const user = storage({ key: 'user' })
+    user = storage({ key: 'user' })
     roleIds = user ? JSON.parse(user).roleIds : undefined
   } catch (_) {
     roleIds = undefined
   }
+  console.log('roleIds.some(item => Number(item) === 1)', roleIds.some(item => Number(item) === 1))
   return roleIds.some(item => Number(item) === 1)
 }
 

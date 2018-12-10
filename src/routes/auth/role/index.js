@@ -5,7 +5,6 @@ import { connect } from 'dva'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
-import { isSuperAdmin } from '../../../utils'
 
 const Modular = ({ location, dispatch, role, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, menuList, roleList } = role
@@ -73,15 +72,13 @@ const Modular = ({ location, dispatch, role, loading }) => {
           type: 'role/queryMenuList',
         })
       }
-      if (isSuperAdmin()) {
-        dispatch({
-          type: 'role/queryRoleList',
-          payload: {
-            id: item.ID,
-            parent_id: item.PARENT_ROLE_ID,
-          },
-        })
-      }
+      dispatch({
+        type: 'role/queryRoleList',
+        payload: {
+          id: item.ID,
+          parent_id: item.PARENT_ROLE_ID,
+        },
+      })
       dispatch({
         type: 'role/filterRoleList',
       })

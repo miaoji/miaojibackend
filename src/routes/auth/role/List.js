@@ -79,9 +79,9 @@ const List = ({ location, onEditItem, onDeleteItem, onReadAuth, ...tableProps })
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        if (record.ID === 1) {
-          return <span>/</span>
-        }
+        // if (record.ID === 1) {
+        //   return <span>/</span>
+        // }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },

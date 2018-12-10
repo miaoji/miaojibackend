@@ -98,7 +98,7 @@ const modal = ({
             initialValue: defaultRoleId,
             rules: [
               {
-                required: true,
+                required: item.ID !== 1,
                 message: '请输入父级角色!',
               },
             ],

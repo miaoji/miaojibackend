@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { query, orderInfo } from 'src/services/orderdetails'
 import key from 'src/utils/key'
+import { message } from 'antd'
 import { pageModel } from './system/common'
 
 export default modelExtend(pageModel, {
@@ -51,6 +52,9 @@ export default modelExtend(pageModel, {
       let data = yield call(query, { page: 1, pageSize: 10, ...payload })
       if (data.code === 200) {
         data.obj = data.obj.map(item => ({ ...item, key: key() }))
+        if (data.obj.length === 0) {
+          message.warning('没有查询到相关数据')
+        }
         yield put({
           type: 'querySuccess',
           payload: {
