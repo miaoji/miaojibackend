@@ -6,18 +6,23 @@ import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
 
-const Order = ({ location, dispatch, order, loading }) => {
+const Order = ({ location, dispatch, order, loading, app }) => {
   const { list, pagination, isMotion, selectedRowKeys } = order
   const { pageSize } = pagination
+  const { storeuserList } = app
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['storeUser/query'],
+    loading: loading.effects['order/query'],
     pagination,
     location,
     isMotion,
     onChange(page) {
       const { query, pathname } = location
+      if (query.createTime && query.createTime.length > 0) {
+        query.createTime[0] = query.createTime[0].format('YYYY-MM-DD')
+        query.createTime[1] = query.createTime[1].format('YYYY-MM-DD')
+      }
       dispatch(routerRedux.push({
         pathname,
         query: {
@@ -29,19 +34,19 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onMarkItem(id) {
       dispatch({
-        type: 'storeUser/markBlackList',
+        type: 'order/markBlackList',
         payload: id,
       })
     },
     onDeleteItem(id) {
       dispatch({
-        type: 'storeUser/delete',
+        type: 'order/delete',
         payload: id,
       })
     },
     onEditItem(item) {
       dispatch({
-        type: 'storeUser/showModal',
+        type: 'order/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -52,7 +57,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     //   selectedRowKeys,
     //   onChange: (keys) => {
     //     dispatch({
-    //       type: 'storeUser/updateState',
+    //       type: 'order/updateState',
     //       payload: {
     //         selectedRowKeys: keys,
     //       },
@@ -66,6 +71,7 @@ const Order = ({ location, dispatch, order, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -78,31 +84,31 @@ const Order = ({ location, dispatch, order, loading }) => {
     },
     onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/storeUser',
+        pathname: '/order',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/storeUser',
+        pathname: '/order',
       }))
     },
     onAdd() {
       dispatch({
-        type: 'storeUser/showModal',
+        type: 'order/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion() {
-      dispatch({ type: 'storeUser/switchIsMotion' })
+      dispatch({ type: 'order/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'storeUser/multiDelete',
+      type: 'order/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -133,6 +139,7 @@ Order.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ order, loading }) => ({ order, loading }))(Order)
+export default connect(({ order, loading, app }) => ({ order, loading, app }))(Order)

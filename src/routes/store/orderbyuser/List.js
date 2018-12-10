@@ -27,10 +27,16 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'state',
       render: (text) => {
         const replText = {
-          1: '点单',
-          101: '上架',
+          1: '点货',
+          101: '到件',
+          102: '上架',
           103: '分派',
-          301: '签收',
+          201: '问题件',
+          202: '移库',
+          299: '问题件',
+          305: '签收',
+          303: '退回',
+          304: '一件补签',
         }
         return <span>{replText[text]}</span>
       },

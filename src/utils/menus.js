@@ -26,6 +26,13 @@ export default [
     route: '/adminuser',
   },
   {
+    id: '204',
+    mpid: '2',
+    bpid: '1',
+    name: '机构管理',
+    route: '/org',
+  },
+  {
     id: '202',
     mpid: '2',
     bpid: '1',
@@ -54,14 +61,6 @@ export default [
     icon: 'message',
     route: '/wxuserdetail',
   },
-  // {
-  //   id: '4',
-  //   bpid: '1',
-  //   name: '门店用户',
-  //   icon: 'shop',
-  //   route: '/storeuser',
-  // },
-  // -- //
   {
     id: '4',
     bpid: '1',
@@ -81,13 +80,6 @@ export default [
     mpid: '-1',
     name: '门店操作人详情',
     route: '/storeuserDetail',
-  },
-  {
-    id: '403',
-    bpid: '1',
-    mpid: '-1',
-    name: '操作人寄件汇总',
-    route: '/operator',
   },
   {
     id: '404',
@@ -165,6 +157,20 @@ export default [
     mpid: '-1',
     name: '门店问题件明细',
     route: '/problemdetail',
+  },
+  {
+    id: '409',
+    bpid: '1',
+    mpid: '4',
+    name: '业务量',
+    route: '/businessvolume',
+  },
+  {
+    id: '4017',
+    bpid: '409',
+    mpid: '-1',
+    name: '业务量详情',
+    route: '/businessvolumeDetail',
   },
   // //
   {

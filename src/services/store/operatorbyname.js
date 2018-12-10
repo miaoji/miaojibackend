@@ -5,14 +5,10 @@ const { operatorbyname } = api
 
 export async function query (params) {
   params = pageParams(params)
-  delete params.page
-  delete params.pageSize
-  params = JSON.stringify(params)
+  delete params.location
   return request({
     url: operatorbyname.all,
     method: 'post',
-    params: {
-      param: params,
-    },
+    data: params,
   })
 }

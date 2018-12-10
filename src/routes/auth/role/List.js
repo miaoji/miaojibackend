@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal } from 'antd'
+import { Table, Modal, Button } from 'antd'
 import moment from 'moment'
 import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
+// import { getUserId, isSuperAdmin } from '../../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ location, onEditItem, onDeleteItem, onReadAuth, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -18,8 +19,8 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
-            onDeleteItem(record.ROLE_ID)
+          onOk() {
+            onDeleteItem(record.ID)
           },
         })
         break
@@ -28,37 +29,59 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
     }
   }
 
+  const handleRaadAuth = (record) => {
+    console.log('dss', record)
+    onReadAuth(record)
+  }
+
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'ROLE_ID',
-      key: 'ROLE_ID',
+      dataIndex: 'ID',
+      key: 'ID',
     }, {
       title: '角色名称',
       dataIndex: 'ROLE_NAME',
       key: 'ROLE_NAME',
     }, {
+      title: '创建人',
+      dataIndex: 'createUserName',
+      key: 'createUserName',
+      render: (text) => {
+        return <span>{text || '无记录'}</span>
+      },
+    }, {
       title: '备注信息',
-      dataIndex: 'remark',
-      key: 'remark',
+      dataIndex: 'DESCRIPTION',
+      key: 'DESCRIPTION',
       width: 300,
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
     }, {
       title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
+      dataIndex: 'ROLE_CREATE_TIME',
+      key: 'ROLE_CREATE_TIME',
       width: 200,
       render: (text) => {
         const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
         return <span>{createTime}</span>
       },
     }, {
+      title: '权限',
+      key: 'auth',
+      width: 100,
+      render(record) {
+        return <Button onClick={() => { handleRaadAuth(record) }} ghost style={{ color: '#0e77ca' }}>查看</Button>
+      },
+    }, {
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
+        if (record.ID === 1) {
+          return <span>/</span>
+        }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },
@@ -91,6 +114,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   location: PropTypes.object,
+  onReadAuth: PropTypes.func,
 }
 
 export default List

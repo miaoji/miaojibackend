@@ -13,7 +13,7 @@ const List = ({ isMotion, location, ...tableProps }) => {
       dataIndex: 'name',
       key: 'name',
       render: (text) => {
-        return <span>{text || '空'}</span>
+        return <span>{text || '暂无'}</span>
       },
     }, {
       title: '提现金额',
@@ -24,12 +24,14 @@ const List = ({ isMotion, location, ...tableProps }) => {
       },
     }, {
       title: '帐号类型',
-      dataIndex: 'accountType',
-      key: 'accountType',
+      dataIndex: 'type',
+      key: 'type',
       render: (text) => {
-        return (<span>{text === 0
-          ? '门店主账号'
-          : '门店子帐号'}</span>)
+        const replText = {
+          0: '主账号',
+          1: '子账号',
+        }
+        return (<span>{(text || text === 0) ? replText[text] : '暂无'}</span>)
       },
     }, {
       title: '帐号',
@@ -42,15 +44,14 @@ const List = ({ isMotion, location, ...tableProps }) => {
       title: '提现状态',
       dataIndex: 'status',
       key: 'status',
-      // filters: [
-      //   { text: '失败', value: '0' },
-      //   { text: '成功', value: '1' },
-      // ],
-      // onFilter: (value, record) => record.status === value,
       render: (text) => {
-        return (<span>{text === 0
-          ? '失败'
-          : '成功'}</span>)
+        const replText = {
+          success: '成功',
+          wait: '等待',
+          cancel: '交易取消',
+          close: '交易关闭',
+        }
+        return (<span>{text ? replText[text] : '暂无'}</span>)
       },
     }, {
       title: '提现时间',

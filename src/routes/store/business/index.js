@@ -26,11 +26,13 @@ const Business = ({ location, dispatch, business, app, loading }) => {
         payload: {
           idUser: value.pop(),
           mailtype: location.query.mailtype || 0,
+          createTime: query.createTime || [],
         },
       })
     },
     dataSource: list,
     loading: loading.effects['business/query'],
+    rowLoading: loading.effects['business/getOperator'],
     pagination,
     location,
     onChange(page, filter) {

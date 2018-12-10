@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table } from 'antd'
+import { Table, Spin } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
 import { Link } from 'dva/router'
@@ -8,8 +8,9 @@ import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import SonTable from './SonTable'
+import { isSuperAdmin } from '../../utils'
 
-const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, ...tableProps }) => {
+const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -105,15 +106,19 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看操作人详情</Link>
       },
     },
-    {
-      title: '操作',
-      key: 'operations',
-      width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
-      },
-    },
   ]
+  if (isSuperAdmin()) {
+    columns.push(
+      {
+        title: '操作',
+        key: 'operations',
+        width: 100,
+        render: (text, record) => {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
+        },
+      },
+    )
+  }
 
   const getBodyWrapperProps = {
     page: location.query.page,
@@ -137,7 +142,21 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         // expandedRowRender={() => <p>123123123</p>}
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
-        expandedRowRender={record => <SonTable handleMenuClick={handleMenuClick} record={record} list={sonlist} filter={filter} />}
+        expandedRowRender={(record) => {
+          if (rowLoading) {
+            return <Spin />
+          }
+          if (sonlist && sonlist.length === 0) {
+            return (<div>
+              <div style={{ margin: 0 }}>
+                <div style={{ textAlign: 'center', margin: '10px', color: 'red' }}>
+                  暂无相关数据
+                </div>
+              </div>
+            </div>)
+          }
+          return <SonTable handleMenuClick={handleMenuClick} record={record} list={sonlist} filter={filter} />
+        }}
       />
     </div>
   )
@@ -152,6 +171,7 @@ List.propTypes = {
   onVersionSwitching: PropTypes.func.isRequired,
   filter: PropTypes.object,
   sonlist: PropTypes.array,
+  rowLoading: PropTypes.bool,
 }
 
 export default List

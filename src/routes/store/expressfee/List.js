@@ -80,13 +80,6 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
         return <span>{text ? `${text}元` : '0元'}</span>
       },
     }, {
-      title: '余额',
-      dataIndex: 'balance',
-      key: 'balance',
-      render: (text) => {
-        return <span>{text ? `${text}元` : '0元'}</span>
-      },
-    }, {
       title: '现金',
       dataIndex: 'cash',
       key: 'cash',
@@ -99,7 +92,7 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
       key: 'amount ',
       render: (text, record) => {
         const amount = record.alipayPrice + record.weChatPrice + record.balance + record.cash
-        return <span>{amount ? `${amount}元` : '0元'}</span>
+        return <span>{amount ? `${amount.toFixed(2)}元` : '0元'}</span>
       },
     }, {
       title: '收款失败金额',
@@ -116,17 +109,6 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '寄件详情' }, { key: '2', name: '操作人详情' }]} />
       },
     },
-    // {
-    //   title: '操作',
-    //   dataIndex: 'option',
-    //   key: 'option',
-    //   render: (text, record) => {
-    //     if (filter.createTime && filter.createTime.length > 0) {
-    //       return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看寄件详情</Link>
-    //     }
-    //     return <Link to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}`}>查看寄件详情</Link>
-    //   },
-    // },
   ]
 
   const getBodyWrapperProps = {

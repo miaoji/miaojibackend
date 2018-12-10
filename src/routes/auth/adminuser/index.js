@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, adminuser, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = adminuser
+  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty, orangeizeList, roleList } = adminuser
   const { pageSize } = pagination
 
   const modalProps = {
@@ -17,16 +17,24 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     confirmLoading: loading.effects['adminuser/update'],
     title: `${modalType === 'create' ? '注册用户信息' : '修改用户信息'}`,
     wrapClassName: 'vertical-center-modal',
-    selectSiteName,
-    onOk (data) {
+    confirmDirty: confirmDirty || false,
+    orangeizeList,
+    roleList,
+    onOk(data) {
       dispatch({
         type: `adminuser/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'adminuser/hideModal',
+      })
+    },
+    onEditConfirmDirty(payload) {
+      dispatch({
+        type: 'adminuser/updateState',
+        payload,
       })
     },
   }
@@ -36,7 +44,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     loading: loading.effects['adminuser/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -47,13 +55,15 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'adminuser/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
+      dispatch({ type: 'adminuser/queryOrangeizeList' })
+      dispatch({ type: 'adminuser/queryRoleList' })
       dispatch({
         type: 'adminuser/showModal',
         payload: {
@@ -61,8 +71,14 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
           currentItem: item,
         },
       })
+    },
+    onResetPWD(item) {
       dispatch({
-        type: 'adminuser/getSiteName',
+        type: 'adminuser/showModal',
+        payload: {
+          modalType: 'resetPWD',
+          currentItem: { id: item },
+        },
       })
     },
   }
@@ -71,7 +87,7 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -81,15 +97,15 @@ const Modular = ({ location, dispatch, adminuser, loading }) => {
         },
       }))
     },
-    onAdd () {
+    onAdd() {
+      dispatch({ type: 'adminuser/queryOrangeizeList' })
+      dispatch({ type: 'adminuser/queryRoleList' })
       dispatch({
         type: 'adminuser/showModal',
         payload: {
           modalType: 'create',
+          currentItem: {},
         },
-      })
-      dispatch({
-        type: 'adminuser/getSiteName',
       })
     },
   }

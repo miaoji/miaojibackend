@@ -15,7 +15,7 @@ const Routers = function ({ history, app }) {
       path: '/',
       component: App,
       // 默认渲染首页
-      getIndexRoute (nextState, cb) {
+      getIndexRoute(nextState, cb) {
         require.ensure([], (require) => {
           registerModel(app, require('./models/dashboard'))
           cb(null, { component: require('./routes/dashboard/') })
@@ -25,7 +25,7 @@ const Routers = function ({ history, app }) {
         {
           // 登陆页
           path: 'login',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/system/login'))
               cb(null, require('./routes/system/login/'))
@@ -35,7 +35,7 @@ const Routers = function ({ history, app }) {
         {
           // 首页
           path: 'dashboard',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/dashboard'))
               cb(null, require('./routes/dashboard/'))
@@ -45,7 +45,7 @@ const Routers = function ({ history, app }) {
         {
           // 演示页面
           path: 'user',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/user'))
               cb(null, require('./routes/user/'))
@@ -55,7 +55,7 @@ const Routers = function ({ history, app }) {
         {
           // 测试页面子页
           path: 'user/:id',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/details/userdetail'))
               cb(null, require('./routes/user/detail/'))
@@ -65,7 +65,7 @@ const Routers = function ({ history, app }) {
         {
           // 门店用户
           path: 'storeuser',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/storeuser'))
               cb(null, require('./routes/storeuser/'))
@@ -75,7 +75,7 @@ const Routers = function ({ history, app }) {
         {
           // 微信用户页面
           path: 'wxuser',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/wxuser'))
               cb(null, require('./routes/wxuser/'))
@@ -85,7 +85,7 @@ const Routers = function ({ history, app }) {
         {
           // 微信用户页面子页
           path: 'wxuserdetail',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/details/wxuserdetail'))
               cb(null, require('./routes/wxuser/detail/'))
@@ -95,7 +95,7 @@ const Routers = function ({ history, app }) {
         {
           // 收支数据>收入
           path: 'income',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/storedata/income'))
               cb(null, require('./routes/storedata/income/'))
@@ -105,7 +105,7 @@ const Routers = function ({ history, app }) {
         {
           // 收支数据>支出
           path: 'expend',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/storedata/expend'))
               cb(null, require('./routes/storedata/expend/'))
@@ -115,7 +115,7 @@ const Routers = function ({ history, app }) {
         {
           // 文章管理>发布列表
           path: 'articles',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/articles'))
               cb(null, require('./routes/articles/'))
@@ -125,7 +125,7 @@ const Routers = function ({ history, app }) {
         {
           // 文章管理>文章发布
           path: 'publish',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/publish'))
               cb(null, require('./routes/publish/'))
@@ -135,7 +135,7 @@ const Routers = function ({ history, app }) {
         {
           // 钱包管理>充值记录
           path: 'topup',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/wallet/topup'))
               cb(null, require('./routes/wallet/topup/'))
@@ -145,7 +145,7 @@ const Routers = function ({ history, app }) {
         {
           // 钱包管理>提现记录
           path: 'withdraw',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/wallet/withdraw'))
               cb(null, require('./routes/wallet/withdraw/'))
@@ -155,17 +155,17 @@ const Routers = function ({ history, app }) {
         {
           // 运单管理
           path: 'order',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/order'))
-              cb(null, require('./routes/order/'))
-            }, 'order')
+              registerModel(app, require('./models/orderdetails'))
+              cb(null, require('./routes/orderdetails/'))
+            }, 'orderdetails')
           },
         },
         {
           // 推广管理
           path: 'qr',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/qr'))
               cb(null, require('./routes/qr/'))
@@ -175,7 +175,7 @@ const Routers = function ({ history, app }) {
         {
           // 二维码图片
           path: 'qrdetail',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/details/qrdetail'))
               cb(null, require('./routes/qr/detail/'))
@@ -185,7 +185,7 @@ const Routers = function ({ history, app }) {
         {
           // 充值消费
           path: 'consume',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/consume'))
               cb(null, require('./routes/consume/'))
@@ -195,7 +195,7 @@ const Routers = function ({ history, app }) {
         {
           // 黑名单
           path: 'blacklist',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/blacklist'))
               cb(null, require('./routes/blacklist/'))
@@ -205,7 +205,7 @@ const Routers = function ({ history, app }) {
         {
           // 京东单号管理
           path: 'jd',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/jd'))
               cb(null, require('./routes/jd/'))
@@ -215,7 +215,7 @@ const Routers = function ({ history, app }) {
         {
           // 单号规则配置
           path: 'ordernumber',
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/ordernumber'))
               cb(null, require('./routes/ordernumber/'))
@@ -230,16 +230,6 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/details/storeuserdetail'))
               cb(null, require('./routes/storeuser/detail/'))
             }, 'storeuser-detail')
-          },
-        },
-        {
-          // 门店用户>门店操作人详情>操作人寄件汇总
-          path: 'operator',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/store/operator'))
-              cb(null, require('./routes/store/operator/'))
-            }, 'operator')
           },
         },
         {
@@ -393,9 +383,59 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 权限管理>机构管理
+          path: 'org',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/auth/org'))
+              cb(null, require('./routes/auth/org/'))
+            }, 'org')
+          },
+        },
+        {
+          // 业务量 报表
+          path: 'businessvolume',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/businessvolume'))
+              cb(null, require('./routes/businessvolume'))
+            }, 'businessvolume')
+          },
+        },
+        {
+          // 业务量 报表 详情
+          path: 'businessvolumeDetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/details/businessvolume'))
+              cb(null, require('./routes/businessvolume/detail/'))
+            }, 'businessvolume-detail')
+          },
+        },
+        {
+          // 品牌统计
+          path: 'brandcount',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/brandcount'))
+              cb(null, require('./routes/brandcount/'))
+            }, 'brandcount')
+          },
+        },
+        {
+          // 分派人
+          path: 'assignment',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/assignment'))
+              cb(null, require('./routes/assignment/'))
+            }, 'assignment')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
-          getComponent (nextState, cb) {
+          getComponent(nextState, cb) {
             require.ensure([], (require) => {
               cb(null, require('./routes/system/error/'))
             }, 'error')

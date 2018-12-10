@@ -1,13 +1,16 @@
-import { request, config, pageParams } from '../../utils'
+import { request, config, pageParams, getUserId, getOrgId } from '../../utils'
 
 const { api: { auth: { adminuser } } } = config
 
 export async function query(params) {
+  params.userId = getUserId()
+  params.orgId = getOrgId()
   params = pageParams(params)
+  delete params.location
   return request({
     url: adminuser.list,
-    method: 'get',
-    params,
+    method: 'post',
+    data: params,
   })
 }
 
@@ -15,7 +18,7 @@ export async function create(params) {
   return request({
     url: adminuser.create,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
@@ -23,21 +26,14 @@ export async function update(params) {
   return request({
     url: adminuser.update,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
 export async function remove(params) {
   return request({
     url: adminuser.delete,
-    method: 'delete',
-    params,
-  })
-}
-
-export async function showSiteName() {
-  return request({
-    url: adminuser.showSiteName,
     method: 'post',
+    data: params,
   })
 }

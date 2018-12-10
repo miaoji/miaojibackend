@@ -12,7 +12,7 @@ function NumberCard ({ icon, color, title, number, countUp }) {
         <p className={styles.title}>{title || 'No Title'}</p>
         <p className={styles.number}>
           <CountUp
-            start={200}
+            start={0}
             end={number}
             duration={2.75}
             useEasing

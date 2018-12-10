@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { query } from 'src/services/order'
 import { pageModel } from './system/common'
-import { config, initialCreateTime } from '../utils'
+import { config, initialCreateTime, time } from '../utils'
 
 const { prefix } = config
 
@@ -33,8 +33,24 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      payload.name ? payload.name = payload.name.split('///')[1] : undefined
+      payload.serialNumber = payload.serialNumber ? payload.serialNumber.trim() : undefined
       payload = initialCreateTime(payload)
-      let data = yield call(query, payload)
+      if (Number(payload.mailtype) === 9) {
+        payload.mailtype = undefined
+      }
+      let newpayload = {}
+      if (!payload.startTime) {
+        const times = time.yesterTime(7, 7)
+        newpayload = { ...times, ...payload }
+      } else {
+        newpayload = { ...payload }
+      }
+      if (payload.serialNumber) {
+        delete newpayload.startTime
+        delete newpayload.endTime
+      }
+      let data = yield call(query, { ...newpayload })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',

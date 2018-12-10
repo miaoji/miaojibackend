@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import {
   Form, Button, Row, Col, Input, Select,
 } from 'antd'
-import { DateRange } from '../../../components'
-import { handleFields, defaultTime } from '../../../utils'
+import moment from 'moment'
+import { DateRange } from '../../components'
+import { handleFields, defaultTime } from '../../utils'
 
-const { Search } = Input
-const { Option } = Select
+const Search = Input.Search
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -22,9 +22,11 @@ const TwoColProps = {
 }
 
 const Filter = ({
+  // onAdd,
   onFilterChange,
-  // handleDownLoad,
+  onDownLoad,
   filter,
+  storeuserList,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -50,13 +52,13 @@ const Filter = ({
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
-          // fields[item] = []
+          fields[item] = []
         } else {
           fields[item] = undefined
         }
       }
     }
-    setFieldsValue({ ...fields, payType: '0' })
+    setFieldsValue(fields)
     filter.page = undefined
     filter.pageSize = undefined
     handleSubmit()
@@ -72,48 +74,55 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    if (fields.payType === '0') {
-      fields.payType = undefined
-    }
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { brand, payType, createTime } = filter
+  let { name } = filter
 
-  const payTypeChange = (key) => {
-    handleChange('payType', key)
+  let initialCreateTime = []
+  if (filter.createTime && filter.createTime[0]) {
+    initialCreateTime[0] = moment(filter.createTime[0])
+  }
+  if (filter.createTime && filter.createTime[1]) {
+    initialCreateTime[1] = moment(filter.createTime[1])
+  }
+  const nameChange = (key) => {
+    handleChange('name', key)
   }
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('brand', { initialValue: brand })(
-          <Search onSearch={handleSubmit} onPressEnter={handleSubmit} size="large" placeholder="按快递品牌搜索" />
-        )}
-      </Col>
-      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>收款方式 : </span>
-        {getFieldDecorator('payType', { initialValue: payType || '0' })(
-          <Select onChange={payTypeChange} size="large" style={{ width: '70%' }} placeholder="按支付方式筛选">
-            <Option key="0">全部</Option>
-            <Option key="1">支付宝</Option>
-            <Option key="2">微信</Option>
-            <Option key="3">余额</Option>
-            <Option key="4">现金</Option>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按店铺名称搜索"
+            size="large"
+          >
+            {storeuserList}
           </Select>
         )}
       </Col>
+      <div style={{ display: 'none' }}>
+        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+          {getFieldDecorator('name', { initialValue: name })(
+            <Search onPressEnter={nameChange} placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />
+          )}
+        </Col>
+      </div>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: createTime })(
+        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            {/* <Button type="primary" size="large" onClick={handleDownLoad}>下载</Button> */}
+            <Button type="primary" size="large" onClick={onDownLoad}>下载Excel</Button>
           </div>
         </div>
       </Col>
@@ -122,11 +131,13 @@ const Filter = ({
 }
 
 Filter.propTypes = {
+  onAdd: PropTypes.func,
   switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  handleDownLoad: PropTypes.func,
+  onDownLoad: PropTypes.func,
+  storeuserList: PropTypes.array,
 }
 
 export default Form.create()(Filter)

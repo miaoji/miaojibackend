@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import 'braft-editor/dist/braft.css'
 import { Form, Input, Modal, notification, Select, Row, Col } from 'antd'
 import { upload } from '../../services/publish'
+import { APIV3 } from '../../utils'
+
 
 const confirm = Modal.confirm
 const { Option } = Select
@@ -124,7 +126,7 @@ class List extends React.Component {
             if (data.obj) {
               param.progress(100)
               param.success({
-                url: data.obj,
+                url: `${APIV3}${data.obj}`,
               })
             } else {
               param.error({

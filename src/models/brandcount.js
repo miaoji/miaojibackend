@@ -1,21 +1,24 @@
 import modelExtend from 'dva-model-extend'
-import { query } from '../../services/store/operator'
-import { pageModel } from '../system/common'
-import { time, initialCreateTime } from '../../utils'
+import { config, initialCreateTime } from 'utils'
+import { query } from '../services/brandcount'
+import { pageModel } from './system/common'
 
+const { prefix } = config
 export default modelExtend(pageModel, {
-  namespace: 'operator',
+  namespace: 'brandcount',
 
   state: {
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
+    selectedRowKeys: [],
+    echartShow: false,
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/operator') {
+        if (location.pathname === '/brandcount') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -27,18 +30,11 @@ export default modelExtend(pageModel, {
 
   effects: {
 
-    *query({ payload = {} }, { call, put }) {
+    * query({ payload = {} }, { call, put }) {
+      // 如果使用了日期选择器, 则需要配合initialCreateTime方法处理时间
       payload = initialCreateTime(payload)
-      let newpayload = {}
-      if (!payload.startTime) {
-        const times = time.yesterTime()
-        newpayload = { ...times, ...payload }
-      } else {
-        newpayload = { ...payload }
-      }
-      // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      const data = yield call(query, { ...newpayload, download: 0 })
-      if (data.obj) {
+      const data = yield call(query, payload)
+      if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
@@ -56,9 +52,6 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
-    setSiteName(state, { payload }) {
-      return { ...state, ...payload }
-    },
 
     showModal(state, { payload }) {
       return { ...state, ...payload, modalVisible: true }
@@ -66,6 +59,11 @@ export default modelExtend(pageModel, {
 
     hideModal(state) {
       return { ...state, modalVisible: false }
+    },
+
+    switchIsMotion(state) {
+      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
+      return { ...state, isMotion: !state.isMotion }
     },
 
   },

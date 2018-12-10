@@ -1,9 +1,18 @@
-import { request, config, pageParams } from '../../utils'
+import {
+  request, config, pageParams, getRoleId,
+  isSuperAdmin,
+  // getUserId,
+} from '../../utils'
 
 const { api: { auth: { role } } } = config
 
 export async function query(params) {
+  params.roleId = getRoleId()
+  if (!isSuperAdmin()) {
+    // params.createUserId = getUserId()
+  }
   params = pageParams(params)
+  delete params.location
   return request({
     url: role.list,
     method: 'post',
@@ -28,7 +37,6 @@ export async function update(params) {
 }
 
 export async function remove(params) {
-  console.log('params', params)
   return request({
     url: role.delete,
     method: 'post',
@@ -36,7 +44,7 @@ export async function remove(params) {
   })
 }
 
-export async function queryMenu (params) {
+export async function queryMenu(params) {
   params = pageParams(params)
   return request({
     url: role.queryMenu,

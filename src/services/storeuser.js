@@ -1,13 +1,19 @@
-import { request, api, pageParams } from 'utils'
+import { request, api, pageParams } from '../utils'
 
 const { storeuser } = api
 
 export async function query(params) {
   params = pageParams(params)
+  // if (params.rownum === 10000) {
+  //   delete params.location
+  // }
+  if (!params.userIds && !params.superId) {
+    params.superId = -1
+  }
   return request({
     url: storeuser.list,
-    method: 'get',
-    params,
+    method: 'post',
+    data: params,
   })
 }
 

@@ -62,6 +62,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           10: '韵达',
           13: '顺丰',
           71: '高铁快运',
+          32: '其他',
         }
         text = text || '0'
         return <span>{newtext[text]}</span>
@@ -73,19 +74,21 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text) => {
         return <span>{text || '手机号暂无'}</span>
       },
-    }, {
-      title: '快递类型',
-      dataIndex: 'iswrong',
-      key: 'iswrong',
-      render: (text) => {
-        const newtext = {
-          0: '正常件',
-          1: '问题件',
-        }
-        return <span>{newtext[text]}</span>
-      },
-    }, {
-      title: '快递状态',
+    },
+    // {
+    //   title: '快递类型',
+    //   dataIndex: 'iswrong',
+    //   key: 'iswrong',
+    //   render: (text) => {
+    //     const newtext = {
+    //       0: '正常件',
+    //       1: '问题件',
+    //     }
+    //     return <span>{newtext[text]}</span>
+    //   },
+    // },
+    {
+      title: '快件类型',
       dataIndex: 'expresStype',
       key: 'expresStype',
       render: (text) => {
@@ -110,7 +113,10 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           202: '移库',
           299: '问题件',
           301: '签收',
+          305: '签收',
           302: '退回',
+          303: '退回',
+          304: '一件补签',
         }
         return <span>{newtext[text]}</span>
       },

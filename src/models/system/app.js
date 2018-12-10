@@ -1,13 +1,12 @@
 import React from 'react'
 import { routerRedux } from 'dva/router'
-// import { parse } from 'qs'
 import config from 'config'
-// import { EnumRoleType } from 'enums'
 import menus from 'utils/menus'
+import hideMenus from 'utils/hideMenus'
 import { storage } from 'utils'
 import { Select } from 'antd'
-// import { query, logout } from '../services/system/app'
 import { query as queryStoreUser } from 'src/services/storeuser'
+import { rebuildMenuData } from 'src/utils/processing'
 
 const { prefix } = config
 const { Option } = Select
@@ -16,6 +15,7 @@ export default {
   namespace: 'app',
   state: {
     storeuserList: [],
+    storeTotal: 0,
     user: {},
     permissions: {
       visit: [],
@@ -38,7 +38,6 @@ export default {
 
     setup({ dispatch }) {
       dispatch({ type: 'query' })
-      dispatch({ type: 'queryStoreUser' })
       let tid
       window.onresize = () => {
         clearTimeout(tid)
@@ -52,15 +51,22 @@ export default {
   effects: {
 
     *query(_, { put }) {
+      const loginTime = new Date().getTime() - storage({ key: 'loginTime' })
       const userInfo = storage({ key: 'user' })
-      if (userInfo) {
+      if (userInfo && loginTime <= 21600000) {
+        yield put({
+          type: 'queryStoreUser',
+        })
         const user = JSON.parse(userInfo)
-        const list = menus
-        // const { permissions } = user
+        console.log('APP-userInfo', user)
+        const menuList = user.userMenus
+        let list = menus
+        if (process.env.NODE_ENV !== 'text') {
+          list = [...rebuildMenuData(menuList), ...hideMenus]
+        }
         let permissions = {}
         permissions.role = 'admin'
         let menu = list
-        // if (permissions.role === EnumRoleType.ADMIN || permissions.role === EnumRoleType.DEVELOPER) {
         if (permissions) {
           permissions.visit = list.map(item => item.id)
         } else {
@@ -106,7 +112,7 @@ export default {
       }
     },
 
-    *queryStoreUser(_, { call, put }) {
+    * queryStoreUser(_, { call, put }) {
       const data = yield call(queryStoreUser, {
         current: 1,
         pageSize: 10000,
@@ -117,12 +123,13 @@ export default {
             return false
           }
           const val = `${item.id}///${item.name}`
-          return <Option key={val}>{item.name}</Option>
+          return <Option key={val}>{`${item.id}-${item.name}`}</Option>
         })
         yield put({
           type: 'updateState',
           payload: {
             storeuserList: option,
+            storeTotal: data.total,
           },
         })
       } else {

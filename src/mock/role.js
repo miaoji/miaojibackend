@@ -1,26 +1,30 @@
+import city from '../utils/city'
+
 const Mock = require('mockjs')
 const config = require('../utils/config')
 
 const { apiPrefix } = config
 
 let usersListData = Mock.mock({
-  'data|9': [
+  'data|19': [
     {
-      'id|+1': 1001,
+      'ID|+1': 1001,
       name: '@name',
-      'roleName|1': ['管理员', '市场', '门店', '超级管理员'],
+      'ROLE_NAME|1': ['管理员', '市场', '门店', '超级管理员'],
       'idUser|+1': 1001,
+      MENU_ID: ['0-0-0', '0-0-1'],
       nickName: '@last',
       phone: /^1[34578]\d{9}$/,
       'age|11-99': 1,
       mobile: /^1[3-9][0-9]{9}$/,
       'sex|0-2': 1,
       note: '@city',
-      'remark|1': ['今天很累了', '今天不怎么想说话了'],
+      'DESCRIPTION|1': ['今天很累了', '今天不怎么想说话了'],
       address: '@county(true)',
       isMale: '@boolean',
       email: '@email',
       createTime: new Date().getTime(),
+      ROLE_CREATE_TIME: new Date().getTime(),
     },
   ],
 })
@@ -30,9 +34,9 @@ let database = usersListData.data
 
 module.exports = {
 
-  [`GET ${apiPrefix}/roles`](req, res) {
-    const { query } = req
-    let { rownum, pagination, ...other } = query
+  [`POST ${apiPrefix}/roleList`](req, res) {
+    const { body } = req
+    let { rownum, pagination, ...other } = body
     rownum = rownum || 10
     pagination = pagination || 1
 
@@ -61,50 +65,110 @@ module.exports = {
     }
 
     res.status(200).json({
+      code: 200,
       obj: newData.slice((pagination - 1) * rownum, pagination * rownum),
       total: newData.length,
     })
   },
 
-  [`POST ${apiPrefix}/delRoles`](req, res) {
-    const { id } = req.query
-    // console.log('item', !ids.some(_ => _ === item.id))
-    database = database.filter(item => !(Number(id) === Number(item.id)))
+  [`POST ${apiPrefix}/roleDel`](req, res) {
+    const ids = req.body
+    database = database.filter(item => !ids.some(_ => Number(_) === Number(item.ID)))
     res.status(200).json({
       code: 200,
       msg: '删除成功',
     })
   },
 
-  [`POST ${apiPrefix}/updateRoles`](req, res) {
-    const { id } = req.query
-    // console.log('item', !ids.some(_ => _ === item.id))
-    database = database.filter(item => !(Number(id) === Number(item.id)))
+  [`POST ${apiPrefix}/roleEdit`](req, res) {
+    const { ID, id, description, menus, roleName, roleLocation } = req.body
+    database = database.map((item) => {
+      if (item.ID === ID || item.ID === id) {
+        return {
+          ID: ID || id,
+          ROLE_NAME: roleName || item.ROLE_NAME,
+          MENU_ID: menus || item.MENU_ID,
+          DESCRIPTION: description || item.DESCRIPTION,
+          ROLE_LOCATION: JSON.stringify(roleLocation),
+          ROLE_CREATE_TIME: new Date().getTime(),
+        }
+      }
+      return item
+    })
     res.status(200).json({
       code: 200,
-      msg: '删除成功',
+      msg: '修改成功',
     })
   },
 
-  [`POST ${apiPrefix}/createRoles`](req, res) {
-    const { remark, roleName } = req.query
+  [`GET ${apiPrefix}/quandiExpressSiteManager/getLocation`](_, res) {
+    res.status(200).json({
+      code: 200,
+      obj: city,
+      msg: '查询成功',
+    })
+  },
+
+  [`POST ${apiPrefix}/menuList`](_, res) {
+    res.status(200).json({
+      code: 200,
+      obj: [
+        {
+          menuName: '0-0',
+          id: '0-0',
+          children: [{
+            menuName: '0-0-0',
+            id: '0-0-0',
+            children: [
+              { menuName: '0-0-0-0', id: '0-0-0-0' },
+              { menuName: '0-0-0-1', id: '0-0-0-1' },
+              { menuName: '0-0-0-2', id: '0-0-0-2' },
+            ],
+          }, {
+            menuName: '0-0-1',
+            id: '0-0-1',
+            children: [
+              { menuName: '0-0-1-0', id: '0-0-1-0' },
+              { menuName: '0-0-1-1', id: '0-0-1-1' },
+              { menuName: '0-0-1-2', id: '0-0-1-2' },
+            ],
+          }, {
+            menuName: '0-0-2',
+            id: '0-0-2',
+          }],
+        }, {
+          menuName: '0-1',
+          id: '0-1',
+          children: [
+            { menuName: '0-1-0-0', id: '0-1-0-0' },
+            { menuName: '0-1-0-1', id: '0-1-0-1' },
+            { menuName: '0-1-0-2', id: '0-1-0-2' },
+          ],
+        }, {
+          menuName: '0-2',
+          id: '0-2',
+        },
+      ],
+      msg: '查询成功',
+    })
+  },
+
+  [`POST ${apiPrefix}/roleAdd`](req, res) {
+    const { description, menus, roleName, roleLocation } = req.body
+    database.unshift({
+      ID: 1001 + database.length,
+      ROLE_NAME: roleName,
+      MENU_ID: menus,
+      DESCRIPTION: description,
+      ROLE_CREATE_TIME: new Date().getTime(),
+      ROLE_LOCATION: JSON.stringify(roleLocation),
+    })
     res.status(200).json(
       {
         code: 200,
-        msg: '添加成功',
-        obj: [{
-          remark,
-          roleName,
-        }],
+        mess: '添加成功',
       }
     )
-    // const { id } = req.query
-    // // console.log('item', !ids.some(_ => _ === item.id))
-    // database = database.filter(item => !(Number(id) === Number(item.id)))
-    // res.status(200).json({
-    //   code: 200,
-    //   msg: '删除成功',
-    // })
   },
 
 }

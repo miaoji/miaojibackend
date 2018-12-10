@@ -4,21 +4,17 @@ const config = require('../utils/config')
 const { apiPrefix } = config
 
 let usersListData = Mock.mock({
-  'data|80-100': [
+  'data|8': [
     {
-      id: '@id',
-      name: '@name',
+      'ID|+1': 1001,
+      name: '@cname',
+      number: /^1[34578]\d{9}$/,
+      'role|1': ['admin', 'user1', 'user2'],
+      'store|1': ['张江小店', '家门口小店', '闵行小店', '高行小店', '徐汇小店'],
       'idUser|+1': 1001,
-      nickName: '@last',
-      phone: /^1[34578]\d{9}$/,
-      'age|11-99': 1,
-      mobile: /^1[3-9][0-9]{9}$/,
-      'sex|0-2': 1,
+      mobile: /^1[34578]\d{9}$/,
       note: '@city',
       'remark|1': ['今天很累了', '今天不怎么想说话了'],
-      address: '@county(true)',
-      isMale: '@boolean',
-      email: '@email',
       createTime: new Date().getTime(),
     },
   ],
@@ -29,9 +25,9 @@ let database = usersListData.data
 
 module.exports = {
 
-  [`GET ${apiPrefix}/adminuser`](req, res) {
-    const { query } = req
-    let { rownum, pagination, ...other } = query
+  [`POST ${apiPrefix}/operatorList`](req, res) {
+    const { body } = req
+    let { rownum, pagination, ...other } = body
     rownum = rownum || 10
     pagination = pagination || 1
 
@@ -60,18 +56,85 @@ module.exports = {
     }
 
     res.status(200).json({
+      code: 200,
       obj: newData.slice((pagination - 1) * rownum, pagination * rownum),
       total: newData.length,
     })
   },
 
-  [`DELETE ${apiPrefix}/adminuser`](req, res) {
-    const { id } = req.body
-    // database = database.filter((item) => { return !id.some(_ => _ === item.id) })
+  [`POST ${apiPrefix}/operatorDel`](req, res) {
+    const ids = req.body
+    database = database.filter(item => !ids.some(_ => Number(_) === Number(item.ID)))
     res.status(200).json({
       code: 200,
-      id,
       msg: '删除成功',
     })
   },
+
+  [`POST ${apiPrefix}/operatorEdit`](req, res) {
+    const {
+      idUser,
+      store,
+      mobile,
+      name,
+      number,
+      remark,
+      role,
+      ID,
+    } = req.body
+    database = database.map((item) => {
+      if (item.ID === ID) {
+        return {
+          ID,
+          name,
+          number,
+          role,
+          store,
+          idUser,
+          mobile,
+          remark,
+          createTime: new Date().getTime(),
+        }
+      }
+      return item
+    })
+    res.status(200).json({
+      code: 200,
+      msg: '修改成功',
+    })
+  },
+
+  [`POST ${apiPrefix}/operatorAdd`](req, res) {
+    const {
+      idUser,
+      store,
+      mobile,
+      name,
+      number,
+      password,
+      remark,
+      role,
+    } = req.body
+
+    database.unshift({
+      ID: 1001 + database.length,
+      name,
+      number,
+      role,
+      store,
+      idUser,
+      mobile,
+      note: '上海',
+      remark,
+      password,
+      createTime: new Date().getTime(),
+    })
+    res.status(200).json(
+      {
+        code: 200,
+        mess: '添加成功',
+      }
+    )
+  },
+
 }

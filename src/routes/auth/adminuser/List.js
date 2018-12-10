@@ -9,7 +9,7 @@ import { DropOption } from '../../../components'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -18,10 +18,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
-            onDeleteItem(record.id)
+          onOk() {
+            onDeleteItem(record.userId)
           },
         })
+        break
+      case '3':
+        onResetPWD(record.userId)
         break
       default:
         break
@@ -30,35 +33,41 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
-      title: '昵称',
-      dataIndex: 'idUser',
-      key: 'idUser',
-    }, {
-      title: '用户名',
+      title: '姓名',
       dataIndex: 'name',
       key: 'name',
     }, {
-      title: '手机号',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      title: '登陆账户',
+      dataIndex: 'accounts',
+      key: 'accounts',
     }, {
-      title: '性别',
-      dataIndex: 'sex',
-      key: 'sex',
+      title: '所属机构',
+      dataIndex: 'orgName',
+      key: 'orgName',
       render: (text) => {
-        const realText = {
-          0: '保密',
-          1: '男',
-          2: '女',
-        }
-        return <span>{realText[text]}</span>
+        return <span>{text || '暂无'}</span>
       },
     }, {
       title: '所在地区',
-      dataIndex: 'note',
-      key: 'note',
+      dataIndex: 'location',
+      key: 'location',
+      render: (text) => {
+        const newText = text ? text.replace(/(,)|(\/\/\/)|([0-9])/g, '') : '暂无'
+        return <span>{newText}</span>
+      },
+    }, {
+      title: '联系方式',
+      dataIndex: 'mobile',
+      key: 'mobile',
       render: (text) => {
         return <span>{text || '暂无'}</span>
+      },
+    }, {
+      title: '创建人',
+      dataIndex: 'createUserName',
+      key: 'createUserName',
+      render: (text) => {
+        return <span>{text || '无记录'}</span>
       },
     }, {
       title: '备注信息',
@@ -72,15 +81,18 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
+        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '暂无'
         return <span>{createTime}</span>
       },
     }, {
       title: '操作',
       key: 'operation',
       width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
+      render: (_, record) => {
+        if (record.userId === 1) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '重置密码' }]} />
+        }
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '重置密码' }, { key: '2', name: '删除' }]} />
       },
     },
   ]
@@ -101,8 +113,19 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.id}
+        rowKey={record => record.userId}
         getBodyWrapper={getBodyWrapper}
+        expandedRowRender={(record) => {
+          let texts
+          if (!record.role) {
+            texts = <p>暂无相关信息</p>
+          } else {
+            texts = record.role.map((item) => {
+              return <p className={styles.item}>{item.roleName}</p>
+            })
+          }
+          return <div className={styles.rowRender}><p>角色信息:</p>{texts}</div>
+        }}
       />
     </div>
   )
@@ -111,6 +134,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
+  onResetPWD: PropTypes.func,
   location: PropTypes.object,
 }
 

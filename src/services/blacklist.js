@@ -1,18 +1,19 @@
+import { getLocation } from '../utils/getUserInfo'
 import { request, config, pageParams } from '../utils'
 
 const { api } = config
 const { blacklist } = api
-
-export async function query (params) {
+export async function query(params) {
   params = pageParams(params)
+  params.location = getLocation().length ? getLocation() : undefined
   return request({
     url: blacklist.all,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
-export async function create (params) {
+export async function create(params) {
   return request({
     url: blacklist.add,
     method: 'post',
@@ -20,7 +21,7 @@ export async function create (params) {
   })
 }
 
-export async function update (params) {
+export async function update(params) {
   return request({
     url: blacklist.update,
     method: 'post',
@@ -28,17 +29,10 @@ export async function update (params) {
   })
 }
 
-export async function remove (params) {
+export async function remove(params) {
   return request({
     url: blacklist.update,
     method: 'post',
     params,
-  })
-}
-
-export async function showSiteName () {
-  return request({
-    url: blacklist.showSiteName,
-    method: 'post',
   })
 }

@@ -14,7 +14,7 @@ const countUpProps = {
 }
 
 
-function User ({ avatar, name, email, sales, sold }) {
+function User({ avatar, name, email, sales, sold }) {
   const handleSelfPage = () => {
     window.open('http://www.mijihome.cn/')
   }
@@ -22,12 +22,12 @@ function User ({ avatar, name, email, sales, sold }) {
   return (<div className={styles.user}>
     <div className={styles.header}>
       <div className={styles.headerinner}>
-        <div className={styles.avatar} style={{ backgroundImage: `url(${avatar})` }} />
+        <div className={styles.avatar} style={{ backgroundImage: `url(${avatar || '/logo.png'})` }} />
         <h5 className={styles.name}>{name}</h5>
         <p>{email}</p>
       </div>
     </div>
-    <div className={styles.number}>
+    <div className={styles.number} style={{ display: 'none' }}>
       <div className={styles.item}>
         <p>销售收益</p>
         <p style={{ color: color.green }}><CountUp

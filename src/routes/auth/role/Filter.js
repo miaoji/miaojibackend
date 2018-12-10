@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
 import { DateRange } from '../../../components'
+import { handleFields } from '../../../utils'
+
 
 const Search = Input.Search
 
@@ -29,16 +31,6 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  const handleFields = (fields) => {
-    const { createTime } = fields
-    if (createTime && createTime.length && createTime[0] && createTime[1]) {
-      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    } else {
-      delete fields.createTime
-    }
-    return fields
-  }
-
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -83,7 +75,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { roleName, mobile } = filter
+  const { roleName } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -97,9 +89,6 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('roleName', { initialValue: roleName })(<Search placeholder="按角色名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
@@ -108,15 +97,9 @@ const Filter = ({
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
-          </div>
-          <div>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
-          </div>
-        </div>
+        <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
+        <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+        <Button size="large" type="primary" className="margin-right" onClick={onAdd}>新增角色</Button>
       </Col>
     </Row>
   )

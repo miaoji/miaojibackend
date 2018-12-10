@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { Form, Button, Row, Col, Input } from 'antd'
+// import moment from 'moment'
+import { Form, Button, Row, Col, Input, Select } from 'antd'
 import { DateRange } from '../../components'
+import { handleFields, defaultTime } from '../../utils'
 
 const Search = Input.Search
 
@@ -21,6 +22,7 @@ const TwoColProps = {
 
 const Filter = ({
   onFilterChange,
+  storeuserList,
   filter,
   form: {
     getFieldDecorator,
@@ -28,16 +30,7 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  const handleFields = (fields) => {
-    const { createTime } = fields
-    if (createTime && createTime.length && createTime[0] && createTime[1]) {
-      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    } else {
-      delete fields.createTime
-    }
-    return fields
-  }
-
+  filter = defaultTime(filter, 7, 6)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -55,7 +48,7 @@ const Filter = ({
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
-          fields[item] = []
+          // fields[item] = []
         } else {
           fields[item] = undefined
         }
@@ -79,26 +72,30 @@ const Filter = ({
     }
     onFilterChange(fields)
   }
-  const { name, serialNumber } = filter
+  const { name, serialNumber, createTime } = filter
 
-  let initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = moment(filter.createTime[0])
-  }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = moment(filter.createTime[1])
+  const nameChange = (key) => {
+    handleChange('name', key)
   }
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按站点名搜索"
+            size="large"
+          >{storeuserList}</Select>
+        )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('serialNumber', { initialValue: serialNumber })(<Search placeholder="按运单号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
+        {getFieldDecorator('createTime', { initialValue: createTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
@@ -118,6 +115,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  storeuserList: PropTypes.func,
 }
 
 export default Form.create()(Filter)

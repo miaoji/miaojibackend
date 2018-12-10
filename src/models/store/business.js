@@ -51,6 +51,13 @@ export default modelExtend(pageModel, {
       const data = yield call(query, { ...newpayload, download: 0 })
       if (data.obj) {
         yield put({
+          type: 'updateState',
+          payload: {
+            expandedRowKeys: [],
+            sonlist: [],
+          },
+        })
+        yield put({
           type: 'querySuccess',
           payload: {
             list: data.obj,
@@ -113,8 +120,8 @@ export default modelExtend(pageModel, {
         })
         return
       }
-      message.success('信息正在加载，请稍等')
       let newpayload = {}
+      payload = initialCreateTime(payload)
       if (!payload.startTime) {
         const times = time.yesterTime()
         newpayload = { ...times, ...payload }

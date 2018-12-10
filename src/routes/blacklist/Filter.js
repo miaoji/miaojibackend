@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Form, Button, Row, Col, Input } from 'antd'
+import { Form, Button, Row, Col, Input, Select } from 'antd'
 import { DateRange } from '../../components'
+import { isSuperAdmin } from '../../utils'
 
 const Search = Input.Search
 
@@ -22,6 +23,7 @@ const TwoColProps = {
 const Filter = ({
   onAdd,
   onFilterChange,
+  storeuserList,
   filter,
   form: {
     getFieldDecorator,
@@ -93,14 +95,25 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
+  const nameChange = (key) => {
+    handleChange('name', key)
+  }
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按站点名称搜索" size="large" onSearch={handleSubmit} />)}
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按站点名称搜索"
+            size="large"
+          >{storeuserList}</Select>
+        )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
@@ -113,7 +126,7 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div>
+          <div style={{ display: isSuperAdmin() ? 'block' : 'none' }}>
             <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
           </div>
         </div>
@@ -128,6 +141,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  storeuserList: PropTypes.array,
 }
 
 export default Form.create()(Filter)

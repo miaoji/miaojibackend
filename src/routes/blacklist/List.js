@@ -6,6 +6,7 @@ import moment from 'moment'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
+import { isSuperAdmin } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -18,7 +19,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       case '2':
         confirm({
           title: '确定要删除吗?',
-          onOk () {
+          onOk() {
             onDeleteItem(record.id)
           },
         })
@@ -53,15 +54,18 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
         return <span>{createTime}</span>
       },
-    }, {
+    },
+  ]
+  if (isSuperAdmin()) {
+    columns.push({
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
-    },
-  ]
+    })
+  }
 
   const getBodyWrapperProps = {
     page: location.query.page,

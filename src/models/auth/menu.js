@@ -1,8 +1,9 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { initialCreateTime } from 'utils'
 import { message, Select } from 'antd'
+import { initialCreateTime } from '../../utils'
 import { getMenuByParentId, query, create, update, remove } from '../../services/auth/menu'
+import { update as updateAdminMenus } from '../../services/auth/role'
 import { pageModel } from '../system/common'
 
 const { Option } = Select
@@ -16,6 +17,20 @@ const reloadItem = (item) => {
     })
   }
   return item
+}
+
+const simplifyArray = (data) => {
+  let tmpArr = []
+  const reduceDimension = (arr) => {
+    arr.forEach((i) => {
+      tmpArr.push(i)
+      if (i.children && i.children.length) {
+        reduceDimension(i.children)
+      }
+    })
+  }
+  reduceDimension(data)
+  return tmpArr.map(item => item.id)
 }
 
 export default modelExtend(pageModel, {
@@ -81,10 +96,6 @@ export default modelExtend(pageModel, {
 
     *update({ payload }, { select, call, put }) {
       const id = yield select(({ menu }) => menu.currentItem.id)
-      // const newmenu = {
-      //   note: payload.note,
-      //   id,
-      // }
       const data = yield call(update, { ...payload, id })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -117,6 +128,24 @@ export default modelExtend(pageModel, {
             mpidOption: option,
           },
         })
+      }
+    },
+
+    *updateAdminOrangeize(_, { call }) {
+      const data = yield call(query, { page: 1, pageSize: 10000 })
+      if (data.code !== 200) {
+        throw data.mess || '更新失败'
+      }
+      const menus = simplifyArray(data.obj)
+      const res = yield call(updateAdminMenus, {
+        menuGroup: menus,
+        menus: menus.map(i => String(i)),
+        id: 1,
+      })
+      if (res.code === 200) {
+        message.success('更新成功')
+      } else {
+        throw res.mess || '更新失败'
       }
     },
 

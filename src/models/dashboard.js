@@ -1,8 +1,9 @@
 import modelExtend from 'dva-model-extend'
+import { query as queryStoreUser } from 'src/services/storeuser'
 import { pageModel } from './system/common'
 import { color } from '../utils/theme'
-import { storage, time } from '../utils'
-import { getLineData, weChatUser, storeTotal, income, terminalTotal } from '../services/dashboard'
+import { storage, time, isSuperAdmin, getOrgIdUsers } from '../utils'
+import { getLineData, weChatUser, income, terminalTotal, businessvolumecount } from '../services/dashboard'
 
 export default modelExtend(pageModel, {
   namespace: 'dashboard',
@@ -25,7 +26,7 @@ export default modelExtend(pageModel, {
     storeTotal: {
       icon: 'shop',
       color: color.blue,
-      title: '门店总数',
+      title: '管理门店总数',
       number: 0,
     },
     weChatUser: {
@@ -40,14 +41,19 @@ export default modelExtend(pageModel, {
       title: '终端总数',
       number: 0,
     },
+    trafficVolume: {
+      someCargo: 0,
+      scheduledReceipt: 0,
+      signingVolume: 0,
+    },
     recentSales: [],
     comments: [],
     completed: [],
     browser: [],
     cpu: {},
     user: {
-      name: '管理员',
-      email: 'winner@qq.com',
+      name: '',
+      email: '',
       avatar: 'http://pic.qbaobei.com/Uploads/Picture/2016-01-14/569781503c21f.jpg',
     },
   },
@@ -63,11 +69,44 @@ export default modelExtend(pageModel, {
           dispatch({ type: 'getStoreTotal' })
           dispatch({ type: 'getWeChatUser' })
           dispatch({ type: 'getTerminalTotal' })
+          dispatch({ type: 'getbusinessvolumecount' })
         }
       })
     },
   },
   effects: {
+    *getbusinessvolumecount(_, { call, put }) {
+      const todayStr = time.getToday(new Date().getTime())
+      let cacheDate = storage({ key: 'trafficVolume' })
+      if (cacheDate) {
+        cacheDate = JSON.parse(cacheDate)
+        if (cacheDate.time === todayStr) {
+          yield put({
+            type: 'setStates',
+            payload: {
+              trafficVolume: { ...cacheDate },
+            },
+          })
+          return
+        }
+      }
+      const data = yield call(businessvolumecount)
+      if (data.code === 200) {
+        const trafficVolume = {
+          someCargo: data.obj[0].someCargo,
+          scheduledReceipt: data.obj[0].scheduledReceipt,
+          signingVolume: data.obj[0].signingVolume,
+        }
+        storage({ type: 'set', key: 'trafficVolume', val: JSON.stringify({ ...trafficVolume, time: todayStr }) })
+        yield put({
+          type: 'setStates',
+          payload: {
+            trafficVolume,
+          },
+        })
+      }
+    },
+
     *getTerminalTotal(_, { call, put }) {
       const data = yield call(terminalTotal)
       if (data.code === 200) {
@@ -104,8 +143,26 @@ export default modelExtend(pageModel, {
         throw data.mess || '网络连接失败'
       }
     },
-    *getStoreTotal(_, { call, put }) {
-      const data = yield call(storeTotal)
+    *getStoreTotal({ payload = {} }, { call, put }) {
+      const userIds = getOrgIdUsers()
+      if (userIds) {
+        yield put({
+          type: 'setStates',
+          payload: {
+            storeTotal: {
+              icon: 'shop',
+              color: color.blue,
+              title: '管理门店总数',
+              number: userIds.split(',').length,
+            },
+          },
+        })
+        return
+      }
+      if (isSuperAdmin()) {
+        payload.superId = -1
+      }
+      const data = yield call(queryStoreUser, { page: 1, pageSize: 100000000, ...payload })
       if (data.code === 200) {
         yield put({
           type: 'setStates',
@@ -113,8 +170,8 @@ export default modelExtend(pageModel, {
             storeTotal: {
               icon: 'shop',
               color: color.blue,
-              title: '门店总数',
-              number: data.obj,
+              title: '管理门店总数',
+              number: data.total,
             },
           },
         })

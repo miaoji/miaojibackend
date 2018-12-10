@@ -5,12 +5,11 @@ import { connect } from 'dva'
 import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
+import { isSuperAdmin } from '../../../utils'
 
 const Modular = ({ location, dispatch, role, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, menuList } = role
+  const { list, pagination, currentItem, modalVisible, modalType, menuList, roleList } = role
   const { pageSize } = pagination
-
-  console.log('menuListindex', menuList)
 
   const modalProps = {
     type: modalType,
@@ -20,7 +19,20 @@ const Modular = ({ location, dispatch, role, loading }) => {
     title: `${modalType === 'create' ? '新增角色信息' : '修改角色信息'}`,
     wrapClassName: 'vertical-center-modal',
     menuList,
+    roleList,
+    onRoldSelect(payload) {
+      dispatch({
+        type: 'role/filterRoleList',
+        payload,
+      })
+    },
     onOk(data) {
+      if (data.roleId === currentItem.PARENT_ROLE_NAME) {
+        data.parentRoleId = undefined
+      } else {
+        data.parentRoleId = data.roleId ? JSON.parse(data.roleId).ID : ''
+      }
+      delete data.roleId
       dispatch({
         type: `role/${modalType}`,
         payload: data,
@@ -32,6 +44,7 @@ const Modular = ({ location, dispatch, role, loading }) => {
       })
     },
   }
+
   const listProps = {
     dataSource: list,
     loading: loading.effects['role/query'],
@@ -55,10 +68,47 @@ const Modular = ({ location, dispatch, role, loading }) => {
       })
     },
     onEditItem(item) {
+      if (menuList.length === 0) {
+        dispatch({
+          type: 'role/queryMenuList',
+        })
+      }
+      if (isSuperAdmin()) {
+        dispatch({
+          type: 'role/queryRoleList',
+          payload: {
+            id: item.ID,
+            parent_id: item.PARENT_ROLE_ID,
+          },
+        })
+      }
+      dispatch({
+        type: 'role/filterRoleList',
+      })
       dispatch({
         type: 'role/showModal',
         payload: {
           modalType: 'update',
+          currentItem: item,
+        },
+      })
+    },
+    onReadAuth(item) {
+      if (menuList.length === 0) {
+        dispatch({
+          type: 'role/queryMenuList',
+        })
+      }
+      dispatch({
+        type: 'role/filterRoleList',
+        payload: {
+          MENU_GROUP_ID: item.MENU_GROUP_ID,
+        },
+      })
+      dispatch({
+        type: 'role/showModal',
+        payload: {
+          modalType: 'readAuth',
           currentItem: item,
         },
       })
@@ -80,8 +130,20 @@ const Modular = ({ location, dispatch, role, loading }) => {
       }))
     },
     onAdd() {
+      if (menuList.length === 0) {
+        dispatch({
+          type: 'role/queryMenuList',
+        })
+      }
+      // if (!isSuperAdmin()) {
+      //   dispatch({
+      //     type: 'role/filterRoleList',
+      //   })
+      // }
+      // if (isSuperAdmin()) {
+      // }
       dispatch({
-        type: 'role/queryMenuList',
+        type: 'role/queryRoleList',
       })
       dispatch({
         type: 'role/showModal',

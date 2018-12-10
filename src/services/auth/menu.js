@@ -1,8 +1,6 @@
 import { request, config, pageParams } from '../../utils'
 
 const { api: { auth: { menu } } } = config
-// const { auth } = api
-// const { menu } = auth
 
 export async function query(params) {
   params = pageParams(params)
@@ -37,10 +35,18 @@ export async function remove(params) {
   })
 }
 
-export async function getMenuByParentId (params) {
+export async function getMenuByParentId(params) {
   return request({
     url: menu.getMenuByParentId,
     method: 'post',
     data: params,
+  })
+}
+
+export async function updateAdminOrangeize() {
+  return new Promise((resolve) => {
+    setTimeout(resolve, 1000, 'done')
+  }).then((value) => {
+    return value
   })
 }

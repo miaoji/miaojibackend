@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
-import { config, initialCreateTime } from 'utils'
 import { message } from 'antd'
+import { config, initialCreateTime } from '../utils'
 import { query, updateFee, versionswitch } from '../services/storeuser'
 import { pageModel } from './system/common'
 
@@ -36,7 +36,10 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
-      const data = yield call(query, { ...payload, superId: -1 })
+      if (payload.name) {
+        payload.name = payload.name.split('///')[1]
+      }
+      const data = yield call(query, { ...payload })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -52,7 +55,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *update({ payload }, { call, put, select }) {
+    * update({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
       const data = yield call(updateFee, payload)
@@ -65,7 +68,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *versionswitch({ payload }, { call, put, select }) {
+    * versionswitch({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
       const data = yield call(versionswitch, payload)
@@ -82,12 +85,11 @@ export default modelExtend(pageModel, {
     // 根据主账号查询子账号
     *unfold({ payload }, { call, put }) {
       const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
-
       if (data.code === 200) {
         yield put({
           type: 'updateState',
           payload: {
-            sonlist: data.obj,
+            sonlist: data.obj || [],
             expandedRowKeys: [payload.superId],
           },
         })

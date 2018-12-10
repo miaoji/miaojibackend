@@ -93,6 +93,7 @@ const Modular = ({ location, dispatch, menu, loading }) => {
     filter: {
       ...location.query,
     },
+    updateLoading: loading.effects['menu/updateAdminOrangeize'],
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -110,6 +111,11 @@ const Modular = ({ location, dispatch, menu, loading }) => {
           modalType: 'create',
           modalMenuLevel: 1,
         },
+      })
+    },
+    onUpdateAdminOrangeize() {
+      dispatch({
+        type: 'menu/updateAdminOrangeize',
       })
     },
   }
