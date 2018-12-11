@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
-  const { list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys } = storeuser
+  const { list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys, locationData } = storeuser
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
@@ -20,6 +20,7 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
     confirmLoading: loading.effects['storeuser/update'],
     title: `${modalType === 'create' ? '新建' : '修改门店用户的通讯费'}`,
     wrapClassName: 'vertical-center-modal',
+    locationData,
     onOk(data) {
       dispatch({
         type: `storeuser/${modalType}`,
@@ -141,6 +142,17 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
     },
     switchIsMotion() {
       dispatch({ type: 'storeuser/switchIsMotion' })
+    },
+    handleCreate() {
+      dispatch({
+        type: 'storeuser/handleLocation',
+      })
+      dispatch({
+        type: 'storeuser/showModal',
+        payload: {
+          modalType: 'create',
+        },
+      })
     },
   }
 

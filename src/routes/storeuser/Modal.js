@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, InputNumber, Modal, Radio } from 'antd'
+import { Form, InputNumber, Input, Modal, Radio, Cascader } from 'antd'
+import classnames from 'classnames'
+import styles from './List.less'
 
 const RadioGroup = Radio.Group
 const FormItem = Form.Item
@@ -21,7 +23,9 @@ const modal = ({
     getFieldDecorator,
     validateFields,
     getFieldsValue,
+    getFieldValue,
   },
+  locationData,
   ...modalProps
 }) => {
   const handleOk = () => {
@@ -42,10 +46,158 @@ const modal = ({
     onOk: handleOk,
   }
 
+  const compareToFirstPassword = (rule, value, callback) => {
+    const password = getFieldValue('password')
+    if (value && value !== password) {
+      callback('两次输入的密码不一致!')
+    } else {
+      callback()
+    }
+  }
+  const validateToNextPassword = (rule, value, callback) => {
+    if (value) {
+      validateFields(['confirm'], { force: true })
+    }
+    callback()
+  }
+
   if (modalProps.modalType === 'versionswitch') {
     return (
       <Modal {...modalOpts} title="版本切换">
         <Form layout="horizontal">
+          <FormItem label="版本" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('isBeta', {
+              initialValue: item.isBeta,
+              rules: [
+                {
+                  required: true,
+                  message: '请选择版本',
+                },
+              ],
+            })(
+              <RadioGroup>
+                <Radio value={1}>点货版</Radio>
+                <Radio value={0}>正式版</Radio>
+              </RadioGroup>
+            )}
+          </FormItem>
+        </Form>
+      </Modal>
+    )
+  }
+
+  function filter(inputValue, path) {
+    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+  }
+  if (modalProps.modalType === 'create') {
+    return (
+      <Modal {...modalOpts} title="妙寄APP注册">
+        <Form layout="horizontal">
+          <FormItem label="手机号" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('mobile', {
+              initialValue: item.mobile,
+              rules: [
+                {
+                  required: true,
+                  pattern: /^1[3456789]\d{9}$/,
+                  message: '请输入正确的手机号码!',
+                },
+              ],
+            })(<Input placeholder="请输入的手机号码!" />)}
+          </FormItem>
+          <FormItem label="站点名称" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('name', {
+              initialValue: '',
+              rules: [
+                {
+                  required: true,
+                  message: '请输入站点名称!',
+                },
+              ],
+            })(<Input
+              prefix={'妙寄'}
+              suffix={'店'}
+              placeholder="请输入站点名称!"
+              className={classnames({ [styles.appInput]: true })}
+            />)}
+          </FormItem>
+          <FormItem label="省市区" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('location', {
+              initialValue: '',
+              rules: [
+                {
+                  required: true,
+                  message: '请选择省市区!',
+                },
+              ],
+            })(<Cascader
+              options={locationData}
+              placeholder="请选择省市区"
+              showSearch={{ filter }}
+              autocomplete="off"
+            />)}
+          </FormItem>
+          <FormItem label="街道" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('street', {
+              initialValue: '',
+              rules: [
+                {
+                  required: true,
+                  message: '请输入街道名称!',
+                },
+              ],
+            })(<Input
+              placeholder="请输入街道名称!"
+            />)}
+          </FormItem>
+          <FormItem label="详细地址" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('description', {
+              initialValue: '',
+              rules: [
+                {
+                  required: true,
+                  message: '请输入详细地址!',
+                },
+              ],
+            })(<Input
+              type="textarea"
+              placeholder="请输入详细地址!"
+            />)}
+          </FormItem>
+          <FormItem label="密码" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('password', {
+              initialValue: '',
+              rules: [
+                {
+                  required: true,
+                  pattern: /^(?=.*[A-Z])[a-zA-Z\d]{6,30}$/,
+                  message: '密码长度要在6~30之间且包含一个大写字母!',
+                },
+                {
+                  validator: validateToNextPassword,
+                },
+              ],
+            })(<Input
+              type="password"
+              placeholder="请输入密码!"
+            />)}
+          </FormItem>
+          <FormItem label="确认密码" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('confirm', {
+              initialValue: '',
+              rules: [
+                {
+                  required: true,
+                  message: '请再次输入密码!',
+                },
+                {
+                  validator: compareToFirstPassword,
+                },
+              ],
+            })(<Input
+              type="password"
+            />)}
+          </FormItem>
           <FormItem label="版本" hasFeedback {...formItemLayout}>
             {getFieldDecorator('isBeta', {
               initialValue: item.isBeta,
@@ -90,6 +242,7 @@ modal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
   item: PropTypes.object.isRequired,
+  locationData: PropTypes.object.isRequired,
   onOk: PropTypes.func.isRequired,
 }
 

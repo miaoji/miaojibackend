@@ -23,6 +23,7 @@ const Filter = ({
   onFilterChange,
   filter,
   storeuserList,
+  handleCreate,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -115,7 +116,8 @@ const Filter = ({
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>重置</Button>
+            <Button size="large" className="margin-right" onClick={handleReset}>重置</Button>
+            <Button type="primary" size="large" onClick={handleCreate}>新建</Button>
           </div>
         </div>
       </Col>
@@ -125,6 +127,7 @@ const Filter = ({
 
 Filter.propTypes = {
   onAdd: PropTypes.func,
+  handleCreate: PropTypes.func,
   isMotion: PropTypes.bool,
   switchIsMotion: PropTypes.func,
   form: PropTypes.object,

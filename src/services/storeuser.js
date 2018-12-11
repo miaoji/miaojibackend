@@ -1,6 +1,6 @@
 import { request, api, pageParams } from '../utils'
 
-const { storeuser } = api
+const { storeuser, registerAPP } = api
 
 export async function query(params) {
   params = pageParams(params)
@@ -28,6 +28,14 @@ export async function updateFee(params) {
 export async function versionswitch(params) {
   return request({
     url: storeuser.versionswitch,
+    method: 'post',
+    params,
+  })
+}
+
+export async function createAccount(params) {
+  return request({
+    url: registerAPP,
     method: 'post',
     params,
   })

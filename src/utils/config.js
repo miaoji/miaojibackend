@@ -9,6 +9,8 @@ let APIV3
 // 新版
 APIV3 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 
+// APIV3 = 'http://106.14.212.146:8288'
+
 // 山东服务器
 // APIV3 = 'http://117.50.23.22:8080'
 
@@ -52,6 +54,7 @@ module.exports = {
       login: `${APIV3}/selectRoleByUserId`,
       getMenus: `${APIV3}/selectRoleByUserId`,
     },
+    registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
