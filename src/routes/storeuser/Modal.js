@@ -200,7 +200,7 @@ const modal = ({
           </FormItem>
           <FormItem label="版本" hasFeedback {...formItemLayout}>
             {getFieldDecorator('isBeta', {
-              initialValue: item.isBeta,
+              initialValue: item.isBeta || 0,
               rules: [
                 {
                   required: true,
