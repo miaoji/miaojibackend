@@ -37,7 +37,6 @@ const modal = ({
   type,
   ...modalProps
 }) => {
-  console.log('parentOrgList', parentOrgList)
   const handleOk = () => {
     validateFields((errors) => {
       if (errors) {
@@ -78,6 +77,7 @@ const modal = ({
     <Radio value={1}>省级</Radio>,
     <Radio value={2}>市级</Radio>,
     <Radio value={3}>县级</Radio>,
+    <Radio value={4}>全国</Radio>,
   ]
 
   if (isSuperAdmin()) {
@@ -96,13 +96,13 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <div style={{ display: isSuperAdmin() ? 'block' : 'none' }}>
+        <div style={{ display: 'block' }}>
           <FormItem label="父级机构" hasFeedback {...formItemLayout}>
             {getFieldDecorator('parentId', {
               initialValue: item.PARENT_ID,
               rules: [
                 {
-                  required: isSuperAdmin(),
+                  required: true,
                   message: '请选择父级机构',
                 },
               ],

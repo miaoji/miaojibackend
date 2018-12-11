@@ -50,6 +50,7 @@ export default modelExtend(pageModel, {
         })
       }
       payload = initialCreateTime(payload)
+      console.log('payload', payload)
       const data = yield call(query, { ...payload })
       if (data.code === 200 && data.obj) {
         yield put({
@@ -95,7 +96,9 @@ export default modelExtend(pageModel, {
         payload.parentId = getOrgId()
       }
       const currentItem = yield select(({ org }) => org.currentItem)
+      debugger
       payload.location = payload.location.toString()
+      debugger
       payload.idUsers = payload.idUsers.toString()
 
       const data = yield call(update, { ...payload, id: currentItem.id })

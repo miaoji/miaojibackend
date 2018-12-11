@@ -1,9 +1,9 @@
-import { request, config, pageParams, getOrgId } from '../../utils'
+import { request, config, pageParams } from '../../utils'
 
 const { api: { auth: { org } } } = config
 
 export async function query(params) {
-  params.orgId = getOrgId()
+  // params.orgId = getOrgId()
   params = pageParams(params)
   delete params.location
   return request({

@@ -33,7 +33,7 @@ export default modelExtend(pageModel, {
     * query({ payload = {} }, { call, put }) {
       // 如果使用了日期选择器, 则需要配合initialCreateTime方法处理时间
       payload = initialCreateTime(payload)
-      const data = yield call(query, payload)
+      const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
       if (data) {
         yield put({
           type: 'querySuccess',

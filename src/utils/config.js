@@ -24,7 +24,7 @@ APIV3 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV3 = 'http://192.168.231.239:8077'
 
 // 石金磊
-APIV3 = 'http://192.168.231.125:80'
+APIV3 = 'http://winnerwly.iok.la'
 
 
 // 生产环境时api固定为线上url
