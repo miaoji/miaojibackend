@@ -5,6 +5,14 @@ import styles from './List.less'
 const List = ({ ...tableProps }) => {
   const columns = [
     {
+      title: '分派人ID',
+      dataIndex: 'idBinding',
+      key: 'idBinding',
+      render(text) {
+        return <span>{text || '/'}</span>
+      },
+    },
+    {
       title: '分派人',
       dataIndex: 'cName',
       key: 'cName',

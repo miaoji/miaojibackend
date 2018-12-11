@@ -24,7 +24,7 @@ APIV3 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV3 = 'http://192.168.231.239:8077'
 
 // 石金磊
-APIV3 = 'http://winnerwly.iok.la'
+APIV3 = 'http://192.168.231.125'
 
 
 // 生产环境时api固定为线上url
@@ -54,7 +54,7 @@ module.exports = {
       login: `${APIV3}/selectRoleByUserId`,
       getMenus: `${APIV3}/selectRoleByUserId`,
     },
-    registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
+    registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser111',
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
@@ -264,6 +264,7 @@ module.exports = {
       detail: `${APIV3}/getOrderByBrand`,
       count: `${APIV3}/getPortfolioByBrand`,
       downloadExcel: `${APIV3}/downloadPortfolio`,
+      downloadDetailExcel: `${APIV3}/downloadPortfolio`,
     },
     // 品牌统计
     brandcount: {

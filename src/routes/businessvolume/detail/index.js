@@ -6,7 +6,7 @@ import List from './List'
 import Filter from './Filter'
 
 const BusinessvolumeDetail = ({ location, dispatch, businessvolumeDetail, loading }) => {
-  const { list, pagination, isMotion } = businessvolumeDetail
+  const { list, pagination } = businessvolumeDetail
   const { query, pathname } = location
   const { pageSize } = pagination
 
@@ -15,7 +15,6 @@ const BusinessvolumeDetail = ({ location, dispatch, businessvolumeDetail, loadin
     loading: loading.effects['businessvolumeDetail/query'],
     pagination,
     location,
-    isMotion,
     onChange(page) {
       dispatch(routerRedux.push({
         pathname,
@@ -26,31 +25,15 @@ const BusinessvolumeDetail = ({ location, dispatch, businessvolumeDetail, loadin
         },
       }))
     },
-    onDeleteItem(id) {
-      dispatch({
-        type: 'businessvolume/delete',
-        payload: { id, query },
-      })
-    },
-    onEditItem(item) {
-      dispatch({
-        type: 'businessvolume/showModal',
-        payload: {
-          modalType: 'update',
-          currentItem: item,
-        },
-      })
-    },
   }
 
   const filterProps = {
-    isMotion,
     filter: {
       ...location.query,
     },
     onDownLoad() {
       dispatch({
-        type: 'businessvolume/download',
+        type: 'businessvolumeDetail/download',
         payload: { ...location.query },
       })
     },
@@ -64,28 +47,6 @@ const BusinessvolumeDetail = ({ location, dispatch, businessvolumeDetail, loadin
           pageSize,
         },
       }))
-    },
-    onSearch(fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/storeuser',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/storeuser',
-      }))
-    },
-    onAdd() {
-      dispatch({
-        type: 'storeuser/showModal',
-        payload: {
-          modalType: 'create',
-        },
-      })
-    },
-    switchIsMotion() {
-      dispatch({ type: 'storeuser/switchIsMotion' })
     },
   }
 

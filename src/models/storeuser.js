@@ -57,7 +57,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    * update({ payload }, { call, put, select }) {
+    *update({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
       const data = yield call(updateFee, payload)
@@ -70,7 +70,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    * versionswitch({ payload }, { call, put, select }) {
+    *versionswitch({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
       const data = yield call(versionswitch, payload)
@@ -84,11 +84,11 @@ export default modelExtend(pageModel, {
       }
     },
 
-    * create({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       const { location } = payload
       const locationId = location[2].split('-')[0]
       // 根据地址判断 dataSource
-      function getdataSourceBylocation(prov) {
+      const getdataSourceBylocation = (prov) => {
         let dataSource = '3'
         if (prov === '上海' || prov === '广东') {
           dataSource = '1'
@@ -101,7 +101,11 @@ export default modelExtend(pageModel, {
       }
       const province = location[0].split('-')[1]
       const dataSource = getdataSourceBylocation(province)
+
+      payload.org = payload.org.map(item => item.split('-')[0])
+
       let registData = {
+        org: payload.org,
         mobile: payload.mobile,
         name: payload.name,
         password: payload.password,
@@ -114,6 +118,7 @@ export default modelExtend(pageModel, {
       const param = {
         param: JSON.stringify(registData),
       }
+      console.log('payload', payload)
       const data = yield call(createAccount, param)
       if (data.code === 200) {
         message.success('创建成功')
@@ -125,7 +130,7 @@ export default modelExtend(pageModel, {
     },
 
     // 处理location数据为antd级联控件格式
-    * handleLocation({ payload }, { put }) {
+    *handleLocation({ payload }, { put }) {
       console.log('payload', payload)
       // console.log('locaionssst', locationData)
       const data = locationData

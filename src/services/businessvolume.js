@@ -39,3 +39,14 @@ export async function downloadExcel(params) {
     data: params,
   })
 }
+
+export function downloadDetailExcel(params) {
+  params = pageParams(params)
+  delete params.pagination
+  delete params.rownum
+  return request({
+    url: businessvolume.downloadDetailExcel,
+    method: 'post',
+    data: params,
+  })
+}

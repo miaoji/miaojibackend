@@ -3,7 +3,7 @@ import { request, config, pageParams, getUserId, getOrgId } from '../../utils'
 const { api: { auth: { adminuser } } } = config
 
 export async function query(params) {
-  params.userId = getUserId()
+  params.userId = getUserId() === 1 ? undefined : getUserId()
   params.orgId = getOrgId()
   params = pageParams(params)
   delete params.location
