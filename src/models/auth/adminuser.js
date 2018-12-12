@@ -175,7 +175,7 @@ export default modelExtend(pageModel, {
     *queryRoleList(_, { call, put }) {
       const data = yield call(queryRoleList, { page: 1, pageSize: 1000000 })
       if (data.code === 200 && data.obj) {
-        const option = data.obj.map((item) => {
+        const option = data.obj.filter(item => item.ID !== 1).map((item) => {
           return <Option key={item.ID}>{item.ROLE_NAME}</Option>
         })
         yield put({
