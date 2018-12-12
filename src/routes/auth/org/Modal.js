@@ -99,7 +99,7 @@ const modal = ({
         <div style={{ display: 'block' }}>
           <FormItem label="父级机构" hasFeedback {...formItemLayout}>
             {getFieldDecorator('parentId', {
-              initialValue: item.PARENT_ID,
+              initialValue: item.parentName,
               rules: [
                 {
                   required: true,

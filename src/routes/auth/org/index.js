@@ -85,6 +85,7 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     },
     onEditItem(item) {
       item.locationType = item.location ? item.location.split(',').length : 4
+      dispatch({ type: 'org/initParentOrgList' })
       dispatch({
         type: 'org/filterLocationList',
         payload: {

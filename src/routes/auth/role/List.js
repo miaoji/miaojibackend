@@ -6,8 +6,9 @@ import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
-// import { getUserId, isSuperAdmin } from '../../../utils'
+import { getUserId } from '../../../utils'
 
+const userId = getUserId()
 const confirm = Modal.confirm
 
 const List = ({ location, onEditItem, onDeleteItem, onReadAuth, ...tableProps }) => {
@@ -79,9 +80,9 @@ const List = ({ location, onEditItem, onDeleteItem, onReadAuth, ...tableProps })
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        // if (record.ID === 1) {
-        //   return <span>/</span>
-        // }
+        if (record.ID === 1 || record.CREATE_USER_ID !== userId) {
+          return <span>/</span>
+        }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },

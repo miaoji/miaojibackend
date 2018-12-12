@@ -96,9 +96,10 @@ export default modelExtend(pageModel, {
         payload.parentId = getOrgId()
       }
       const currentItem = yield select(({ org }) => org.currentItem)
-      debugger
+      if (payload.parentId === currentItem.parentName) {
+        delete payload.parentId
+      }
       payload.location = payload.location.toString()
-      debugger
       payload.idUsers = payload.idUsers.toString()
 
       const data = yield call(update, { ...payload, id: currentItem.id })
