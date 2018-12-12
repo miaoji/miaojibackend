@@ -4,6 +4,8 @@ import { config, initialCreateTime } from '../utils'
 import { query, updateFee, versionswitch, createAccount } from '../services/storeuser'
 import { pageModel } from './system/common'
 import { locationData } from '../utils/locationData'
+import { query as queryOrgList } from '../services/auth/org'
+import orgToTree from '../utils/orgToTree'
 
 const { prefix } = config
 
@@ -17,6 +19,7 @@ export default modelExtend(pageModel, {
     expandedRowKeys: [],
     columnslist: [],
     sonlist: [],
+    orgTree: [],
     isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
     locationData: [],
   },
@@ -35,7 +38,9 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-
+    /**
+     * [获取门店用户列表数据]
+     */
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
       if (payload.name) {
@@ -56,7 +61,9 @@ export default modelExtend(pageModel, {
         })
       }
     },
-
+    /**
+     * [修改通讯费]
+     */
     *update({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
@@ -69,7 +76,9 @@ export default modelExtend(pageModel, {
         message.success(data.mess || '网络错误')
       }
     },
-
+    /**
+     * [版本切换]
+     */
     *versionswitch({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
@@ -83,7 +92,9 @@ export default modelExtend(pageModel, {
         message.success(data.mess || '网络错误')
       }
     },
-
+    /**
+     * [创建门店用户]
+     */
     *create({ payload }, { call, put }) {
       const { location } = payload
       const locationId = location[2].split('-')[0]
@@ -118,7 +129,6 @@ export default modelExtend(pageModel, {
       const param = {
         param: JSON.stringify(registData),
       }
-      console.log('payload', payload)
       const data = yield call(createAccount, param)
       if (data.code === 200) {
         message.success('创建成功')
@@ -128,11 +138,10 @@ export default modelExtend(pageModel, {
         message.success(data.mess || '网络错误')
       }
     },
-
-    // 处理location数据为antd级联控件格式
-    *handleLocation({ payload }, { put }) {
-      console.log('payload', payload)
-      // console.log('locaionssst', locationData)
+    /**
+     * [处理location数据为antd级联控件格式]
+     */
+    *handleLocation(_, { put }) {
       const data = locationData
       let level1 = []
       let level2 = []
@@ -190,7 +199,9 @@ export default modelExtend(pageModel, {
       })
     },
 
-    // 根据主账号查询子账号
+    /**
+     * [根据主账号查询子账号]
+     */
     *unfold({ payload }, { call, put }) {
       const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
       if (data.code === 200) {
@@ -203,6 +214,23 @@ export default modelExtend(pageModel, {
         })
       } else {
         message.success(data.mess || '网络错误')
+      }
+    },
+    /**
+     * [获取机构基础数据]
+     */
+    *getOrgList(_, { call, put }) {
+      const data = yield call(queryOrgList, { page: 1, pageSize: 10000 })
+      console.log('data', data)
+      if (data.code === 200) {
+        const orgTree = orgToTree(data.obj)
+        console.log('orgTree', orgTree)
+        yield put({
+          type: 'updateState',
+          payload: {
+            orgTree,
+          },
+        })
       }
     },
 

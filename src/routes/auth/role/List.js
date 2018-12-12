@@ -31,7 +31,6 @@ const List = ({ location, onEditItem, onDeleteItem, onReadAuth, ...tableProps })
   }
 
   const handleRaadAuth = (record) => {
-    console.log('dss', record)
     onReadAuth(record)
   }
 

@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, InputNumber, Input, Modal, Radio, Cascader } from 'antd'
 import styles from './List.less'
-import tmp from './tmp'
 
-console.log('tmp', tmp)
 const RadioGroup = Radio.Group
 const FormItem = Form.Item
 
@@ -27,6 +25,7 @@ const modal = ({
     getFieldValue,
   },
   locationData,
+  orgTree,
   ...modalProps
 }) => {
   const handleOk = () => {
@@ -137,10 +136,11 @@ const modal = ({
                 },
               ],
             })(<Cascader
-              options={tmp}
+              options={orgTree}
               placeholder="请选择省市区"
               showSearch={{ filterOrg }}
               autocomplete="off"
+              changeOnSelect
             />)}
           </FormItem>
           <FormItem label="省市区" hasFeedback {...formItemLayout}>
@@ -272,6 +272,7 @@ modal.propTypes = {
   item: PropTypes.object.isRequired,
   locationData: PropTypes.object.isRequired,
   onOk: PropTypes.func.isRequired,
+  orgTree: PropTypes.array,
 }
 
 export default Form.create()(modal)

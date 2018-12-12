@@ -50,7 +50,6 @@ export default modelExtend(pageModel, {
         })
       }
       payload = initialCreateTime(payload)
-      console.log('payload', payload)
       const data = yield call(query, { ...payload })
       if (data.code === 200 && data.obj) {
         yield put({
