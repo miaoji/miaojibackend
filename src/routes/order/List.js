@@ -111,6 +111,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           103: '分派',
           201: '问题件',
           202: '移库',
+          203: '催件',
           299: '问题件',
           301: '签收',
           305: '签收',

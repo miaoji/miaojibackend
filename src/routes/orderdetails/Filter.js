@@ -29,7 +29,7 @@ const Filter = ({
       <div className="input" style={{ marginLeft: '20px' }}>
         {getFieldDecorator('serialNumber', {
           initialValue: serialNumber,
-        })(<Input style={{ textAlign: 'center', height: '50px', fontSize: '18px' }} placeholder="按订单号搜索" size="large" onSearch={handleSubmit} />)}
+        })(<Input style={{ textAlign: 'center', height: '50px', fontSize: '18px' }} placeholder="按订单号或手机号搜索订单" size="large" onPressEnter={handleSubmit} />)}
       </div>
       <div style={{ marginLeft: '20px' }}>
         <Button loading={buttonLoading} type="primary" size="large" style={{ width: '100px', height: '50px' }} onClick={handleSubmit}>搜索</Button>
