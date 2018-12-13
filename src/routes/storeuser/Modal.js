@@ -90,9 +90,9 @@ const modal = ({
     return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }
 
-  const filterOrg = (inputValue, path) => {
-    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
-  }
+  // const filterOrg = (inputValue, path) => {
+  //   return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+  // }
 
   if (modalProps.modalType === 'create') {
     return (
@@ -126,23 +126,23 @@ const modal = ({
               className={styles.appInput}
             />)}
           </FormItem>
-          <FormItem label="所属机构" hasFeedback {...formItemLayout}>
+          {/* <FormItem label="所属机构" hasFeedback {...formItemLayout}>
             {getFieldDecorator('org', {
               initialValue: '',
               rules: [
                 {
                   required: true,
-                  message: '请选择省市区!',
+                  message: '请选择所属机构!',
                 },
               ],
             })(<Cascader
               options={orgTree}
-              placeholder="请选择省市区"
+              placeholder="请选择所属机构"
               showSearch={{ filterOrg }}
               autocomplete="off"
               changeOnSelect
             />)}
-          </FormItem>
+          </FormItem> */}
           <FormItem label="省市区" hasFeedback {...formItemLayout}>
             {getFieldDecorator('location', {
               initialValue: '',

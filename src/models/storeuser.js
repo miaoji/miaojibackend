@@ -113,7 +113,7 @@ export default modelExtend(pageModel, {
       const province = location[0].split('-')[1]
       const dataSource = getdataSourceBylocation(province)
 
-      payload.org = payload.org.map(item => item.split('-')[0])
+      // payload.org = payload.org.map(item => item.split('-')[0])
 
       let registData = {
         org: payload.org,
