@@ -90,7 +90,9 @@ export default modelExtend(pageModel, {
           return
         }
       }
-      const data = yield call(businessvolumecount)
+      const times = time.yesterTime()
+
+      const data = yield call(businessvolumecount, { ...times })
       if (data.code === 200) {
         const trafficVolume = {
           someCargo: data.obj[0].someCargo,

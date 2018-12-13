@@ -1,7 +1,11 @@
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime } from 'utils'
+import { routerRedux } from 'dva/router'
 import { query } from '../services/brandcount'
 import { pageModel } from './system/common'
+import { time } from '../utils'
+
+const yesterTime = time.getToday(new Date().getTime())
 
 const { prefix } = config
 export default modelExtend(pageModel, {
@@ -12,17 +16,28 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    echartShow: false,
+    echartShow: true,
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/brandcount') {
-          dispatch({
-            type: 'query',
-            payload: location.query,
-          })
+          const { createTime } = location.query
+          if (createTime) {
+            dispatch({
+              type: 'query',
+              payload: location.query,
+            })
+          } else {
+            dispatch(routerRedux.push({
+              pathname: location.pathname,
+              query: {
+                ...query,
+                createTime: [yesterTime, yesterTime],
+              },
+            }))
+          }
         }
       })
     },

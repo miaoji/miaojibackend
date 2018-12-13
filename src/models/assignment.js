@@ -19,10 +19,11 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/assignment') {
-          dispatch({
-            type: 'query',
-            payload: location.query,
-          })
+          if (location.query && !location.query.name) {
+            dispatch({ type: 'querySuccess', payload: { list: [], pagination: { total: 0 } } })
+          } else {
+            dispatch({ type: 'query', payload: location.query })
+          }
         }
       })
     },
