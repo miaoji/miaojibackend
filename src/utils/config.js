@@ -1,40 +1,42 @@
-const APIV1 = 'http://127.0.0.1:8000/api/v1'
 // const APIV2 = '/api/v2'
 
+let APIV1
 let APIV3
 
 // 线上
 // 旧版
-// APIV3 = 'http://app.quandikeji.com:8288'
+// APIV1 = 'http://app.quandikeji.com:8288'
 // 新版
-APIV3 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 
-// APIV3 = 'http://106.14.212.146:8288'
+// APIV1 = 'http://106.14.212.146:8288'
 
 // 山东服务器
-// APIV3 = 'http://117.50.23.22:8080'
+// APIV1 = 'http://117.50.23.22:8080'
 
 // 吴聪
-// APIV3 = 'http://47.101.42.216:8088'
+// APIV1 = 'http://47.101.42.216:8088'
 
 // 刘思远
-// APIV3 = 'http://192.168.126.1:8081'
+// APIV1 = 'http://192.168.126.1:8081'
 
 // 张涛
-// APIV3 = 'http://192.168.231.239:8077'
+// APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
-APIV3 = 'http://192.168.231.125'
+APIV1 = 'http://192.168.231.125'
 
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  APIV3 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+  APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+  APIV3 = 'http://106.14.212.146:8288'
 }
 
 let APIV4 = 'http://main.mijihome.cn/WeChatService'
 
 module.exports = {
+  APIV1,
   APIV3,
   name: '妙寄后台管理系统',
   title: '妙寄后台管理系统',
@@ -50,65 +52,60 @@ module.exports = {
   apiPrefix: '/api/v1',
   api: {
     userLogin: {
-      // login: `${APIV3}/signIn`,
-      login: `${APIV3}/selectRoleByUserId`,
-      getMenus: `${APIV3}/selectRoleByUserId`,
+      // login: `${APIV1}/signIn`,
+      login: `${APIV1}/selectRoleByUserId`,
+      getMenus: `${APIV1}/selectRoleByUserId`,
     },
     registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
-    userLogout: `${APIV1}/user/logout`,
-    userInfo: `${APIV1}/userInfo`,
-    users: `${APIV1}/users`,
-    user: `${APIV1}/user/:id`,
     dashboard: {
       // 获取折线图数据
-      echart: `${APIV3}/lineChart`,
+      echart: `${APIV1}/lineChart`,
       // 获取微信用户数据
-      weChatUser: `${APIV3}/homePageWechatUserTotal`,
+      weChatUser: `${APIV1}/homePageWechatUserTotal`,
       // 获取门店总数
-      storeTotal: `${APIV3}/selectHomeSiteTotal`,
+      storeTotal: `${APIV1}/selectHomeSiteTotal`,
       // 昨日收入
-      income: `${APIV3}/homePageYesterdayInCome`,
+      income: `${APIV1}/homePageYesterdayInCome`,
       // 获取设备数量
-      terminalTotal: `${APIV3}/homePageStoreTotal`,
+      terminalTotal: `${APIV1}/homePageStoreTotal`,
       // 获取业务量总数
-      businessvolumecount: `${APIV3}/getTrafficVolume`,
+      businessvolumecount: `${APIV1}/getTrafficVolume`,
     },
-    menus: `${APIV1}/menus`,
     wxuser: {
-      list: `${APIV3}/wechatuser`, // 微信用户分页
-      getById: `${APIV3}/received`, // 微信用户详细信息(没有的接口)
+      list: `${APIV1}/wechatuser`, // 微信用户分页
+      getById: `${APIV1}/received`, // 微信用户详细信息(没有的接口)
     },
     storeuser: {
-      list: `${APIV3}/store`, // 门店用户
-      updateFee: `${APIV3}/updateFee`, // 修改门店用户通讯费
-      versionswitch: `${APIV3}/updateVersion`, // app版本切换
+      list: `${APIV1}/store`, // 门店用户
+      updateFee: `${APIV1}/updateFee`, // 修改门店用户通讯费
+      versionswitch: `${APIV1}/updateVersion`, // app版本切换
     },
     articles: {
-      list: `${APIV3}/selectCollection`, // 文章分页数据
+      list: `${APIV1}/selectCollection`, // 文章分页数据
       publish: {
-        upload: `${APIV3}/upload`, // 图片上传接口
-        send: `${APIV3}/insertreleaseArticle`, // 文章发布接口
+        upload: `${APIV1}/upload`, // 图片上传接口
+        send: `${APIV1}/insertreleaseArticle`, // 文章发布接口
       },
     },
     storedata: { // 收支数据
       income: {
-        list: `${APIV3}/income`, // 收入数据
+        list: `${APIV1}/income`, // 收入数据
       },
       expend: {
-        list: `${APIV3}/expenditure`, // 支出数据
+        list: `${APIV1}/expenditure`, // 支出数据
       },
     },
     wallet: {
       topup: {
-        list: `${APIV3}/rechargeRecord`, // 充值记录
+        list: `${APIV1}/rechargeRecord`, // 充值记录
       },
       withdraw: {
-        list: `${APIV3}/extractionamount`, // 提现记录
+        list: `${APIV1}/extractionamount`, // 提现记录
       },
     },
     order: {
-      list: `${APIV3}/waybillStatus`, // 运单管理
-      orderInfo: `${APIV3}/waybillStatusInfo`, // 订单详情
+      list: `${APIV1}/waybillStatus`, // 运单管理
+      orderInfo: `${APIV1}/waybillStatusInfo`, // 订单详情
     },
     qr: { // 二维码推广接口
       create: `${APIV4}/api/qr/createQr`,
@@ -118,105 +115,105 @@ module.exports = {
       del: `${APIV4}/api/delQrById`,
     },
     consume: {
-      list: `${APIV3}/paymentOrder`, // 充值消费
+      list: `${APIV1}/paymentOrder`, // 充值消费
     },
     blacklist: {
-      all: `${APIV3}/blackList`, // 黑名单
-      add: `${APIV3}/insertBlackList`,
-      update: `${APIV3}/updateBlackList`,
+      all: `${APIV1}/blackList`, // 黑名单
+      add: `${APIV1}/insertBlackList`,
+      update: `${APIV1}/updateBlackList`,
     },
     // 单号规则配置
     ordernumber: {
-      index: `${APIV3}/selectorderNumber`,
-      create: `${APIV3}/insertOrderNumber`,
-      update: `${APIV3}/updateOrderNumber`,
-      showBrandName: `${APIV3}/selectBrandId`,
+      index: `${APIV1}/selectorderNumber`,
+      create: `${APIV1}/insertOrderNumber`,
+      update: `${APIV1}/updateOrderNumber`,
+      showBrandName: `${APIV1}/selectBrandId`,
     },
     // 京东配置 接口
     jd: {
       // 查询单号池剩余单量
-      findOrderSheetCount: `${APIV3}/order/findOrderSheetCount`,
+      findOrderSheetCount: `${APIV1}/order/findOrderSheetCount`,
       // 批量填充单号池
-      orderSheet: `${APIV3}/order/orderSheet`,
+      orderSheet: `${APIV1}/order/orderSheet`,
       // 设置京东分成比例
-      setJDConfig: `${APIV3}/order/setJDConfig`,
+      setJDConfig: `${APIV1}/order/setJDConfig`,
       // 获取京东分成比例
-      getJDConfig: `${APIV3}/order/getJDConfig`,
+      getJDConfig: `${APIV1}/order/getJDConfig`,
     },
     // 黑名单详情
     backlistdetail: {
-      all: `${APIV3}/blackListdetails`,
+      all: `${APIV1}/blackListdetails`,
     },
     // 门店支付寄件汇总
     sendtotal: {
-      all: `${APIV3}/orderState`,
+      all: `${APIV1}/orderState`,
     },
     // 查询寄件及金额
     mailprice: {
-      all: `${APIV3}/mailprice`,
+      all: `${APIV1}/mailprice`,
     },
     // 门店寄件金额
     expressfee: {
-      all: `${APIV3}/selectStorePrice`,
+      all: `${APIV1}/selectStorePrice`,
     },
     // 门店单号汇总
     expressfeedetail: {
-      all: `${APIV3}/selectPayType`,
-      download: `${APIV3}/selectMailddownload`,
+      all: `${APIV1}/selectPayType`,
+      download: `${APIV1}/selectMailddownload`,
     },
     // 操作人寄件总金额
     storeUserDetail: {
-      all: `${APIV3}/selectrealName`,
+      all: `${APIV1}/selectrealName`,
     },
     // 门店点单上架分派签收
     business: {
-      all: `${APIV3}/selectdsfq`,
+      all: `${APIV1}/selectdsfq`,
     },
     // 根据站点名查询站点下操作人寄件汇总
     operatorbyname: {
-      all: `${APIV3}/selectRealNamedsfq`,
+      all: `${APIV1}/selectRealNamedsfq`,
     },
     // 根据操作人姓名查询门店单号汇总
     orderbyuser: {
-      all: `${APIV3}/selectRealNamedsfqDetails`,
+      all: `${APIV1}/selectRealNamedsfqDetails`,
     },
     // 门店派件金额
     assignFee: {
-      all: `${APIV3}/selectpjjetotal`,
+      all: `${APIV1}/selectpjjetotal`,
     },
     // 操作人派件金额
     operatorAssignFee: {
-      all: `${APIV3}/selectpjjeDetails`,
+      all: `${APIV1}/selectpjjeDetails`,
     },
     // 门店签收信息汇总
     storeSign: {
-      all: `${APIV3}/SignRate`,
+      all: `${APIV1}/SignRate`,
     },
     // 门店分派
     selectfenpai: {
-      all: `${APIV3}/selectfenpai`,
+      all: `${APIV1}/selectfenpai`,
     },
     // 门店分派-操作人详情
     selectpjjeDetails: {
-      all: `${APIV3}/selectfenpaipDetails`,
+      all: `${APIV1}/selectfenpaipDetails`,
     },
     // 异常件页面
     problem: {
-      all: `${APIV3}/selectProblemPartsCount`,
-      gitBrandByIdUser: `${APIV3}/selectProblemPartsByBrand`,
+      all: `${APIV1}/selectProblemPartsCount`,
+      gitBrandByIdUser: `${APIV1}/selectProblemPartsByBrand`,
     },
     // 异常件明细
     problemdetail: {
-      all: `${APIV3}/selectproblemParts`,
+      all: `${APIV1}/selectproblemParts`,
     },
     // 权限管理
     auth: {
       // 用户管理
       adminuser: {
-        list: `${APIV3}/operatorList`,
-        update: `${APIV3}/operatorEdit`,
-        delete: `${APIV3}/operatorDel`,
-        create: `${APIV3}/operatorAdd`,
+        list: `${APIV1}/operatorList`,
+        update: `${APIV1}/operatorEdit`,
+        delete: `${APIV1}/operatorDel`,
+        create: `${APIV1}/operatorAdd`,
         // list: `${APIV1}/operatorList`,
         // update: `${APIV1}/operatorEdit`,
         // delete: `${APIV1}/operatorDel`,
@@ -224,19 +221,19 @@ module.exports = {
       },
       // 菜单管理
       menu: {
-        list: `${APIV3}/menuList`,
-        update: `${APIV3}/menuEdit`,
-        delete: `${APIV3}/menuDel`,
-        create: `${APIV3}/menuAdd`,
-        getMenuByParentId: `${APIV3}/getMenuByParentId`,
+        list: `${APIV1}/menuList`,
+        update: `${APIV1}/menuEdit`,
+        delete: `${APIV1}/menuDel`,
+        create: `${APIV1}/menuAdd`,
+        getMenuByParentId: `${APIV1}/getMenuByParentId`,
       },
       // 角色管理
       role: {
-        list: `${APIV3}/roleList`,
-        update: `${APIV3}/roleEdit`,
-        delete: `${APIV3}/roleDel`,
-        create: `${APIV3}/roleAdd`,
-        queryMenu: `${APIV3}/menuList`,
+        list: `${APIV1}/roleList`,
+        update: `${APIV1}/roleEdit`,
+        delete: `${APIV1}/roleDel`,
+        create: `${APIV1}/roleAdd`,
+        queryMenu: `${APIV1}/menuList`,
         // list: `${APIV1}/roleList`,
         // update: `${APIV1}/roleEdit`,
         // delete: `${APIV1}/roleDel`,
@@ -246,33 +243,33 @@ module.exports = {
       },
       // 机构管理
       org: {
-        getLocation: `${APIV3}/getLocation`,
-        list: `${APIV3}/orgList`,
-        update: `${APIV3}/orgEdit`,
-        delete: `${APIV3}/orgDel`,
-        create: `${APIV3}/orgAdd`,
+        getLocation: `${APIV1}/getLocation`,
+        list: `${APIV1}/orgList`,
+        update: `${APIV1}/orgEdit`,
+        delete: `${APIV1}/orgDel`,
+        create: `${APIV1}/orgAdd`,
         /**
          * 根据地址查询门店
          */
-        getIdUsers: `${APIV3}/selectIdUsers`,
+        getIdUsers: `${APIV1}/selectIdUsers`,
       },
 
     },
     // 业务量
     businessvolume: {
-      list: `${APIV3}/getPortfolio`,
-      detail: `${APIV3}/getOrderByBrand`,
-      count: `${APIV3}/getPortfolioByBrand`,
-      downloadExcel: `${APIV3}/downloadPortfolio`,
-      downloadDetailExcel: `${APIV3}/downloadPortfolio`,
+      list: `${APIV1}/getPortfolio`,
+      detail: `${APIV1}/getOrderByBrand`,
+      count: `${APIV1}/getPortfolioByBrand`,
+      downloadExcel: `${APIV1}/downloadPortfolio`,
+      downloadDetailExcel: `${APIV1}/downloadPortfolio`,
     },
     // 品牌统计
     brandcount: {
-      list: `${APIV3}/simpleList`,
+      list: `${APIV1}/simpleList`,
     },
     // 分派人
     assignment: {
-      list: `${APIV3}/assignList`,
+      list: `${APIV1}/assignList`,
     },
   },
   brand: {

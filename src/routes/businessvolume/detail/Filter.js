@@ -121,7 +121,7 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            <Button size="large" type="primary" onClick={onDownLoad}>下载</Button>
+            <Button style={{ display: 'none' }} size="large" type="primary" onClick={onDownLoad}>下载</Button>
           </div>
         </div>
       </Col>
