@@ -54,7 +54,7 @@ module.exports = {
       login: `${APIV3}/selectRoleByUserId`,
       getMenus: `${APIV3}/selectRoleByUserId`,
     },
-    registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser111',
+    registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
