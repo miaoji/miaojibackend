@@ -21,9 +21,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'name',
       render: (text, record) => {
         if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/selectpjjeDetails?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text || '暂无'}</Link>
+          return <Link to={`/assignor?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text || '暂无'}</Link>
         }
-        return <Link to={`/selectpjjeDetails?idUser=${record.idUser}`}>{text || '暂无'}</Link>
+        return <Link to={`/assignor?idUser=${record.idUser}`}>{text || '暂无'}</Link>
       },
     }, {
       title: '分派数量',

@@ -313,6 +313,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 门店分派-操作人数据
+          path: 'assignor',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/store/assignor'))
+              cb(null, require('./routes/store/assignor/'))
+            }, 'assignor')
+          },
+        },
+        {
           // 门店分派>操作人分派详情
           path: 'selectpjjeDetails',
           getComponent(nextState, cb) {

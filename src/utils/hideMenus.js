@@ -67,4 +67,10 @@ export default [
     name: '业务量详情',
     route: '/businessvolumeDetail',
   },
+  {
+    id: '1012',
+    mpid: '-1',
+    name: '分派人详情',
+    route: '/assignor',
+  },
 ]
