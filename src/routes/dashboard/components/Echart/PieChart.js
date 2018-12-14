@@ -6,9 +6,9 @@ import './theme/macarons.js'
 
 const PieChart = ({ data, loading }) => {
   const optionData = [
-    { value: data.someCargo, name: '点货数' },
-    { value: data.scheduledReceipt, name: '入库数' },
-    { value: data.signingVolume, name: '签收数' },
+    { value: data.someCargo, name: '点货' },
+    { value: data.scheduledReceipt, name: '入库' },
+    { value: data.signingVolume, name: '签收' },
   ]
   const option = {
     toolbox: {
@@ -19,18 +19,18 @@ const PieChart = ({ data, loading }) => {
     },
     title: {
       text: '业务量统计汇总',
-      subtext: '统计截至到前一天23:59:59',
+      subtext: '统计前一天00:00:00到23:59:59',
       x: 'center',
     },
     tooltip: {
       trigger: 'item',
-      formatter: '{b} : {c} | {d}%',
+      formatter: '{b} | {d}%',
     },
     legend: {
       orient: 'vertical',
       left: 'right',
       top: 'middle',
-      data: ['点货数', '入库数', '签收数'],
+      data: ['点货', '入库', '签收'],
     },
     color: ['#32c5e9', '#9fe6b8', '#ffdb5c', '#ff9f7f', '#fb7293'],
     series: [

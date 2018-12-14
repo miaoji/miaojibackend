@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
+import { Spin } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Echart from './Echart'
@@ -56,8 +57,10 @@ const BrandCount = ({ location, dispatch, brandcount, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {list.length !== 0 && <Echart {...listProps} />}
-      {list.length === 0 && <p style={{ textAlign: 'center', height: '300px', lineHeight: '300px' }}>暂无相关数据</p>}
+      <Spin spinning={loading.effects['brandcount/query']} >
+        {list.length !== 0 && <Echart {...listProps} />}
+        {list.length === 0 && <p style={{ textAlign: 'center', height: '300px', lineHeight: '300px' }}>暂无相关数据</p>}
+      </Spin>
       {!echartShow && <List {...listProps} />}
     </div>
   )
