@@ -20,7 +20,7 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading,
         return <Link to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>{text}</Link>
       },
     }, {
-      title: '点单数量',
+      title: '点货数量',
       dataIndex: 'ddtotal',
       key: 'ddtotal',
       render: (text) => {

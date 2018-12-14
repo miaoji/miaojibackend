@@ -7,18 +7,18 @@ import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 import PieChart from './components/Echart/PieChart'
 
 function Dashboard({ dashboard, loading }) {
-  const { receviceData, sendData, income, storeTotal, weChatUser, terminalTotal, user, trafficVolume } = dashboard
+  const { receviceData, sendData, income, storeTotal, terminalTotal, user, trafficVolume } = dashboard
 
 
-  const munArr = [income, storeTotal, weChatUser, terminalTotal]
+  const munArr = [income, storeTotal, terminalTotal]
   const munLadings = [
     loading.effects['dashboard/getIncome'],
     loading.effects['dashboard/getStoreTotal'],
-    loading.effects['dashboard/getWeChatUser'],
     loading.effects['dashboard/getTerminalTotal'],
+    // loading.effects['dashboard/getWeChatUser'],
   ]
   const numberCards = munArr.map((item, key) => {
-    return (<Col key={key} lg={6} md={12}>
+    return (<Col key={key} lg={8} md={8}>
       <NumberCard {...item} data={munArr} loading={munLadings[key]} />
     </Col>)
   })

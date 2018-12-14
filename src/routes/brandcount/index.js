@@ -56,7 +56,8 @@ const BrandCount = ({ location, dispatch, brandcount, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {echartShow && <Echart {...listProps} />}
+      {list.length !== 0 && <Echart {...listProps} />}
+      {list.length === 0 && <p style={{ textAlign: 'center', height: '300px', lineHeight: '300px' }}>暂无相关数据</p>}
       {!echartShow && <List {...listProps} />}
     </div>
   )

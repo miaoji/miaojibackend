@@ -16,7 +16,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '点单数量',
+      title: '点货数量',
       dataIndex: 'ddtotal',
       key: 'ddtotal',
       render: (text) => {

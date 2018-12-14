@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button, Input } from 'antd'
 import styles from './index.less'
+import { DateRange } from '../../components'
+import { handleFields, defaultTime } from '../../utils'
 
 const { Search } = Input
 
@@ -14,25 +16,55 @@ const Filter = ({
     getFieldsValue,
   },
 }) => {
+  filter = defaultTime(filter)
   const handleSubmit = () => {
     let fields = getFieldsValue()
-    fields.name = fields.name.trim()
-    if (!fields.name) return
-    onFilterChange(fields)
+    fields = handleFields(fields)
+    // 判断搜索提交的内容是否为空
+    // 为空则等于undefined
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
+    onFilterChange({ ...filter, ...fields })
+  }
+  const { name, createTime } = filter
+
+  // 时间选择器change事件
+  const handleChange = (key, values) => {
+    let fields = getFieldsValue()
+    fields[key] = values
+    fields = handleFields(fields)
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
+    onFilterChange({ ...filter, ...fields })
   }
 
-  const { name } = filter
-
   return (
-    <div className={styles.filter} >
-      <div className={styles.filter_title}><span className="icon_line" />分派人查询 : </div>
-      <div className="input" style={{ marginLeft: '20px' }}>
-        {getFieldDecorator('name', {
-          initialValue: name,
-        })(<Search onSearch={handleSubmit} className={styles.filter_input} placeholder="按分派人姓名或id搜索" size="large" onPressEnter={handleSubmit} />)}
+    <div>
+      <div className={styles.filter} >
+        <div className={styles.filter_title}><span className="icon_line" />时间筛选 : </div>
+        <div style={{ width: '400px', marginLeft: '40px' }}>
+          {getFieldDecorator('createTime', { initialValue: createTime })(
+            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          )}
+        </div>
       </div>
-      <div style={{ marginLeft: '20px' }}>
-        <Button className={styles.filter_button} loading={buttonLoading} type="primary" size="large" onClick={handleSubmit}>搜索</Button>
+      <div className={styles.filter} >
+        <div className={styles.filter_title}><span className="icon_line" />分派人查询 : </div>
+        <div className="input">
+          {getFieldDecorator('name', {
+            initialValue: name,
+          })(<Search onSearch={handleSubmit} className={styles.filter_input} placeholder="按分派人姓名或id搜索" size="large" onPressEnter={handleSubmit} />)}
+        </div>
+
+        <div style={{ marginLeft: '20px' }}>
+          <Button className={styles.filter_button} loading={buttonLoading} type="primary" size="large" onClick={handleSubmit}>搜索</Button>
+        </div>
       </div>
     </div>
   )
