@@ -6,9 +6,9 @@ import './theme/macarons.js'
 
 const PieChart = ({ data, loading }) => {
   const optionData = [
-    { value: data.someCargo, name: '点货' },
-    { value: data.scheduledReceipt, name: '入库' },
-    { value: data.signingVolume, name: '签收' },
+    { value: data.someCargo, name: '点货数' },
+    { value: data.scheduledReceipt, name: '入库数' },
+    { value: data.signingVolume, name: '签收数' },
   ]
   const option = {
     toolbox: {
@@ -24,13 +24,13 @@ const PieChart = ({ data, loading }) => {
     },
     tooltip: {
       trigger: 'item',
-      formatter: '{b} | {d}%',
+      formatter: '{b} : {c}',
     },
     legend: {
       orient: 'vertical',
       left: 'right',
       top: 'middle',
-      data: ['点货', '入库', '签收'],
+      data: ['点货数', '入库数', '签收数'],
     },
     color: ['#32c5e9', '#9fe6b8', '#ffdb5c', '#ff9f7f', '#fb7293'],
     series: [

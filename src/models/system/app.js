@@ -53,11 +53,17 @@ export default {
     *query(_, { put }) {
       const loginTime = new Date().getTime() - storage({ key: 'loginTime' })
       const userInfo = storage({ key: 'user' })
-      if (userInfo && loginTime <= 21600000) {
+      let user = null
+      try {
+        user = JSON.parse(userInfo)
+      } catch (e) {
+        user = null
+      }
+      if (user && loginTime <= 21600000) {
         yield put({
           type: 'queryStoreUser',
         })
-        const user = JSON.parse(userInfo)
+
         if (process.env.NODE_ENV === 'development') {
           console.log('App-userInfo', user)
         }
@@ -95,6 +101,7 @@ export default {
       } else {
         /* eslint no-lonely-if: "off" */
         if (config.openPages && config.openPages.indexOf(location.pathname) < 0) {
+          storage({ type: 'clear' })
           let from = location.pathname
           window.location = `${location.origin}/login?from=${from}`
         }
@@ -102,7 +109,7 @@ export default {
     },
 
     * logout(_, { put }) {
-      window.localStorage.clear()
+      storage({ type: 'clear' })
       yield put({ type: 'query' })
     },
 

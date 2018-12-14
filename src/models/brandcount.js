@@ -5,7 +5,7 @@ import { query } from '../services/brandcount'
 import { pageModel } from './system/common'
 import { time } from '../utils'
 
-const yesterTime = time.getToday(new Date().getTime())
+const yesterTime = time.getToday(new Date().getTime() - 86400000)
 
 const { prefix } = config
 export default modelExtend(pageModel, {

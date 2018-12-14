@@ -6,7 +6,9 @@ import { Form, Button, Row, Col, Input } from 'antd'
 import { time } from '../../utils'
 
 
-const yesterTime = time.getToday(new Date().getTime())
+const yesterTime = time.getToday(new Date().getTime() - 86400000)
+
+console.log('yesterTime', yesterTime)
 const Search = Input.Search
 
 const ColProps = {

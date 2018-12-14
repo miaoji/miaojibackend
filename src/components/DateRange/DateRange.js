@@ -7,7 +7,6 @@ import moment from 'moment'
 class DateRange extends React.Component {
   constructor(props) {
     super(props)
-    debugger
     this.state = {
       startValue: props.value[0],
       endValue: props.value[1],
