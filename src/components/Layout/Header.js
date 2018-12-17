@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Icon, Popover } from 'antd'
+import { Menu, Icon, Popover, Dropdown } from 'antd'
 import styles from './Header.less'
 import Menus from './Menu'
 
 const SubMenu = Menu.SubMenu
 
-const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys, menu }) => {
+const Header = ({ message, user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys, menu }) => {
   let handleClickMenu = e => e.key === 'logout' && logout()
   const menusProps = {
     menu,
@@ -18,6 +18,17 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
     navOpenKeys,
     changeOpenKeys,
   }
+
+  const messageList = (
+    <Menu>
+      {message.length > 0 ? message.map(item => (
+        <Menu.Item>
+          <span>{item.content}</span>
+        </Menu.Item>
+      )) : <Menu.Item>无消息</Menu.Item>}
+    </Menu>
+  )
+
   return (
     <div className={styles.header}>
       {isNavbar
@@ -30,9 +41,11 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
           <Icon type={siderFold ? 'menu-unfold' : 'menu-fold'} />
         </div>}
       <div className={styles.rightWarpper}>
-        <div className={styles.button}>
-          <Icon type="mail" />
-        </div>
+        <Dropdown overlay={messageList}>
+          <div className={styles.button}>
+            <Icon type="mail" />
+          </div>
+        </Dropdown>
         <Menu mode="horizontal" onClick={handleClickMenu}>
           <SubMenu
             style={{
@@ -62,6 +75,7 @@ Header.propTypes = {
   switchMenuPopover: PropTypes.func,
   navOpenKeys: PropTypes.array,
   changeOpenKeys: PropTypes.func,
+  message: PropTypes.array,
 }
 
 export default Header

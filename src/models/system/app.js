@@ -20,6 +20,7 @@ export default {
     permissions: {
       visit: [],
     },
+    message: [],
     menu: [
       {
         id: 1,
@@ -134,6 +135,9 @@ export default {
           const val = `${item.id}///${item.name}`
           return <Option key={val}>{`${item.id}-${item.name}`}</Option>
         })
+        if (data.total > 291) {
+          console.info('消息通知', `新增了${data.total - 291}个新用户,请进行机构的分配`)
+        }
         yield put({
           type: 'updateState',
           payload: {
