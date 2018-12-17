@@ -221,10 +221,8 @@ export default modelExtend(pageModel, {
      */
     *getOrgList(_, { call, put }) {
       const data = yield call(queryOrgList, { page: 1, pageSize: 10000 })
-      console.log('data', data)
       if (data.code === 200) {
         const orgTree = orgToTree(data.obj)
-        console.log('orgTree', orgTree)
         yield put({
           type: 'updateState',
           payload: {

@@ -8,7 +8,6 @@ import { time } from '../../utils'
 
 const yesterTime = time.getToday(new Date().getTime() - 86400000)
 
-console.log('yesterTime', yesterTime)
 const Search = Input.Search
 
 const ColProps = {

@@ -96,7 +96,6 @@ export default modelExtend(pageModel, {
       if (!payload.orderSn) {
         delete newpayload.orderSn
       }
-      console.log('payload', newpayload)
       const data = yield call(downloadDetailExcel, { ...newpayload })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj

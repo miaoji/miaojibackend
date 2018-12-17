@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Spin } from 'antd'
+import { Table, Spin, Tooltip } from 'antd'
 import { Link } from 'dva/router'
 import styles from './styles.less'
 
@@ -11,43 +11,42 @@ let colorPalette = [
   '#59678c', '#c9ab00', '#7eb00a', '#6f5553', '#c14089',
 ]
 
-const columns = [
-  {
-    title: 'id',
-    dataIndex: 'id',
-    key: 'id',
-    render(text) {
-      return <span>{text || '/'}</span>
+const List = ({ filter, rowLoading, expandedList, ...tableProps }) => {
+  const createTime = filter.createTime ? `&createTime=${filter.createTime ? filter.createTime[0]._i : ''}&createTime=${filter.createTime ? filter.createTime[1]._i : ''}` : ''
+  const columns = [
+    {
+      title: 'id',
+      dataIndex: 'id',
+      key: 'id',
+      render(text) {
+        return <span>{text || '/'}</span>
+      },
     },
-  },
-  {
-    title: '分派人姓名',
-    dataIndex: 'name',
-    key: 'name',
-    render(text) {
-      return <span>{text || '/'}</span>
+    {
+      title: '分派人姓名',
+      dataIndex: 'c_name',
+      key: 'c_name',
+      render(text) {
+        return <span>{text || '/'}</span>
+      },
     },
-  },
-  {
-    title: '分派数据',
-    dataIndex: 'count',
-    key: 'count',
-    render(text) {
-      return <span>{text || '/'}</span>
+    {
+      title: '分派数据',
+      dataIndex: 'count',
+      key: 'count',
+      render(text) {
+        return <span>{text || '/'}</span>
+      },
     },
-  },
-  {
-    title: '查看详情',
-    dataIndex: 'option',
-    key: 'option',
-    render: () => {
-      return <Link>明细</Link>
+    {
+      title: '查看详情',
+      dataIndex: 'option',
+      key: 'option',
+      render: (_, record) => {
+        return <Link to={`/selectpjjeDetails?idBinding=${record.id}&idUser=${filter.idUser}${createTime}`}>订单明细</Link>
+      },
     },
-  },
-]
-console.log('.................')
-const List = ({ filter, rowLoading, ...tableProps }) => {
-  console.log('-----------------------')
+  ]
   return (
     <div>
       <Table
@@ -55,23 +54,31 @@ const List = ({ filter, rowLoading, ...tableProps }) => {
         className={styles.table}
         columns={columns}
         bordered
-        rowKey={record => record.ddtotal}
-        expandedRowRender={() => (
-          rowLoading ? <Spin /> : (
-            <div className={styles.row}>
-              {
-                [1231231, 212312, 31233, 2223233, 31132311].map((item, index) => {
-                  return (<p>
-                    <span className="title" style={{ backgroundColor: colorPalette[index] }}>
-                      <Link to="/selectpjjeDetails">圆通</Link>
-                    </span>
-                    <span className="count">{item}</span>
-                  </p>)
-                })
-              }
-            </div>
+        rowKey={record => record.id}
+        expandedRowRender={(row) => {
+          return (
+            rowLoading ? <Spin /> : (
+              <div className={styles.row}>
+                {
+                  expandedList.map((item, index) => {
+                    return (<p>
+                      <Tooltip placement="top" title="点击查看明细">
+                        <Link
+                          style={{ backgroundColor: colorPalette[index] }}
+                          className="title"
+                          to={`/selectpjjeDetails?idBinding=${row.id}&idBrand=${item.idBrand}${createTime}`}
+                        >
+                          {item.brand}
+                        </Link>
+                      </Tooltip>
+                      <span className="count">{item.count}</span>
+                    </p>)
+                  })
+                }
+              </div>
+            )
           )
-        )}
+        }}
       />
     </div>
   )
@@ -80,6 +87,7 @@ const List = ({ filter, rowLoading, ...tableProps }) => {
 List.propTypes = {
   filter: PropTypes.object,
   rowLoading: PropTypes.bool,
+  expandedList: PropTypes.array,
 }
 
 export default List

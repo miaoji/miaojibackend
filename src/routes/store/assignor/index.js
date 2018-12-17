@@ -6,13 +6,14 @@ import List from './List'
 import Filter from './Filter'
 
 const Assignor = ({ location, dispatch, assignor, loading }) => {
-  const { list, expandedRowKeys, pagination } = assignor
+  const { list, expandedRowKeys, pagination, expandedList } = assignor
   const { query, pathname } = location
 
   const listProps = {
     filter: {
       ...query,
     },
+    expandedList,
     pagination,
     location,
     expandedRowKeys,
@@ -42,7 +43,7 @@ const Assignor = ({ location, dispatch, assignor, loading }) => {
       dispatch({
         type: 'assignor/updateState',
         payload: {
-          expandedRowKeys: [record.ddtotal],
+          expandedRowKeys: [record.id],
         },
       })
       dispatch({

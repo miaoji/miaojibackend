@@ -10,7 +10,6 @@ import { getUserId, isSuperAdmin } from '../../../utils/getUserInfo'
 
 const userId = getUserId()
 const isSuperRole = isSuperAdmin()
-console.log('isSuperRole', isSuperRole)
 const confirm = Modal.confirm
 
 const List = ({ location, onEditItem, onDeleteItem, onReadAuth, ...tableProps }) => {

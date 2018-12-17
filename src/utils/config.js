@@ -193,6 +193,11 @@ module.exports = {
     selectfenpai: {
       all: `${APIV1}/selectfenpai`,
     },
+    // 门店分派子页面分派人信息汇总
+    assignor: {
+      all: `${APIV1}/selectBusiness`,
+      expanded: `${APIV1}/selectBrandBusiness`,
+    },
     // 门店分派-操作人详情
     selectpjjeDetails: {
       all: `${APIV1}/selectfenpaipDetails`,
