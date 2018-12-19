@@ -17,7 +17,7 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/order') {
-          const serialNumber = location.query
+          const { serialNumber } = location.query
           if (serialNumber) {
             dispatch({ type: 'query', payload: { ...location.query } })
           } else {
