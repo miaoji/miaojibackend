@@ -179,3 +179,20 @@ export const initUserInfo = (userInfo) => {
     menuGroupIds,
   }
 }
+
+/**
+ * [从menusList从取出menuId]
+ */
+
+export const getMenuIds = (menuList) => {
+  const tmpArr = []
+  menuList.forEach((item) => {
+    if (item.children && item.children.length > 0) {
+      const test = getMenuIds(item.children)
+      tmpArr.push(...test, item.id)
+    } else {
+      tmpArr.push(item.id)
+    }
+  })
+  return tmpArr
+}

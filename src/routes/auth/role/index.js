@@ -149,6 +149,9 @@ const Modular = ({ location, dispatch, role, loading }) => {
         },
       })
     },
+    onUpdateAdminRole() {
+      dispatch({ type: 'role/updateAdminRole' })
+    },
   }
 
   return (

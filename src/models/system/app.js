@@ -109,12 +109,12 @@ export default {
       }
     },
 
-    * logout(_, { put }) {
+    *logout(_, { put }) {
       storage({ type: 'clear' })
       yield put({ type: 'query' })
     },
 
-    * changeNavbar(_, { put, select }) {
+    *changeNavbar(_, { put, select }) {
       const { app } = yield select(e => e)
       const isNavbar = document.body.clientWidth < 769
       if (isNavbar !== app.isNavbar) {
@@ -122,7 +122,7 @@ export default {
       }
     },
 
-    * queryStoreUser(_, { call, put }) {
+    *queryStoreUser(_, { call, put }) {
       const data = yield call(queryStoreUser, {
         current: 1,
         pageSize: 10000,
@@ -135,8 +135,8 @@ export default {
           const val = `${item.id}///${item.name}`
           return <Option key={val}>{`${item.id}-${item.name}`}</Option>
         })
-        if (data.total > 313) {
-          console.info('消息通知', `新增了${data.total - 313}个新用户,请进行机构的分配`)
+        if (data.total > 316) {
+          console.info('消息通知', `新增了${data.total - 316}个新用户,请进行机构的分配`)
         }
         yield put({
           type: 'updateState',

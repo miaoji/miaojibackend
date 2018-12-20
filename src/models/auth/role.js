@@ -6,7 +6,7 @@ import { query, create, update, remove, queryMenu } from '../../services/auth/ro
 import { pageModel } from '../system/common'
 import {
   reloadItem, handleArrData, renderTreeNodes,
-  filterRoleList,
+  filterRoleList, getMenuIds,
 } from '../../utils/processing'
 import { storage, isSuperAdmin, getRoleId, getUserId } from '../../utils'
 
@@ -91,6 +91,8 @@ export default modelExtend(pageModel, {
     *update({ payload }, { select, call, put }) {
       const currentItem = yield select(({ role }) => role.currentItem)
       if (payload.menus) {
+        console.log('payload', payload)
+        debugger
         const storageData = storage({ key: 'menuListSpare' })
         const menuList = JSON.parse(storageData)
         payload.menuGroup = handleArrData({
@@ -206,6 +208,26 @@ export default modelExtend(pageModel, {
           menuList: option,
         },
       })
+    },
+
+    *updateAdminRole(_, { call, put }) {
+      const menusData = yield call(queryMenu, { parentMenuId: 0, page: 1, pageSize: 10000 })
+      if (menusData.code === 200) {
+        const menuListSpare = getMenuIds(menusData.obj)
+        const menus = menuListSpare.map(item => item.toString())
+        const menuGroup = menus.toString()
+        const data = yield call(update, { id: 1, menuGroup, menus })
+        if (data.code === 200) {
+          message.success('超级管理员权限已更新')
+          yield put({
+            type: 'query',
+          })
+        } else {
+          message.warning(`${data.mess} 超级管理员权限更新失败`)
+        }
+      } else {
+        message.warning('菜单信息获取失败,超级管理员权限更新失败')
+      }
     },
 
   },
