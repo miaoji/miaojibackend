@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem, DateRange } from 'components'
-import { Form, Button, Row, Col, Input } from 'antd'
+import { Form, Button, Row, Col, Input, Select } from 'antd'
 import { time } from '../../utils'
 
 
@@ -26,6 +26,7 @@ const Filter = ({
   echartShow,
   onEchartShowChange,
   filter,
+  storeuserList,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -69,7 +70,7 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { brand, createTime = [yesterTime, yesterTime] } = filter
+  const { brand, createTime = [yesterTime, yesterTime], name } = filter
 
   let initialCreateTime = []
   if (createTime && createTime[0]) {
@@ -79,8 +80,26 @@ const Filter = ({
     initialCreateTime[1] = moment(createTime[1])
   }
 
+  const nameChange = (key) => {
+    handleChange('name', key)
+  }
+
+
   return (
     <Row gutter={24}>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按店铺名称搜索"
+            size="large"
+          >
+            {storeuserList}
+          </Select>
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 4 }}>
         {getFieldDecorator('brand', { initialValue: brand })(<Search placeholder="按名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
@@ -113,6 +132,7 @@ Filter.propTypes = {
   onFilterChange: PropTypes.func,
   echartShow: PropTypes.bool,
   onEchartShowChange: PropTypes.func,
+  storeuserList: PropTypes.array,
 }
 
 export default Form.create()(Filter)
