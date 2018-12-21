@@ -19,6 +19,7 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     title: `${modalType === 'create' ? '新增机构信息' : '修改机构信息'}`,
     wrapClassName: 'vertical-center-modal',
     locationLoading: loading.effects['org/filterLocationList'],
+    width: '1100px',
     maskClosable: false,
     storeuserList,
     locationList,
@@ -26,10 +27,11 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     locationSelectShow,
     parentOrgList,
     onOk(data) {
-      dispatch({
-        type: `org/${modalType}`,
-        payload: data,
-      })
+      console.log('data', data)
+      // dispatch({
+      //   type: `org/${modalType}`,
+      //   payload: data,
+      // })
     },
     onCancel() {
       dispatch({
