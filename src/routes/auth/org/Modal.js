@@ -18,7 +18,7 @@ class TransferModal extends React.Component {
   }
 
   filterOption = (inputValue, option) => {
-    return option.description.indexOf(inputValue) > -1
+    return option.text.indexOf(inputValue) > -1
   }
 
   handleChange = (targetKeys) => {
@@ -38,6 +38,7 @@ class TransferModal extends React.Component {
       onGetIdUsers,
       locationLoading,
       parentOrgList,
+      storeuserArr,
       form: {
         getFieldDecorator,
         validateFields,
@@ -64,8 +65,10 @@ class TransferModal extends React.Component {
       onOk: handleOk,
     }
 
+    const idUsers = storeuserArr.map(ss => ({ key: ss.id, ...ss }))
+
     return (
-      <Modal {...modalOpts} className={styles.modal}>
+      <Modal {...modalOpts} className={styles.modal} >
         <Form layout="horizontal">
           <Row gutter={24}>
             <Col span={8}>
@@ -122,12 +125,12 @@ class TransferModal extends React.Component {
             })(<Transfer
               className={styles.transfer}
               listStyle={{ width: '45%' }}
-              dataSource={this.state.mockData}
+              dataSource={idUsers}
               showSearch
               filterOption={this.filterOption}
               targetKeys={this.state.targetKeys}
               onChange={this.handleChange}
-              render={record => record.description}
+              render={record => record.text}
               locale={{ searchPlaceholder: '请输入地址或者门店名筛选' }}
             />)}
           </FormItem>
@@ -164,6 +167,7 @@ TransferModal.propTypes = {
   locationSelectShow: PropTypes.bool,
   locationLoading: PropTypes.bool,
   parentOrgList: PropTypes.array,
+  storeuserArr: PropTypes.array,
 }
 
 export default Form.create()(TransferModal)

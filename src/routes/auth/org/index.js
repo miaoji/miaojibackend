@@ -9,10 +9,11 @@ import Modal from './Modal'
 const Modular = ({ location, dispatch, org, loading, app }) => {
   const { list, pagination, currentItem, modalVisible, modalType, storeuserList, locationList, orgIdusers, locationSelectShow, parentOrgList } = org
   const { pageSize } = pagination
-  const { storeTotal } = app
+  const { storeTotal, storeuserArr } = app
 
   const modalProps = {
     type: modalType,
+    storeuserArr,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['org/create'] || loading.effects['org/update'],
