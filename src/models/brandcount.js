@@ -47,7 +47,6 @@ export default modelExtend(pageModel, {
 
     * query({ payload = {} }, { call, put }) {
       payload = { ...payload }
-      console.log('payload', payload)
       if (payload.name) {
         payload.idUser = payload.name.split('///')[0]
         delete payload.name

@@ -196,3 +196,22 @@ export const getMenuIds = (menuList) => {
   })
   return tmpArr
 }
+
+/**
+ * [门店用户页面,遍历地址信息]
+ */
+export const storeuserEditLocation = (data) => {
+  if (data.children && data.children.length === 0) {
+    delete data.children
+  }
+  if (data.children && data.children.length > 0) {
+    data.children = data.children.map((items) => {
+      return storeuserEditLocation(items)
+    })
+  }
+  return {
+    value: data.name || data.province || data.city || data.district,
+    label: data.name || data.province || data.city || data.district,
+    children: data.children,
+  }
+}

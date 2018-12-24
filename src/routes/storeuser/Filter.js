@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem, DateRange } from 'components'
-import { Form, Button, Row, Col, Input, Select } from 'antd'
+import { Form, Button, Row, Col, Input, Select, Cascader } from 'antd'
 import { isSuperAdmin } from '../../utils/getUserInfo'
 
 const isSuperRole = isSuperAdmin()
@@ -26,6 +26,7 @@ const Filter = ({
   filter,
   storeuserList,
   handleCreate,
+  locationList,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -76,7 +77,9 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name, mobile } = filter
+  const { name, mobile, location } = filter
+
+  let initLocation = (location instanceof Array) && location ? location : [location]
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -87,6 +90,17 @@ const Filter = ({
   }
   const nameChange = (key) => {
     handleChange('name', key)
+  }
+
+  const filterLocation = (inputValue, path) => {
+    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+  }
+
+  const handleLocationChange = (key) => {
+    handleChange('location', key)
+    setFieldsValue({
+      location: key,
+    })
   }
 
   return (
@@ -106,6 +120,21 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按账号搜索" size="large" onSearch={handleSubmit} />)}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('location', { initialValue: initLocation })(
+          <Cascader
+            style={{ width: '100%' }}
+            showSearch={{ filterLocation }}
+            size="large"
+            options={locationList}
+            onChange={handleLocationChange}
+            placeholder="请输入地区信息"
+            changeOnSelect
+            allowClear
+            expandTrigger="hover"
+          />
+        )}
       </Col>
       <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="">
@@ -133,6 +162,7 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   storeuserList: PropTypes.array,
+  locationList: PropTypes.array,
 }
 
 export default Form.create()(Filter)

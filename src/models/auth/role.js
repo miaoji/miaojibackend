@@ -91,8 +91,6 @@ export default modelExtend(pageModel, {
     *update({ payload }, { select, call, put }) {
       const currentItem = yield select(({ role }) => role.currentItem)
       if (payload.menus) {
-        console.log('payload', payload)
-        debugger
         const storageData = storage({ key: 'menuListSpare' })
         const menuList = JSON.parse(storageData)
         payload.menuGroup = handleArrData({

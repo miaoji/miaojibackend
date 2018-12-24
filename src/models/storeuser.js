@@ -4,8 +4,9 @@ import { config, initialCreateTime } from '../utils'
 import { query, updateFee, versionswitch, createAccount } from '../services/storeuser'
 import { pageModel } from './system/common'
 import { locationData } from '../utils/locationData'
-import { query as queryOrgList } from '../services/auth/org'
+import { query as queryOrgList, getLocation } from '../services/auth/org'
 import orgToTree from '../utils/orgToTree'
+import { storeuserEditLocation } from '../utils/processing'
 
 const { prefix } = config
 
@@ -22,6 +23,7 @@ export default modelExtend(pageModel, {
     orgTree: [],
     isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
     locationData: [],
+    locationList: [],
   },
 
   subscriptions: {
@@ -31,6 +33,9 @@ export default modelExtend(pageModel, {
           dispatch({
             type: 'query',
             payload: location.query,
+          })
+          dispatch({
+            type: 'queryLocation',
           })
         }
       })
@@ -46,7 +51,26 @@ export default modelExtend(pageModel, {
       if (payload.name) {
         payload.name = payload.name.split('///')[1]
       }
-      const data = yield call(query, { ...payload })
+      if (payload.location && payload.location.length > 0) {
+        let { location } = payload
+        if (!(location instanceof Array)) {
+          location = [location]
+        }
+        switch (location.length) {
+          case 1:
+            payload.province = location[0]
+            break
+          case 2:
+            payload.city = location[1]
+            break
+          case 3:
+            payload.district = location[2]
+            break
+          default:
+            break
+        }
+      }
+      const data = yield call(query, { ...payload, location: undefined })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -227,6 +251,24 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             orgTree,
+          },
+        })
+      }
+    },
+    /**
+     * [获取筛选地址的数据]
+     */
+    *queryLocation(_, { call, put }) {
+      const data = yield call(getLocation)
+      let option = []
+      if (data.code === 200 && data.obj) {
+        option = data.obj.map((item) => {
+          return storeuserEditLocation(item)
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            locationList: option,
           },
         })
       }

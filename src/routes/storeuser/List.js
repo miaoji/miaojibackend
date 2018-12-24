@@ -46,6 +46,14 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         return <span>{text || '暂无'}</span>
       },
     }, {
+      title: '店铺地址',
+      dataIndex: 'address',
+      key: 'address',
+      width: 170,
+      render: (_, record) => {
+        return <span>{`${record.province}${record.city}${record.district}`}</span>
+      },
+    }, {
       title: '店铺级别',
       dataIndex: 'type',
       key: 'type',
