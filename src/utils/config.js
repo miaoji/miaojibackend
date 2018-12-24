@@ -26,7 +26,7 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // 石金磊
 APIV1 = 'http://192.168.231.125:8081'
 
-// APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -338,6 +338,7 @@ module.exports = {
     韵达: 10,
     顺丰: 13,
     高铁快运: 71,
+    德邦: 1,
   },
   orderType: {
     101: '到件',

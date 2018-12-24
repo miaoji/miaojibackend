@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, org, loading, app }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, locationList, orgIdusers, locationSelectShow, parentOrgList } = org
+  const { list, pagination, currentItem, modalVisible, modalType, storeuserList, locationList, orgIdusers, parentOrgList } = org
   const { pageSize } = pagination
   const { storeTotal, storeuserArr } = app
 
@@ -19,38 +19,22 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     confirmLoading: loading.effects['org/create'] || loading.effects['org/update'],
     title: `${modalType === 'create' ? '新增机构信息' : '修改机构信息'}`,
     wrapClassName: 'vertical-center-modal',
-    locationLoading: loading.effects['org/filterLocationList'],
-    width: '1100px',
+    width: '900px',
     maskClosable: false,
     storeuserList,
     locationList,
     orgIdusers,
-    locationSelectShow,
     parentOrgList,
     onOk(data) {
       console.log('data', data)
-      // dispatch({
-      //   type: `org/${modalType}`,
-      //   payload: data,
-      // })
+      dispatch({
+        type: `org/${modalType}`,
+        payload: data,
+      })
     },
     onCancel() {
       dispatch({
         type: 'org/hideModal',
-      })
-    },
-    onChangeLocationType(val) {
-      dispatch({
-        type: 'org/updateState',
-        payload: {
-          orgIdusers: [],
-        },
-      })
-      dispatch({
-        type: 'org/filterLocationList',
-        payload: {
-          locationType: val,
-        },
       })
     },
     onGetIdUsers(val) {
@@ -90,12 +74,6 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
       item.locationType = item.location ? item.location.split(',').length : 4
       dispatch({ type: 'org/initParentOrgList' })
       dispatch({
-        type: 'org/filterLocationList',
-        payload: {
-          locationType: item.locationType,
-        },
-      })
-      dispatch({
         type: 'org/queryRoleList',
       })
       dispatch({
@@ -117,14 +95,6 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
       ...location.query,
     },
     locationList,
-    onChangeLocationType(val) {
-      dispatch({
-        type: 'org/filterLocationList',
-        payload: {
-          locationType: val,
-        },
-      })
-    },
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -137,15 +107,6 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     },
     onAdd() {
       dispatch({ type: 'org/initParentOrgList' })
-      dispatch({
-        type: 'org/queryRoleList',
-      })
-      dispatch({
-        type: 'org/filterLocationList',
-        payload: {
-          locationType: [],
-        },
-      })
       dispatch({
         type: 'org/queryStoreUser',
       })

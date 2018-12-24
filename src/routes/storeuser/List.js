@@ -51,7 +51,7 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
       key: 'address',
       width: 170,
       render: (_, record) => {
-        return <span>{`${record.province}${record.city}${record.district}`}</span>
+        return <span>{`${record.province || ''}${record.city || ''}${record.district || '/'}`}</span>
       },
     }, {
       title: '店铺级别',

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Transfer, Form, Modal, Select, Input, Row, Col, Cascader } from 'antd'
-import Mock from './test'
 import styles from './index.less'
 
 const FormItem = Form.Item
@@ -11,10 +10,9 @@ class TransferModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      mockData: Mock.mockData,
-      targetKeys: Mock.targetKeys,
+      targetKeys: [],
+      transferDisabled: false,
     }
-    console.log('sss', this.props)
   }
 
   filterOption = (inputValue, option) => {
@@ -33,20 +31,24 @@ class TransferModal extends React.Component {
       storeuserList,
       locationList,
       orgIdusers,
-      onChangeLocationType,
-      locationSelectShow,
       onGetIdUsers,
-      locationLoading,
       parentOrgList,
       storeuserArr,
       form: {
         getFieldDecorator,
         validateFields,
         getFieldsValue,
+        setFieldsValue,
       },
       type,
       ...modalProps
     } = this.props
+
+    const {
+      transferDisabled,
+    } = this.state
+
+    const locationInfo = [{ value: '全国', label: '全国' }, ...locationList]
 
     const handleOk = () => {
       validateFields((errors) => {
@@ -66,6 +68,26 @@ class TransferModal extends React.Component {
     }
 
     const idUsers = storeuserArr.map(ss => ({ key: ss.id, ...ss }))
+
+    const filterLocation = (inputValue, path) => {
+      return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+    }
+
+    const handleLocationChange = (key) => {
+      if (key[0] === '全国') {
+        this.setState({
+          transferDisabled: true,
+        })
+      } else {
+        this.setState({
+          transferDisabled: false,
+        })
+      }
+      setFieldsValue({
+        location: key,
+      })
+    }
+    const disabled = true
 
     return (
       <Modal {...modalOpts} className={styles.modal} >
@@ -102,27 +124,42 @@ class TransferModal extends React.Component {
                 {getFieldDecorator('location', {
                   rules: [
                     {
-                      required: locationSelectShow,
+                      required: true,
                       message: '请输入地区信息!',
                     },
                   ],
                 })(<Cascader
-                  disabled={locationLoading}
-                  options={locationList}
+                  options={locationInfo}
+                  showSearch={{ filterLocation }}
+                  onChange={handleLocationChange}
                   placeholder="请输入地区信息"
+                  changeOnSelect
+                  allowClear
+                  expandTrigger="hover"
                 />)}
               </FormItem>
             </Col>
           </Row>
-          <FormItem label="* 站点信息" hasFeedback>
-            {getFieldDecorator('test', {
+          <FormItem label="站点信息" hasFeedback>
+            <div
+              style={{
+                display: transferDisabled ? 'block' : 'none',
+                backgroundColor: '#eeeeee80',
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                zIndex: 9999,
+              }}
+            />
+            {getFieldDecorator('idUsers', {
               rules: [
                 {
-                  required: false,
-                  message: '请输入地区信息!',
+                  required: !transferDisabled,
+                  message: '请选择门店信息!',
                 },
               ],
             })(<Transfer
+              disabled={disabled}
               className={styles.transfer}
               listStyle={{ width: '45%' }}
               dataSource={idUsers}
@@ -131,7 +168,8 @@ class TransferModal extends React.Component {
               targetKeys={this.state.targetKeys}
               onChange={this.handleChange}
               render={record => record.text}
-              locale={{ searchPlaceholder: '请输入地址或者门店名筛选' }}
+              titles={['待分配', '已选中']}
+              locale={{ searchPlaceholder: '请输入地址或者门店名筛选', itemUnit: '待处理', itemsUnit: '项', notFoundContent: '列表为空' }}
             />)}
           </FormItem>
           <FormItem label="备注信息" hasFeedback>
@@ -161,11 +199,8 @@ TransferModal.propTypes = {
   modalMenuLevel: PropTypes.number,
   storeuserList: PropTypes.array,
   locationList: PropTypes.array,
-  onChangeLocationType: PropTypes.func,
   onGetIdUsers: PropTypes.func,
   orgIdusers: PropTypes.array,
-  locationSelectShow: PropTypes.bool,
-  locationLoading: PropTypes.bool,
   parentOrgList: PropTypes.array,
   storeuserArr: PropTypes.array,
 }

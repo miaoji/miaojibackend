@@ -139,7 +139,7 @@ export default {
         if (data.total > 316) {
           console.info('消息通知', `新增了${data.total - 316}个新用户,请进行机构的分配`)
         }
-        const storeuserArr = data.obj.map(item => ({ key: item.id, text: `${item.id}-${item.name}-${item.province}-${item.city}-${item.district}` }))
+        const storeuserArr = data.obj.map(item => ({ key: item.id, text: `${item.id}-${item.name}-${item.province || ''}${item.city || ''}${item.district || ''}` }))
         yield put({
           type: 'updateState',
           payload: {

@@ -6,7 +6,6 @@ import { query as queryStoreUser } from '../../services/storeuser'
 import { query, create, update, remove, getLocation, getIdUsers } from '../../services/auth/org'
 import { pageModel } from '../system/common'
 import { editLocation } from '../../utils/processing'
-import { getLocation as getLocationArr } from '../../utils/getUserInfo'
 import { getOrgId, getUserId } from '../../utils'
 
 const { Option } = Select
@@ -20,7 +19,6 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     storeuserList: [],
     orgIdusers: [],
-    locationSelectShow: false,
     parentOrgList: [],
   },
 
@@ -43,10 +41,7 @@ export default modelExtend(pageModel, {
       const locationList = yield select(({ org }) => org.locationList)
       if (!locationList) {
         yield put({
-          type: 'filterLocationList',
-          payload: {
-            locationType: payload.locationType || 1,
-          },
+          type: 'queryLocation',
         })
       }
       payload = initialCreateTime(payload)
@@ -67,7 +62,7 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      if (payload.locationType === 4) {
+      if (payload.location && payload.location[0] === '全国') {
         payload.location = []
       }
       if (!payload.parentId) {
@@ -76,7 +71,7 @@ export default modelExtend(pageModel, {
       payload.location = payload.location.toString()
       payload.createUserId = getUserId()
       payload.idUsers = payload.idUsers.toString()
-
+      console.log('payload', payload)
       const data = yield call(create, { ...payload })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -198,89 +193,6 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *filterLocationList({ payload }, { call, put }) {
-      if (payload.locationType === 4) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            locationSelectShow: false,
-          },
-        })
-        return
-      }
-      yield put({
-        type: 'updateState',
-        payload: {
-          locationSelectShow: true,
-        },
-      })
-      const location = getLocationArr()
-      const data = yield call(getLocation)
-      let option = []
-      if (data.code === 200 && data.obj) {
-        option = data.obj.map((item) => {
-          // 第一层
-          if (item.children && item.children.length === 0) {
-            delete item.children
-          }
-          if (item.children && item.children.length > 0 && payload.locationType >= 2) {
-            item.children = item.children.map((i) => {
-              // 第二层
-              if (i.children && i.children.length === 0) {
-                delete i.children
-              }
-              if (i.children && i.children.length > 0 && payload.locationType === 3) {
-                i.children = i.children.map((j) => {
-                  // 第三层
-                  if (j.children && j.children.length === 0) {
-                    delete j.children
-                  }
-                  return {
-                    value: j.name || j.province || j.city || `${j.district}///${j.id}`,
-                    label: j.name || j.province || j.city || j.district,
-                    children: j.children,
-                  }
-                })
-              } else {
-                delete i.children
-              }
-              return {
-                value: i.name || i.province || i.city || `${i.district}///${i.id}`,
-                label: i.name || i.province || i.city || i.district,
-                children: i.children,
-              }
-            })
-          } else {
-            delete item.children
-          }
-          return {
-            value: item.name || item.province || item.city || `${item.district}///${item.id}`,
-            label: item.name || item.province || item.city || item.district,
-            children: item.children,
-          }
-        }).filter((item) => {
-          if (item.children && location.length > 0 && location[0]) {
-            item.children = item.children.filter((i) => {
-              if (location.length > 1) {
-                return i.label === location[1]
-              }
-              return true
-            })
-          }
-          if (location.length > 0 && location[0]) {
-            return item.label === location[0]
-          }
-          return true
-        })
-        yield put({
-          type: 'updateState',
-          payload: {
-            locationList: option,
-          },
-        })
-      }
-    },
-
     *initParentOrgList(_, { put, call }) {
       const data = yield call(query, { page: 1, pageSize: 10000, orgId: getOrgId() })
       if (data.code === 200) {
@@ -305,7 +217,7 @@ export default modelExtend(pageModel, {
     },
 
     hideModal(state) {
-      return { ...state, modalVisible: false, orgIdusers: [], locationSelectShow: false }
+      return { ...state, modalVisible: false, orgIdusers: [] }
     },
 
   },
