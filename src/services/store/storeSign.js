@@ -17,6 +17,7 @@ export async function detailquery(params) {
   delete params.page
   delete params.pageSize
   if (params.idUser) {
+    delete params.userIds
     delete params.location
   }
   return request({
