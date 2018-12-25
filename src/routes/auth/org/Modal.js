@@ -17,9 +17,10 @@ class TransferModal extends React.Component {
         idUsers: tmp,
       })
     }
+    const transferDisabled = this.props.type === 'update' && !this.props.item.location
     this.state = {
       targetKeys,
-      transferDisabled: false,
+      transferDisabled,
     }
   }
 
@@ -78,7 +79,10 @@ class TransferModal extends React.Component {
 
     const idUsers = storeuserArr.map(ss => ({ key: ss.id, ...ss }))
 
-    const initLocation = item.location ? item.location.split(',') : []
+    let initLocation = item.location ? item.location.split(',') : []
+    if (type !== 'create' && initLocation.length === 0) {
+      initLocation = ['全国']
+    }
 
     const filterLocation = (inputValue, path) => {
       return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))

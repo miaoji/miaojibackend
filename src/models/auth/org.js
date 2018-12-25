@@ -86,8 +86,11 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
-      if (payload.locationType === 4) {
+      if (payload.location && payload.location[0] === '全国') {
         payload.location = []
+        payload.idUsers = undefined
+      } else {
+        payload.idUsers = payload.idUsers.toString()
       }
       if (!payload.parentId) {
         payload.parentId = getOrgId()
@@ -97,7 +100,6 @@ export default modelExtend(pageModel, {
         delete payload.parentId
       }
       payload.location = payload.location.toString()
-      payload.idUsers = payload.idUsers.toString()
 
       const data = yield call(update, { ...payload, id: currentItem.id })
       if (data.code === 200) {
