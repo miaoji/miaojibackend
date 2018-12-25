@@ -64,13 +64,16 @@ export default modelExtend(pageModel, {
     *create({ payload }, { call, put }) {
       if (payload.location && payload.location[0] === '全国') {
         payload.location = []
+        payload.idUsers = undefined
+      } else {
+        payload.idUsers = payload.idUsers.toString()
       }
       if (!payload.parentId) {
         payload.parentId = getOrgId()
       }
+      debugger
       payload.location = payload.location.toString()
       payload.createUserId = getUserId()
-      payload.idUsers = payload.idUsers.toString()
       console.log('payload', payload)
       const data = yield call(create, { ...payload })
       if (data.code === 200) {

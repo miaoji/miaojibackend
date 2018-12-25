@@ -9,8 +9,16 @@ const { TextArea } = Input
 class TransferModal extends React.Component {
   constructor(props) {
     super(props)
+    let targetKeys = []
+    if (this.props.item.idUsers) {
+      const tmp = this.props.item.idUsers.split(',')
+      targetKeys = tmp.map(i => Number(i))
+      this.props.form.setFieldsValue({
+        idUsers: tmp,
+      })
+    }
     this.state = {
-      targetKeys: [],
+      targetKeys,
       transferDisabled: false,
     }
   }
@@ -21,7 +29,7 @@ class TransferModal extends React.Component {
 
   handleChange = (targetKeys) => {
     this.setState({ targetKeys })
-    this.props.form.setFieldsValue({ test: targetKeys })
+    this.props.form.setFieldsValue({ idUsers: targetKeys })
   }
 
   render() {
@@ -45,11 +53,12 @@ class TransferModal extends React.Component {
     } = this.props
 
     const {
+      targetKeys,
       transferDisabled,
     } = this.state
 
     const locationInfo = [{ value: '全国', label: '全国' }, ...locationList]
-
+    console.log('ss', item)
     const handleOk = () => {
       validateFields((errors) => {
         if (errors) {
@@ -68,6 +77,8 @@ class TransferModal extends React.Component {
     }
 
     const idUsers = storeuserArr.map(ss => ({ key: ss.id, ...ss }))
+
+    const initLocation = item.location ? item.location.split(',') : []
 
     const filterLocation = (inputValue, path) => {
       return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
@@ -122,6 +133,7 @@ class TransferModal extends React.Component {
             <Col span={8}>
               <FormItem label="地区信息" hasFeedback>
                 {getFieldDecorator('location', {
+                  initialValue: initLocation,
                   rules: [
                     {
                       required: true,
@@ -152,6 +164,7 @@ class TransferModal extends React.Component {
               }}
             />
             {getFieldDecorator('idUsers', {
+              initialValue: targetKeys,
               rules: [
                 {
                   required: !transferDisabled,
@@ -165,7 +178,7 @@ class TransferModal extends React.Component {
               dataSource={idUsers}
               showSearch
               filterOption={this.filterOption}
-              targetKeys={this.state.targetKeys}
+              targetKeys={targetKeys}
               onChange={this.handleChange}
               render={record => record.text}
               titles={['待分配', '已选中']}
