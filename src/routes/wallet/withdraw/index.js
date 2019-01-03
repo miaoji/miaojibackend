@@ -2,20 +2,40 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import { Row, Col, Button, Popconfirm } from 'antd'
 import List from './List'
 import Filter from './Filter'
+import Modal from './Modal'
 
 const WithDraw = ({ location, dispatch, withdraw, loading }) => {
-  const { list, pagination, isMotion, selectedRowKeys } = withdraw
+  const { list, pagination, currentItem, modalVisible, modalType } = withdraw
   const { pageSize } = pagination
+
+  const modalProps = {
+    type: modalType,
+    item: modalType === 'create' ? {} : currentItem,
+    visible: modalVisible,
+    confirmLoading: loading.effects['boot/update'],
+    title: `${modalType === 'create' ? '提现审核' : '提现审核'}`,
+    wrapClassName: 'vertical-center-modal',
+    onOk(data) {
+      console.log('data', data)
+      dispatch({
+        type: `withdraw/${modalType}`,
+        payload: data,
+      })
+    },
+    onCancel() {
+      dispatch({
+        type: 'withdraw/hideModal',
+      })
+    },
+  }
 
   const listProps = {
     dataSource: list,
     loading: loading.effects['withdraw/query'],
     pagination,
     location,
-    isMotion,
     onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
@@ -27,10 +47,19 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
         },
       }))
     },
+    onWithdrawalClick(record) {
+      console.log('re', record)
+      dispatch({
+        type: 'withdraw/showModal',
+        payload: {
+          modalType: 'cashWithdraw',
+          currentItem: { ...record },
+        },
+      })
+    },
   }
 
   const filterProps = {
-    isMotion,
     filter: {
       ...location.query,
     },
@@ -57,30 +86,11 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
     },
   }
 
-  const handleDeleteItems = () => {
-    dispatch({
-      type: 'withdraw/multiDelete',
-      payload: {
-        ids: selectedRowKeys,
-      },
-    })
-  }
-
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {
-        selectedRowKeys.length > 0 &&
-        <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
-          <Col>
-            {`选中 ${selectedRowKeys.length} 个微信用户 `}
-            <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
-            </Popconfirm>
-          </Col>
-        </Row>
-      }
       <List {...listProps} />
+      {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }

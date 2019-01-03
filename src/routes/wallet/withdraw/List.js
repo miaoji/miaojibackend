@@ -4,9 +4,18 @@ import { Table } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
 import styles from './List.less'
-import AnimTableBody from '../../../components/DataTable/AnimTableBody'
+import { DropOption } from '../../../components'
 
-const List = ({ isMotion, location, ...tableProps }) => {
+const List = ({ onWithdrawalClick, ...tableProps }) => {
+  const handleMenuClick = (record, e) => {
+    switch (e.key) {
+      case '1':
+        onWithdrawalClick(record)
+        break
+      default:
+        break
+    }
+  }
   const columns = [
     {
       title: '提现人',
@@ -50,8 +59,17 @@ const List = ({ isMotion, location, ...tableProps }) => {
           wait: '等待',
           cancel: '交易取消',
           close: '交易关闭',
+          false: '交易失败',
+          refuse: '审核被拒绝',
         }
         return (<span>{text ? replText[text] : '暂无'}</span>)
+      },
+    }, {
+      title: '原因',
+      dataIndex: 'transferDetails',
+      key: 'transferDetails',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
       },
     }, {
       title: '提现时间',
@@ -60,35 +78,37 @@ const List = ({ isMotion, location, ...tableProps }) => {
       render: (text) => {
         return <span>{text ? moment.unix(text / 1000).format('YYYY-MM-DD HH:mm:ss') : '未知时间'}</span>
       },
+    }, {
+      title: '操作',
+      key: 'option',
+      width: 100,
+      render: (_, record) => {
+        if (record.status === 'wait') {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '提现审核' }]} />
+        }
+        return <span>已操作</span>
+      },
     },
   ]
 
-  const getBodyWrapperProps = {
-    page: location.query.page,
-    current: tableProps.pagination.current,
-  }
-
-  const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
     <div>
       <Table
         {...tableProps}
-        className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
+        className={classnames({ [styles.table]: true })}
         bordered
         scroll={{ x: 767 }}
         columns={columns}
         simple
         rowKey={record => record.id}
-        getBodyWrapper={getBodyWrapper}
       />
     </div>
   )
 }
 
 List.propTypes = {
-  isMotion: PropTypes.bool,
-  location: PropTypes.object,
+  onWithdrawalClick: PropTypes.func,
 }
 
 export default List

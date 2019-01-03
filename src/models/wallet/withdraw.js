@@ -1,9 +1,7 @@
 import modelExtend from 'dva-model-extend'
-import { query } from 'src/services/wallet/withdraw'
-import { config, initialCreateTime } from 'utils'
+import { query, cashWithdraw } from 'src/services/wallet/withdraw'
+import { initialCreateTime } from 'utils'
 import { pageModel } from '../system/common'
-
-const { prefix } = config
 
 export default modelExtend(pageModel, {
   namespace: 'withdraw',
@@ -11,7 +9,8 @@ export default modelExtend(pageModel, {
   state: {
     currentItem: {},
     selectedRowKeys: [],
-    isMotion: false,
+    modalVisible: false,
+    modalType: 'create',
   },
 
   subscriptions: {
@@ -50,14 +49,39 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *cashWithdraw({ payload = {} }, { call, select, put }) {
+      const currentItem = yield select(({ withdraw }) => withdraw.currentItem)
+      console.log('payload', payload)
+      const param = JSON.stringify({
+        userId: currentItem.userId,
+        price: currentItem.price,
+        orderId: currentItem.orderId,
+        status: payload.status,
+        transferDetails: payload.transferDetails,
+      })
+      console.log('param', param)
+      const data = yield call(cashWithdraw, { param })
+      console.log('data', data)
+      if (data.code === 200) {
+        yield put({ type: 'query' })
+        yield put({ type: 'hideModal' })
+      } else {
+        throw data.mess || '网络不行了!!!'
+      }
+    },
+
   },
 
   reducers: {
 
-    switchIsMotion(state) {
-      localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
-      return { ...state, isMotion: !state.isMotion }
+    showModal(state, { payload }) {
+      return { ...state, ...payload, modalVisible: true }
     },
+
+    hideModal(state) {
+      return { ...state, modalVisible: false }
+    },
+
 
   },
 })
