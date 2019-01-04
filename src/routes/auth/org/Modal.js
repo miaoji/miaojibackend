@@ -59,7 +59,6 @@ class TransferModal extends React.Component {
     } = this.state
 
     const locationInfo = [{ value: '全国', label: '全国' }, ...locationList]
-    console.log('ss', item)
     const handleOk = () => {
       validateFields((errors) => {
         if (errors) {

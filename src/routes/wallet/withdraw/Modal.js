@@ -56,7 +56,6 @@ class modal extends Component {
       onOk: handleOk,
     }
     const onStatusChonge = (e) => {
-      console.log('e', e)
       if (e.target.value === 'refuse') {
         this.setState({
           show: true,
@@ -105,6 +104,7 @@ class modal extends Component {
               <RadioGroup onChange={onStatusChonge}>
                 <Radio value="success">通过</Radio>
                 <Radio value="refuse">拒绝</Radio>
+                <Radio value="wait">等待</Radio>
               </RadioGroup>
             )}
           </FormItem>

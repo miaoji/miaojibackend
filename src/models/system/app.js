@@ -136,8 +136,8 @@ export default {
           const val = `${item.id}///${item.name}`
           return <Option key={val}>{`${item.id}-${item.name}`}</Option>
         })
-        if (data.total > 316) {
-          console.info('消息通知', `新增了${data.total - 316}个新用户,请进行机构的分配`)
+        if (data.total > 336) {
+          console.info('消息通知', `新增了${data.total - 336}个新用户,请进行机构的分配`)
         }
         const storeuserArr = data.obj.map(item => ({ key: item.id, text: `${item.id}-${item.name}-${item.province || ''}${item.city || ''}${item.district || ''}` }))
         yield put({

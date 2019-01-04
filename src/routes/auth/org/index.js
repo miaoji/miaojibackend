@@ -26,7 +26,6 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     orgIdusers,
     parentOrgList,
     onOk(data) {
-      console.log('data', data)
       dispatch({
         type: `org/${modalType}`,
         payload: data,

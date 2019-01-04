@@ -74,7 +74,6 @@ export default modelExtend(pageModel, {
       debugger
       payload.location = payload.location.toString()
       payload.createUserId = getUserId()
-      console.log('payload', payload)
       const data = yield call(create, { ...payload })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })

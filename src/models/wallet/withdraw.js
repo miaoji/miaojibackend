@@ -51,7 +51,6 @@ export default modelExtend(pageModel, {
 
     *cashWithdraw({ payload = {} }, { call, select, put }) {
       const currentItem = yield select(({ withdraw }) => withdraw.currentItem)
-      console.log('payload', payload)
       const param = JSON.stringify({
         userId: currentItem.userId,
         price: currentItem.price,
@@ -59,9 +58,7 @@ export default modelExtend(pageModel, {
         status: payload.status,
         transferDetails: payload.transferDetails,
       })
-      console.log('param', param)
       const data = yield call(cashWithdraw, { param })
-      console.log('data', data)
       if (data.code === 200) {
         yield put({ type: 'query' })
         yield put({ type: 'hideModal' })

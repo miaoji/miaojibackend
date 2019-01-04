@@ -18,7 +18,6 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
     title: `${modalType === 'create' ? '提现审核' : '提现审核'}`,
     wrapClassName: 'vertical-center-modal',
     onOk(data) {
-      console.log('data', data)
       dispatch({
         type: `withdraw/${modalType}`,
         payload: data,
@@ -48,7 +47,6 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
       }))
     },
     onWithdrawalClick(record) {
-      console.log('re', record)
       dispatch({
         type: 'withdraw/showModal',
         payload: {
