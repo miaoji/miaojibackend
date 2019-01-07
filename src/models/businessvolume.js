@@ -94,6 +94,7 @@ export default modelExtend(pageModel, {
           scheduledReceipt: [], // 入库数
           signingVolume: [], // 签收
           someCargo: [], // 点货数
+          retroactive: [], // 补签数
         }
         data.obj.forEach((item) => {
           const brandName = item.brandName
@@ -101,7 +102,12 @@ export default modelExtend(pageModel, {
           list.someCargo.push(<Tag color="#87d068"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=1///点货`}>{brandName}:{item.someCargo}</a></Tag>)
           list.scheduledReceipt.push(<Tag color="#2db7f5"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=101///入库`}>{brandName}:{item.scheduledReceipt}</a></Tag>)
           list.signingVolume.push(<Tag color="#108ee9"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=305///签收`}>{brandName}:{item.signingVolume}</a></Tag>)
-          list.returnAmount.push(<Tag color="#f50"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=303///退回`}>{brandName}:{item.returnAmount}</a></Tag>)
+          list.returnAmount.push(
+            <Tag color="#f50">
+              <a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=303///退回`}>{brandName}:{item.returnAmount}</a>
+            </Tag>
+          )
+          list.retroactive.push(<Tag color="#03a9f4"><a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=303///退回`}>{brandName}:{item.retroactive || 0}</a></Tag>)
         })
         yield put({
           type: 'updateState',

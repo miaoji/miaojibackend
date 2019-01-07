@@ -107,6 +107,7 @@ const Filter = ({
             <Option key="101">上架</Option>
             {/* <Option key="103">分派</Option> */}
             <Option key="305">签收</Option>
+            <Option key="304">补签</Option>
           </Select>
         )}
       </Col>

@@ -26,6 +26,11 @@ const Tab = ({
           {list.signingVolume}
         </div>
       </TabPane>
+      <TabPane tab="补签数" key="5">
+        <div>
+          {list.retroactive}
+        </div>
+      </TabPane>
       <TabPane tab="退回数" key="4">
         <div>
           {list.returnAmount}

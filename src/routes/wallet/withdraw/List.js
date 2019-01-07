@@ -83,10 +83,11 @@ const List = ({ onWithdrawalClick, ...tableProps }) => {
       key: 'option',
       width: 100,
       render: (_, record) => {
-        if (record.status === 'wait') {
+        if (record.status === 'aa') {
+          // if (record.status === 'wait') {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '提现审核' }]} />
         }
-        return <span>已操作</span>
+        return <span>暂无法操作</span>
       },
     },
   ]

@@ -112,12 +112,6 @@ export default modelExtend(pageModel, {
     *getOperator({ payload }, { call, put, select }) {
       const idusers = yield select(({ business }) => business.iduser)
       if (payload.idUser === idusers || payload.idUser === undefined) {
-        yield put({
-          type: 'setSiteName',
-          payload: {
-            expandedRowKeys: [payload.idUser],
-          },
-        })
         return
       }
       let newpayload = {}

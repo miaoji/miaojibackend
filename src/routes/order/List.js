@@ -117,7 +117,7 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           305: '签收',
           302: '退回',
           303: '退回',
-          304: '一件补签',
+          304: '补签',
         }
         return <span>{newtext[text]}</span>
       },
