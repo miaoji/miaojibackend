@@ -79,7 +79,15 @@ const Filter = ({
   }
   const { name, mobile, location } = filter
 
-  let initLocation = (location instanceof Array) && location ? location : [location]
+  let initLocation
+
+  if (location) {
+    if (location instanceof Array) {
+      initLocation = location
+    } else {
+      initLocation = [location]
+    }
+  }
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -122,7 +130,7 @@ const Filter = ({
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按账号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('location', { initialValue: initLocation })(
+        {getFieldDecorator('location', { initialValue: initLocation || null })(
           <Cascader
             style={{ width: '100%' }}
             showSearch={{ filterLocation }}
@@ -136,7 +144,7 @@ const Filter = ({
           />
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }} sm={{ span: 12 }}>
+      <Col {...ColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
             <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
