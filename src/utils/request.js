@@ -6,7 +6,7 @@ const fetch = (options) => {
     method = 'get',
     data,
     params,
-    timeout = 9999999999999999999999,
+    timeout = 9000000,
     url,
   } = options
 

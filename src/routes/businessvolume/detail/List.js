@@ -13,8 +13,8 @@ const List = ({ location, ...tableProps }) => {
       key: 'brand',
     }, {
       title: '操作人',
-      dataIndex: 'orderSn',
-      key: 'orderSn',
+      dataIndex: 'operator',
+      key: 'operator',
     }, {
       title: '快递状态',
       dataIndex: 'state',
