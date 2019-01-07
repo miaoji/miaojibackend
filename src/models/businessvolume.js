@@ -2,7 +2,7 @@ import React from 'react'
 import { message, notification, Tag } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime, filterStoreSelect } from '../utils'
-import { query, detail, count, downloadExcel as download } from '../services/businessvolume'
+import { query, detail, count, downloadExcel as download, downloadAllData } from '../services/businessvolume'
 import { pageModel } from './system/common'
 
 const { prefix, APIV3, brandReverse } = config
@@ -135,6 +135,33 @@ export default modelExtend(pageModel, {
         // idUser: payload.idUser,
       }
       const data = yield call(download, { ...newpayload })
+      if (data.code === 200 && data.obj) {
+        const url = APIV3 + data.obj
+        const openUrl = window.open(url)
+        if (openUrl === null) {
+          notification.warn({
+            message: '下载失败',
+            description: '请关闭浏览阻止网页弹窗的功能!!!',
+            duration: 3,
+          })
+        } else {
+          notification.warn({
+            message: '正在下载',
+            description: '请等待!!!',
+            duration: 3,
+          })
+        }
+      } else {
+        throw data.mess || '无法跟服务器建立有效连接'
+      }
+    },
+
+    *downloadAllData({ payload = {} }, { call }) {
+      console.log('payload', payload)
+      const data = yield call(downloadAllData, {
+        endTime: 1541087999999,
+        startTime: 1541001600000,
+      })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
         const openUrl = window.open(url)

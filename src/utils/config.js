@@ -26,7 +26,7 @@ APIV1 = 'http://192.168.231.239:8077'
 // 石金磊
 // APIV1 = 'http://192.168.231.125:8081'
 
-// APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
 
 // 生产环境时api固定为线上url
@@ -270,6 +270,7 @@ module.exports = {
       count: `${APIV1}/getPortfolioByBrand`,
       downloadExcel: `${APIV1}/downloadPortfolio`,
       downloadDetailExcel: `${APIV1}/downloadPortfolio`,
+      downloadAllData: `${APIV1}/selectAllBusiness`, // 下载当日权限下所有门店数据(签收,操作,分派,业务量)
     },
     // 品牌统计
     brandcount: {

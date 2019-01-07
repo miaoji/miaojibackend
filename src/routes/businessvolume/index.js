@@ -105,10 +105,17 @@ const BusinessVolume = ({ location, dispatch, businessvolume, app, loading }) =>
     filter: {
       ...location.query,
     },
+    downloadAllLoading: loading.effects['businessvolume/downloadAllData'],
+    downloadLoading: loading.effects['businessvolume/download'],
     onDownLoad() {
       dispatch({
         type: 'businessvolume/download',
         payload: { ...location.query },
+      })
+    },
+    onDownLoadAll() {
+      dispatch({
+        type: 'businessvolume/downloadAllData',
       })
     },
     onFilterChange(value) {

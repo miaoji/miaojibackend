@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input, Select,
+  Form, Button, Row, Col, Input, Select, Modal,
 } from 'antd'
 import moment from 'moment'
 import { DateRange } from '../../components'
@@ -25,8 +25,11 @@ const Filter = ({
   // onAdd,
   onFilterChange,
   onDownLoad,
+  onDownLoadAll,
   filter,
   storeuserList,
+  downloadAllLoading,
+  downloadLoading,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -90,6 +93,15 @@ const Filter = ({
     handleChange('name', key)
   }
 
+  const handleDownloadAll = () => {
+    Modal.confirm({
+      title: '您将下载今天权限下的所有门店数据(签收,操作,分派,业务量),是否确定继续?',
+      content: '数据较多,生成数据耗时长,请不要离开当前页面',
+      onOk() {
+        onDownLoadAll()
+      },
+    })
+  }
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
@@ -122,9 +134,12 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            <Button type="primary" size="large" onClick={onDownLoad}>下载Excel</Button>
+            <Button type="primary" size="large" loading={downloadLoading} className="margin-right" onClick={onDownLoad}>下载Excel</Button>
           </div>
         </div>
+      </Col>
+      <Col>
+        <Button type="primary" size="large" loading={downloadAllLoading} onClick={handleDownloadAll}>下载当日所有门店数据</Button>
       </Col>
     </Row>
   )
@@ -138,6 +153,9 @@ Filter.propTypes = {
   onFilterChange: PropTypes.func,
   onDownLoad: PropTypes.func,
   storeuserList: PropTypes.array,
+  onDownLoadAll: PropTypes.func,
+  downloadAllLoading: PropTypes.bool,
+  downloadLoading: PropTypes.bool,
 }
 
 export default Form.create()(Filter)
