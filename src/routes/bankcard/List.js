@@ -18,7 +18,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         break
       case '2':
         confirm({
-          title: '确定要删除吗?',
+          title: '确定要删除门店绑定信息吗?',
           onOk() {
             onDeleteItem(record.id)
           },
@@ -32,22 +32,69 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '站点ID',
-      dataIndex: 'idUser',
-      key: 'idUser',
+      dataIndex: 'id',
+      key: 'id',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
-      title: '站点名称',
+      title: '账号',
       dataIndex: 'name',
       key: 'name',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
-      title: '黑名单手机号/单号',
+      title: '站点名称',
       dataIndex: 'mobile',
       key: 'mobile',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
-      title: '理由',
+      title: '站点地址',
       dataIndex: 'note',
-      key: 'note',
+      key: 'note6',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
-      title: '时间',
+      title: '银行卡',
+      dataIndex: 'note',
+      key: 'note5',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
+    }, {
+      title: '登录密码',
+      dataIndex: 'note',
+      key: 'note4',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
+    }, {
+      title: '登录账号',
+      dataIndex: 'note',
+      key: 'note3',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
+    }, {
+      title: '邮箱',
+      dataIndex: 'note',
+      key: 'note1',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
+    }, {
+      title: '真实姓名',
+      dataIndex: 'note',
+      key: 'note2',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
+    }, {
+      title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {

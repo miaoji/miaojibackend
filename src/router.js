@@ -443,6 +443,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 银行卡信息
+          path: 'bankcard',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/bankcard'))
+              cb(null, require('./routes/bankcard/'))
+            }, 'bankcard')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {

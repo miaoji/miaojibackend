@@ -1,11 +1,11 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { list, add, mod, del } from '../services/extends'
+import { list, add, mod, del } from '../services/bankcard'
 import { pageModel } from './system/common'
 
 export default modelExtend(pageModel, {
 
-  namespace: 'extends',
+  namespace: 'bankcard',
 
   state: {
     currentItem: {},
@@ -16,7 +16,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/extends') {
+        if (location.pathname === '/bankcard') {
           dispatch({
             type: 'query',
             payload: location.query,

@@ -49,7 +49,7 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="站点名称" hasFeedback {...formItemLayout}>
+        <FormItem label="站点" hasFeedback {...formItemLayout}>
           {getFieldDecorator('idUser', {
             initialValue: item.idUser,
             rules: [
@@ -60,19 +60,55 @@ const modal = ({
             ],
           })(<Select showSearch disabled={paramDisabled} placeholder="输入站点名称或者IdUser可搜索" defaultValue="" style={{ width: 286 }}>{storeuserList}</Select>)}
         </FormItem>
-        <FormItem label="手机号/单号" hasFeedback {...formItemLayout}>
+        <FormItem label="银行卡" hasFeedback {...formItemLayout}>
           {getFieldDecorator('mobile', {
             initialValue: item.mobile,
             rules: [
               {
                 required: !paramDisabled,
                 pattern: /^[0-9a-zA-Z]*$/,
-                message: '请输入手机号码/单号!',
+                message: '请输入银行卡!',
               },
             ],
-          })(<Input placeholder="请输入手机号码/单号!" disabled={paramDisabled} />)}
+          })(<Input placeholder="请输入银行卡!" disabled={paramDisabled} />)}
         </FormItem>
-        <FormItem label="理由" hasFeedback {...formItemLayout}>
+        <FormItem label="登录密码" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('mobile', {
+            initialValue: item.mobile,
+            rules: [
+              {
+                required: !paramDisabled,
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入银行卡!',
+              },
+            ],
+          })(<Input placeholder="请输入银行卡!" disabled={paramDisabled} />)}
+        </FormItem>
+        <FormItem label="邮箱" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('email', {
+            initialValue: item.email,
+            rules: [
+              {
+                required: !paramDisabled,
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入银行卡!',
+              },
+            ],
+          })(<Input placeholder="请输入银行卡!" disabled={paramDisabled} />)}
+        </FormItem>
+        <FormItem label="真实姓名" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('replname', {
+            initialValue: item.replname,
+            rules: [
+              {
+                required: !paramDisabled,
+                pattern: /^[0-9a-zA-Z]*$/,
+                message: '请输入真实姓名!',
+              },
+            ],
+          })(<Input placeholder="请输入真实姓名!" disabled={paramDisabled} />)}
+        </FormItem>
+        <FormItem label="密码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('note', {
             initialValue: item.note,
             rules: [

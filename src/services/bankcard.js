@@ -1,15 +1,19 @@
-import { config } from '../utils'
+import { config, pageParams } from '../utils'
 import request from '../utils/request'
 
 const { api } = config
-const { order } = api
+const { bankcard } = api
 
 /**
  * [查询]
  */
 export function list(params) {
+  params = pageParams(params)
+  if (!params.userIds && !params.superId) {
+    params.superId = -1
+  }
   return request({
-    url: order.list,
+    url: bankcard.list,
     method: 'post',
     data: params,
   })
@@ -19,7 +23,7 @@ export function list(params) {
  */
 export function add(params) {
   return request({
-    url: order.list,
+    url: bankcard.list,
     method: 'post',
     data: params,
   })
@@ -29,7 +33,7 @@ export function add(params) {
  */
 export function mod(params) {
   return request({
-    url: order.list,
+    url: bankcard.list,
     method: 'post',
     data: params,
   })
@@ -39,7 +43,7 @@ export function mod(params) {
  */
 export function del(params) {
   return request({
-    url: order.list,
+    url: bankcard.list,
     method: 'post',
     data: params,
   })

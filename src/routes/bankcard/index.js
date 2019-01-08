@@ -6,8 +6,8 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const PageIndex = ({ location, dispatch, extendsss, loading, app }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = extendsss
+const PageIndex = ({ location, dispatch, bankcard, loading, app }) => {
+  const { list, pagination, currentItem, modalVisible, modalType } = bankcard
   const { pageSize } = pagination
   const { storeuserList } = app
 
@@ -15,26 +15,26 @@ const PageIndex = ({ location, dispatch, extendsss, loading, app }) => {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['extendsss/update'] || loading.effects['extendsss/create'],
+    confirmLoading: loading.effects['bankcard/update'] || loading.effects['bankcard/create'],
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
     onOk(data) {
       dispatch({
-        type: `extendsss/${modalType}`,
+        type: `bankcard/${modalType}`,
         payload: data,
       })
     },
     onCancel() {
       dispatch({
-        type: 'extendsss/hideModal',
+        type: 'bankcard/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['extendsss/query'],
+    loading: loading.effects['bankcard/query'],
     pagination,
     location,
     onChange(page) {
@@ -50,13 +50,13 @@ const PageIndex = ({ location, dispatch, extendsss, loading, app }) => {
     },
     onDeleteItem(id) {
       dispatch({
-        type: 'extendsss/delete',
+        type: 'bankcard/delete',
         payload: id,
       })
     },
     onEditItem(item) {
       dispatch({
-        type: 'extendsss/showModal',
+        type: 'bankcard/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -82,18 +82,18 @@ const PageIndex = ({ location, dispatch, extendsss, loading, app }) => {
     },
     onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/extendsss',
+        pathname: '/bankcard',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/extendsss',
+        pathname: '/bankcard',
       }))
     },
     onAdd() {
       dispatch({
-        type: 'extendsss/showModal',
+        type: 'bankcard/showModal',
         payload: {
           modalType: 'create',
         },
@@ -111,11 +111,11 @@ const PageIndex = ({ location, dispatch, extendsss, loading, app }) => {
 }
 
 PageIndex.propTypes = {
-  extendsss: PropTypes.object,
+  bankcard: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
   app: PropTypes.object,
 }
 
-export default connect(({ extendsss, loading, app }) => ({ extendsss, loading, app }))(PageIndex)
+export default connect(({ bankcard, loading, app }) => ({ bankcard, loading, app }))(PageIndex)

@@ -280,6 +280,13 @@ module.exports = {
     assignment: {
       list: `${APIV1}/assignList`,
     },
+    // 银行卡记录
+    bankcard: {
+      list: `${APIV1}/store`,
+      update: `${APIV1}/operatorEdit`,
+      delete: `${APIV1}/operatorDel`,
+      create: `${APIV1}/operatorAdd`,
+    },
   },
   brand: {
     2: '优速',
