@@ -27,7 +27,7 @@ APIV1 = 'http://192.168.231.239:8077'
 // APIV1 = 'http://192.168.231.125:8081'
 
 APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
-// APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
+APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -280,12 +280,12 @@ module.exports = {
     assignment: {
       list: `${APIV1}/assignList`,
     },
-    // 银行卡记录
+    // 环迅账号管理
     bankcard: {
-      list: `${APIV1}/store`,
-      update: `${APIV1}/operatorEdit`,
-      delete: `${APIV1}/operatorDel`,
-      create: `${APIV1}/operatorAdd`,
+      list: `${APIV1}/selectHxIPS`,
+      // update: `${APIV1}/deleteHxIPS`,
+      delete: `${APIV1}/deleteHxIPS`,
+      create: `${APIV1}/saveHxIPS`,
     },
   },
   brand: {

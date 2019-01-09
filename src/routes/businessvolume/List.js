@@ -27,6 +27,9 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
       width: 160,
       dataIndex: 'district',
       key: 'district',
+      render: (text, record) => {
+        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
+      },
     }, {
       title: '站点名称',
       dataIndex: 'name',

@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Modal } from 'antd'
 import classnames from 'classnames'
-import moment from 'moment'
+// import moment from 'moment'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { isSuperAdmin } from '../../utils'
+// import { isSuperAdmin } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -20,7 +20,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         confirm({
           title: '确定要删除门店绑定信息吗?',
           onOk() {
-            onDeleteItem(record.id)
+            onDeleteItem(record)
           },
         })
         break
@@ -32,87 +32,87 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
       title: '站点ID',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'userId',
+      key: 'userId',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
-      title: '账号',
-      dataIndex: 'name',
-      key: 'name',
+      title: '站点名',
+      dataIndex: 'stationName',
+      key: 'stationName',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
-      title: '站点名称',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      title: '站点手机号',
+      dataIndex: 'stationMobile',
+      key: 'stationMobile',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
       title: '站点地址',
-      dataIndex: 'note',
-      key: 'note6',
+      dataIndex: 'stationAddress',
+      key: 'stationAddress',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
-      title: '银行卡',
-      dataIndex: 'note',
-      key: 'note5',
+      title: '商户编号',
+      dataIndex: 'customerCode',
+      key: 'customerCode',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
-      title: '登录密码',
-      dataIndex: 'note',
-      key: 'note4',
+      title: '登录名',
+      dataIndex: 'loginName',
+      key: 'loginName',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
-      title: '登录账号',
-      dataIndex: 'note',
-      key: 'note3',
+      title: '环迅认证名字',
+      dataIndex: 'hxName',
+      key: 'hxName',
       render: (text) => {
         return <span>{text || '/'}</span>
+      },
+    }, {
+      title: '环迅手机号',
+      dataIndex: 'hxMobile',
+      key: 'hxMobile',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
+    }, {
+      title: '专有用户',
+      dataIndex: 'hxSpecialUse',
+      key: 'hxSpecialUse',
+      render: (text) => {
+        const realText = {
+          1: '是',
+          2: '否',
+        }
+        return <span>{text ? realText[text] : '/'}</span>
       },
     }, {
       title: '邮箱',
-      dataIndex: 'note',
-      key: 'note1',
+      dataIndex: 'Email',
+      key: 'Email',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
-      title: '真实姓名',
-      dataIndex: 'note',
-      key: 'note2',
-      render: (text) => {
-        return <span>{text || '/'}</span>
-      },
-    }, {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-      render: (text) => {
-        const createTime = text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '未知时间'
-        return <span>{createTime}</span>
-      },
-    },
-  ]
-  if (isSuperAdmin()) {
-    columns.push({
       title: '操作',
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '删除' }]} />
       },
-    })
-  }
+    },
+  ]
 
   const getBodyWrapperProps = {
     page: location.query.page,
@@ -132,6 +132,16 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
         simple
         rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
+        expandedRowRender={(record) => {
+          return (
+            <div className={styles.expand}>
+              <p>证件类型: {record.idType || '/'}</p>
+              <p>证件号码: {record.idNumber || '/'}</p>
+              <p>环迅座机: {record.hxTel || '/'}</p>
+              <p>环迅联系地址: {record.hxAddress || '/'}</p>
+            </div>
+          )
+        }}
       />
     </div>
   )

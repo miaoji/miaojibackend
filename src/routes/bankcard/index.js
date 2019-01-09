@@ -19,6 +19,7 @@ const PageIndex = ({ location, dispatch, bankcard, loading, app }) => {
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
+    width: '700px',
     onOk(data) {
       dispatch({
         type: `bankcard/${modalType}`,

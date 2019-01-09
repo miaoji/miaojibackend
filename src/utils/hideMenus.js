@@ -1,11 +1,11 @@
 export default [
-  {
-    id: '1111',
-    mpid: 1,
-    name: '银行卡信息',
-    icon: 'message',
-    route: '/bankcard',
-  },
+  // {
+  //   id: '1111',
+  //   mpid: 1,
+  //   name: '环迅账号管理',
+  //   icon: 'message',
+  //   route: '/bankcard',
+  // },
   {
     id: '1001',
     mpid: '-1',

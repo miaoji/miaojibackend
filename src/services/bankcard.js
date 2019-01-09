@@ -9,13 +9,15 @@ const { bankcard } = api
  */
 export function list(params) {
   params = pageParams(params)
-  if (!params.userIds && !params.superId) {
-    params.superId = -1
-  }
+  // if (!params.userIds && !params.superId) {
+  //   // params.superId = -1
+  // }
   return request({
     url: bankcard.list,
     method: 'post',
-    data: params,
+    params: {
+      param: JSON.stringify(params),
+    },
   })
 }
 /**
@@ -23,9 +25,11 @@ export function list(params) {
  */
 export function add(params) {
   return request({
-    url: bankcard.list,
+    url: bankcard.create,
     method: 'post',
-    data: params,
+    params: {
+      param: JSON.stringify(params),
+    },
   })
 }
 /**
@@ -33,9 +37,11 @@ export function add(params) {
  */
 export function mod(params) {
   return request({
-    url: bankcard.list,
+    url: bankcard.update,
     method: 'post',
-    data: params,
+    params: {
+      param: JSON.stringify(params),
+    },
   })
 }
 /**
@@ -43,8 +49,10 @@ export function mod(params) {
  */
 export function del(params) {
   return request({
-    url: bankcard.list,
+    url: bankcard.delete,
     method: 'post',
-    data: params,
+    params: {
+      param: JSON.stringify(params),
+    },
   })
 }
