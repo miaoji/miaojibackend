@@ -42,6 +42,11 @@ function Dashboard({ dashboard, loading }) {
           <SimpleChartComponent {...lineProps} />
         </Card>
       </Col>
+      <Col lg={24} md={24} style={{ marginTop: '24px' }}>
+        <Card>
+          <SimpleChartComponent {...lineProps} />
+        </Card>
+      </Col>
       <Col lg={12} md={12} style={{ marginTop: '24px' }}>
         <Card>
           <PieChart {...pieChartProps} />
