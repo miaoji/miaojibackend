@@ -11,18 +11,18 @@ export default modelExtend(pageModel, {
     orderInfos: [],
     expandedRowKeys: [],
     rowData: [],
-    isShowData: false,
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/order' && location.query.serialNumber) {
-          dispatch({ type: 'query', payload: { ...location.query } })
-          dispatch({ type: 'updateState', payload: { isShowData: true } })
-        } else {
-          dispatch({ type: 'updateState', payload: { isShowData: false } })
-          dispatch({ type: 'querySuccess', payload: { list: [], pagination: { total: 0 } } })
+        if (location.pathname === '/order') {
+          const { serialNumber } = location.query
+          if (serialNumber) {
+            dispatch({ type: 'query', payload: { ...location.query } })
+          } else {
+            dispatch({ type: 'querySuccess', payload: { list: [], pagination: { total: 0 } } })
+          }
         }
       })
     },

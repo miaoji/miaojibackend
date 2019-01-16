@@ -88,7 +88,7 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         <span>快递品牌 : </span>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Input onPressEnter={brandChange} size="large" style={{ width: '70%' }} placeholder="按快递品牌搜索" />
+          <Input disabled={filter.idBrand} onPressEnter={brandChange} size="large" style={{ width: '70%' }} placeholder="按快递品牌搜索" />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>

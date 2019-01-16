@@ -4,6 +4,9 @@ import { config, initialCreateTime } from '../utils'
 import { query, updateFee, versionswitch, createAccount } from '../services/storeuser'
 import { pageModel } from './system/common'
 import { locationData } from '../utils/locationData'
+import { query as queryOrgList, getLocation } from '../services/auth/org'
+import orgToTree from '../utils/orgToTree'
+import { storeuserEditLocation } from '../utils/processing'
 
 const { prefix } = config
 
@@ -17,8 +20,10 @@ export default modelExtend(pageModel, {
     expandedRowKeys: [],
     columnslist: [],
     sonlist: [],
+    orgTree: [],
     isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
     locationData: [],
+    locationList: [],
   },
 
   subscriptions: {
@@ -29,19 +34,43 @@ export default modelExtend(pageModel, {
             type: 'query',
             payload: location.query,
           })
+          dispatch({
+            type: 'queryLocation',
+          })
         }
       })
     },
   },
 
   effects: {
-
+    /**
+     * [获取门店用户列表数据]
+     */
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
       if (payload.name) {
         payload.name = payload.name.split('///')[1]
       }
-      const data = yield call(query, { ...payload })
+      if (payload.location && payload.location.length > 0) {
+        let { location } = payload
+        if (!(location instanceof Array)) {
+          location = [location]
+        }
+        switch (location.length) {
+          case 1:
+            payload.province = location[0]
+            break
+          case 2:
+            payload.city = location[1]
+            break
+          case 3:
+            payload.district = location[2]
+            break
+          default:
+            break
+        }
+      }
+      const data = yield call(query, { ...payload, location: undefined })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -56,8 +85,10 @@ export default modelExtend(pageModel, {
         })
       }
     },
-
-    * update({ payload }, { call, put, select }) {
+    /**
+     * [修改通讯费]
+     */
+    *update({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
       const data = yield call(updateFee, payload)
@@ -69,8 +100,10 @@ export default modelExtend(pageModel, {
         message.success(data.mess || '网络错误')
       }
     },
-
-    * versionswitch({ payload }, { call, put, select }) {
+    /**
+     * [版本切换]
+     */
+    *versionswitch({ payload }, { call, put, select }) {
       payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
 
       const data = yield call(versionswitch, payload)
@@ -83,12 +116,14 @@ export default modelExtend(pageModel, {
         message.success(data.mess || '网络错误')
       }
     },
-
-    * create({ payload }, { call, put }) {
+    /**
+     * [创建门店用户]
+     */
+    *create({ payload }, { call, put }) {
       const { location } = payload
       const locationId = location[2].split('-')[0]
       // 根据地址判断 dataSource
-      function getdataSourceBylocation(prov) {
+      const getdataSourceBylocation = (prov) => {
         let dataSource = '3'
         if (prov === '上海' || prov === '广东') {
           dataSource = '1'
@@ -101,7 +136,11 @@ export default modelExtend(pageModel, {
       }
       const province = location[0].split('-')[1]
       const dataSource = getdataSourceBylocation(province)
+
+      // payload.org = payload.org.map(item => item.split('-')[0])
+
       let registData = {
+        org: payload.org,
         mobile: payload.mobile,
         name: payload.name,
         password: payload.password,
@@ -123,11 +162,10 @@ export default modelExtend(pageModel, {
         message.success(data.mess || '网络错误')
       }
     },
-
-    // 处理location数据为antd级联控件格式
-    * handleLocation({ payload }, { put }) {
-      console.log('payload', payload)
-      // console.log('locaionssst', locationData)
+    /**
+     * [处理location数据为antd级联控件格式]
+     */
+    *handleLocation(_, { put }) {
       const data = locationData
       let level1 = []
       let level2 = []
@@ -185,7 +223,9 @@ export default modelExtend(pageModel, {
       })
     },
 
-    // 根据主账号查询子账号
+    /**
+     * [根据主账号查询子账号]
+     */
     *unfold({ payload }, { call, put }) {
       const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })
       if (data.code === 200) {
@@ -198,6 +238,39 @@ export default modelExtend(pageModel, {
         })
       } else {
         message.success(data.mess || '网络错误')
+      }
+    },
+    /**
+     * [获取机构基础数据]
+     */
+    *getOrgList(_, { call, put }) {
+      const data = yield call(queryOrgList, { page: 1, pageSize: 10000 })
+      if (data.code === 200) {
+        const orgTree = orgToTree(data.obj)
+        yield put({
+          type: 'updateState',
+          payload: {
+            orgTree,
+          },
+        })
+      }
+    },
+    /**
+     * [获取筛选地址的数据]
+     */
+    *queryLocation(_, { call, put }) {
+      const data = yield call(getLocation)
+      let option = []
+      if (data.code === 200 && data.obj) {
+        option = data.obj.map((item) => {
+          return storeuserEditLocation(item)
+        })
+        yield put({
+          type: 'updateState',
+          payload: {
+            locationList: option,
+          },
+        })
       }
     },
 

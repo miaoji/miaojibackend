@@ -19,10 +19,11 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/assignment') {
-          dispatch({
-            type: 'query',
-            payload: location.query,
-          })
+          if (location.query && !location.query.name) {
+            dispatch({ type: 'querySuccess', payload: { list: [], pagination: { total: 0 } } })
+          } else {
+            dispatch({ type: 'query', payload: location.query })
+          }
         }
       })
     },
@@ -35,7 +36,6 @@ export default modelExtend(pageModel, {
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data.code === 200) {
-        console.log('data', data)
         yield put({
           type: 'querySuccess',
           payload: {

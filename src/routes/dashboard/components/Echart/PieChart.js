@@ -19,12 +19,12 @@ const PieChart = ({ data, loading }) => {
     },
     title: {
       text: '业务量统计汇总',
-      subtext: '统计截至到前一天23:59:59',
+      subtext: '统计前一天00:00:00到23:59:59',
       x: 'center',
     },
     tooltip: {
       trigger: 'item',
-      formatter: '{b} : {c} | {d}%',
+      formatter: '{b} : {c}',
     },
     legend: {
       orient: 'vertical',

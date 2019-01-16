@@ -1,195 +1,213 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select, Cascader, Radio, Spin } from 'antd'
-import { isSuperAdmin } from '../../../utils'
-import style from './Modal.less'
+import { Transfer, Form, Modal, Select, Input, Row, Col, Cascader } from 'antd'
+import styles from './index.less'
 
 const FormItem = Form.Item
-const TextArea = Input.TextArea
-const RadioGroup = Radio.Group
+const { TextArea } = Input
 
-const formItemLayout = {
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 14,
-  },
-}
+class TransferModal extends React.Component {
+  constructor(props) {
+    super(props)
+    let targetKeys = []
+    if (this.props.item.idUsers) {
+      const tmp = this.props.item.idUsers.split(',')
+      targetKeys = tmp.map(i => Number(i))
+      this.props.form.setFieldsValue({
+        idUsers: tmp,
+      })
+    }
+    const transferDisabled = this.props.type === 'update' && !this.props.item.location
+    this.state = {
+      targetKeys,
+      transferDisabled,
+    }
+  }
 
-const modal = ({
-  item = {},
-  onOk,
-  storeuserList,
-  locationList,
-  orgIdusers,
-  onChangeLocationType,
-  locationSelectShow,
-  onGetIdUsers,
-  locationLoading,
-  parentOrgList,
-  form: {
-    getFieldDecorator,
-    validateFields,
-    getFieldsValue,
-    setFieldsValue,
-  },
-  type,
-  ...modalProps
-}) => {
-  const handleOk = () => {
-    validateFields((errors) => {
-      if (errors) {
-        return
+  filterOption = (inputValue, option) => {
+    return option.text.indexOf(inputValue) > -1
+  }
+
+  handleChange = (targetKeys) => {
+    this.setState({ targetKeys })
+    this.props.form.setFieldsValue({ idUsers: targetKeys })
+  }
+
+  render() {
+    const {
+      item = {},
+      onOk,
+      storeuserList,
+      locationList,
+      orgIdusers,
+      onGetIdUsers,
+      parentOrgList,
+      storeuserArr,
+      form: {
+        getFieldDecorator,
+        validateFields,
+        getFieldsValue,
+        setFieldsValue,
+      },
+      type,
+      ...modalProps
+    } = this.props
+
+    const {
+      targetKeys,
+      transferDisabled,
+    } = this.state
+
+    const locationInfo = [{ value: '全国', label: '全国' }, ...locationList]
+    const handleOk = () => {
+      validateFields((errors) => {
+        if (errors) {
+          return
+        }
+        const data = {
+          ...getFieldsValue(),
+        }
+        onOk(data)
+      })
+    }
+
+    const modalOpts = {
+      ...modalProps,
+      onOk: handleOk,
+    }
+
+    const idUsers = storeuserArr.map(ss => ({ key: ss.id, ...ss }))
+
+    let initLocation = item.location ? item.location.split(',') : []
+    if (type !== 'create' && initLocation.length === 0) {
+      initLocation = ['全国']
+    }
+
+    const filterLocation = (inputValue, path) => {
+      return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+    }
+
+    const handleLocationChange = (key) => {
+      if (key[0] === '全国') {
+        this.setState({
+          transferDisabled: true,
+        })
+      } else {
+        this.setState({
+          transferDisabled: false,
+        })
       }
-      const data = {
-        ...getFieldsValue(),
-        key: item.key,
-      }
-      onOk(data)
-    })
-  }
+      setFieldsValue({
+        location: key,
+      })
+    }
+    const disabled = true
 
-  const handleChange = (key) => {
-    onGetIdUsers(key)
-  }
-
-  const modalOpts = {
-    ...modalProps,
-    onOk: handleOk,
-  }
-
-  let initIdusers = item.idUsers ? item.idUsers.split(',').map(val => Number(val)) : []
-
-  if (orgIdusers && orgIdusers.length > 0) {
-    initIdusers = orgIdusers
-  }
-  const initLocation = item.location ? item.location.split(',') : []
-
-  const handleTypeChange = (key) => {
-    setFieldsValue({
-      location: undefined,
-    })
-    onChangeLocationType(key.target.value)
-  }
-
-  let LocationTypeOption = [
-    <Radio value={1}>省级</Radio>,
-    <Radio value={2}>市级</Radio>,
-    <Radio value={3}>县级</Radio>,
-    <Radio value={4}>全国</Radio>,
-  ]
-
-  if (isSuperAdmin()) {
-    LocationTypeOption = [
-      <Radio value={1}>省级</Radio>,
-      <Radio value={2}>市级</Radio>,
-      <Radio value={3}>县级</Radio>,
-      <Radio value={4}>全国</Radio>,
-    ]
-  }
-
-  const filterLocation = (inputValue, path) => {
-    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
-  }
-
-  return (
-    <Modal {...modalOpts}>
-      <Form layout="horizontal">
-        <div style={{ display: 'block' }}>
-          <FormItem label="父级机构" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('parentId', {
-              initialValue: item.PARENT_ID,
+    return (
+      <Modal {...modalOpts} className={styles.modal} >
+        <Form layout="horizontal">
+          <Row gutter={24}>
+            <Col span={8}>
+              <FormItem label="机构名称" hasFeedback>
+                {getFieldDecorator('orgName', {
+                  initialValue: item.orgName,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入机构名称!',
+                    },
+                  ],
+                })(<Input placeholder="请输入机构名称!" />)}
+              </FormItem>
+            </Col>
+            <Col span={8}>
+              <FormItem label="父级机构" hasFeedback >
+                {getFieldDecorator('parentId', {
+                  initialValue: item.parentName,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请选择父级机构',
+                    },
+                  ],
+                })(<Select placeholder="请选择父级机构">{parentOrgList}</Select>)}
+              </FormItem>
+            </Col>
+            <Col span={8}>
+              <FormItem label="地区信息" hasFeedback>
+                {getFieldDecorator('location', {
+                  initialValue: initLocation,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入地区信息!',
+                    },
+                  ],
+                })(<Cascader
+                  options={locationInfo}
+                  showSearch={{ filterLocation }}
+                  onChange={handleLocationChange}
+                  placeholder="请输入地区信息"
+                  changeOnSelect
+                  allowClear
+                  expandTrigger="hover"
+                />)}
+              </FormItem>
+            </Col>
+          </Row>
+          <FormItem label="站点信息" hasFeedback>
+            <div
+              style={{
+                display: transferDisabled ? 'block' : 'none',
+                backgroundColor: '#eeeeee80',
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                zIndex: 9999,
+              }}
+            />
+            {getFieldDecorator('idUsers', {
+              initialValue: targetKeys,
               rules: [
                 {
-                  required: true,
-                  message: '请选择父级机构',
+                  required: !transferDisabled,
+                  message: '请选择门店信息!',
                 },
               ],
-            })(<Select placeholder="请选择父级机构">{parentOrgList}</Select>)}
-          </FormItem>
-        </div>
-        <FormItem label="机构名称" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('orgName', {
-            initialValue: item.orgName,
-            rules: [
-              {
-                required: true,
-                message: '请输入机构名称!',
-              },
-            ],
-          })(<Input placeholder="请输入机构名称!" />)}
-        </FormItem>
-        <FormItem label="地区等级" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('locationType', {
-            initialValue: item.locationType || 1,
-            rules: [
-              {
-                required: true,
-                message: '请输入地区等级!',
-              },
-            ],
-          })(<RadioGroup onChange={handleTypeChange}>
-            {LocationTypeOption}
-          </RadioGroup>)}
-        </FormItem>
-        <div className={style.location_box} style={{ display: locationSelectShow ? 'block' : 'none' }}>
-          {locationLoading ? <div className={style.location}><Spin /></div> : ''}
-          <FormItem label="地区信息" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('location', {
-              initialValue: initLocation,
-              rules: [
-                {
-                  required: locationSelectShow,
-                  message: '请输入地区信息!',
-                },
-              ],
-            })(<Cascader
-              disabled={locationLoading}
-              showSearch={{ filterLocation }}
-              options={locationList}
-              onChange={handleChange}
-              placeholder="请输入地区信息"
+            })(<Transfer
+              disabled={disabled}
+              className={styles.transfer}
+              listStyle={{ width: '45%' }}
+              dataSource={idUsers}
+              showSearch
+              filterOption={this.filterOption}
+              targetKeys={targetKeys}
+              onChange={this.handleChange}
+              render={record => record.text}
+              titles={['待分配', '已选中']}
+              locale={{ searchPlaceholder: '请输入地址或者门店名筛选', itemUnit: '待处理', itemsUnit: '项', notFoundContent: '列表为空' }}
             />)}
           </FormItem>
-          <FormItem label="站点信息确认" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('idUsers', {
-              initialValue: initIdusers,
+          <FormItem label="备注信息" hasFeedback>
+            {getFieldDecorator('remark', {
+              initialValue: item.remark,
               rules: [
                 {
                   required: false,
-                  type: 'array',
-                  message: '您选择的地址没有可以管理的站点!',
+                  message: '字数不能超过100!',
+                  max: 100,
                 },
               ],
-            })(<Select
-              mode="multiple"
-              style={{ width: '100%' }}
-              placeholder="暂无可以管理的站点!"
-            >
-              {storeuserList}
-            </Select>)}
+            })(<TextArea placeholder="请输入备注信息!" style={{ height: '50', width: '100%' }} />)}
           </FormItem>
+        </Form>
 
-        </div>
-        <FormItem label="备注信息" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('remark', {
-            initialValue: item.remark,
-            rules: [
-              {
-                required: false,
-                message: '字数不能超过100!',
-                max: 100,
-              },
-            ],
-          })(<TextArea placeholder="请输入备注信息!" style={{ height: '50', width: '100%' }} />)}
-        </FormItem>
-      </Form>
-    </Modal>
-  )
+      </Modal>
+    )
+  }
 }
 
-modal.propTypes = {
+TransferModal.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
@@ -197,12 +215,10 @@ modal.propTypes = {
   modalMenuLevel: PropTypes.number,
   storeuserList: PropTypes.array,
   locationList: PropTypes.array,
-  onChangeLocationType: PropTypes.func,
   onGetIdUsers: PropTypes.func,
   orgIdusers: PropTypes.array,
-  locationSelectShow: PropTypes.bool,
-  locationLoading: PropTypes.bool,
   parentOrgList: PropTypes.array,
+  storeuserArr: PropTypes.array,
 }
 
-export default Form.create()(modal)
+export default Form.create()(TransferModal)

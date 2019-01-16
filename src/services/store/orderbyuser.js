@@ -18,6 +18,7 @@ export async function download(params) {
   delete params.pagination
   delete params.rownum
   if (params.idUser) {
+    delete params.userIds
     delete params.location
   }
   return request({

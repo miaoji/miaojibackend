@@ -15,11 +15,13 @@ export default {
   namespace: 'app',
   state: {
     storeuserList: [],
+    storeuserArr: [],
     storeTotal: 0,
     user: {},
     permissions: {
       visit: [],
     },
+    message: [],
     menu: [
       {
         id: 1,
@@ -53,11 +55,17 @@ export default {
     *query(_, { put }) {
       const loginTime = new Date().getTime() - storage({ key: 'loginTime' })
       const userInfo = storage({ key: 'user' })
-      if (userInfo && loginTime <= 21600000) {
+      let user = null
+      try {
+        user = JSON.parse(userInfo)
+      } catch (e) {
+        user = null
+      }
+      if (user && loginTime <= 21600000) {
         yield put({
           type: 'queryStoreUser',
         })
-        const user = JSON.parse(userInfo)
+
         if (process.env.NODE_ENV === 'development') {
           console.log('App-userInfo', user)
         }
@@ -95,18 +103,19 @@ export default {
       } else {
         /* eslint no-lonely-if: "off" */
         if (config.openPages && config.openPages.indexOf(location.pathname) < 0) {
+          storage({ type: 'clear' })
           let from = location.pathname
           window.location = `${location.origin}/login?from=${from}`
         }
       }
     },
 
-    * logout(_, { put }) {
-      window.localStorage.clear()
+    *logout(_, { put }) {
+      storage({ type: 'clear' })
       yield put({ type: 'query' })
     },
 
-    * changeNavbar(_, { put, select }) {
+    *changeNavbar(_, { put, select }) {
       const { app } = yield select(e => e)
       const isNavbar = document.body.clientWidth < 769
       if (isNavbar !== app.isNavbar) {
@@ -114,7 +123,7 @@ export default {
       }
     },
 
-    * queryStoreUser(_, { call, put }) {
+    *queryStoreUser(_, { call, put }) {
       const data = yield call(queryStoreUser, {
         current: 1,
         pageSize: 10000,
@@ -127,11 +136,16 @@ export default {
           const val = `${item.id}///${item.name}`
           return <Option key={val}>{`${item.id}-${item.name}`}</Option>
         })
+        if (data.total > 336) {
+          console.info('消息通知', `新增了${data.total - 336}个新用户,请进行机构的分配`)
+        }
+        const storeuserArr = data.obj.map(item => ({ key: item.id, text: `${item.id}-${item.name}-${item.province || ''}${item.city || ''}${item.district || ''}` }))
         yield put({
           type: 'updateState',
           payload: {
             storeuserList: option,
             storeTotal: data.total,
+            storeuserArr,
           },
         })
       } else {

@@ -1,9 +1,11 @@
-import { request, config, pageParams, getUserId, getOrgId } from '../../utils'
+import { request, config, pageParams, getUserId, getOrgId, isSuperAdmin } from '../../utils'
+
+const isSuperRole = isSuperAdmin()
 
 const { api: { auth: { adminuser } } } = config
 
 export async function query(params) {
-  params.userId = getUserId()
+  params.userId = getUserId() === 1 || isSuperRole ? undefined : getUserId()
   params.orgId = getOrgId()
   params = pageParams(params)
   delete params.location

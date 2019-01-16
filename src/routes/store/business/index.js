@@ -21,10 +21,17 @@ const Business = ({ location, dispatch, business, app, loading }) => {
     sonlist,
     expandedRowKeys,
     onExpandedRowsChange(value) {
+      const key = value.pop()
+      dispatch({
+        type: 'business/setSiteName',
+        payload: {
+          expandedRowKeys: [key],
+        },
+      })
       dispatch({
         type: 'business/getOperator',
         payload: {
-          idUser: value.pop(),
+          idUser: key,
           mailtype: location.query.mailtype || 0,
           createTime: query.createTime || [],
         },

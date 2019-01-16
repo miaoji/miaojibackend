@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
-  const { list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys, locationData } = storeuser
+  const { locationList, orgTree, list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys, locationData } = storeuser
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
@@ -21,6 +21,7 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
     title: `${modalType === 'create' ? '新建' : '修改门店用户的通讯费'}`,
     wrapClassName: 'vertical-center-modal',
     locationData,
+    orgTree,
     onOk(data) {
       dispatch({
         type: `storeuser/${modalType}`,
@@ -106,10 +107,10 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
   }
 
   const filterProps = {
-    isMotion,
     filter: {
       ...location.query,
     },
+    locationList,
     storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({
@@ -121,29 +122,10 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
         },
       }))
     },
-    onSearch(fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/storeuser',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/storeuser',
-      }))
-    },
-    onAdd() {
-      dispatch({
-        type: 'storeuser/showModal',
-        payload: {
-          modalType: 'create',
-        },
-      })
-    },
-    switchIsMotion() {
-      dispatch({ type: 'storeuser/switchIsMotion' })
-    },
     handleCreate() {
+      dispatch({
+        type: 'storeuser/getOrgList',
+      })
       dispatch({
         type: 'storeuser/handleLocation',
       })

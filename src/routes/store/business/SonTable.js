@@ -34,6 +34,13 @@ const SonTable = ({ record, list, filter }) => {
         return <span>{text}</span>
       },
     }, {
+      title: '补签数量',
+      dataIndex: 'retroactive',
+      key: 'retroactive',
+      render: (text) => {
+        return <span>{text || 0}</span>
+      },
+    }, {
       title: '操作',
       dataIndex: 'option',
       key: 'option',

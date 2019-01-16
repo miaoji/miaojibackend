@@ -1,0 +1,47 @@
+.table {
+  td.avatar {
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  :global {
+    .ant-table-tbody > tr > td,
+    .ant-table-thead > tr > th {
+      height: 49px;
+      padding: 16px;
+    }
+    .ant-table-tbody > tr > td{
+      padding: 10px;
+    }
+  }
+
+  &.p {
+    text-align: left;
+  }
+}
+  
+.row {
+  display: flex;
+  justify-content: center;
+  :global {
+    p {
+      max-width: 300px;
+      padding: 10px 20px;
+      a {
+        display: block;
+      }
+      .title {
+        background-color: red;
+        color: #fff;
+        cursor: pointer;
+        min-width: 50px;
+        border-radius: 3px;
+        padding: 3px 5px;
+        &:hover {
+          box-shadow: 0px 0px 9px #999;
+        }
+      }
+    }
+  }
+}

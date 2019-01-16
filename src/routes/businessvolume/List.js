@@ -57,6 +57,14 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
         return (<span>{text}</span>)
       },
     }, {
+      title: '补签数',
+      dataIndex: 'retroactive',
+      key: 'retroactive',
+      width: 100,
+      render: (text) => {
+        return (<span>{text || 0}</span>)
+      },
+    }, {
       title: '退回数',
       dataIndex: 'returnAmount',
       key: 'returnAmount',

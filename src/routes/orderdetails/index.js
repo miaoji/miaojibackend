@@ -6,8 +6,7 @@ import List from './List'
 import Filter from './Filter'
 
 const OrderDetails = ({ location, dispatch, orderdetails, loading }) => {
-  const { list, pagination, expandedRowKeys, rowData, isShowData } = orderdetails
-  console.log('orderdetails', orderdetails)
+  const { list, pagination, expandedRowKeys, rowData } = orderdetails
 
   const listProps = {
     dataSource: list,
@@ -50,12 +49,10 @@ const OrderDetails = ({ location, dispatch, orderdetails, loading }) => {
       }
     },
   }
-  console.log('isShowData', isShowData)
   const filterProps = {
     filter: {
       ...location.query,
     },
-    isData: isShowData,
     buttonLoading: loading.effects['orderdetails/query'],
     onFilterChange(value) {
       dispatch(routerRedux.push({
@@ -70,7 +67,7 @@ const OrderDetails = ({ location, dispatch, orderdetails, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {isShowData && <List {...listProps} />}
+      <List {...listProps} />
     </div>
   )
 }

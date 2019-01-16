@@ -19,18 +19,22 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
-      render: (text, record) => {
-        if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/selectpjjeDetails?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text || '暂无'}</Link>
-        }
-        return <Link to={`/selectpjjeDetails?idUser=${record.idUser}`}>{text || '暂无'}</Link>
-      },
     }, {
       title: '分派数量',
       dataIndex: 'fptotal',
       key: 'fptotal',
       render: (text) => {
         return <span>{text || 0}</span>
+      },
+    }, {
+      title: '操作',
+      dataIndex: 'op',
+      key: 'op',
+      render: (text, record) => {
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link to={`/assignor?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>操作人明细</Link>
+        }
+        return <Link to={`/assignor?idUser=${record.idUser}`}>操作人明细</Link>
       },
     }, {
       title: '操作',
@@ -41,7 +45,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         if (filter.createTime && filter.createTime.length > 0) {
           return <Link to={`/selectpjjeDetails?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看操作人派件金额</Link>
         }
-        return <Link to={`/selectpjjeDetails?idUser=${record.idUser}`}>查看操作人派件金额</Link>
+        return <Link to={`/selectpjjeDetails?idUser=${record.idUser}`}>订单明细</Link>
       },
     },
   ]

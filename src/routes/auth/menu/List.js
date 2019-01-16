@@ -6,7 +6,9 @@ import moment from 'moment'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
+import { getUserId } from '../../../utils/getUserInfo'
 
+const userId = getUserId()
 const confirm = Modal.confirm
 
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
@@ -96,6 +98,9 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
+        if (userId !== 1) {
+          return <span>/</span>
+        }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
       },
     },

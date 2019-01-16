@@ -2,14 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
+import { Spin } from 'antd'
 import List from './List'
 import Filter from './Filter'
 import Echart from './Echart'
 
-const BrandCount = ({ location, dispatch, brandcount, loading }) => {
+const BrandCount = ({ location, dispatch, brandcount, loading, app }) => {
   const { list, pagination, echartShow } = brandcount
   pagination.pageSize = 30
   const { pageSize } = pagination
+  const { storeuserList } = app
 
   const listProps = {
     dataSource: list,
@@ -32,6 +34,7 @@ const BrandCount = ({ location, dispatch, brandcount, loading }) => {
     filter: {
       ...location.query,
     },
+    storeuserList,
     echartShow,
     onFilterChange(value) {
       dispatch(routerRedux.push({
@@ -56,7 +59,10 @@ const BrandCount = ({ location, dispatch, brandcount, loading }) => {
   return (
     <div className="content-inner">
       <Filter {...filterProps} />
-      {echartShow && <Echart {...listProps} />}
+      <Spin spinning={loading.effects['brandcount/query']} >
+        {list.length !== 0 && <Echart {...listProps} />}
+        {list.length === 0 && <p style={{ textAlign: 'center', height: '300px', lineHeight: '300px' }}>暂无相关数据</p>}
+      </Spin>
       {!echartShow && <List {...listProps} />}
     </div>
   )
@@ -67,6 +73,7 @@ BrandCount.propTypes = {
   location: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   loading: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired,
 }
 
-export default connect(({ brandcount, loading }) => ({ brandcount, loading }))(BrandCount)
+export default connect(({ brandcount, loading, app }) => ({ brandcount, loading, app }))(BrandCount)

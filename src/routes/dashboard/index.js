@@ -4,21 +4,24 @@ import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
 import { NumberCard, User } from './components'
 import SimpleChartComponent from './components/Echart/SimpleChartComponent'
+import RegistChart from './components/Echart/RegistChart'
+import OperationChart from './components/Echart/OperationChart'
 import PieChart from './components/Echart/PieChart'
 
 function Dashboard({ dashboard, loading }) {
-  const { receviceData, sendData, income, storeTotal, weChatUser, terminalTotal, user, trafficVolume } = dashboard
+  const { receviceData, sendData, income,
+    storeTotal, terminalTotal, user, trafficVolume,
+    registData, registDatetime, operationData, operationDatetime } = dashboard
 
-
-  const munArr = [income, storeTotal, weChatUser, terminalTotal]
+  const munArr = [income, storeTotal, terminalTotal]
   const munLadings = [
     loading.effects['dashboard/getIncome'],
     loading.effects['dashboard/getStoreTotal'],
-    loading.effects['dashboard/getWeChatUser'],
     loading.effects['dashboard/getTerminalTotal'],
+    // loading.effects['dashboard/getWeChatUser'],
   ]
   const numberCards = munArr.map((item, key) => {
-    return (<Col key={key} lg={6} md={12}>
+    return (<Col key={key} lg={8} md={8}>
       <NumberCard {...item} data={munArr} loading={munLadings[key]} />
     </Col>)
   })
@@ -27,6 +30,18 @@ function Dashboard({ dashboard, loading }) {
     receviceData,
     sendData,
     loading: loading.effects['dashboard/query'],
+  }
+
+  const registProps = {
+    registData,
+    registDatetime,
+    loading: loading.effects['dashboard/getbusinessRegist'],
+  }
+
+  const operationProps = {
+    operationData,
+    operationDatetime,
+    loading: loading.effects['dashboard/getbusinessRegist'],
   }
 
   const pieChartProps = {
@@ -44,7 +59,12 @@ function Dashboard({ dashboard, loading }) {
       </Col>
       <Col lg={24} md={24} style={{ marginTop: '24px' }}>
         <Card>
-          <SimpleChartComponent {...lineProps} />
+          <RegistChart {...registProps} />
+        </Card>
+      </Col>
+      <Col lg={24} md={24} style={{ marginTop: '24px' }}>
+        <Card>
+          <OperationChart {...operationProps} />
         </Card>
       </Col>
       <Col lg={12} md={12} style={{ marginTop: '24px' }}>

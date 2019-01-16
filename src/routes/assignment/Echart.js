@@ -4,7 +4,6 @@ import ReactEcharts from 'echarts-for-react'
 import '../../themes/js/macarons.js'
 
 const PieChart = ({ dataSource }) => {
-  console.log('dataSource', dataSource)
   const brands = dataSource.map(item => item.cName)
   const brandData = dataSource.map(item => ({
     value: item.count,

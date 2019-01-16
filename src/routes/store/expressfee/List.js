@@ -56,6 +56,13 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
   }
   const columns = [
     {
+      title: '站点地区',
+      dataIndex: 'city',
+      key: 'city',
+      render: (text, record) => {
+        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
+      },
+    }, {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',

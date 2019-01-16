@@ -1,7 +1,11 @@
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime } from 'utils'
+import { routerRedux } from 'dva/router'
 import { query } from '../services/brandcount'
 import { pageModel } from './system/common'
+import { time } from '../utils'
+
+const yesterTime = time.getToday(new Date().getTime() - 86400000)
 
 const { prefix } = config
 export default modelExtend(pageModel, {
@@ -12,17 +16,28 @@ export default modelExtend(pageModel, {
     modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
-    echartShow: false,
+    echartShow: true,
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/brandcount') {
-          dispatch({
-            type: 'query',
-            payload: location.query,
-          })
+          const { createTime } = location.query
+          if (createTime) {
+            dispatch({
+              type: 'query',
+              payload: location.query,
+            })
+          } else {
+            dispatch(routerRedux.push({
+              pathname: location.pathname,
+              query: {
+                ...query,
+                createTime: [yesterTime, yesterTime],
+              },
+            }))
+          }
         }
       })
     },
@@ -31,6 +46,11 @@ export default modelExtend(pageModel, {
   effects: {
 
     * query({ payload = {} }, { call, put }) {
+      payload = { ...payload }
+      if (payload.name) {
+        payload.idUser = payload.name.split('///')[0]
+        delete payload.name
+      }
       // 如果使用了日期选择器, 则需要配合initialCreateTime方法处理时间
       payload = initialCreateTime(payload)
       const data = yield call(query, { ...payload, page: 1, pageSize: 10000 })

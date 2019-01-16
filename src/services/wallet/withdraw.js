@@ -11,3 +11,11 @@ export async function query(params) {
     data: params,
   })
 }
+
+export async function cashWithdraw(params) {
+  return request({
+    url: wallet.withdraw.cashWithdraw,
+    method: 'post',
+    params,
+  })
+}

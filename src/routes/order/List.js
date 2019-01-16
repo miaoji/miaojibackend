@@ -111,12 +111,13 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           103: '分派',
           201: '问题件',
           202: '移库',
+          203: '催件',
           299: '问题件',
           301: '签收',
           305: '签收',
           302: '退回',
           303: '退回',
-          304: '一件补签',
+          304: '补签',
         }
         return <span>{newtext[text]}</span>
       },

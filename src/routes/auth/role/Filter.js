@@ -4,8 +4,9 @@ import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
 import { DateRange } from '../../../components'
 import { handleFields } from '../../../utils'
+import { getUserId } from '../../../utils/getUserInfo'
 
-
+const userId = getUserId()
 const Search = Input.Search
 
 const ColProps = {
@@ -25,6 +26,7 @@ const Filter = ({
   onAdd,
   onFilterChange,
   filter,
+  onUpdateAdminRole,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -101,6 +103,9 @@ const Filter = ({
         <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
         <Button size="large" type="primary" className="margin-right" onClick={onAdd}>新增角色</Button>
       </Col>
+      <Col style={{ display: userId === 1 ? 'block' : 'none' }}>
+        <Button size="large" type="primary" className="margin-right" onClick={onUpdateAdminRole}>更新权限</Button>
+      </Col>
     </Row>
   )
 }
@@ -111,6 +116,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  onUpdateAdminRole: PropTypes.func,
 }
 
 export default Form.create()(Filter)

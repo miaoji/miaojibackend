@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Form, Button, Row, Col, Input, Cascader, Radio } from 'antd'
+import { Form, Button, Row, Col, Input, Cascader } from 'antd'
 import { DateRange } from '../../../components'
 import { handleFields } from '../../../utils'
 
-const RadioGroup = Radio.Group
 const Search = Input.Search
 
 const ColProps = {
@@ -24,7 +23,6 @@ const TwoColProps = {
 const Filter = ({
   onAdd,
   onFilterChange,
-  onChangeLocationType,
   locationList,
   filter,
   form: {
@@ -90,16 +88,16 @@ const Filter = ({
   const filterLocation = (inputValue, path) => {
     return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }
+
   const handleLocationChange = (key) => {
     handleChange('location', key)
     setFieldsValue({
       location: key,
     })
   }
-  const handleTypeChange = (key) => {
-    onChangeLocationType(key.target.value)
-  }
+
   const initLocation = location ? location.split(',') : undefined
+
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
@@ -107,15 +105,6 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('roleName', { initialValue: roleName })(<Search placeholder="按角色名称搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }}>
-        {getFieldDecorator('locationType', { initialValue: 1 })(
-          <RadioGroup size="large" onChange={handleTypeChange}>
-            <Radio value={1}>按省筛选</Radio>
-            <Radio value={2}>按市筛选</Radio>
-            <Radio value={3}>按县筛选</Radio>
-          </RadioGroup>
-        )}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('location', { initialValue: initLocation })(
@@ -125,6 +114,9 @@ const Filter = ({
             options={locationList}
             onChange={handleLocationChange}
             placeholder="请输入地区信息"
+            changeOnSelect
+            allowClear
+            expandTrigger="hover"
           />
         )}
       </Col>
@@ -149,7 +141,6 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   locationList: PropTypes.array,
-  onChangeLocationType: PropTypes.func,
 }
 
 export default Form.create()(Filter)

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 import { Form, Button, Input } from 'antd'
 import styles from './index.less'
 
@@ -8,7 +7,6 @@ const Filter = ({
   onFilterChange,
   filter,
   buttonLoading,
-  isData,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -24,15 +22,15 @@ const Filter = ({
   const { serialNumber } = filter
 
   return (
-    <div className={classnames({ [styles.filter]: true, [styles.isData]: !isData })} >
-      <div className={styles.filter_title}>运单查询 : </div>
+    <div className={styles.filter} >
+      <div className={styles.filter_title}><span className="icon_line" />运单查询 : </div>
       <div className="input" style={{ marginLeft: '20px' }}>
         {getFieldDecorator('serialNumber', {
           initialValue: serialNumber,
-        })(<Input style={{ textAlign: 'center', height: '50px', fontSize: '18px' }} placeholder="按订单号搜索" size="large" onSearch={handleSubmit} />)}
+        })(<Input className={styles.filter_input} placeholder="按订单号或手机号搜索订单" size="large" onPressEnter={handleSubmit} />)}
       </div>
       <div style={{ marginLeft: '20px' }}>
-        <Button loading={buttonLoading} type="primary" size="large" style={{ width: '100px', height: '50px' }} onClick={handleSubmit}>搜索</Button>
+        <Button className={styles.filter_button} loading={buttonLoading} type="primary" size="large" onClick={handleSubmit}>搜索</Button>
       </div>
     </div>
   )
@@ -43,7 +41,6 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   buttonLoading: PropTypes.bool,
-  isData: PropTypes.bool,
 }
 
 export default Form.create()(Filter)

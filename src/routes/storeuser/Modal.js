@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, InputNumber, Input, Modal, Radio, Cascader } from 'antd'
-import classnames from 'classnames'
 import styles from './List.less'
 
 const RadioGroup = Radio.Group
@@ -26,6 +25,7 @@ const modal = ({
     getFieldValue,
   },
   locationData,
+  orgTree,
   ...modalProps
 }) => {
   const handleOk = () => {
@@ -86,9 +86,14 @@ const modal = ({
     )
   }
 
-  function filter(inputValue, path) {
+  const filterLocation = (inputValue, path) => {
     return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }
+
+  // const filterOrg = (inputValue, path) => {
+  //   return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+  // }
+
   if (modalProps.modalType === 'create') {
     return (
       <Modal {...modalOpts} title="妙寄APP注册">
@@ -118,9 +123,26 @@ const modal = ({
               prefix={'妙寄'}
               suffix={'店'}
               placeholder="请输入站点名称!"
-              className={classnames({ [styles.appInput]: true })}
+              className={styles.appInput}
             />)}
           </FormItem>
+          {/* <FormItem label="所属机构" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('org', {
+              initialValue: '',
+              rules: [
+                {
+                  required: true,
+                  message: '请选择所属机构!',
+                },
+              ],
+            })(<Cascader
+              options={orgTree}
+              placeholder="请选择所属机构"
+              showSearch={{ filterOrg }}
+              autocomplete="off"
+              changeOnSelect
+            />)}
+          </FormItem> */}
           <FormItem label="省市区" hasFeedback {...formItemLayout}>
             {getFieldDecorator('location', {
               initialValue: '',
@@ -133,7 +155,7 @@ const modal = ({
             })(<Cascader
               options={locationData}
               placeholder="请选择省市区"
-              showSearch={{ filter }}
+              showSearch={{ filterLocation }}
               autocomplete="off"
             />)}
           </FormItem>
@@ -170,6 +192,9 @@ const modal = ({
               rules: [
                 {
                   required: true,
+                  message: '请输入密码',
+                },
+                {
                   pattern: /^(?=.*[A-Z])[a-zA-Z\d]{6,30}$/,
                   message: '密码长度要在6~30之间且包含一个大写字母!',
                 },
@@ -179,6 +204,7 @@ const modal = ({
               ],
             })(<Input
               type="password"
+              autocomplete="off"
               placeholder="请输入密码!"
             />)}
           </FormItem>
@@ -196,6 +222,8 @@ const modal = ({
               ],
             })(<Input
               type="password"
+              autocomplete="off"
+              placeholder="请确认你的密码"
             />)}
           </FormItem>
           <FormItem label="版本" hasFeedback {...formItemLayout}>
@@ -244,6 +272,7 @@ modal.propTypes = {
   item: PropTypes.object.isRequired,
   locationData: PropTypes.object.isRequired,
   onOk: PropTypes.func.isRequired,
+  orgTree: PropTypes.array,
 }
 
 export default Form.create()(modal)

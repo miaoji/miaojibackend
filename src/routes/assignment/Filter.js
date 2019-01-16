@@ -1,108 +1,72 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-import { FilterItem, DateRange } from 'components'
-import { Form, Button, Row, Col, Input } from 'antd'
+import { Form, Button, Input } from 'antd'
+import styles from './index.less'
+import { DateRange } from '../../components'
+import { handleFields, defaultTime } from '../../utils'
 
-const Search = Input.Search
-
-const ColProps = {
-  xl: 8,
-  lg: 8,
-  md: 8,
-  sm: 12,
-  xs: 24,
-  style: {
-    marginBottom: 16,
-  },
-}
+const { Search } = Input
 
 const Filter = ({
   onFilterChange,
-  echartShow,
-  onEchartShowChange,
   filter,
+  buttonLoading,
   form: {
     getFieldDecorator,
     getFieldsValue,
-    setFieldsValue,
   },
 }) => {
-  const handleFields = (fields) => {
-    const { createTime } = fields
-    if (createTime && createTime.length && createTime[0] && createTime[1]) {
-      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    } else {
-      delete fields.createTime
-    }
-    return fields
-  }
-
+  filter = defaultTime(filter)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    onFilterChange(fields)
-  }
-
-  const handleReset = () => {
-    const fields = getFieldsValue()
+    // 判断搜索提交的内容是否为空
+    // 为空则等于undefined
     for (let item in fields) {
-      if ({}.hasOwnProperty.call(fields, item)) {
-        if (fields[item] instanceof Array) {
-          fields[item] = []
-        } else {
-          fields[item] = undefined
-        }
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
       }
     }
-    setFieldsValue(fields)
-    handleSubmit()
+    onFilterChange({ ...filter, ...fields })
   }
+  const { name, createTime } = filter
 
+  // 时间选择器change事件
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
-    onFilterChange(fields)
-  }
-  const { name, idBinding } = filter
-
-  let initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = moment(filter.createTime[0])
-  }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = moment(filter.createTime[1])
+    for (let item in fields) {
+      if (/^\s*$/g.test(fields[item])) {
+        fields[item] = undefined
+      }
+    }
+    onFilterChange({ ...filter, ...fields })
   }
 
   return (
-    <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按分派人姓名搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 4 }}>
-        {getFieldDecorator('idBinding', { initialValue: idBinding })(<Search placeholder="按分派人ID搜索" size="large" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps}>
-        <FilterItem>
-          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+    <div>
+      <div className={styles.filter} >
+        <div className={styles.filter_title}><span className="icon_line" />时间筛选 : </div>
+        <div style={{ width: '400px', marginLeft: '40px' }}>
+          {getFieldDecorator('createTime', { initialValue: createTime })(
+            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
           )}
-        </FilterItem>
-      </Col>
-      <Col {...ColProps}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-          <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>重置</Button>
-          </div>
-          <div>
-            <Button size="large" type="primary" onClick={() => { onEchartShowChange(!echartShow) }}>{echartShow ? '列表查看' : '饼状图查看'}</Button>
-          </div>
         </div>
-      </Col>
+      </div>
+      <div className={styles.filter} >
+        <div className={styles.filter_title}><span className="icon_line" />分派人查询 : </div>
+        <div className="input">
+          {getFieldDecorator('name', {
+            initialValue: name,
+          })(<Search onSearch={handleSubmit} className={styles.filter_input} placeholder="按分派人姓名或id搜索" size="large" onPressEnter={handleSubmit} />)}
+        </div>
 
-    </Row>
+        <div style={{ marginLeft: '20px' }}>
+          <Button className={styles.filter_button} loading={buttonLoading} type="primary" size="large" onClick={handleSubmit}>搜索</Button>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -110,8 +74,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  echartShow: PropTypes.bool,
-  onEchartShowChange: PropTypes.func,
+  buttonLoading: PropTypes.bool,
 }
 
 export default Form.create()(Filter)

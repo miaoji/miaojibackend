@@ -4,7 +4,7 @@ import { Tree } from 'antd'
 const TreeNode = Tree.TreeNode
 
 /**
- * 用于调整权限管理>角色管理的添加和修改获取菜单列表的数据结构与项目所需字段不匹配的问题
+ * [用于调整权限管理>角色管理的添加和修改获取菜单列表的数据结构与项目所需字段不匹配的问题]
  */
 export const reloadItem = (item) => {
   if (item.children && item.children.length === 0) {
@@ -23,7 +23,7 @@ export const reloadItem = (item) => {
 }
 
 /**
- *  用于调整权限管理>角色管理的添加和修改中tree无法识别节点树父级ID的问题
+ *  [用于调整权限管理>角色管理的添加和修改中tree无法识别节点树父级ID的问题]
  */
 export const handleArrData = ({ list, arr }) => {
   const tmp = []
@@ -53,7 +53,7 @@ export const handleArrData = ({ list, arr }) => {
 }
 
 /**
- * 用户管理遍历Tree菜单选择组件
+ * [用户管理遍历Tree菜单选择组件]
  */
 export const renderTreeNodes = (data) => {
   if (data.length) {
@@ -78,7 +78,7 @@ export const renderTreeNodes = (data) => {
 }
 
 /**
- * 角色 管理页面遍历地址信息
+ * [角色管理页面遍历地址信息]
  */
 export const editLocation = (data) => {
   if (data.children && data.children.length === 0) {
@@ -97,7 +97,7 @@ export const editLocation = (data) => {
 }
 
 /**
- * 角色管理页面筛选当前角色能使用的菜单列表
+ * [角色管理页面筛选当前角色能使用的菜单列表]
  */
 export const filterRoleList = (data, list) => {
   data = data.filter((item) => {
@@ -110,7 +110,7 @@ export const filterRoleList = (data, list) => {
 }
 
 /**
- * 对菜单数据进行整理
+ * [对菜单数据进行整理]
  */
 export const rebuildMenuData = (data) => {
   const tmp = data.map((item) => {
@@ -177,5 +177,41 @@ export const initUserInfo = (userInfo) => {
     roleIds,
     menuIds,
     menuGroupIds,
+  }
+}
+
+/**
+ * [从menusList从取出menuId]
+ */
+
+export const getMenuIds = (menuList) => {
+  const tmpArr = []
+  menuList.forEach((item) => {
+    if (item.children && item.children.length > 0) {
+      const test = getMenuIds(item.children)
+      tmpArr.push(...test, item.id)
+    } else {
+      tmpArr.push(item.id)
+    }
+  })
+  return tmpArr
+}
+
+/**
+ * [门店用户页面,遍历地址信息]
+ */
+export const storeuserEditLocation = (data) => {
+  if (data.children && data.children.length === 0) {
+    delete data.children
+  }
+  if (data.children && data.children.length > 0) {
+    data.children = data.children.map((items) => {
+      return storeuserEditLocation(items)
+    })
+  }
+  return {
+    value: data.name || data.province || data.city || data.district,
+    label: data.name || data.province || data.city || data.district,
+    children: data.children,
   }
 }

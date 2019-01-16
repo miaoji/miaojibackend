@@ -67,3 +67,23 @@ export function businessvolumecount(params = {}) {
     data: params,
   })
 }
+/**
+ * [获取业务量注册数据]
+ */
+export function businessRegist(params = {}) {
+  return request({
+    url: dashboard.businessRegist,
+    method: 'post',
+    data: params,
+  })
+}
+/**
+ * [获取业务量操作数据]
+ */
+export function businessOperation(params = {}) {
+  return request({
+    url: dashboard.businessOperation,
+    method: 'post',
+    data: params,
+  })
+}

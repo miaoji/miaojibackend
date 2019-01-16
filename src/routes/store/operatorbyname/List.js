@@ -16,7 +16,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '点单数量',
+      title: '点货数量',
       dataIndex: 'ddtotal',
       key: 'ddtotal',
       render: (text) => {
@@ -35,6 +35,13 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       key: 'qstotal',
       render: (text) => {
         return <span>{text}</span>
+      },
+    }, {
+      title: '补签数量',
+      dataIndex: 'retroactive',
+      key: 'retroactive',
+      render: (text) => {
+        return <span>{text || 0}</span>
       },
     }, {
       title: '操作',

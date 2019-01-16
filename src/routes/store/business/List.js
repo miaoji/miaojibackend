@@ -10,6 +10,13 @@ import SonTable from './SonTable'
 const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading, ...tableProps }) => {
   const columns = [
     {
+      title: '站点地区',
+      dataIndex: 'city',
+      key: 'city',
+      render: (text, record) => {
+        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
+      },
+    }, {
       title: '站点名',
       dataIndex: 'name',
       key: 'name',
@@ -20,7 +27,7 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading,
         return <Link to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>{text}</Link>
       },
     }, {
-      title: '点单数量',
+      title: '点货数量',
       dataIndex: 'ddtotal',
       key: 'ddtotal',
       render: (text) => {
@@ -37,6 +44,13 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading,
       title: '签收数量',
       dataIndex: 'qstotal',
       key: 'qstotal',
+      render: (text) => {
+        return <span>{text || 0}</span>
+      },
+    }, {
+      title: '补签数量',
+      dataIndex: 'retroactive',
+      key: 'retroactive',
       render: (text) => {
         return <span>{text || 0}</span>
       },

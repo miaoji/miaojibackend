@@ -36,7 +36,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
           299: '问题件',
           305: '签收',
           303: '退回',
-          304: '一件补签',
+          304: '补签',
         }
         return <span>{replText[text]}</span>
       },

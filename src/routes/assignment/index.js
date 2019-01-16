@@ -9,7 +9,7 @@ import Echart from './Echart'
 const Assignment = ({ location, dispatch, assignment, loading }) => {
   const { list, pagination, echartShow } = assignment
   const { pageSize } = pagination
-  console.log('pagination', pagination)
+
   const listProps = {
     dataSource: list,
     loading: loading.effects['assignment/query'],

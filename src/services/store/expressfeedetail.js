@@ -20,6 +20,7 @@ export async function download(params) {
   delete params.rownum
   delete params.pagination
   if (params.idUser) {
+    delete params.userIds
     delete params.location
   }
   return request({

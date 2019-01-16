@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import { Table, Modal } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
-import styles from './List.less'
+import styles from './index.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
+import { getUserId, isSuperAdmin } from '../../../utils/getUserInfo'
 
+const userId = getUserId()
+const isSuperRole = isSuperAdmin()
 const confirm = Modal.confirm
 
 const List = ({ storeTotal, location, onEditItem, onDeleteItem, ...tableProps }) => {
@@ -46,6 +49,13 @@ const List = ({ storeTotal, location, onEditItem, onDeleteItem, ...tableProps })
         return <span>{newText}</span>
       },
     }, {
+      title: '父级机构',
+      dataIndex: 'parentName',
+      key: 'parentName',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
+    }, {
       title: '创建人',
       dataIndex: 'createUserName',
       key: 'createUserName',
@@ -72,7 +82,7 @@ const List = ({ storeTotal, location, onEditItem, onDeleteItem, ...tableProps })
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        if (record.id === 1) {
+        if (record.id === 1 || record.createUserId !== userId && !isSuperRole) {
           return <div>/</div>
         }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />

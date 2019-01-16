@@ -8,6 +8,13 @@ import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
+      title: '站点地区',
+      dataIndex: 'city',
+      key: 'city',
+      render: (text, record) => {
+        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
+      },
+    }, {
       title: '站点名',
       dataIndex: 'showName',
       key: 'showName',

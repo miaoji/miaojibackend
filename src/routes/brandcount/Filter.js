@@ -2,7 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem, DateRange } from 'components'
-import { Form, Button, Row, Col, Input } from 'antd'
+import { Form, Button, Row, Col, Input, Select } from 'antd'
+import { time } from '../../utils'
+
+
+const yesterTime = time.getToday(new Date().getTime() - 86400000)
 
 const Search = Input.Search
 
@@ -22,6 +26,7 @@ const Filter = ({
   echartShow,
   onEchartShowChange,
   filter,
+  storeuserList,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -65,18 +70,36 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { brand } = filter
+  const { brand, createTime = [yesterTime, yesterTime], name } = filter
 
   let initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = moment(filter.createTime[0])
+  if (createTime && createTime[0]) {
+    initialCreateTime[0] = moment(createTime[0])
   }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = moment(filter.createTime[1])
+  if (createTime && createTime[1]) {
+    initialCreateTime[1] = moment(createTime[1])
   }
+
+  const nameChange = (key) => {
+    handleChange('name', key)
+  }
+
 
   return (
     <Row gutter={24}>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('name', { initialValue: name })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onSelect={nameChange}
+            placeholder="按店铺名称搜索"
+            size="large"
+          >
+            {storeuserList}
+          </Select>
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 4 }}>
         {getFieldDecorator('brand', { initialValue: brand })(<Search placeholder="按名称搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
@@ -94,7 +117,7 @@ const Filter = ({
             <Button size="large" onClick={handleReset}>重置</Button>
           </div>
           <div>
-            <Button size="large" type="primary" onClick={() => { onEchartShowChange(!echartShow) }}>{echartShow ? '列表查看' : '饼状图查看'}</Button>
+            <Button className="hide" size="large" type="primary" onClick={() => { onEchartShowChange(!echartShow) }}>{echartShow ? '列表查看' : '饼状图查看'}</Button>
           </div>
         </div>
       </Col>
@@ -109,6 +132,7 @@ Filter.propTypes = {
   onFilterChange: PropTypes.func,
   echartShow: PropTypes.bool,
   onEchartShowChange: PropTypes.func,
+  storeuserList: PropTypes.array,
 }
 
 export default Form.create()(Filter)
