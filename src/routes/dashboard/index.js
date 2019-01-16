@@ -4,11 +4,14 @@ import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
 import { NumberCard, User } from './components'
 import SimpleChartComponent from './components/Echart/SimpleChartComponent'
+import RegistChart from './components/Echart/RegistChart'
+import OperationChart from './components/Echart/OperationChart'
 import PieChart from './components/Echart/PieChart'
 
 function Dashboard({ dashboard, loading }) {
-  const { receviceData, sendData, income, storeTotal, terminalTotal, user, trafficVolume } = dashboard
-
+  const { receviceData, sendData, income,
+    storeTotal, terminalTotal, user, trafficVolume,
+    registData, registDatetime, operationData, operationDatetime } = dashboard
 
   const munArr = [income, storeTotal, terminalTotal]
   const munLadings = [
@@ -29,6 +32,18 @@ function Dashboard({ dashboard, loading }) {
     loading: loading.effects['dashboard/query'],
   }
 
+  const registProps = {
+    registData,
+    registDatetime,
+    loading: loading.effects['dashboard/getbusinessRegist'],
+  }
+
+  const operationProps = {
+    operationData,
+    operationDatetime,
+    loading: loading.effects['dashboard/getbusinessRegist'],
+  }
+
   const pieChartProps = {
     data: trafficVolume,
     loading: loading.effects['dashboard/getbusinessvolumecount'],
@@ -40,6 +55,16 @@ function Dashboard({ dashboard, loading }) {
       <Col lg={24} md={24}>
         <Card>
           <SimpleChartComponent {...lineProps} />
+        </Card>
+      </Col>
+      <Col lg={24} md={24} style={{ marginTop: '24px' }}>
+        <Card>
+          <RegistChart {...registProps} />
+        </Card>
+      </Col>
+      <Col lg={24} md={24} style={{ marginTop: '24px' }}>
+        <Card>
+          <OperationChart {...operationProps} />
         </Card>
       </Col>
       <Col lg={12} md={12} style={{ marginTop: '24px' }}>

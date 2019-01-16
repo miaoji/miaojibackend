@@ -21,13 +21,17 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.126.1:8081'
 
 // 张涛
-APIV1 = 'http://192.168.231.239:8077'
+// APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
 // APIV1 = 'http://192.168.231.125:8081'
 
-APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+// APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
+APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+
+// 莫畏
+// APIV1 = 'http://192.168.231.110:8080'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
@@ -72,6 +76,10 @@ module.exports = {
       terminalTotal: `${APIV1}/homePageStoreTotal`,
       // 获取业务量总数
       businessvolumecount: `${APIV1}/getTrafficVolume`,
+      // 获取业务量注册记录
+      businessRegist: `${APIV1}/stRegist`,
+      // 获取业务量操作记录
+      businessOperation: `${APIV1}/stOperation`,
     },
     wxuser: {
       list: `${APIV1}/wechatuser`, // 微信用户分页

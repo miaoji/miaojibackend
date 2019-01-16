@@ -9,7 +9,7 @@ import { APIV3 } from './config'
 export function yesterTime(frontDay = 1, distance = 0, isInit = false) {
   const newfrontDay = frontDay - 1
   let dayCount = 1
-  const test = false
+  const test = true
   if (process.env.NODE_ENV !== 'development' || APIV3 === 'http://106.14.212.146:8288' || test) {
     dayCount = 1
     const date = new Date()
