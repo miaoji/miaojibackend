@@ -104,7 +104,7 @@ class modal extends Component {
               <RadioGroup onChange={onStatusChonge}>
                 <Radio value="success">通过</Radio>
                 <Radio value="refuse">拒绝</Radio>
-                <Radio value="wait">等待</Radio>
+                {/* <Radio value="wait">等待</Radio> */}
               </RadioGroup>
             )}
           </FormItem>

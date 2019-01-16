@@ -56,6 +56,7 @@ export default modelExtend(pageModel, {
         price: currentItem.price,
         orderId: currentItem.orderId,
         status: payload.status,
+        customerCode: currentItem.customerCode,
         transferDetails: payload.transferDetails,
       })
       const data = yield call(cashWithdraw, { param })
