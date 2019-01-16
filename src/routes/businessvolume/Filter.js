@@ -139,7 +139,7 @@ const Filter = ({
         </div>
       </Col>
       <Col>
-        <Button type="primary" size="large" loading={downloadAllLoading} onClick={handleDownloadAll}>下载当日所有门店数据</Button>
+        <Button className="hide" type="primary" size="large" loading={downloadAllLoading} onClick={handleDownloadAll}>下载当日所有门店数据</Button>
       </Col>
     </Row>
   )

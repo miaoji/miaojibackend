@@ -277,7 +277,7 @@ module.exports = {
       detail: `${APIV1}/getOrderByBrand`,
       count: `${APIV1}/getPortfolioByBrand`,
       downloadExcel: `${APIV1}/downloadPortfolio`,
-      downloadDetailExcel: `${APIV1}/downloadPortfolio`,
+      downloadDetailExcel: `${APIV1}/downloadBusinessInfo`,
       downloadAllData: `${APIV1}/selectAllBusiness`, // 下载当日权限下所有门店数据(签收,操作,分派,业务量)
     },
     // 品牌统计
@@ -287,6 +287,13 @@ module.exports = {
     // 分派人
     assignment: {
       list: `${APIV1}/assignList`,
+    },
+    // 环迅账号管理
+    bankcard: {
+      list: `${APIV1}/selectHxIPS`,
+      // update: `${APIV1}/deleteHxIPS`,
+      delete: `${APIV1}/deleteHxIPS`,
+      create: `${APIV1}/saveHxIPS`,
     },
   },
   brand: {

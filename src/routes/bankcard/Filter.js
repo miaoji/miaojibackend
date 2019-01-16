@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import { Form, Button, Row, Col, Input, Select } from 'antd'
-import { DateRange } from '../../components'
 import { isSuperAdmin } from '../../utils'
 
 const Search = Input.Search
@@ -85,15 +83,8 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name, mobile } = filter
+  const { name, stationMobile } = filter
 
-  let initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = moment(filter.createTime[0])
-  }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = moment(filter.createTime[1])
-  }
 
   const nameChange = (key) => {
     handleChange('name', key)
@@ -102,7 +93,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('stationMobile', { initialValue: stationMobile })(<Search placeholder="按站点手机号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(
@@ -113,11 +104,6 @@ const Filter = ({
             placeholder="按站点名称搜索"
             size="large"
           >{storeuserList}</Select>
-        )}
-      </Col>
-      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>

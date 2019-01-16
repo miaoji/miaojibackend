@@ -1,11 +1,11 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { list, add, mod, del } from '../services/extends'
+import { list, add, mod, del } from '../services/bankcard'
 import { pageModel } from './system/common'
 
 export default modelExtend(pageModel, {
 
-  namespace: 'extends',
+  namespace: 'bankcard',
 
   state: {
     currentItem: {},
@@ -16,7 +16,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/extends') {
+        if (location.pathname === '/bankcard') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -29,7 +29,12 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      const data = yield call(list, payload)
+      const Tmp = { ...payload }
+      if (payload.name) {
+        Tmp.stationName = payload.name.split('///')[1]
+        delete Tmp.name
+      }
+      const data = yield call(list, { ...Tmp })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -48,9 +53,25 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload = {} }, { call, put }) {
-      const data = yield call(add, payload)
+      console.log('pay', payload)
+      const { idUser } = payload
+      const data = yield call(add, {
+        userId: idUser.split('///')[0],
+        customerCode: payload.customerCode,
+        loginName: payload.loginName,
+        idType: payload.idType,
+        hxName: payload.hxName,
+        idNumber: payload.idNumber,
+        hxMobile: payload.hxMobile,
+        hxSpecialUse: payload.hxSpecialUse,
+        email: payload.email,
+        card: payload.card,
+        hxTel: payload.hxTel,
+        hxAddress: payload.hxAddress,
+      })
       if (data.code === 200) {
         yield put({ type: 'query' })
+        yield put({ type: 'hideModal' })
         message.success('新增成功')
       } else {
         throw data.mess || '当前网络无法使用'
@@ -68,7 +89,11 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload = {} }, { call, put }) {
-      const data = yield call(del, payload)
+      console.log('pau', payload)
+      debugger
+      const data = yield call(del, {
+        id: payload.id,
+      })
       if (data.code === 200) {
         yield put({ type: 'query' })
         message.success('删除成功')

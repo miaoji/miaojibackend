@@ -69,7 +69,19 @@ export default {
         if (process.env.NODE_ENV === 'development') {
           console.log('App-userInfo', user)
         }
-        const menuList = user.userMenus
+        let menuList = user.userMenus
+
+        if (user.userId === 98) {
+          // if (user.userId === 1) {
+          hideMenus.push({
+            id: '1111',
+            mpid: 1,
+            name: '环迅账号管理',
+            icon: 'message',
+            route: '/bankcard',
+          })
+        }
+        console.log('menuList', menuList)
         let list = menus
         if (process.env.NODE_ENV !== 'text') {
           list = [...rebuildMenuData(menuList), ...hideMenus]

@@ -5,6 +5,9 @@ import classnames from 'classnames'
 import moment from 'moment'
 import styles from './List.less'
 import { DropOption } from '../../../components'
+import { getUserId } from '../../../utils/getUserInfo'
+
+const userId = getUserId()
 
 const List = ({ onWithdrawalClick, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
@@ -83,9 +86,11 @@ const List = ({ onWithdrawalClick, ...tableProps }) => {
       key: 'option',
       width: 100,
       render: (_, record) => {
-        if (record.status === 'aa') {
-          // if (record.status === 'wait') {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '提现审核' }]} />
+        if (userId === 98) {
+          if (record.status === 'wait') {
+            return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '提现审核' }]} />
+          }
+          return <span>已操作</span>
         }
         return <span>暂无法操作</span>
       },
