@@ -7,7 +7,7 @@ let APIV3
 // 旧版
 // APIV1 = 'http://app.quandikeji.com:8288'
 // 新版
-// APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 
 // APIV1 = 'http://106.14.212.146:8288'
 
@@ -28,7 +28,7 @@ let APIV3
 // APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
 
 // 莫畏
-APIV1 = 'http://192.168.231.110:8080'
+// APIV1 = 'http://192.168.231.110:8080'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
