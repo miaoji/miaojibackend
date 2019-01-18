@@ -256,4 +256,10 @@ export default [
     name: '发布消息',
     route: '/publish',
   },
+  {
+    id: '7',
+    bpid: '1',
+    name: '业务操作',
+    icon: 'diff',
+  },
 ]

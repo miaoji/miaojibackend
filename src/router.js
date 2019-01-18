@@ -443,6 +443,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 业务操作
+          path: 'businessoperation',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/businessoperation'))
+              cb(null, require('./routes/businessoperation/'))
+            }, 'businessoperation')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {

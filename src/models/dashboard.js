@@ -3,8 +3,7 @@ import { query as queryStoreUser } from 'src/services/storeuser'
 import { pageModel } from './system/common'
 import { color } from '../utils/theme'
 import { storage, time, isSuperAdmin, getOrgIdUsers } from '../utils'
-import { getLineData, weChatUser, income, terminalTotal,
-  businessvolumecount, businessRegist, businessOperation } from '../services/dashboard'
+import { getLineData, weChatUser, income, terminalTotal, businessvolumecount } from '../services/dashboard'
 
 export default modelExtend(pageModel, {
   namespace: 'dashboard',
@@ -75,116 +74,11 @@ export default modelExtend(pageModel, {
           dispatch({ type: 'getWeChatUser' })
           dispatch({ type: 'getTerminalTotal' })
           dispatch({ type: 'getbusinessvolumecount' })
-          dispatch({ type: 'getbusinessRegist' })
-          dispatch({ type: 'getbusinessOperation' })
         }
       })
     },
   },
   effects: {
-    *getbusinessOperation(_, { call, put }) {
-      const todayStr = time.getToday(new Date().getTime())
-      let cacheDate = storage({ key: 'operationlinedata' })
-      if (cacheDate) {
-        cacheDate = JSON.parse(cacheDate)
-        if (cacheDate.time === todayStr) {
-          yield put({
-            type: 'setStates',
-            payload: {
-              operationData: cacheDate.operationData,
-              operationDatetime: cacheDate.operationDatetime,
-            },
-          })
-          return
-        }
-      }
-      const times = time.yesterTime(31, 30)
-      const data = yield call(businessOperation, {
-        ...times,
-      })
-      if (data.code === 200) {
-        let operationData = {}
-        let storageData = []
-        let signData = []
-        let operationDatetime = []
-        const allObj = data.obj
-        allObj.forEach((item) => {
-          if (item.callCompany === 'kb') {
-            storageData.push([item.createTime, item.rkId])
-            signData.push([item.createTime, item.qsId])
-            operationDatetime.push([item.createTime])
-          }
-        })
-        operationData.storageData = storageData
-        operationData.signData = signData
-        storage({
-          type: 'set',
-          key: 'operationlinedata',
-          val: JSON.stringify({
-            time: todayStr,
-            operationData,
-            operationDatetime,
-          }),
-        })
-        yield put({
-          type: 'setStates',
-          payload: {
-            operationData,
-            operationDatetime,
-          },
-        })
-      }
-    },
-
-    *getbusinessRegist(_, { call, put }) {
-      const todayStr = time.getToday(new Date().getTime())
-      let cacheDate = storage({ key: 'registlinedata' })
-      if (cacheDate) {
-        cacheDate = JSON.parse(cacheDate)
-        if (cacheDate.time === todayStr) {
-          yield put({
-            type: 'setStates',
-            payload: {
-              registData: cacheDate.registData,
-              registDatetime: cacheDate.registDatetime,
-            },
-          })
-          return
-        }
-      }
-      const times = time.yesterTime(31, 30)
-      const data = yield call(businessRegist, {
-        ...times,
-      })
-      if (data.code === 200) {
-        let registData = []
-        let registDatetime = []
-        const allObj = data.obj
-        allObj.forEach((item) => {
-          if (item.callCompany === 'kb') {
-            registData.push([item.createTime, item.registId])
-            registDatetime.push([item.createTime])
-          }
-        })
-        storage({
-          type: 'set',
-          key: 'registlinedata',
-          val: JSON.stringify({
-            time: todayStr,
-            registData,
-            registDatetime,
-          }),
-        })
-        yield put({
-          type: 'setStates',
-          payload: {
-            registData,
-            registDatetime,
-          },
-        })
-      }
-    },
-
     *getbusinessvolumecount(_, { call, put }) {
       const todayStr = time.getToday(new Date().getTime())
       let cacheDate = storage({ key: 'trafficVolume' })
