@@ -288,6 +288,13 @@ module.exports = {
     businessoperation: {
       list: `${APIV1}/stOperation`,
     },
+    // 环迅账号管理
+    bankcard: {
+      list: `${APIV1}/selectHxIPS`,
+      // update: `${APIV1}/deleteHxIPS`,
+      delete: `${APIV1}/deleteHxIPS`,
+      create: `${APIV1}/saveHxIPS`,
+    },
   },
   brand: {
     2: '优速',
