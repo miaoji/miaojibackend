@@ -119,7 +119,8 @@ export default modelExtend(pageModel, {
     /**
      * [创建门店用户]
      */
-    *create({ payload }, { call, put }) {
+    *create({ payload }, { call, put, select }) {
+      const orgList = yield select(({ storeuser }) => storeuser.orgList)
       const { address } = payload
       const locationId = address[2].split('-')[0]
       // 根据地址判断 dataSource
@@ -137,7 +138,8 @@ export default modelExtend(pageModel, {
       const province = address[0].split('-')[1]
       const dataSource = getdataSourceBylocation(province)
 
-      payload.org = payload.org.map(item => String(item))
+      // 过滤选择机构为全国的时候不提交id给后端
+      payload.org = orgList.filter(item => payload.org.some(i => i === item.id && item.idUsers && item.idUsers !== '0')).map(_ => String(_.id))
 
       let registData = {
         org: payload.org,
@@ -251,6 +253,7 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             orgTree,
+            orgList: data.obj,
           },
         })
       }
