@@ -120,8 +120,8 @@ export default modelExtend(pageModel, {
      * [创建门店用户]
      */
     *create({ payload }, { call, put }) {
-      const { location } = payload
-      const locationId = location[2].split('-')[0]
+      const { address } = payload
+      const locationId = address[2].split('-')[0]
       // 根据地址判断 dataSource
       const getdataSourceBylocation = (prov) => {
         let dataSource = '3'
@@ -134,15 +134,15 @@ export default modelExtend(pageModel, {
         }
         return dataSource
       }
-      const province = location[0].split('-')[1]
+      const province = address[0].split('-')[1]
       const dataSource = getdataSourceBylocation(province)
 
-      // payload.org = payload.org.map(item => item.split('-')[0])
+      payload.org = payload.org.map(item => String(item))
 
       let registData = {
         org: payload.org,
-        mobile: payload.mobile,
-        name: payload.name,
+        mobile: payload.siteMobile,
+        name: payload.siteName,
         password: payload.password,
         locationId,
         dataSource,
