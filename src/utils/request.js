@@ -1,6 +1,6 @@
 import axios from 'axios'
 import lodash from 'lodash'
-import 'url-search-params-polyfill'
+// import 'url-search-params-polyfill'
 
 const fetch = (options) => {
   let {
