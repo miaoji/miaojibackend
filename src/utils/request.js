@@ -1,6 +1,7 @@
 import axios from 'axios'
 import lodash from 'lodash'
 // import 'url-search-params-polyfill'
+import qs from 'qs'
 
 const fetch = (options) => {
   let {
@@ -38,12 +39,11 @@ const fetch = (options) => {
       })
     /* eslint-disable */
     case 'parampost':
-      let param = new URLSearchParams()
-      param.append('param', data.param)
+      data = qs.stringify(data)
       return axios({
         url,
         method: 'post',
-        data: param,
+        data,
         timeout: 200000,
         headers: {
           'content-Type': 'application/x-www-form-urlencoded'

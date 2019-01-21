@@ -19,8 +19,7 @@
     "react-dom": "^15.6.1",
     "react-draft-wysiwyg": "^1.10.0",
     "react-helmet": "^5.1.3",
-    "recharts": "^0.22.4",
-    "url-search-params-polyfill": "^5.0.0"
+    "recharts": "^0.22.4"
   },
   "devDependencies": {
     "axios": "^0.16.2",
