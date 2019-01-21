@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem, DateRange } from 'components'
 import { Form, Button, Row, Col, Input, Select, Cascader } from 'antd'
-import { isSuperAdmin } from '../../utils/getUserInfo'
+// import { isSuperAdmin } from '../../utils/getUserInfo'
 
-const isSuperRole = isSuperAdmin()
+// const isSuperRole = isSuperAdmin()
 const Search = Input.Search
 
 const ColProps = {
@@ -156,7 +156,7 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>重置</Button>
-            <Button disabled={!isSuperRole} type="primary" size="large" onClick={handleCreate}>新建门店用户</Button>
+            <Button disabled={false} type="primary" size="large" onClick={handleCreate}>新建门店用户</Button>
           </div>
         </div>
       </Col>
