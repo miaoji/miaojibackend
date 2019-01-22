@@ -1,7 +1,7 @@
 import { request, api, pageParams } from '../utils'
 import { yesterTime } from '../utils/time'
 
-const { businessoperation } = api
+const { businessregist } = api
 
 export async function query(params) {
   params = pageParams(params)
@@ -14,7 +14,7 @@ export async function query(params) {
     params.endTime = timeArr.endTime
   }
   return request({
-    url: businessoperation.list,
+    url: businessregist.list,
     method: 'post',
     data: params,
   })

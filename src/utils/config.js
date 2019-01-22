@@ -288,6 +288,10 @@ module.exports = {
     businessoperation: {
       list: `${APIV1}/stOperation`,
     },
+    // 业务注册
+    businessregist: {
+      list: `${APIV1}/stRegist`,
+    },
     // 环迅账号管理
     bankcard: {
       list: `${APIV1}/selectHxIPS`,

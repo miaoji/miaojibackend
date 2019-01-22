@@ -261,5 +261,13 @@ export default [
     bpid: '1',
     name: '业务操作',
     icon: 'diff',
+    route: '/businessoperation',
+  },
+  {
+    id: '8',
+    bpid: '1',
+    name: '业务注册',
+    icon: 'plus-square',
+    route: '/businessregist',
   },
 ]

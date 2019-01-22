@@ -1,11 +1,11 @@
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime } from 'utils'
-import { query } from '../services/businessoperation'
+import { query } from '../services/businessregist'
 import { pageModel } from './system/common'
 
 const { prefix } = config
 export default modelExtend(pageModel, {
-  namespace: 'businessoperation',
+  namespace: 'businessregist',
 
   state: {
     currentItem: {},
@@ -18,7 +18,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/businessoperation') {
+        if (location.pathname === '/businessregist') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -32,7 +32,7 @@ export default modelExtend(pageModel, {
 
     * query({ payload = {} }, { call, put }) {
       // 如果使用了日期选择器, 则需要配合initialCreateTime方法处理时间
-      payload = initialCreateTime(payload, true)
+      payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
         yield put({

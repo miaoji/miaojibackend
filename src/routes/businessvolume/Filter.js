@@ -61,6 +61,7 @@ const Filter = ({
         }
       }
     }
+    filter.createTime = []
     setFieldsValue(fields)
     filter.page = undefined
     filter.pageSize = undefined

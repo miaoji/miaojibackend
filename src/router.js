@@ -453,6 +453,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 业务操作
+          path: 'businessregist',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/businessregist'))
+              cb(null, require('./routes/businessregist/'))
+            }, 'businessregist')
+          },
+        },
+        {
           // 银行卡信息
           path: 'bankcard',
           getComponent(nextState, cb) {

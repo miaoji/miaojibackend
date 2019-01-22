@@ -6,8 +6,8 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const BusinessOperation = ({ location, dispatch, businessoperation, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = businessoperation
+const BusinessRgist = ({ location, dispatch, businessregist, loading }) => {
+  const { list, pagination, currentItem, modalVisible, modalType } = businessregist
   const { pageSize } = pagination
 
   const modalProps = {
@@ -19,20 +19,20 @@ const BusinessOperation = ({ location, dispatch, businessoperation, loading }) =
     wrapClassName: 'vertical-center-modal',
     onOk(data) {
       dispatch({
-        type: `businessoperation/${modalType}`,
+        type: `businessregist/${modalType}`,
         payload: data,
       })
     },
     onCancel() {
       dispatch({
-        type: 'businessoperation/hideModal',
+        type: 'businessregist/hideModal',
       })
     },
   }
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['businessoperation/query'],
+    loading: loading.effects['businessregist/query'],
     pagination,
     location,
     onChange(page) {
@@ -52,13 +52,13 @@ const BusinessOperation = ({ location, dispatch, businessoperation, loading }) =
     },
     onDeleteItem(id) {
       dispatch({
-        type: 'businessoperation/delete',
+        type: 'businessregist/delete',
         payload: id,
       })
     },
     onEditItem(item) {
       dispatch({
-        type: 'businessoperation/showModal',
+        type: 'businessregist/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -83,13 +83,13 @@ const BusinessOperation = ({ location, dispatch, businessoperation, loading }) =
     },
     onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/businessoperation',
+        pathname: '/businessregist',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/businessoperation',
+        pathname: '/businessregist',
       }))
     },
   }
@@ -103,12 +103,12 @@ const BusinessOperation = ({ location, dispatch, businessoperation, loading }) =
   )
 }
 
-BusinessOperation.propTypes = {
-  businessoperation: PropTypes.object,
+BusinessRgist.propTypes = {
+  businessregist: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
   app: PropTypes.object,
 }
 
-export default connect(({ businessoperation, loading, app }) => ({ businessoperation, loading, app }))(BusinessOperation)
+export default connect(({ businessregist, loading, app }) => ({ businessregist, loading, app }))(BusinessRgist)
