@@ -7,6 +7,10 @@ const getOrgId = () => {
   try {
     const user = storage({ key: 'user' })
     orgId = user ? JSON.parse(user).orgId : undefined
+    console.log('user', user)
+    if (orgId === '0') {
+      orgId = undefined
+    }
   } catch (err) {
     console.info(err)
     orgId = undefined

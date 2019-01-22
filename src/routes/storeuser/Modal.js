@@ -90,17 +90,17 @@ const modal = ({
     return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }
 
-  // const filterOrg = (inputValue, path) => {
-  //   return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
-  // }
+  const filterOrg = (inputValue, path) => {
+    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+  }
 
   if (modalProps.modalType === 'create') {
     return (
       <Modal {...modalOpts} title="妙寄APP注册">
         <Form layout="horizontal">
           <FormItem label="手机号" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('mobile', {
-              initialValue: item.mobile,
+            {getFieldDecorator('siteMobile', {
+              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -111,7 +111,7 @@ const modal = ({
             })(<Input placeholder="请输入的手机号码!" />)}
           </FormItem>
           <FormItem label="站点名称" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('name', {
+            {getFieldDecorator('siteName', {
               initialValue: '',
               rules: [
                 {
@@ -126,7 +126,7 @@ const modal = ({
               className={styles.appInput}
             />)}
           </FormItem>
-          {/* <FormItem label="所属机构" hasFeedback {...formItemLayout}>
+          <FormItem label="所属机构" hasFeedback {...formItemLayout}>
             {getFieldDecorator('org', {
               initialValue: '',
               rules: [
@@ -142,9 +142,9 @@ const modal = ({
               autocomplete="off"
               changeOnSelect
             />)}
-          </FormItem> */}
+          </FormItem>
           <FormItem label="省市区" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('location', {
+            {getFieldDecorator('address', {
               initialValue: '',
               rules: [
                 {

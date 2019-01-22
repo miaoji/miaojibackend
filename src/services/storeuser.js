@@ -36,7 +36,7 @@ export async function versionswitch(params) {
 export async function createAccount(params) {
   return request({
     url: registerAPP,
-    method: 'post',
-    params,
+    method: 'parampost',
+    data: params,
   })
 }

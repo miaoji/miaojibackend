@@ -1,5 +1,7 @@
 import axios from 'axios'
 import lodash from 'lodash'
+// import 'url-search-params-polyfill'
+import qs from 'qs'
 
 const fetch = (options) => {
   let {
@@ -34,6 +36,18 @@ const fetch = (options) => {
         data: cloneData,
         params,
         timeout,
+      })
+    /* eslint-disable */
+    case 'parampost':
+      data = qs.stringify(data)
+      return axios({
+        url,
+        method: 'post',
+        data,
+        timeout: 200000,
+        headers: {
+          'content-Type': 'application/x-www-form-urlencoded'
+        }
       })
     case 'put':
       return axios.put(url, cloneData)
