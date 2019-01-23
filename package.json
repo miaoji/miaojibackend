@@ -56,6 +56,7 @@
     "start": "set BROWSER=none&&set HOST=127.0.0.1&&roadhog server",
     "lint": "eslint --fix --ext .js src",
     "build": "roadhog build",
-    "git": "git add . && git commit -m ... && git push origin rebuild"
+    "git": "git add . && git commit -m ... && git push origin rebuild",
+    "push": "bash push.sh push"
   }
 }
