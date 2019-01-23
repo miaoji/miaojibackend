@@ -156,7 +156,7 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>重置</Button>
-            <Button disabled type="primary" size="large" onClick={handleCreate}>新建门店用户</Button>
+            <Button disabled={false} type="primary" size="large" onClick={handleCreate}>新建门店用户</Button>
           </div>
         </div>
       </Col>
