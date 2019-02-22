@@ -11,7 +11,7 @@ export const pageParams = function (params) {
     rownum: 10,
   }
   // params.location = getLocation().length ? getLocation() : undefined
-  params.userIds = getOrgIdUsers()
+  params.userIds = params.userIds || getOrgIdUsers()
   params.pagination = params.page ? Number(params.page) : 1
   params.rownum = params.pageSize ? Number(params.pageSize) : 10
   delete params.page

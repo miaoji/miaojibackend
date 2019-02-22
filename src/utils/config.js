@@ -24,7 +24,7 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
-// APIV1 = 'http://192.168.231.125:8081'
+APIV1 = 'http://192.168.231.125:80'
 // APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
 
 // 莫畏
@@ -300,6 +300,11 @@ module.exports = {
       // update: `${APIV1}/deleteHxIPS`,
       delete: `${APIV1}/deleteHxIPS`,
       create: `${APIV1}/saveHxIPS`,
+    },
+    // 快递对接状态查询
+    docking: {
+      list: `${APIV1}/simpleRecordIndex`,
+      detail: `${APIV1}/simpleRecordList`,
     },
   },
   brand: {

@@ -473,6 +473,26 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 快递对接
+          path: 'docking',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/docking'))
+              cb(null, require('./routes/docking/'))
+            }, 'docking')
+          },
+        },
+        {
+          // 快递对接-明细
+          path: 'dockingdetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/details/dockingdetail'))
+              cb(null, require('./routes/docking/detail/'))
+            }, 'dockingdetail')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {
