@@ -14,11 +14,11 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
       dataIndex: 'id',
       key: 'id',
       width: 100,
-      render: (text) => {
+      render: (text, record) => {
         if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/dockingdetail?idUser=${text}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
+          return <Link to={`/dockingdetail?idBrand=${record.idBrand}&idUser=${text}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
         }
-        return <Link to={`/dockingdetail?idUser=${text}`}>{text}</Link>
+        return <Link to={`/dockingdetail?idBrand=${record.idBrand}&idUser=${text}`}>{text}</Link>
         // return <a rel="noopener noreferrer" target="_blank" href={`/dockingdetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
       },
     }, {

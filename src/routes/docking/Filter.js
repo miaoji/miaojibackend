@@ -5,9 +5,12 @@ import {
 } from 'antd'
 import moment from 'moment'
 import { DateRange } from '../../components'
-import { handleFields, defaultTime } from '../../utils'
+import { handleFields, defaultTime, config } from '../../utils'
 
 const Search = Input.Search
+const { Option } = Select
+const { brand } = config
+
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -19,6 +22,15 @@ const ColProps = {
 const TwoColProps = {
   ...ColProps,
   xl: 96,
+}
+
+let brandList = []
+for (let item in brand) {
+  if (Object.prototype.hasOwnProperty.call(brand, item)) {
+    let key = `${item}`
+    let optionItem = <Option key={key}>{brand[item]}</Option>
+    brandList.push(optionItem)
+  }
 }
 
 const Filter = ({
@@ -81,7 +93,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name } = filter
+  let { name, idBrand } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -92,6 +104,10 @@ const Filter = ({
   }
   const nameChange = (key) => {
     handleChange('name', key)
+  }
+
+  const brandChange = (key) => {
+    handleChange('idBrand', key)
   }
 
   const handleDownloadAll = () => {
@@ -125,6 +141,20 @@ const Filter = ({
           )}
         </Col>
       </div>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        {getFieldDecorator('idBrand', { initialValue: idBrand })(
+          <Select
+            showSearch
+            allowClear
+            style={{ width: '100%' }}
+            onChange={brandChange}
+            placeholder="按快递品牌搜索"
+            size="large"
+          >
+            {brandList}
+          </Select>
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />

@@ -63,7 +63,7 @@ const Filter = ({
   let brandList = []
   for (let item in brand) {
     if (Object.prototype.hasOwnProperty.call(brand, item)) {
-      let key = `${item}///${brand[item]}`
+      let key = `${item}`
       let optionItem = <Option key={key}>{brand[item]}</Option>
       brandList.push(optionItem)
     }

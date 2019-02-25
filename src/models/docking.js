@@ -2,7 +2,7 @@ import React from 'react'
 import { message, notification, Tag } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime, filterStoreSelect } from '../utils'
-import { query, detail, count, downloadExcel as download, downloadAllData } from '../services/docking'
+import { query, detail, count, download, downloadAllData } from '../services/docking'
 import { pageModel } from './system/common'
 
 const { prefix, APIV3, brandReverse } = config
@@ -137,9 +137,9 @@ export default modelExtend(pageModel, {
       const newpayload = {
         startTime: payload.startTime,
         endTime: payload.endTime,
-        // idUser: payload.idUser,
+        idUser: payload.idUser,
       }
-      const data = yield call(download, { ...newpayload })
+      const data = yield call(download, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
         const openUrl = window.open(url)

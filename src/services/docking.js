@@ -11,6 +11,17 @@ export async function query(params) {
   })
 }
 
+export async function download(params) {
+  params = pageParams(params)
+  delete params.pagination
+  delete params.rownum
+  return request({
+    url: docking.list,
+    method: 'post',
+    data: params,
+  })
+}
+
 export async function detail(params) {
   params = pageParams(params)
   return request({
@@ -34,7 +45,7 @@ export async function downloadExcel(params) {
   delete params.pagination
   delete params.rownum
   return request({
-    url: docking.downloadExcel,
+    url: docking.detail,
     method: 'post',
     data: params,
   })
