@@ -1,13 +1,13 @@
 export default [
   {
     id: '1111',
-    mpid: 1,
+    mpid: '1',
     name: '接口对接',
     icon: 'message',
     route: '/docking',
   }, {
     id: '1112',
-    mpid: 1,
+    mpid: '-1',
     name: '接口对接明细',
     icon: 'message',
     route: '/dockingdetail',
