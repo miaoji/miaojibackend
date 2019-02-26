@@ -88,8 +88,8 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
       width: 100,
       render: (text) => {
         const replText = {
-          0: '正式版',
-          1: '点货版',
+          0: '简化版',
+          1: '正式版',
         }
         return (<span>{replText[text]}</span>)
       },
