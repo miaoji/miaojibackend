@@ -138,6 +138,7 @@ export default modelExtend(pageModel, {
         startTime: payload.startTime,
         endTime: payload.endTime,
         idUser: payload.idUser,
+        idBrand: payload.idBrand,
       }
       const data = yield call(download, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {

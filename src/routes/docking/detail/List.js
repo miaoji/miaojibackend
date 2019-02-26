@@ -1,12 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'antd'
-import { config } from 'utils'
 
-const { orderTypeForBusiness } = config
+const orderTypeForBusiness = {
+  101: '入库',
+  103: '入库',
+  104: '入库',
+  305: '出库',
+  302: '出库',
+  304: '出库',
+  306: '出库',
+}
+
+const orderAccessFilter = {
+  1: '对接失败',
+  2: '对接失败',
+  3: '对接失败',
+  4: '对接成功',
+}
 
 const List = ({ location, ...tableProps }) => {
   const columns = [
+    {
+      title: '订单号',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
+    },
     {
       title: '快递品牌',
       dataIndex: 'brand',
@@ -26,6 +45,9 @@ const List = ({ location, ...tableProps }) => {
       title: '对接状态',
       dataIndex: 'access',
       key: 'access',
+      render: (text) => {
+        return <span>{orderAccessFilter[text]}</span>
+      },
     },
   ]
 
