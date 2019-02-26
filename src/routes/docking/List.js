@@ -48,7 +48,7 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
       key: 'noPourIn',
       width: 100,
     }, {
-      title: '对接出库书',
+      title: '对接出库数',
       dataIndex: 'pourOut',
       key: 'pourOut',
       width: 70,

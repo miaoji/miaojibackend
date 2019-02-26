@@ -89,13 +89,8 @@ export default modelExtend(pageModel, {
         newpayload = { ...payload }
       }
       if (payload.idUser) {
-        newpayload.idUser = payload.idUser.split('///')[0]
-      }
-      if (payload.state) {
-        newpayload.state = payload.state.split('///')[0]
-      }
-      if (!payload.orderSn) {
-        delete newpayload.orderSn
+        newpayload.userIds = payload.idUser.split('///')[0]
+        delete newpayload.idUser
       }
       const data = yield call(downloadDetailExcel, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {

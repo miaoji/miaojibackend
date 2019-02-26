@@ -56,7 +56,7 @@ export function downloadDetailExcel(params) {
   delete params.pagination
   delete params.rownum
   return request({
-    url: docking.downloadDetailExcel,
+    url: docking.detail,
     method: 'post',
     data: params,
   })

@@ -1,7 +1,7 @@
 // const APIV2 = '/api/v2'
 
 let APIV1
-let APIV3
+let APIV3 = 'http://106.14.212.146:8288'
 
 // 线上
 // 旧版
@@ -24,7 +24,7 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
-APIV1 = 'http://192.168.231.125:80'
+// APIV1 = 'http://192.168.231.125:80'
 
 // APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
 
