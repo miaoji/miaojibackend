@@ -144,7 +144,7 @@ export default modelExtend(pageModel, {
       let registData = {
         org: payload.org,
         mobile: payload.siteMobile,
-        name: payload.siteName,
+        name: `妙寄${payload.siteName}店`,
         password: payload.password,
         locationId,
         dataSource,
