@@ -1,25 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table } from 'antd'
+import { Table, Spin } from 'antd'
 import { Link } from 'dva/router'
 import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, location, ...tableProps }) => {
+const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, isMotion, location, rowExpandList, ...tableProps }) => {
   const filter = location.query
+  const timeParams = filter.createTime && filter.createTime.length > 0 ? `&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}` : ''
   const columns = [
     {
       title: '站点ID',
       dataIndex: 'id',
       key: 'id',
       width: 100,
-      render: (text, record) => {
-        if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/dockingdetail?idBrand=${record.idBrand}&idUser=${text}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
-        }
-        return <Link to={`/dockingdetail?idBrand=${record.idBrand}&idUser=${text}`}>{text}</Link>
-        // return <a rel="noopener noreferrer" target="_blank" href={`/dockingdetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
+      render: (text) => {
+        return <Link to={`/dockingdetail?idUser=${text}${timeParams}`}>{text}</Link>
       },
     }, {
       title: '站点名称',
@@ -28,14 +25,6 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
       width: 170,
       render: (text) => {
         return <span>{text || '暂无'}</span>
-      },
-    }, {
-      title: '快递品牌',
-      width: 160,
-      dataIndex: 'brand',
-      key: 'brand',
-      render: (text) => {
-        return <span>{text}</span>
       },
     }, {
       title: '对接入库数',
@@ -82,8 +71,30 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
         scroll={{ x: 1250 }}
         columns={columns}
         simple
-        rowKey={record => record.key}
+        rowKey={record => record.id}
         getBodyWrapper={getBodyWrapper}
+        expandedRowRender={() => {
+          if (expandedLoading) {
+            return <Spin />
+          }
+          if (rowExpandList.length === 0) {
+            return <span>暂无数据</span>
+          }
+          return (<div className={styles.rowRender}>
+            {
+              rowExpandList.map((item) => {
+                return (<div>
+                  <p>快递品牌:<span>{item.brand}</span></p>
+                  <p>对接入库数:<span>{item.pourIn}</span></p>
+                  <p>未对接入库数:<span>{item.noPourIn}</span></p>
+                  <p>对接出库数:<span>{item.pourOut}</span></p>
+                  <p>未对接出库数:<span>{item.noPourOut}</span></p>
+                  <p><Link to={`/dockingdetail?idBrand=${item.idBrand}&idUser=${item.id}${timeParams}`}>查看明细</Link></p>
+                </div>)
+              })
+            }
+          </div>)
+        }}
       />
     </div>
   )
@@ -95,7 +106,8 @@ List.propTypes = {
   isMotion: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   sonlist: PropTypes.array,
-  tabLoading: PropTypes.bool,
+  expandedLoading: PropTypes.bool,
+  rowExpandList: PropTypes.array,
 }
 
 export default List

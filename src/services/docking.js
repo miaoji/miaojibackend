@@ -72,3 +72,12 @@ export function downloadAllData(params) {
     data: params,
   })
 }
+
+export function brandList(params) {
+  params = pageParams(params)
+  return request({
+    url: docking.brandList,
+    method: 'post',
+    data: params,
+  })
+}

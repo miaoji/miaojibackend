@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const IndexPage = ({ location, dispatch, docking, app, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, sonlist, expandedRowKeys } = docking
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, sonlist, expandedRowKeys, rowExpandList } = docking
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
@@ -40,7 +40,8 @@ const IndexPage = ({ location, dispatch, docking, app, loading }) => {
     location,
     isMotion,
     sonlist,
-    tabLoading: loading.effects['docking/countInfo'],
+    rowExpandList,
+    expandedLoading: loading.effects['docking/querybrandlist'],
     expandedRowKeys,
     onChange(page) {
       if (query.createTime && query.createTime.length > 0) {
@@ -90,10 +91,10 @@ const IndexPage = ({ location, dispatch, docking, app, loading }) => {
         },
       })
       dispatch({
-        type: 'docking/countInfo',
+        type: 'docking/querybrandlist',
         payload: {
           ...location.query,
-          idUser: record.id,
+          userIds: record.id,
         },
       })
     },

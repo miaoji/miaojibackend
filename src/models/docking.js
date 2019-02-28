@@ -2,7 +2,7 @@ import React from 'react'
 import { message, notification, Tag } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime, filterStoreSelect } from '../utils'
-import { query, detail, count, download, downloadAllData } from '../services/docking'
+import { query, detail, count, download, downloadAllData, brandList } from '../services/docking'
 import { pageModel } from './system/common'
 
 const { prefix, APIV3, brandReverse } = config
@@ -17,6 +17,7 @@ export default modelExtend(pageModel, {
     isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
     expandedRowKeys: [],
     sonlist: {},
+    rowExpandList: [],
   },
 
   subscriptions: {
@@ -185,6 +186,31 @@ export default modelExtend(pageModel, {
           })
         }
       } else {
+        throw data.mess || '无法跟服务器建立有效连接'
+      }
+    },
+
+    *querybrandlist({ payload = {} }, { call, put }) {
+      payload = initialCreateTime(payload, true)
+      const data = yield call(brandList, {
+        ...payload,
+        page: 1,
+        pageSize: 10000,
+      })
+      if (data.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            rowExpandList: data.obj,
+          },
+        })
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            rowExpandList: [],
+          },
+        })
         throw data.mess || '无法跟服务器建立有效连接'
       }
     },
