@@ -1,5 +1,8 @@
 import lodash from 'lodash'
 import { getOrgIdUsers } from './getUserInfo'
+
+const userIds = getOrgIdUsers()
+const userIdsArr = userIds ? userIds.split(',') : undefined
 /**
  * 对网络请求的params做处理，针对分页
  * @param   {Object} params 传入一个需要的对象
@@ -10,8 +13,13 @@ export const pageParams = function (params) {
     pagination: 1,
     rownum: 10,
   }
-  // params.location = getLocation().length ? getLocation() : undefined
-  params.userIds = params.userIds || getOrgIdUsers()
+  if (params.userIds) {
+    const tmp = userIdsArr ? userIdsArr.filter(i => String(i) === String(params.userIds)) : []
+    if (tmp.length === 0 && userIds) {
+      params.userIds = '0000'
+    }
+  }
+  params.userIds = params.userIds || userIds
   params.pagination = params.page ? Number(params.page) : 1
   params.rownum = params.pageSize ? Number(params.pageSize) : 10
   delete params.page

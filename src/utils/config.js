@@ -308,6 +308,10 @@ module.exports = {
       brandList: `${APIV1}/simpleRecordIndex`,
       detail: `${APIV1}/simpleRecordList`,
     },
+    // 品牌对接状态查询
+    brandDocking: {
+      list: `${APIV1}/blackList`,
+    },
   },
   brand: {
     2: '优速',

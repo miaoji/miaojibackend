@@ -473,7 +473,17 @@ const Routers = function ({ history, app }) {
           },
         },
         {
-          // 快递对接
+          // 对接管理>品牌对接
+          path: 'branddocking',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/branddocking'))
+              cb(null, require('./routes/branddocking/'))
+            }, 'branddocking')
+          },
+        },
+        {
+          // 对接管理>快递对接
           path: 'docking',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
