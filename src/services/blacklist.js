@@ -2,6 +2,7 @@ import { request, config, pageParams } from '../utils'
 
 const { api } = config
 const { blacklist } = api
+
 export async function query(params) {
   params = pageParams(params)
   return request({
@@ -32,5 +33,16 @@ export async function remove(params) {
     url: blacklist.update,
     method: 'post',
     params,
+  })
+}
+
+export async function download(params) {
+  params = pageParams(params)
+  delete params.pagination
+  delete params.rownum
+  return request({
+    url: blacklist.all,
+    method: 'post',
+    data: params,
   })
 }

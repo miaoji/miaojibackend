@@ -22,6 +22,7 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
+  onExport,
   onFilterChange,
   storeuserList,
   filter,
@@ -120,11 +121,12 @@ const Filter = ({
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+            <Button type="primary" className="margin-right" size="large" onClick={onExport}>下载</Button>
           </div>
           <div style={{ display: isSuperAdmin() ? 'block' : 'none' }}>
             <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
@@ -142,6 +144,7 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   storeuserList: PropTypes.array,
+  onExport: PropTypes.func,
 }
 
 export default Form.create()(Filter)

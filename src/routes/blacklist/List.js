@@ -46,6 +46,9 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '理由',
       dataIndex: 'note',
       key: 'note',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
       title: '时间',
       dataIndex: 'createTime',

@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
-import { initialCreateTime } from 'utils'
-import { message } from 'antd'
-import { query, create, update, remove } from '../services/blacklist'
+import { initialCreateTime, APIV3 } from 'utils'
+import { message, notification } from 'antd'
+import { query, create, update, remove, download } from '../services/blacklist'
 import { pageModel } from './system/common'
 
 
@@ -88,6 +88,33 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
       } else {
         throw data.mess === 'id或手机号已存在' ? '您输入的idUser不存在或者输入的手机号已存在' : data.mess || data
+      }
+    },
+
+    *export({ payload = {} }, { call }) {
+      payload = initialCreateTime(payload)
+      payload.name ? payload.name = payload.name.split('///')[1] : undefined
+      console.log('payload', payload)
+      const data = yield call(download, { ...payload, downLoad: 1 })
+      console.log('data', data)
+      if (data.code === 200 && data.obj) {
+        const url = APIV3 + data.obj
+        const openUrl = window.open(url)
+        if (openUrl === null) {
+          notification.warn({
+            message: '下载失败',
+            description: '请关闭浏览阻止网页弹窗的功能!!!',
+            duration: 3,
+          })
+        } else {
+          notification.warn({
+            message: '正在下载',
+            description: '请等待!!!',
+            duration: 3,
+          })
+        }
+      } else {
+        throw data.mess || '无法跟服务器建立有效连接'
       }
     },
   },
