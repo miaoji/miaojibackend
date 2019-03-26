@@ -1,7 +1,7 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { initialCreateTime } from 'utils'
+import { initialCreateTime, storage } from 'utils'
 import { query, create, update, remove } from '../services/qr'
 import { query as queryParameterOption } from '../services/storeuser'
 import { pageModel } from './system/common'
@@ -37,10 +37,18 @@ export default modelExtend(pageModel, {
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
       if (data) {
+        const storeuserArr = storage({ key: 'storeuserArr', json: true })
+        const list = data.obj.obj.map((i) => {
+          const itemInfo = storeuserArr.find(k => +i.parameter && +i.parameter === k.idUser) || {}
+          return {
+            ...i,
+            address: itemInfo.address,
+          }
+        })
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj.obj,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,

@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { query, orderInfo } from 'src/services/orderdetails'
 import key from 'src/utils/key'
+import { storage } from 'utils'
 import { message } from 'antd'
 import { pageModel } from './system/common'
 
@@ -51,14 +52,22 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       let data = yield call(query, { page: 1, pageSize: 10, ...payload })
       if (data.code === 200) {
-        data.obj = data.obj.map(item => ({ ...item, key: key() }))
+        const storeuserArr = storage({ key: 'storeuserArr', json: true })
+        const list = data.obj.map((i) => {
+          const itemInfo = storeuserArr.find(k => +i.idUser && +i.idUser === k.idUser) || {}
+          return {
+            ...i,
+            address: itemInfo.address || '/',
+            key: key(),
+          }
+        })
         if (data.obj.length === 0) {
           message.warning('没有查询到相关数据')
         }
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,

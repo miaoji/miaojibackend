@@ -10,14 +10,7 @@ import SonTable from './SonTable'
 const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading, ...tableProps }) => {
   const columns = [
     {
-      title: '站点地区',
-      dataIndex: 'city',
-      key: 'city',
-      render: (text, record) => {
-        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
-      },
-    }, {
-      title: '站点名',
+      title: '站点名称',
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
@@ -25,6 +18,13 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading,
           return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
         }
         return <Link to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>{text}</Link>
+      },
+    }, {
+      title: '站点地址',
+      dataIndex: 'city',
+      key: 'city',
+      render: (text, record) => {
+        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
       },
     }, {
       title: '点货数量',

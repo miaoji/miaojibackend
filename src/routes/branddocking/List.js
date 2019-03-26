@@ -39,6 +39,10 @@ const List = ({ location, ...tableProps }) => {
       key: 'name',
 
     }, {
+      title: '站点地址',
+      dataIndex: 'address',
+      key: 'address',
+    }, {
       title: '圆通',
       dataIndex: 'stoDatastatus',
       key: 'stoDatastatus',

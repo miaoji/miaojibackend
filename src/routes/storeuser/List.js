@@ -38,7 +38,7 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
       dataIndex: 'mobile',
       key: 'mobile',
     }, {
-      title: '店铺名称',
+      title: '站点名称',
       dataIndex: 'name',
       key: 'name',
       width: 170,
@@ -46,12 +46,12 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '店铺地址',
+      title: '站点地址',
       dataIndex: 'address',
       key: 'address',
       width: 170,
       render: (_, record) => {
-        return <span>{`${record.province || ''}${record.city || ''}${record.district || '/'}`}</span>
+        return <span>{`${record.province || ''}/${record.city || ''}/${record.district || '/'}`}</span>
       },
     }, {
       title: '店铺级别',

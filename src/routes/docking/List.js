@@ -27,6 +27,14 @@ const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, isMotion, lo
         return <span>{text || '暂无'}</span>
       },
     }, {
+      title: '站点地址',
+      dataIndex: 'address',
+      key: 'address',
+      width: 170,
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      },
+    }, {
       title: '对接入库数',
       dataIndex: 'pourIn',
       key: 'pourIn',

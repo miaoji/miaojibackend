@@ -10,7 +10,6 @@ const IndexPage = ({ location, dispatch, branddocking, loading, app }) => {
   const { pageSize } = pagination
   const { storeuserList } = app
 
-
   const listProps = {
     dataSource: list,
     loading: loading.effects['branddocking/query'],

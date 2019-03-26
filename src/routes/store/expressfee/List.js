@@ -56,14 +56,7 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
   }
   const columns = [
     {
-      title: '站点地区',
-      dataIndex: 'city',
-      key: 'city',
-      render: (text, record) => {
-        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
-      },
-    }, {
-      title: '站点名',
+      title: '站点名称',
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
@@ -71,6 +64,13 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
           return <Link title="查看寄件详情" to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text || '暂无'}</Link>
         }
         return <Link title="查看寄件详情" to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}`}>{text || '暂无'}</Link>
+      },
+    }, {
+      title: '站点地址',
+      dataIndex: 'city',
+      key: 'city',
+      render: (text, record) => {
+        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
       },
     }, {
       title: '支付宝',

@@ -121,7 +121,7 @@ const Filter = ({
             showSearch
             style={{ width: '100%' }}
             onSelect={nameChange}
-            placeholder="按店铺名称搜索"
+            placeholder="按站点名称搜索"
             size="large"
           >
             {storeuserList}
@@ -139,7 +139,7 @@ const Filter = ({
             size="large"
             options={locationList}
             onChange={handleLocationChange}
-            placeholder="请输入地区信息"
+            placeholder="按站点地址搜索"
             changeOnSelect
             allowClear
             expandTrigger="hover"

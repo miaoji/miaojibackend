@@ -23,20 +23,20 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
         // return <a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
       },
     }, {
-      title: '区',
-      width: 160,
-      dataIndex: 'district',
-      key: 'district',
-      render: (text, record) => {
-        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
-      },
-    }, {
       title: '站点名称',
       dataIndex: 'name',
       key: 'name',
       width: 170,
       render: (text) => {
         return <span>{text || '暂无'}</span>
+      },
+    }, {
+      title: '站点地址',
+      width: 160,
+      dataIndex: 'district',
+      key: 'district',
+      render: (text, record) => {
+        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
       },
     }, {
       title: '点货数',

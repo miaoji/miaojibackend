@@ -11,7 +11,7 @@ const localStorage = window.localStorage
  * @param  {String}  type   [localStorage的操作方式 get、set、remove、clear]
  * @return {String}         [localStorage.getItem(key)时返回的值]
  */
-export const storage = function ({ key, val, prefix = true, type = 'get' }) {
+export const storage = function ({ key, val, prefix = true, type = 'get', json = false }) {
   let typeCheck = type === 'get'
   if (prefix) {
     key = localPrefix + key
@@ -22,6 +22,13 @@ export const storage = function ({ key, val, prefix = true, type = 'get' }) {
       res = localStorage.getItem(key)
       if (res) {
         res = decode(res)
+      }
+      if (json) {
+        try {
+          res = JSON.parse(res)
+        } catch (e) {
+          res = ''
+        }
       }
       break
     case 'set':

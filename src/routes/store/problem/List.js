@@ -9,7 +9,7 @@ import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点编号',
+      title: '站点ID',
       dataIndex: 'idUser',
       key: 'idUser',
       render: (text) => {
@@ -24,6 +24,13 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
           return <Link to={`/problemdetail?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[0]._i}`}>{text || '暂无'}</Link>
         }
         return <Link to={`/problemdetail?idUser=${record.idUser}`}>{text || '暂无'}</Link>
+      },
+    }, {
+      title: '站点地址',
+      dataIndex: 'address',
+      key: 'address',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
       },
     }, {
       title: '问题件数量',
