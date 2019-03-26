@@ -23,7 +23,6 @@ export default modelExtend(pageModel, {
     orgTree: [],
     isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
     locationData: [],
-    locationList: [],
   },
 
   subscriptions: {
@@ -34,9 +33,9 @@ export default modelExtend(pageModel, {
             type: 'query',
             payload: location.query,
           })
-          dispatch({
-            type: 'queryLocation',
-          })
+          // dispatch({
+          //   type: 'queryLocation',
+          // })
         }
       })
     },
@@ -262,6 +261,7 @@ export default modelExtend(pageModel, {
      * [获取筛选地址的数据]
      */
     *queryLocation(_, { call, put }) {
+      // 已经没用了
       const data = yield call(getLocation)
       let option = []
       if (data.code === 200 && data.obj) {

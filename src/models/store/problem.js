@@ -49,7 +49,6 @@ export default modelExtend(pageModel, {
             address: itemInfo.address,
           }
         })
-        console.log('list', list)
         yield put({
           type: 'querySuccess',
           payload: {

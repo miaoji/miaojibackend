@@ -18,7 +18,6 @@ const IndexPage = ({ location, dispatch, branddocking, loading, app }) => {
     onChange(page, filters) {
       const filtersQuery = {}
       Object.keys(filters).forEach((i) => { filtersQuery[i] = filters[i][0] })
-      console.log('filtersQuery', filtersQuery)
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,

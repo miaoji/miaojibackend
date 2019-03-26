@@ -7,7 +7,7 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
-  const { locationList, orgTree, list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys, locationData } = storeuser
+  const { orgTree, list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys, locationData } = storeuser
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
@@ -110,7 +110,6 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
     filter: {
       ...location.query,
     },
-    locationList,
     storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({

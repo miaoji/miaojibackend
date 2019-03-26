@@ -67,7 +67,7 @@ export default {
         })
 
         if (process.env.NODE_ENV === 'development') {
-          console.log('App-userInfo', user)
+          // console.log('App-userInfo', user)
         }
         let menuList = user.userMenus
 
@@ -81,7 +81,6 @@ export default {
             route: '/bankcard',
           })
         }
-        console.log('menuList', menuList)
         let list = menus
         if (process.env.NODE_ENV !== 'text') {
           list = [...rebuildMenuData(menuList), ...hideMenus]

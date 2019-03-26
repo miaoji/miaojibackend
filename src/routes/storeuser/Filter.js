@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { FilterItem, DateRange } from 'components'
-import { Form, Button, Row, Col, Input, Select, Cascader } from 'antd'
+import { FilterItem, DateRange, Location } from 'components'
+import {
+  Form, Button, Row, Col, Input, Select,
+  // Cascader
+} from 'antd'
 import { getOrgIdUsers } from '../../utils/getUserInfo'
 
 const createUserDis = !(getOrgIdUsers())
-console.log('getOrgIdUsers()', getOrgIdUsers())
-console.log('createUserDis', createUserDis)
 const Search = Input.Search
 
 const ColProps = {
@@ -28,7 +29,6 @@ const Filter = ({
   filter,
   storeuserList,
   handleCreate,
-  locationList,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -48,8 +48,6 @@ const Filter = ({
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
-    // 判断搜索提交的内容是否为空
-    // 为空则等于undefined
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
         fields[item] = undefined
@@ -102,17 +100,6 @@ const Filter = ({
     handleChange('name', key)
   }
 
-  const filterLocation = (inputValue, path) => {
-    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
-  }
-
-  const handleLocationChange = (key) => {
-    handleChange('location', key)
-    setFieldsValue({
-      location: key,
-    })
-  }
-
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
@@ -132,18 +119,8 @@ const Filter = ({
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按账号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('location', { initialValue: initLocation || null })(
-          <Cascader
-            style={{ width: '100%' }}
-            showSearch={{ filterLocation }}
-            size="large"
-            options={locationList}
-            onChange={handleLocationChange}
-            placeholder="按站点地址搜索"
-            changeOnSelect
-            allowClear
-            expandTrigger="hover"
-          />
+        {getFieldDecorator('location', { initialValue: initLocation })(
+          <Location handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 12 }}>
@@ -172,7 +149,6 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   storeuserList: PropTypes.array,
-  locationList: PropTypes.array,
 }
 
 export default Form.create()(Filter)

@@ -102,9 +102,7 @@ export default modelExtend(pageModel, {
     *export({ payload = {} }, { call }) {
       payload = initialCreateTime(payload)
       payload.name ? payload.name = payload.name.split('///')[1] : undefined
-      console.log('payload', payload)
       const data = yield call(download, { ...payload, downLoad: 1 })
-      console.log('data', data)
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
         const openUrl = window.open(url)

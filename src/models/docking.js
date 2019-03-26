@@ -171,10 +171,10 @@ export default modelExtend(pageModel, {
     },
 
     *downloadAllData({ payload = {} }, { call }) {
-      console.log('payload', payload)
       const data = yield call(downloadAllData, {
         endTime: 1541087999999,
         startTime: 1541001600000,
+        ...payload,
       })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
