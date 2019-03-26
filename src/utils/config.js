@@ -24,7 +24,7 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
-// APIV1 = 'http://192.168.231.125:80'
+APIV1 = 'http://192.168.231.125:80'
 
 // APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
 
@@ -310,7 +310,7 @@ module.exports = {
     },
     // 品牌对接状态查询
     brandDocking: {
-      list: `${APIV1}/blackList`,
+      list: `${APIV1}/stTactinnList`,
     },
   },
   brand: {

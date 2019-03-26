@@ -1,14 +1,14 @@
 import lodash from 'lodash'
 import { getOrgIdUsers } from './getUserInfo'
 
-const userIds = getOrgIdUsers()
-const userIdsArr = userIds ? userIds.split(',') : undefined
 /**
  * 对网络请求的params做处理，针对分页
  * @param   {Object} params 传入一个需要的对象
  * @return  {Object} 返回一个处理好的对象
  */
 export const pageParams = function (params) {
+  const userIds = getOrgIdUsers()
+  const userIdsArr = userIds ? userIds.split(',') : undefined
   params = { ...params } || {
     pagination: 1,
     rownum: 10,

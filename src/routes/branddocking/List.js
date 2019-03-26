@@ -4,20 +4,22 @@ import { Table } from 'antd'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
+const replText = {
+  0: '未对接',
+  1: '对接成功',
+  2: '对接失败',
+  3: '对接中',
+}
+const color = {
+  0: '#DB9019',
+  1: '#62bd00',
+  2: '#FF534D',
+  3: '#25C6FC',
+}
+
+const filtersTest = Object.values(replText).map((i, index) => ({ text: i, value: index }))
 const Text = ({ children }) => {
-  const text = {
-    0: '未对接',
-    1: '对接成功',
-    2: '对接失败',
-    3: '对接中',
-  }
-  const color = {
-    0: '#DB9019',
-    1: '#62bd00',
-    2: '#FF534D',
-    3: '#25C6FC',
-  }
-  return <span style={{ color: color[children] }}>{text[children]}</span>
+  return <span style={{ color: color[children] }}>{replText[children]}</span>
 }
 
 Text.propTypes = {
@@ -25,6 +27,7 @@ Text.propTypes = {
 }
 
 const List = ({ location, ...tableProps }) => {
+  const { stoDatastatus, ztoDatastatus, ytoDatastatus, beDatastatus, ydDatastatus } = location.query
   const columns = [
     {
       title: '站点ID',
@@ -37,38 +40,53 @@ const List = ({ location, ...tableProps }) => {
 
     }, {
       title: '圆通',
-      dataIndex: 'mobile',
-      key: 'mobile1',
-      render: () => {
-        return <Text>{Math.floor(Math.random() * 4)}</Text>
+      dataIndex: 'stoDatastatus',
+      key: 'stoDatastatus',
+      filters: filtersTest,
+      filterMultiple: false,
+      filteredValue: stoDatastatus ? [stoDatastatus] : [],
+      render: (text) => {
+        return <Text>{text}</Text>
       },
     }, {
       title: '中通',
-      dataIndex: 'mobile',
-      key: 'mobile2',
-      render: () => {
-        return <Text>{Math.floor(Math.random() * 4)}</Text>
+      dataIndex: 'ztoDatastatus',
+      key: 'ztoDatastatus',
+      filters: filtersTest,
+      filterMultiple: false,
+      filteredValue: ztoDatastatus ? [ztoDatastatus] : [],
+      render: (text) => {
+        return <Text>{text}</Text>
       },
     }, {
       title: '申通',
-      dataIndex: 'mobile',
-      key: 'mobile3',
-      render: () => {
-        return <Text>{Math.floor(Math.random() * 4)}</Text>
+      dataIndex: 'ytoDatastatus',
+      key: 'ytoDatastatus',
+      filters: filtersTest,
+      filterMultiple: false,
+      filteredValue: ytoDatastatus ? [ytoDatastatus] : [],
+      render: (text) => {
+        return <Text>{text}</Text>
       },
     }, {
       title: '百世汇通',
-      dataIndex: 'mobile',
-      key: 'mobile4',
-      render: () => {
-        return <Text>{Math.floor(Math.random() * 4)}</Text>
+      dataIndex: 'beDatastatus',
+      key: 'beDatastatus',
+      filters: filtersTest,
+      filterMultiple: false,
+      filteredValue: beDatastatus ? [beDatastatus] : [],
+      render: (text) => {
+        return <Text>{text}</Text>
       },
     }, {
       title: '韵达',
-      dataIndex: 'mobile',
-      key: 'mobile5',
-      render: () => {
-        return <Text>{Math.floor(Math.random() * 4)}</Text>
+      dataIndex: 'ydDatastatus',
+      key: 'ydDatastatus',
+      filters: filtersTest,
+      filterMultiple: false,
+      filteredValue: ydDatastatus ? [ydDatastatus] : [],
+      render: (text) => {
+        return <Text>{text}</Text>
       },
     },
   ]
