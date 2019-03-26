@@ -1,5 +1,3 @@
-import { storeuserEditLocation } from './processing'
-
 /* eslint-disable */
 const location = [{
   "children": [{
@@ -12650,8 +12648,4 @@ const location = [{
   "province": "黑龙江"
 }]
 
-const city = location.map((item) => {
-  return storeuserEditLocation(item)
-})
-
-module.exports = city
+module.exports = location

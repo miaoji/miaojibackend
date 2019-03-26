@@ -1,10 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Cascader, Form } from 'antd'
-import city from 'utils/city'
+import cityData from 'utils/city'
+import { storeuserEditLocation } from 'utils/processing'
+
+const city = cityData.map((item) => {
+  return storeuserEditLocation(item)
+})
+
 
 const Location = ({ handleChange, value, ...props }) => {
-  console.log('props', props)
+  console.log('props', value)
   const filterLocation = (inputValue, path) => {
     return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }

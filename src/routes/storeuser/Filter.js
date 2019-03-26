@@ -72,6 +72,7 @@ const Filter = ({
   }
 
   const handleChange = (key, values) => {
+    console.log('key', values)
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
