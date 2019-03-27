@@ -95,7 +95,26 @@ export default modelExtend(pageModel, {
       } else {
         newpayload = { ...payload }
       }
-      const data = yield call(download, { ...newpayload, download: 1 })
+      const locationPayload = {}
+      if (newpayload.location && newpayload.location.length > 0) {
+        // 不要对传进来的newpayload直接修改,会直接影响原数据
+        let location = newpayload.location.split(',')
+        console.log('location', location)
+        switch (location.length) {
+          case 1:
+            locationPayload.province = location[0]
+            break
+          case 2:
+            locationPayload.city = location[1]
+            break
+          case 3:
+            locationPayload.district = location[2]
+            break
+          default:
+            break
+        }
+      }
+      const data = yield call(download, { ...newpayload, ...locationPayload, location: undefined, download: 1 })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
         const openUrl = window.open(url)

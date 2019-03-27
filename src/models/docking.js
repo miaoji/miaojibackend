@@ -153,19 +153,44 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *download({ payload }, { call }) {
+    *download({ ...props }, { call }) {
+      let { payload } = props
       notification.success({
         message: '准备中...',
         description: '正在为您准备资源,请稍等!!!',
         duration: 3,
       })
       payload = initialCreateTime(payload, true)
-      // filterStoreSelect(payload)
+      filterStoreSelect(payload)
+      if (payload.idUser) {
+        payload.userIds = String(payload.idUser)
+        delete payload.idUser
+      }
+      const locationPayload = {}
+      if (payload.location && payload.location.length > 0) {
+        // 不要对传进来的payload直接修改,会直接影响原数据
+        let location = payload.location.split(',')
+        console.log('location', location)
+        switch (location.length) {
+          case 1:
+            locationPayload.province = location[0]
+            break
+          case 2:
+            locationPayload.city = location[1]
+            break
+          case 3:
+            locationPayload.district = location[2]
+            break
+          default:
+            break
+        }
+      }
       const newpayload = {
         startTime: payload.startTime,
         endTime: payload.endTime,
-        idUser: payload.idUser,
+        userIds: payload.userIds,
         idBrand: payload.idBrand,
+        ...locationPayload,
       }
       const data = yield call(download, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {
