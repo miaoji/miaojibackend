@@ -47,6 +47,7 @@ const Filter = ({
 
   const handleSubmit = () => {
     let fields = getFieldsValue()
+    console.log('fields', fields)
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
@@ -73,22 +74,17 @@ const Filter = ({
 
   const handleChange = (key, values) => {
     console.log('key', values)
+    if (key === 'location') {
+      setFieldsValue({
+        location: values,
+      })
+    }
     let fields = getFieldsValue()
     fields[key] = values
     fields = handleFields(fields)
     onFilterChange(fields)
   }
   const { name, mobile, location } = filter
-
-  let initLocation
-
-  if (location) {
-    if (location instanceof Array) {
-      initLocation = location
-    } else {
-      initLocation = [location]
-    }
-  }
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -120,7 +116,7 @@ const Filter = ({
         {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按账号搜索" size="large" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('location', { initialValue: initLocation })(
+        {getFieldDecorator('location', { initialValue: location })(
           <Location handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>

@@ -36,8 +36,27 @@ export default modelExtend(pageModel, {
       } else {
         newpayload = { ...payload }
       }
+      const locationPayload = {}
+      if (newpayload.location && newpayload.location.length > 0) {
+        // 不要对传进来的newpayload直接修改,会直接影响原数据
+        let location = newpayload.location.split(',')
+        console.log('location', location)
+        switch (location.length) {
+          case 1:
+            locationPayload.province = location[0]
+            break
+          case 2:
+            locationPayload.city = location[1]
+            break
+          case 3:
+            locationPayload.district = location[2]
+            break
+          default:
+            break
+        }
+      }
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      const data = yield call(query, { ...newpayload, download: 0 })
+      const data = yield call(query, { ...newpayload, ...locationPayload, download: 0, location: undefined })
       if (data.obj) {
         const storeuserArr = storage({ key: 'storeuserArr', json: true })
         const list = data.obj.map((i) => {

@@ -46,30 +46,31 @@ export default modelExtend(pageModel, {
      * [获取门店用户列表数据]
      */
     *query({ payload = {} }, { call, put }) {
+      console.log('model', payload.location)
       payload = initialCreateTime(payload)
       if (payload.name) {
         payload.name = payload.name.split('///')[1]
       }
+      const locationPayload = {}
       if (payload.location && payload.location.length > 0) {
-        let { location } = payload
-        if (!(location instanceof Array)) {
-          location = [location]
-        }
+        // 不要对传进来的payload直接修改,会直接影响原数据
+        let location = payload.location.split(',')
+        console.log('location', location)
         switch (location.length) {
           case 1:
-            payload.province = location[0]
+            locationPayload.province = location[0]
             break
           case 2:
-            payload.city = location[1]
+            locationPayload.city = location[1]
             break
           case 3:
-            payload.district = location[2]
+            locationPayload.district = location[2]
             break
           default:
             break
         }
       }
-      const data = yield call(query, { ...payload, location: undefined })
+      const data = yield call(query, { ...payload, ...locationPayload, location: undefined })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',

@@ -42,7 +42,26 @@ export default modelExtend(pageModel, {
         payload.userIds = String(payload.idUser)
         delete payload.idUser
       }
-      const data = yield call(query, { ...payload })
+      const locationPayload = {}
+      if (payload.location && payload.location.length > 0) {
+        // 不要对传进来的payload直接修改,会直接影响原数据
+        let location = payload.location.split(',')
+        console.log('location', location)
+        switch (location.length) {
+          case 1:
+            locationPayload.province = location[0]
+            break
+          case 2:
+            locationPayload.city = location[1]
+            break
+          case 3:
+            locationPayload.district = location[2]
+            break
+          default:
+            break
+        }
+      }
+      const data = yield call(query, { ...payload, ...locationPayload, location: undefined })
       if (data.code === 200) {
         const storeuserArr = storage({ key: 'storeuserArr', json: true })
         const list = data.obj.map((i) => {

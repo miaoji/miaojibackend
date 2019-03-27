@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button, Row, Col, Select } from 'antd'
+import { Location } from '../../components'
 
 
 const ColProps = {
@@ -57,6 +58,11 @@ const Filter = ({
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
+    if (key === 'location') {
+      setFieldsValue({
+        location: values,
+      })
+    }
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
         fields[item] = undefined
@@ -65,7 +71,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name } = filter
+  const { name, location } = filter
 
   const nameChange = (key) => {
     handleChange('name', key)
@@ -82,6 +88,11 @@ const Filter = ({
             placeholder="按站点名称搜索"
             size="large"
           >{storeuserList}</Select>
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('location', { initialValue: location })(
+          <Location handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>

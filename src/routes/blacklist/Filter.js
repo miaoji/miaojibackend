@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input, Select } from 'antd'
-import { DateRange } from '../../components'
+import { DateRange, Location } from '../../components'
 import { isSuperAdmin } from '../../utils'
 
 const Search = Input.Search
@@ -77,6 +77,11 @@ const Filter = ({
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
+    if (key === 'location') {
+      setFieldsValue({
+        location: values,
+      })
+    }
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
@@ -86,7 +91,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name, mobile } = filter
+  const { name, mobile, location } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -114,6 +119,11 @@ const Filter = ({
             placeholder="按站点名称搜索"
             size="large"
           >{storeuserList}</Select>
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('location', { initialValue: location })(
+          <Location handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>

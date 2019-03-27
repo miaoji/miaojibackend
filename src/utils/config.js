@@ -26,8 +26,6 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // 石金磊
 // APIV1 = 'http://192.168.231.125:80'
 
-// APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
-
 // 莫畏
 // APIV1 = 'http://192.168.231.110:8080'
 
