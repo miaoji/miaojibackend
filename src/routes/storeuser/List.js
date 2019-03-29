@@ -8,7 +8,7 @@ import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import SonTable from './SonTable'
-import { isSuperAdmin, getOrgId } from '../../utils'
+import { isSuperAdmin, getOrgId, getUserId } from '../../utils'
 
 const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
@@ -129,7 +129,7 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
   }
 
   console.log('getOrgId()', getOrgId())
-  if (getOrgId() === 66) {
+  if (getOrgId() === 66 || getUserId() === 130) {
     columns.push(
       {
         title: '操作',
