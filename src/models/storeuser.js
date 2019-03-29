@@ -161,7 +161,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
         yield put({ type: 'hideModal' })
       } else {
-        message.success(data.mess || '网络错误')
+        throw data.mess || '网络错误'
       }
     },
     /**
