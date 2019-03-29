@@ -55,7 +55,12 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
           2: '二级菜单',
           3: '三级菜单',
         }
-        return <p>{text ? realText[text] : '无'}</p>
+        const color = {
+          1: '#e53935',
+          2: '#9c27b0',
+          3: '#3f51b5',
+        }
+        return <p style={{ color: color[text] }}>{text ? realText[text] : '无'}</p>
       },
     }, {
       title: '菜单对应路由',

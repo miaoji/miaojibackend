@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { config, initialCreateTime } from '../utils'
-import { query, updateFee, versionswitch, createAccount } from '../services/storeuser'
+import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList } from '../services/storeuser'
 import { pageModel } from './system/common'
 import { locationData } from '../utils/locationData'
 import { query as queryOrgList, getLocation } from '../services/auth/org'
@@ -21,6 +21,7 @@ export default modelExtend(pageModel, {
     columnslist: [],
     sonlist: [],
     orgTree: [],
+    monitorList: [],
     isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
     locationData: [],
   },
@@ -275,6 +276,35 @@ export default modelExtend(pageModel, {
             locationList: option,
           },
         })
+      }
+    },
+    /**
+     * [添加监控设备信息到门店用户上]
+     */
+    *monitor({ payload = {} }, { call, select, put }) {
+      const idUser = yield select(({ storeuser }) => storeuser.currentItem.id)
+      const data = yield call(monitorAdd, { deviceSerial: payload.monitorItem, idUser })
+      if (data.code === 200) {
+        message.success('添加成功')
+        yield put({ type: 'queryMonitor', payload: { idUser } })
+      } else {
+        throw data.mess || '网络错误'
+      }
+    },
+    /**
+     * [查询监控设备信息]
+     */
+    *queryMonitor({ payload = {} }, { call, put }) {
+      const list = yield call(monitorList, { idUser: payload.idUser })
+      if (list.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            monitorList: list.obj,
+          },
+        })
+      } else {
+        throw new Error('列表更新失败')
       }
     },
 

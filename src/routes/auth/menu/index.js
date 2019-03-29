@@ -8,7 +8,7 @@ import Modal from './Modal'
 
 const Modular = ({ location, dispatch, menu, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, modalMenuLevel, mpidOption } = menu
-  const { pageSize } = pagination
+  const { pageSize = 100 } = pagination
   const modalProps = {
     type: modalType,
     modalMenuLevel,

@@ -40,3 +40,19 @@ export async function createAccount(params) {
     data: params,
   })
 }
+
+export function monitorAdd(params) {
+  return request({
+    url: storeuser.monitorAdd,
+    method: 'post',
+    data: params,
+  })
+}
+
+export function monitorList(params) {
+  return request({
+    url: storeuser.monitorList,
+    method: 'get',
+    params,
+  })
+}

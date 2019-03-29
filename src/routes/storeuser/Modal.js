@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, InputNumber, Input, Modal, Radio, Cascader } from 'antd'
+import { Row, Col, Form, InputNumber, Input, Modal, Radio, Cascader, Button, Spin } from 'antd'
 import styles from './List.less'
 
 const RadioGroup = Radio.Group
@@ -23,9 +23,13 @@ const modal = ({
     validateFields,
     getFieldsValue,
     getFieldValue,
+    setFieldsValue,
   },
+  monitorList,
   locationData,
   orgTree,
+  contentLoading,
+  monitorAddLoading,
   ...modalProps
 }) => {
   const handleOk = () => {
@@ -37,7 +41,13 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
+      console.log('data', data)
       onOk(data)
+      if (data.monitorItem) {
+        setFieldsValue({
+          monitorItem: undefined,
+        })
+      }
     })
   }
 
@@ -59,6 +69,54 @@ const modal = ({
       validateFields(['confirm'], { force: true })
     }
     callback()
+  }
+
+  console.log('contentLoading', contentLoading)
+
+  if (modalProps.modalType === 'monitor') {
+    return (
+      <Modal {...{ ...modalOpts, footer: null }} title="监控管理" >
+        <Row>
+          <Col span={20}>
+            <Form layout="horizontal">
+              <FormItem label="设备序列号" hasFeedback {...{ ...formItemLayout, wrapperCol: { span: 16 } }}>
+                {getFieldDecorator('monitorItem', {
+                  initialValue: '',
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入设备序列号',
+                    },
+                  ],
+                })(<Input placeholder="请输入设备序列号" />)}
+              </FormItem>
+            </Form>
+          </Col>
+          <Col span={2}>
+            <Button loading={monitorAddLoading} onClick={handleOk} style={{ height: '32px' }} type="primary">添加</Button>
+          </Col>
+        </Row>
+        <div className={styles.monitorList}>
+          <h2>门店监控设备列表</h2>
+          <div>
+            <Spin spinning={contentLoading}>
+              <div className={styles.monitorListItem}>
+                {monitorList.length ? monitorList.map((i, k) => (
+                  <p key={k}>
+                    <span>{`设备${k + 1}`}</span>
+                    <span>:</span>
+                    <span>{`${i}`}</span>
+                    <span>
+                      <Button type="danger" size="small">删除</Button>
+                    </span>
+                  </p>
+                )) : <p>暂无设备记录</p>}
+              </div>
+            </Spin>
+          </div>
+        </div>
+      </Modal >
+    )
   }
 
   if (modalProps.modalType === 'versionswitch') {
@@ -273,6 +331,9 @@ modal.propTypes = {
   locationData: PropTypes.object.isRequired,
   onOk: PropTypes.func.isRequired,
   orgTree: PropTypes.array,
+  monitorList: PropTypes.array,
+  contentLoading: PropTypes.bool,
+  monitorAddLoading: PropTypes.bool,
 }
 
 export default Form.create()(modal)

@@ -7,14 +7,30 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
-  const { orgTree, list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys, locationData } = storeuser
+  const {
+    orgTree,
+    list,
+    sonlist,
+    columnslist,
+    pagination,
+    currentItem,
+    modalVisible,
+    modalType,
+    isMotion,
+    expandedRowKeys,
+    locationData,
+    monitorList,
+  } = storeuser
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
 
   const modalProps = {
     modalType,
+    monitorList,
     item: modalType === 'create' ? {} : currentItem,
+    contentLoading: loading.effects['storeuser/queryMonitor'],
+    monitorAddLoading: loading.effects['storeuser/monitor'],
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['storeuser/update'],
@@ -77,6 +93,21 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
         payload: {
           modalType: 'versionswitch',
           currentItem: item,
+        },
+      })
+    },
+    onMonitorClick(item) {
+      dispatch({
+        type: 'storeuser/showModal',
+        payload: {
+          modalType: 'monitor',
+          currentItem: item,
+        },
+      })
+      dispatch({
+        type: 'storeuser/queryMonitor',
+        payload: {
+          idUser: item.id,
         },
       })
     },

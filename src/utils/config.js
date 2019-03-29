@@ -21,7 +21,7 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.126.1:8081'
 
 // 张涛
-// APIV1 = 'http://192.168.231.239:8077'
+APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
 // APIV1 = 'http://192.168.231.125:80'
@@ -87,6 +87,8 @@ module.exports = {
       list: `${APIV1}/store`, // 门店用户
       updateFee: `${APIV1}/updateFee`, // 修改门店用户通讯费
       versionswitch: `${APIV1}/updateVersion`, // app版本切换
+      monitorAdd: `${APIV1}/stMonitorAdd`, // 添加门店监控设备信息
+      monitorList: `${APIV1}/stMonitor`, // 查询门店监控设备信息
     },
     articles: {
       list: `${APIV1}/selectCollection`, // 文章分页数据
