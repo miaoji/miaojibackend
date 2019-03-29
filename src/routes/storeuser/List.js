@@ -8,7 +8,7 @@ import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import SonTable from './SonTable'
-import { isSuperAdmin } from '../../utils'
+import { isSuperAdmin, getOrgId } from '../../utils'
 
 const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
@@ -123,6 +123,20 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         width: 100,
         render: (text, record) => {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
+        },
+      },
+    )
+  }
+
+  console.log('getOrgId()', getOrgId())
+  if (getOrgId() === 66) {
+    columns.push(
+      {
+        title: '操作',
+        key: 'operations',
+        width: 100,
+        render: (text, record) => {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '版本切换' }]} />
         },
       },
     )
