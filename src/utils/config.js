@@ -78,6 +78,8 @@ module.exports = {
       businessRegist: `${APIV1}/stRegist`,
       // 获取业务量操作记录
       businessOperation: `${APIV1}/stOperation`,
+      // 获取接口调用折线图数据
+      interfaceCallList: `${APIV1}/stThirtyTime`,
     },
     wxuser: {
       list: `${APIV1}/wechatuser`, // 微信用户分页

@@ -5,7 +5,9 @@ import { Spin } from 'antd'
 import './theme/macarons.js'
 import { time } from '../../../../utils'
 
-const InterfaceCall = ({ receviceData, sendData, loading }) => {
+const InterfaceCall = ({ interfaceCallData = {}, loading }) => {
+  console.log('interfaceCallData', interfaceCallData)
+  const { qsArr = [], rkArr = [] } = interfaceCallData
   const dataname = time.getLineTime()
   const option = {
     backgroundColor: '#fff',
@@ -17,7 +19,7 @@ const InterfaceCall = ({ receviceData, sendData, loading }) => {
       trigger: 'axis',
     },
     legend: {
-      data: ['入库数', '出库数'],
+      data: ['入库数', '签收数'],
     },
     toolbox: {
       show: true,
@@ -61,10 +63,10 @@ const InterfaceCall = ({ receviceData, sendData, loading }) => {
             rotate: '36',
           },
         },
-        data: receviceData,
+        data: rkArr,
       },
       {
-        name: '出库数',
+        name: '签收数',
         type: 'line',
         // stack: '总量',
         smooth: false,
@@ -74,7 +76,7 @@ const InterfaceCall = ({ receviceData, sendData, loading }) => {
             rotate: '36',
           },
         },
-        data: sendData,
+        data: qsArr,
       },
     ],
   }
@@ -94,8 +96,7 @@ const InterfaceCall = ({ receviceData, sendData, loading }) => {
   )
 }
 InterfaceCall.propTypes = {
-  receviceData: PropTypes.array,
-  sendData: PropTypes.array,
+  interfaceCallData: PropTypes.object,
   loading: PropTypes.bool,
 }
 

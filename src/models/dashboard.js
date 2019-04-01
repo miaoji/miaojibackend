@@ -3,14 +3,14 @@ import { query as queryStoreUser } from 'src/services/storeuser'
 import { pageModel } from './system/common'
 import { color } from '../utils/theme'
 import { storage, time, isSuperAdmin, getOrgIdUsers } from '../utils'
-import { getLineData, weChatUser, income, terminalTotal, businessvolumecount } from '../services/dashboard'
+import { getLineData, weChatUser, income, terminalTotal, businessvolumecount, interfaceCallList } from '../services/dashboard'
 
 export default modelExtend(pageModel, {
   namespace: 'dashboard',
   state: {
     receviceData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     sendData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    interfaceCallData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    interfaceCallData: {},
     sales: [],
     quote: {
       name: '圈嘀科技',
@@ -77,13 +77,51 @@ export default modelExtend(pageModel, {
     },
   },
   effects: {
-    *getInterfaceCall(_, { put }) {
-      yield put({
-        type: 'updateState',
-        payload: {
-          interfaceCallData: [123],
-        },
-      })
+    *getInterfaceCall(_, { call, put }) {
+      const storageData = JSON.parse(storage({ key: 'interfaceCallData' }))
+      const todayStr = time.getToday(new Date().getTime())
+      if (storageData && todayStr === storageData.time) {
+        const { qsArr, rkArr } = storageData
+        yield put({
+          type: 'setStates',
+          payload: {
+            interfaceCallData: {
+              qsArr,
+              rkArr,
+            },
+          },
+        })
+        return
+      }
+
+      const data = yield call(interfaceCallList)
+      // qsId 签收次数
+      // rkId 入库次数
+      if (data.code === 200) {
+        const arrs = data.obj
+        const qsArr = arrs.filter(i => i.qsId).map(i => ([i.createTime, i.qsId]))
+        const rkArr = arrs.filter(i => i.rkId).map(i => ([i.createTime, i.rkId]))
+        yield put({
+          type: 'setStates',
+          payload: {
+            interfaceCallData: {
+              qsArr,
+              rkArr,
+            },
+          },
+        })
+        storage({
+          type: 'set',
+          key: 'interfaceCallData',
+          val: JSON.stringify({
+            time: todayStr,
+            qsArr,
+            rkArr,
+          }),
+        })
+      } else {
+        throw new Error('开发平台接口调用统计数据获取失败')
+      }
     },
     *getbusinessvolumecount(_, { call, put }) {
       const todayStr = time.getToday(new Date().getTime())

@@ -125,7 +125,13 @@ const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, column
         key: 'operations',
         width: 100,
         render: (text, record) => {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }, { key: '3', name: '监控设备' }]} />
+          return (<DropOption onMenuClick={e => handleMenuClick(record, e)}
+            menuOptions={[
+              { key: '1', name: '修改通讯费' },
+              { key: '2', name: '版本切换' },
+              // { key: '3', name: '监控设备' },
+            ]}
+          />)
         },
       },
     )

@@ -28,9 +28,9 @@ function Dashboard({ dashboard, loading }) {
     loading: loading.effects['dashboard/query'],
   }
   const interfaceCallLineProps = {
-    receviceData,
-    sendData,
     interfaceCallData,
+    // sendData,
+    // interfaceCallData,
     loading: loading.effects['dashboard/getInterfaceCall'],
   }
 

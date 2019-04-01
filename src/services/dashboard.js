@@ -87,3 +87,14 @@ export function businessOperation(params = {}) {
     data: params,
   })
 }
+
+/**
+ * [获取接口调用折线图数据]
+ */
+export function interfaceCallList(params = {}) {
+  return request({
+    url: dashboard.interfaceCallList,
+    method: 'post',
+    data: params,
+  })
+}
