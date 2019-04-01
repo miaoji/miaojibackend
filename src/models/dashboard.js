@@ -10,10 +10,7 @@ export default modelExtend(pageModel, {
   state: {
     receviceData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     sendData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    registData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    registDatetime: [],
-    operationData: {},
-    operationDatetime: [],
+    interfaceCallData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     sales: [],
     quote: {
       name: '圈嘀科技',
@@ -74,11 +71,20 @@ export default modelExtend(pageModel, {
           dispatch({ type: 'getWeChatUser' })
           dispatch({ type: 'getTerminalTotal' })
           dispatch({ type: 'getbusinessvolumecount' })
+          dispatch({ type: 'getInterfaceCall' })
         }
       })
     },
   },
   effects: {
+    *getInterfaceCall(_, { put }) {
+      yield put({
+        type: 'updateState',
+        payload: {
+          interfaceCallData: [123],
+        },
+      })
+    },
     *getbusinessvolumecount(_, { call, put }) {
       const todayStr = time.getToday(new Date().getTime())
       let cacheDate = storage({ key: 'trafficVolume' })
