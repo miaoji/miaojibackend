@@ -18,3 +18,11 @@ export async function getMenus(params) {
     data: params,
   })
 }
+
+export async function imgCode(params) {
+  return request({
+    url: userLogin.imgCode,
+    method: 'post',
+    data: params,
+  })
+}

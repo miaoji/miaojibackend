@@ -58,6 +58,7 @@ module.exports = {
       // login: `${APIV1}/signIn`,
       login: `${APIV1}/selectRoleByUserId`,
       getMenus: `${APIV1}/selectRoleByUserId`,
+      imgCode: `${APIV1}/imageCode`,
     },
     registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
     // registerAPP: 'http://192.168.231.131:8080/quandiExpressSiteSimple/StationUser/registerStationUser',
