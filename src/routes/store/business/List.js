@@ -41,6 +41,13 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading,
         return <span>{text || 0}</span>
       },
     }, {
+      title: '入柜数量',
+      dataIndex: 'enterTank',
+      key: 'enterTank',
+      render: (text) => {
+        return <span>{text || 0}</span>
+      },
+    }, {
       title: '签收数量',
       dataIndex: 'qstotal',
       key: 'qstotal',

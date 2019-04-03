@@ -31,6 +31,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
           101: '到件',
           102: '上架',
           103: '分派',
+          104: '入柜',
           201: '问题件',
           202: '移库',
           299: '问题件',

@@ -89,7 +89,6 @@ const Filter = ({
     handleChange('state', key)
   }
 
-
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
@@ -98,11 +97,12 @@ const Filter = ({
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('state', { initialValue: state || '0' })(
+        {getFieldDecorator('state', { initialValue: state })(
           <Select allowClear onChange={stateChange} size="large" style={{ width: '100%' }} placeholder="按快递状态筛选">
             <Option key="1">点单</Option>
             <Option key="101">上架</Option>
             {/* <Option key="103">分派</Option> */}
+            <Option key="104">入柜</Option>
             <Option key="305">签收</Option>
             <Option key="304">补签</Option>
           </Select>
