@@ -44,6 +44,7 @@ export default {
         }
       } else {
         yield put({ type: 'hideLoginLoading' })
+        yield put({ type: 'initImgCode' })
         throw data.mess || '当前网络不可用'
       }
       yield put({ type: 'hideLoginLoading' })

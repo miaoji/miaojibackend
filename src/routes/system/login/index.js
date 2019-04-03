@@ -91,11 +91,12 @@ const Login = ({
                   </Col>
                   <Col span={8}>
                     <Tooltip placement="right" title="看不清,点击换一张">
-                      <Spin spinning={loading.effects['login/initImgCode']}>
-                        <div onClick={onUpdateImgCode} style={{ height: '32px', width: '75px', marginLeft: '7px', overflow: 'hidden' }}>
-                          <img src={imgCode} alt="验证码" style={{ height: '32px', cursor: 'pointer' }} />
-                        </div>
-                      </Spin>
+                      <div onClick={onUpdateImgCode} style={{ height: '32px', width: '75px', marginLeft: '7px', overflow: 'hidden' }}>
+                        {loading.effects['login/initImgCode']
+                          ? <Spin />
+                          : <img src={imgCode} alt="验证码" style={{ height: '32px', cursor: 'pointer' }} />
+                        }
+                      </div>
                     </Tooltip>
                   </Col>
                 </Row>
