@@ -1,21 +1,35 @@
 import { routerRedux } from 'dva/router'
 import { queryURL, storage, password } from 'utils'
-import { login } from '../../services/system/login'
+import { login as signIn, imgCode } from '../../services/system/login'
 import { initUserInfo } from '../../utils/processing'
 
 export default {
   namespace: 'login',
   state: {
     loginLoading: false,
+    imgCode: '',
+    uuid: '',
   },
-
+  subscriptions: {
+    setup({ dispatch, history }) {
+      history.listen((location) => {
+        if (location.pathname === '/login') {
+          dispatch({ type: 'initImgCode' })
+        }
+      })
+    },
+  },
   effects: {
-    * login({
-      payload,
-    }, { put, call }) {
+    *login({ payload }, { put, call, select }) {
+      const uuid = yield select(({ login }) => login.uuid)
       payload.password = password(payload.password)
       yield put({ type: 'showLoginLoading' })
-      const data = yield call(login, payload)
+      const data = yield call(signIn, {
+        accounts: payload.accounts,
+        password: payload.password,
+        verification: payload.verification,
+        uuid,
+      })
       if (data.success && data.code === 200) {
         // 处理获取的用户数据
         data.obj = initUserInfo(data.obj)
@@ -34,8 +48,28 @@ export default {
       }
       yield put({ type: 'hideLoginLoading' })
     },
+
+    *initImgCode(_, { call, put }) {
+      const uuid = new Date().getTime().toString()
+      const data = yield call(imgCode, { uuid })
+      console.log('data', data)
+      if (data.code === 200) {
+        yield put({
+          type: 'setStates',
+          payload: {
+            imgCode: data.obj,
+            uuid,
+          },
+        })
+      } else {
+        throw new Error('获取验证码失败')
+      }
+    },
   },
   reducers: {
+    setStates(state, { payload }) {
+      return { ...state, ...payload }
+    },
     showLoginLoading(state) {
       return {
         ...state,

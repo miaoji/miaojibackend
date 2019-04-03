@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Button, Row, Form, Input, Icon } from 'antd'
+import { Button, Row, Form, Input, Icon, Col, Tooltip, Spin } from 'antd'
 import { config } from 'utils'
 import styles from './index.less'
 
@@ -10,12 +10,15 @@ const FormItem = Form.Item
 const Login = ({
   login,
   dispatch,
+  loading,
   form: {
     getFieldDecorator,
     validateFieldsAndScroll,
   },
 }) => {
-  const { loginLoading } = login
+  const { loginLoading, imgCode } = login
+
+  console.log('imgCode', imgCode)
 
   function handleOk() {
     validateFieldsAndScroll((errors, values) => {
@@ -24,6 +27,10 @@ const Login = ({
       }
       dispatch({ type: 'login/login', payload: values })
     })
+  }
+
+  const onUpdateImgCode = () => {
+    dispatch({ type: 'login/initImgCode' })
   }
 
   return (
@@ -65,6 +72,34 @@ const Login = ({
                   />)}
                 </FormItem>
                 <Row>
+                  <Col span={16}>
+                    <FormItem hasFeedback>
+                      {getFieldDecorator('verification', {
+                        rules: [
+                          {
+                            required: true,
+                            message: '请输入验证码',
+                          },
+                        ],
+                      })(<Input
+                        prefix={<Icon type="qrcode" style={{ color: 'rgba(0,0,0,.5)' }} />}
+                        size="large"
+                        onPressEnter={handleOk}
+                        placeholder="验证码"
+                      />)}
+                    </FormItem>
+                  </Col>
+                  <Col span={8}>
+                    <Tooltip placement="right" title="看不清,点击换一张">
+                      <Spin spinning={loading.effects['login/initImgCode']}>
+                        <div onClick={onUpdateImgCode} style={{ height: '32px', width: '75px', marginLeft: '7px', overflow: 'hidden' }}>
+                          <img src={imgCode} alt="验证码" style={{ height: '32px', cursor: 'pointer' }} />
+                        </div>
+                      </Spin>
+                    </Tooltip>
+                  </Col>
+                </Row>
+                <Row>
                   <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
                     登录
                   </Button>
@@ -82,6 +117,7 @@ Login.propTypes = {
   form: PropTypes.object.isRequired,
   login: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.object.isRequired,
 }
 
-export default connect(({ login }) => ({ login }))(Form.create()(Login))
+export default connect(({ login, loading }) => ({ login, loading }))(Form.create()(Login))

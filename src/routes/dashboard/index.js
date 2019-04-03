@@ -6,6 +6,7 @@ import { NumberCard, User } from './components'
 import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 import InterfaceCall from './components/Echart/InterfaceCall'
 import PieChart from './components/Echart/PieChart'
+import { isSuperAdmin } from '../../utils'
 
 function Dashboard({ dashboard, loading }) {
   const { interfaceCallData, receviceData, sendData, income, storeTotal, terminalTotal, user, trafficVolume } = dashboard
@@ -46,12 +47,11 @@ function Dashboard({ dashboard, loading }) {
         <Card>
           <SimpleChartComponent {...orderLineProps} />
         </Card>
-      </Col>
-      <Col lg={24} md={24} style={{ marginTop: '24px' }}>
+      </Col>{isSuperAdmin() ? (<Col lg={24} md={24} style={{ marginTop: '24px' }}>
         <Card>
           <InterfaceCall {...interfaceCallLineProps} />
         </Card>
-      </Col>
+      </Col>) : ''}
       <Col lg={12} md={12} style={{ marginTop: '24px' }}>
         <Card>
           <PieChart {...pieChartProps} />

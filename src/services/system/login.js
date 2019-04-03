@@ -22,7 +22,7 @@ export async function getMenus(params) {
 export async function imgCode(params) {
   return request({
     url: userLogin.imgCode,
-    method: 'post',
-    data: params,
+    method: 'get',
+    params,
   })
 }
