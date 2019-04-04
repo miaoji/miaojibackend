@@ -24,19 +24,26 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
-APIV1 = 'http://192.168.231.125:80'
-APIV3 = 'http://192.168.231.125:80'
+// APIV1 = 'http://192.168.231.125:80'
+// APIV3 = 'http://192.168.231.125:80'
+
+APIV1 = 'https://console.mijihome.cn/server/quandiExpressSiteManager'
+APIV3 = 'https://console.mijihome.cn/server'
 
 // 莫畏
 // APIV1 = 'http://192.168.231.110:8080'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
-  APIV3 = 'http://106.14.212.146:8288'
+  // APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+  // APIV3 = 'http://106.14.212.146:8288'
+  APIV1 = 'https://console.mijihome.cn/server/quandiExpressSiteManager'
+  APIV3 = 'https://console.mijihome.cn/server'
 }
 
-let APIV4 = 'http://main.mijihome.cn/WeChatService'
+// let APIV4 = 'http://main.mijihome.cn/WeChatService'
+let APIV4 = 'https://console.mijihome.cn/miaoji2/WeChatService'
+let APIV5 = 'https://console.mijihome.cn/miaoji1'
 
 module.exports = {
   APIV1,
@@ -60,7 +67,8 @@ module.exports = {
       getMenus: `${APIV1}/selectRoleByUserId`,
       imgCode: `${APIV1}/imageCode`,
     },
-    registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
+    registerAPP: `${APIV5}/quandiExpressSiteSimple/StationUser/registerStationUser`,
+    // registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
     // registerAPP: 'http://192.168.231.131:8080/quandiExpressSiteSimple/StationUser/registerStationUser',
     dashboard: {
       // 获取折线图数据

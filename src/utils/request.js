@@ -3,6 +3,8 @@ import lodash from 'lodash'
 // import 'url-search-params-polyfill'
 import qs from 'qs'
 
+// axios.defaults.withCredentials = true
+
 const fetch = (options) => {
   let {
     method = 'get',
