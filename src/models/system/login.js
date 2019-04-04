@@ -53,7 +53,6 @@ export default {
     *initImgCode(_, { call, put }) {
       const uuid = new Date().getTime().toString()
       const data = yield call(imgCode, { uuid })
-      console.log('data', data)
       if (data.code === 200) {
         yield put({
           type: 'setStates',

@@ -6,7 +6,6 @@ import './theme/macarons.js'
 import { time } from '../../../../utils'
 
 const InterfaceCall = ({ interfaceCallData = {}, loading }) => {
-  console.log('interfaceCallData', interfaceCallData)
   const { qsArr = [], rkArr = [] } = interfaceCallData
   const dataname = time.getLineTime()
   const option = {

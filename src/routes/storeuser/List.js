@@ -137,7 +137,6 @@ const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, column
     )
   }
 
-  console.log('getOrgId()', getOrgId())
   if (getOrgId() === 66 || getUserId() === 130) {
     columns.push(
       {

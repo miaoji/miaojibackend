@@ -47,7 +47,6 @@ const Filter = ({
 
   const handleSubmit = () => {
     let fields = getFieldsValue()
-    console.log('fields', fields)
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
@@ -73,7 +72,6 @@ const Filter = ({
   }
 
   const handleChange = (key, values) => {
-    console.log('key', values)
     if (key === 'location') {
       setFieldsValue({
         location: values,

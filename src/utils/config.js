@@ -24,8 +24,10 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
-// APIV1 = 'http://192.168.231.125:80'
-// APIV3 = 'http://192.168.231.125:80'
+APIV1 = 'http://192.168.231.125:80'
+APIV3 = 'http://192.168.231.125:80'
+
+APIV1 = '/api'
 
 APIV1 = 'https://console.mijihome.cn/server/quandiExpressSiteManager'
 APIV3 = 'https://console.mijihome.cn/server'

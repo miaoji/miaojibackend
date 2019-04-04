@@ -1,4 +1,5 @@
 import { request, api, pageParams } from '../utils'
+import mainRequest from '../utils/mainRequest'
 
 const { storeuser, registerAPP } = api
 
@@ -34,10 +35,11 @@ export async function versionswitch(params) {
 }
 
 export async function createAccount(params) {
-  return request({
+  return mainRequest({
     url: registerAPP,
     method: 'parampost',
     data: params,
+    decrypt: true,
   })
 }
 

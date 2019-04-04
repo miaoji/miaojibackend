@@ -40,7 +40,6 @@ export default modelExtend(pageModel, {
       if (newpayload.location && newpayload.location.length > 0) {
         // 不要对传进来的newpayload直接修改,会直接影响原数据
         let location = newpayload.location.split(',')
-        console.log('location', location)
         switch (location.length) {
           case 1:
             locationPayload.province = location[0]
@@ -99,7 +98,6 @@ export default modelExtend(pageModel, {
       if (newpayload.location && newpayload.location.length > 0) {
         // 不要对传进来的newpayload直接修改,会直接影响原数据
         let location = newpayload.location.split(',')
-        console.log('location', location)
         switch (location.length) {
           case 1:
             locationPayload.province = location[0]

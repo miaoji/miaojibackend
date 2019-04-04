@@ -18,8 +18,6 @@ const Login = ({
 }) => {
   const { loginLoading, imgCode } = login
 
-  console.log('imgCode', imgCode)
-
   function handleOk() {
     validateFieldsAndScroll((errors, values) => {
       if (errors) {

@@ -41,7 +41,6 @@ const modal = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      console.log('data', data)
       onOk(data)
       if (data.monitorItem) {
         setFieldsValue({
@@ -70,8 +69,6 @@ const modal = ({
     }
     callback()
   }
-
-  console.log('contentLoading', contentLoading)
 
   if (modalProps.modalType === 'monitor') {
     return (

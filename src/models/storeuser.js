@@ -47,7 +47,6 @@ export default modelExtend(pageModel, {
      * [获取门店用户列表数据]
      */
     *query({ payload = {} }, { call, put }) {
-      console.log('model', payload.location)
       payload = initialCreateTime(payload)
       if (payload.name) {
         payload.name = payload.name.split('///')[1]
@@ -56,7 +55,6 @@ export default modelExtend(pageModel, {
       if (payload.location && payload.location.length > 0) {
         // 不要对传进来的payload直接修改,会直接影响原数据
         let location = payload.location.split(',')
-        console.log('location', location)
         switch (location.length) {
           case 1:
             locationPayload.province = location[0]
