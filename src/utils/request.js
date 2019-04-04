@@ -1,9 +1,8 @@
 import axios from 'axios'
 import lodash from 'lodash'
-// import 'url-search-params-polyfill'
-import qs from 'qs'
+import { storage } from './storage'
 
-// axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true
 
 const fetch = (options) => {
   let {
@@ -12,7 +11,10 @@ const fetch = (options) => {
     params,
     timeout = 9000000,
     url,
+    auth = true,
+    token,
   } = options
+  console.log('token', token)
 
   const cloneData = lodash.cloneDeep(data)
 
@@ -23,6 +25,7 @@ const fetch = (options) => {
         method: 'get',
         params: cloneData || params,
         timeout,
+        headers: auth ? { token } : {},
       })
     case 'delete':
       return axios({
@@ -30,6 +33,7 @@ const fetch = (options) => {
         method: 'delete',
         params: cloneData || params,
         timeout,
+        headers: auth ? { token } : {},
       })
     case 'post':
       return axios({
@@ -38,18 +42,7 @@ const fetch = (options) => {
         data: cloneData,
         params,
         timeout,
-      })
-    /* eslint-disable */
-    case 'parampost':
-      data = qs.stringify(data)
-      return axios({
-        url,
-        method: 'post',
-        data,
-        timeout: 200000,
-        headers: {
-          'content-Type': 'application/x-www-form-urlencoded'
-        }
+        headers: auth ? { token } : {},
       })
     case 'put':
       return axios.put(url, cloneData)
@@ -64,6 +57,7 @@ const fetch = (options) => {
  * [用于发起ajax请求的一个封装的方法]
  */
 export default function request(options) {
+  options.token = storage({ key: 'token' })
   return fetch(options).then((response) => {
     const { statusText, status } = response
     let data = response.data

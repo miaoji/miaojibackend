@@ -35,6 +35,7 @@ export default {
         data.obj = initUserInfo(data.obj)
         storage({ type: 'set', key: 'user', val: JSON.stringify(data.obj) })
         storage({ type: 'set', key: 'loginTime', val: new Date().getTime() })
+        storage({ type: 'set', key: 'token', val: data.obj.token })
         const from = queryURL('from')
         yield put({ type: 'app/query' })
         if (from) {
