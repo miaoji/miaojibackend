@@ -503,6 +503,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 审计-日志
+          path: 'log',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/log'))
+              cb(null, require('./routes/log/'))
+            }, 'log')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {

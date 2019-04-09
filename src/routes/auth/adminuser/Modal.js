@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select } from 'antd'
+import { Form, Input, Modal, Select, Cascader } from 'antd'
 
 const FormItem = Form.Item
 const { TextArea } = Input
@@ -17,6 +17,7 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  orgTree,
   confirmDirty,
   onEditConfirmDirty,
   orangeizeList,
@@ -73,6 +74,10 @@ const modal = ({
   const handleConfirmBlur = (e) => {
     const value = e.target.value
     onEditConfirmDirty({ confirmDirty: confirmDirty || !!value })
+  }
+
+  const filterOrg = (inputValue, path) => {
+    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }
 
   if (type === 'resetPWD') {
@@ -266,9 +271,13 @@ const modal = ({
                   message: '请选择所属机构!',
                 },
               ],
-            })(<Select placeholder="请选择所属机构!">
-              {orangeizeList}
-            </Select>)}
+            })(<Cascader
+              options={orgTree}
+              placeholder="请选择所属机构"
+              showSearch={{ filterOrg }}
+              autocomplete="off"
+              changeOnSelect
+            />)}
           </FormItem>
           <FormItem label="角色信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('roleId', {
@@ -327,6 +336,7 @@ modal.propTypes = {
   onEditConfirmDirty: PropTypes.func,
   orangeizeList: PropTypes.array,
   roleList: PropTypes.array,
+  orgTree: PropTypes.array,
 }
 
 export default Form.create()(modal)

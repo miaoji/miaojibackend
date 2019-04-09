@@ -326,6 +326,9 @@ module.exports = {
     brandDocking: {
       list: `${APIV1}/stTactinnList`,
     },
+    log: {
+      list: `${APIV1}/stTactinnList`,
+    },
   },
   brand: {
     2: '优速',
