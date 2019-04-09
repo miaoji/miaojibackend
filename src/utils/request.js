@@ -74,7 +74,13 @@ export default function request(options) {
     if (response && response instanceof Object) {
       const { data, statusText } = response
       statusCode = response.status
+      console.log('statusCode', statusCode)
       msg = data.message || statusText
+      if (statusCode === 401) {
+        console.log('123')
+        storage({ type: 'clear' })
+        window.location.href = '/login'
+      }
     } else {
       statusCode = 600
       msg = error.message || 'Network Error'

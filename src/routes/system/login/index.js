@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Button, Row, Form, Input, Icon, Col, Tooltip, Spin } from 'antd'
+import { Row, Form, Input, Icon, Col, Tooltip, Spin } from 'antd'
 import { config } from 'utils'
 import styles from './index.less'
+import LoginButton from './loginButton'
 
 const FormItem = Form.Item
 
@@ -16,7 +17,8 @@ const Login = ({
     validateFieldsAndScroll,
   },
 }) => {
-  const { loginLoading, imgCode } = login
+  const { loginLoading, imgCode, loginErrorCount, prohibitloginStart } = login
+  console.log('loginErrorCount1', loginErrorCount)
 
   function handleOk() {
     validateFieldsAndScroll((errors, values) => {
@@ -29,6 +31,13 @@ const Login = ({
 
   const onUpdateImgCode = () => {
     dispatch({ type: 'login/initImgCode' })
+  }
+
+  const LoginButtonProps = {
+    loginLoading,
+    handleOk,
+    loginErrorCount,
+    prohibitloginStart,
   }
 
   return (
@@ -99,9 +108,10 @@ const Login = ({
                   </Col>
                 </Row>
                 <Row>
-                  <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
+                  {/* <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
                     登录
-                  </Button>
+                  </Button> */}
+                  <LoginButton {...LoginButtonProps} />
                 </Row>
               </form>
             </div>

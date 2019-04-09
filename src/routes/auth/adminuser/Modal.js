@@ -49,6 +49,13 @@ const modal = ({
   }
 
   const validateToNextPassword = (_, value, callback) => {
+    // let lv = 0
+    // if (value.match(/[a-z]/g)) { lv++ }
+    // if (value.match(/[0-9]/g)) { lv++ }
+    // if (value.match(/(.[^a-z0-9])/g)) { lv++ }
+    // if (value.length < 6) { lv = 0 }
+    // if (lv > 3) { lv = 3 }
+    // console.log('lv', lv)
     if (value && confirmDirty) {
       validateFields(['repass'], { force: true })
     }
@@ -79,6 +86,10 @@ const modal = ({
                 {
                   required: true,
                   message: '请填写用户登陆密码!',
+                },
+                {
+                  pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./])[~!@#$%^&*()_+`\-={}:";'<>?,./0-9a-zA-Z\d]{8,30}$/,
+                  message: '密码长度要在8~30之间且至少包含一个大写字母一个小写字母一个数字一个特殊符号!',
                 },
                 {
                   validator: validateToNextPassword,
@@ -223,6 +234,10 @@ const modal = ({
                 {
                   required: true,
                   message: '请填写用户登陆密码!',
+                },
+                {
+                  pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./])[~!@#$%^&*()_+`\-={}:";'<>?,./0-9a-zA-Z\d]{8,30}$/,
+                  message: '密码长度要在8~30之间且至少包含一个大写字母一个小写字母一个数字一个特殊符号!',
                 },
                 {
                   validator: validateToNextPassword,

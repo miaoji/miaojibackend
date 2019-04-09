@@ -12,9 +12,11 @@ export default {
   // 接口代理示例
   "proxy": {
     "/api": {
-      "target": "http://192.168.231.125:80",
+      // "target": "https://console.mijihome.cn/server/quandiExpressSiteManager",
+      // "target": "http://192.168.231.125:80",
+      "target": "http://192.168.231.239:8077",
       "changeOrigin": true,
-      "pathRewrite": { "^/api" : "/" }
+      "pathRewrite": { "^/api": "/" }
     },
     // "/api/v2": {
     //   "target": "http://192.168.0.110",
@@ -23,18 +25,18 @@ export default {
     // }
   },
   "env": {
-      "development": {
-        "extraBabelPlugins": [
-          "dva-hmr",
-          "transform-runtime",
-  		    ["import", { "libraryName": "antd", "style": true }]
-        ]
-      },
-      "production": {
-        "extraBabelPlugins": [
-          "transform-runtime",
-  		    ["import", { "libraryName": "antd", "style": true}]
-        ]
-      }
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr",
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": true }]
+      ]
+    },
+    "production": {
+      "extraBabelPlugins": [
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": true }]
+      ]
+    }
   }
 }
