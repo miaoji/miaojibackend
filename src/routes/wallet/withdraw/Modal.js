@@ -72,12 +72,6 @@ class modal extends Component {
           <FormItem label="提现账号" hasFeedback {...formItemLayout}>
             {getFieldDecorator('alipayaccount', {
               initialValue: item.alipayaccount,
-              rules: [
-                {
-                  required: true,
-                  message: '提现账号不能为空!',
-                },
-              ],
             })(<Input disabled />)}
           </FormItem>
           <FormItem label="提现金额(元)" hasFeedback {...formItemLayout}>
