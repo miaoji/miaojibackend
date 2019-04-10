@@ -30,14 +30,14 @@ export default {
   },
   effects: {
     *login({ payload }, { put, call, select }) {
-      // const uuid = yield select(({ login }) => login.uuid)
+      const uuid = yield select(({ login }) => login.uuid)
       payload.password = password(payload.password)
       yield put({ type: 'showLoginLoading' })
       const data = yield call(signIn, {
         accounts: payload.accounts,
         password: payload.password,
-        // verification: payload.verification,
-        // uuid,
+        verification: payload.verification,
+        uuid,
       })
       if (data.success && data.code === 200) {
         // 处理获取的用户数据

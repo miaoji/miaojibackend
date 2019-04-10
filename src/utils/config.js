@@ -39,8 +39,8 @@ APIV1 = '/api'
 if (process.env.NODE_ENV !== 'development') {
   // APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
   // APIV3 = 'http://106.14.212.146:8288'
-  APIV1 = 'https://console.mijihome.cn/server/quandiExpressSiteManager'
-  APIV3 = 'https://console.mijihome.cn/server'
+  APIV1 = '/quandiExpressSiteManager'
+  APIV3 = '/'
 }
 
 // let APIV4 = 'http://main.mijihome.cn/WeChatService'
@@ -436,6 +436,7 @@ module.exports = {
   orderTypeForBusiness: {
     1: '点货',
     101: '入库',
+    202: '移库',
     305: '签收',
     304: '补签',
     303: '退回',
