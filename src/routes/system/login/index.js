@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Form, Input, Icon, Col, Tooltip, Spin } from 'antd'
+import {
+  Row, Form, Input, Icon,
+  //  Col,
+  // Tooltip, Spin
+} from 'antd'
 import { config } from 'utils'
 import styles from './index.less'
 import LoginButton from './loginButton'
@@ -11,13 +15,15 @@ const FormItem = Form.Item
 const Login = ({
   login,
   dispatch,
-  loading,
+  // loading,
   form: {
     getFieldDecorator,
     validateFieldsAndScroll,
   },
 }) => {
-  const { loginLoading, imgCode, loginErrorCount, prohibitloginStart } = login
+  const { loginLoading,
+    //  imgCode,
+    loginErrorCount, prohibitloginStart } = login
   console.log('loginErrorCount1', loginErrorCount)
 
   function handleOk() {
@@ -29,9 +35,9 @@ const Login = ({
     })
   }
 
-  const onUpdateImgCode = () => {
-    dispatch({ type: 'login/initImgCode' })
-  }
+  // const onUpdateImgCode = () => {
+  //   dispatch({ type: 'login/initImgCode' })
+  // }
 
   const LoginButtonProps = {
     loginLoading,
@@ -79,7 +85,7 @@ const Login = ({
                   />)}
                 </FormItem>
                 <Row>
-                  <Col span={16}>
+                  {/* <Col span={16}>
                     <FormItem hasFeedback>
                       {getFieldDecorator('verification', {
                         rules: [
@@ -95,8 +101,8 @@ const Login = ({
                         placeholder="验证码"
                       />)}
                     </FormItem>
-                  </Col>
-                  <Col span={8}>
+                  </Col> */}
+                  {/* <Col span={8}>
                     <Tooltip placement="right" title="看不清,点击换一张">
                       <div onClick={onUpdateImgCode} style={{ height: '32px', width: '75px', marginLeft: '7px', overflow: 'hidden' }}>
                         {loading.effects['login/initImgCode']
@@ -105,7 +111,7 @@ const Login = ({
                         }
                       </div>
                     </Tooltip>
-                  </Col>
+                  </Col> */}
                 </Row>
                 <Row>
                   {/* <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
