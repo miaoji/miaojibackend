@@ -39,6 +39,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       dataIndex: 'name',
       key: 'name',
     }, {
+      title: '站点地址',
+      dataIndex: 'address',
+      key: 'address',
+    }, {
       title: '黑名单手机号/单号',
       dataIndex: 'mobile',
       key: 'mobile',
@@ -46,6 +50,9 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '理由',
       dataIndex: 'note',
       key: 'note',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
       title: '时间',
       dataIndex: 'createTime',

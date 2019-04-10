@@ -75,7 +75,7 @@ export default modelExtend(pageModel, {
             list,
             pagination: {
               current: Number(payload.page) || 1,
-              pageSize: Number(payload.pageSize) || 10,
+              pageSize: Number(payload.pageSize) || 100,
               total: data.total,
             },
           },

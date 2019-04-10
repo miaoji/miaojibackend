@@ -7,14 +7,30 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
-  const { locationList, orgTree, list, sonlist, columnslist, pagination, currentItem, modalVisible, modalType, isMotion, expandedRowKeys, locationData } = storeuser
+  const {
+    orgTree,
+    list,
+    sonlist,
+    columnslist,
+    pagination,
+    currentItem,
+    modalVisible,
+    modalType,
+    isMotion,
+    expandedRowKeys,
+    locationData,
+    monitorList,
+  } = storeuser
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
 
   const modalProps = {
     modalType,
+    monitorList,
     item: modalType === 'create' ? {} : currentItem,
+    contentLoading: loading.effects['storeuser/queryMonitor'],
+    monitorAddLoading: loading.effects['storeuser/monitor'],
     visible: modalVisible,
     maskClosable: false,
     confirmLoading: loading.effects['storeuser/update'],
@@ -80,6 +96,21 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
         },
       })
     },
+    onMonitorClick(item) {
+      dispatch({
+        type: 'storeuser/showModal',
+        payload: {
+          modalType: 'monitor',
+          currentItem: item,
+        },
+      })
+      dispatch({
+        type: 'storeuser/queryMonitor',
+        payload: {
+          idUser: item.id,
+        },
+      })
+    },
     // 控制可展开的行-执行展开操作但是不执行 原先的效果
     onExpand(onOff, record) {
       if (onOff === false) {
@@ -110,7 +141,6 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
     filter: {
       ...location.query,
     },
-    locationList,
     storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({

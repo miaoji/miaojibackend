@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { query } from 'src/services/order'
 import { pageModel } from './system/common'
-import { config, initialCreateTime, time } from '../utils'
+import { config, initialCreateTime, time, storage } from '../utils'
 
 const { prefix } = config
 
@@ -52,10 +52,18 @@ export default modelExtend(pageModel, {
       }
       let data = yield call(query, { ...newpayload })
       if (data.code === 200) {
+        const storeuserArr = storage({ key: 'storeuserArr', json: true })
+        const list = data.obj.map((i) => {
+          const itemInfo = storeuserArr.find(k => +i.idUser && +i.idUser === k.idUser) || {}
+          return {
+            ...i,
+            address: itemInfo.address || '/',
+          }
+        })
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj,
+            list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,

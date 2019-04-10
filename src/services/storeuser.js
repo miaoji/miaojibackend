@@ -1,4 +1,5 @@
 import { request, api, pageParams } from '../utils'
+import mainRequest from '../utils/mainRequest'
 
 const { storeuser, registerAPP } = api
 
@@ -34,9 +35,26 @@ export async function versionswitch(params) {
 }
 
 export async function createAccount(params) {
-  return request({
+  return mainRequest({
     url: registerAPP,
     method: 'parampost',
     data: params,
+    decrypt: true,
+  })
+}
+
+export function monitorAdd(params) {
+  return request({
+    url: storeuser.monitorAdd,
+    method: 'post',
+    data: params,
+  })
+}
+
+export function monitorList(params) {
+  return request({
+    url: storeuser.monitorList,
+    method: 'get',
+    params,
   })
 }

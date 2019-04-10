@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { query, gitBrandByIdUser } from '../../services/store/problem'
 import { pageModel } from '../system/common'
-import { time, initialCreateTime, filterStoreSelect } from '../../utils'
+import { time, initialCreateTime, filterStoreSelect, storage } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'problem',
@@ -41,10 +41,14 @@ export default modelExtend(pageModel, {
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
       const data = yield call(query, { ...newpayload, download: 0 })
       if (data.obj) {
-        const list = data.obj
-        // list.forEach((item, index) => {
-        //   item.key = index
-        // })
+        const storeuserArr = storage({ key: 'storeuserArr', json: true })
+        const list = data.obj.map((i) => {
+          const itemInfo = storeuserArr.find(k => +i.idUser && +i.idUser === k.idUser) || {}
+          return {
+            ...i,
+            address: itemInfo.address,
+          }
+        })
         yield put({
           type: 'querySuccess',
           payload: {

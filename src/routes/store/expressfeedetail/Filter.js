@@ -103,15 +103,13 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>快递品牌 : </span>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Input onPressEnter={brandChange} size="large" style={{ width: '70%' }} placeholder="按品牌搜索" />
+          <Input onPressEnter={brandChange} size="large" style={{ width: '100%' }} placeholder="按快递品牌筛选" />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>收款方式 : </span>
         {getFieldDecorator('payType', { initialValue: payType || '0' })(
-          <Select onChange={payTypeChange} size="large" style={{ width: '70%' }} placeholder="按支付方式筛选">
+          <Select onChange={payTypeChange} size="large" style={{ width: '100%' }} placeholder="按收款筛选">
             <Option key="0">全部</Option>
             <Option key="1">支付宝</Option>
             <Option key="2">微信</Option>
@@ -121,9 +119,8 @@ const Filter = ({
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>完成状态 : </span>
         {getFieldDecorator('status', { initialValue: status || '0' })(
-          <Select onChange={statusChange} size="large" style={{ width: '70%' }} placeholder="按支付方式筛选">
+          <Select onChange={statusChange} size="large" style={{ width: '100%' }} placeholder="按完成状态筛选">
             <Option key="0">全部</Option>
             <Option key="success">成功</Option>
             <Option key="wait">等待</Option>

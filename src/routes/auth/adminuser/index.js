@@ -7,11 +7,12 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, adminuser, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, confirmDirty, orangeizeList, roleList } = adminuser
+  const { orgTree, list, pagination, currentItem, modalVisible, modalType, confirmDirty, orangeizeList, roleList } = adminuser
   const { pageSize } = pagination
 
   const modalProps = {
     type: modalType,
+    orgTree,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['adminuser/update'],

@@ -66,9 +66,6 @@ export default {
           type: 'queryStoreUser',
         })
 
-        if (process.env.NODE_ENV === 'development') {
-          console.log('App-userInfo', user)
-        }
         let menuList = user.userMenus
 
         if (user.userId === 98) {
@@ -81,7 +78,6 @@ export default {
             route: '/bankcard',
           })
         }
-        console.log('menuList', menuList)
         let list = menus
         if (process.env.NODE_ENV !== 'text') {
           list = [...rebuildMenuData(menuList), ...hideMenus]
@@ -148,10 +144,10 @@ export default {
           const val = `${item.id}///${item.name}`
           return <Option key={val}>{`${item.id}-${item.name}`}</Option>
         })
-        if (data.total > 336) {
-          console.info('消息通知', `新增了${data.total - 336}个新用户,请进行机构的分配`)
-        }
-        const storeuserArr = data.obj.map(item => ({ key: item.id, text: `${item.id}-${item.name}-${item.province || ''}${item.city || ''}${item.district || ''}` }))
+        const storeuserArr = data.obj.map(item => ({
+          key: item.id,
+          text: `${item.id}-${item.name}-${item.province || ''}${item.city || ''}${item.district || ''}`,
+        }))
         yield put({
           type: 'updateState',
           payload: {
@@ -159,6 +155,11 @@ export default {
             storeTotal: data.total,
             storeuserArr,
           },
+        })
+        storage({
+          type: 'set',
+          key: 'storeuserArr',
+          val: JSON.stringify(data.obj.map(item => ({ idUser: item.id, address: `${item.province}/${item.city}/${item.district}` }))),
         })
       } else {
         throw '网络故障，请稍后重试' || data.mess

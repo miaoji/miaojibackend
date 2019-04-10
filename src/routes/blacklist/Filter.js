@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input, Select } from 'antd'
-import { DateRange } from '../../components'
+import { DateRange, Location } from '../../components'
 import { isSuperAdmin } from '../../utils'
 
 const Search = Input.Search
@@ -22,6 +22,7 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
+  onExport,
   onFilterChange,
   storeuserList,
   filter,
@@ -76,6 +77,11 @@ const Filter = ({
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
+    if (key === 'location') {
+      setFieldsValue({
+        location: values,
+      })
+    }
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
@@ -85,7 +91,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name, mobile } = filter
+  const { name, mobile, location } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -115,16 +121,22 @@ const Filter = ({
           >{storeuserList}</Select>
         )}
       </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('location', { initialValue: location })(
+          <Location handleChange={handleChange.bind(null, 'location')} />
+        )}
+      </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+            <Button type="primary" className="margin-right" size="large" onClick={onExport}>下载</Button>
           </div>
           <div style={{ display: isSuperAdmin() ? 'block' : 'none' }}>
             <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
@@ -142,6 +154,7 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   storeuserList: PropTypes.array,
+  onExport: PropTypes.func,
 }
 
 export default Form.create()(Filter)

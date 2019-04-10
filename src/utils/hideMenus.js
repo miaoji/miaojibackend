@@ -1,11 +1,4 @@
 export default [
-  // {
-  //   id: '1111',
-  //   mpid: 1,
-  //   name: '环迅账号管理',
-  //   icon: 'message',
-  //   route: '/bankcard',
-  // },
   {
     id: '1001',
     mpid: '-1',
@@ -80,4 +73,31 @@ export default [
     name: '分派人详情',
     route: '/assignor',
   },
+  {
+    id: '1013',
+    mpid: '-1',
+    name: '接口对接明细',
+    icon: 'message',
+    route: '/dockingdetail',
+  },
+  {
+    id: '1014',
+    mpid: '1',
+    name: '审计管理',
+    icon: 'message',
+  },
+  {
+    id: '101401',
+    mpid: '1014',
+    name: '日志记录',
+    icon: 'message',
+    route: '/log',
+  },
+  // {
+  //   id: '101402',
+  //   mpid: '1014',
+  //   name: '品牌对接',
+  //   icon: 'message',
+  //   route: '/branddocking',
+  // },
 ]

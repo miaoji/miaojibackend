@@ -8,3 +8,5 @@ yarn.lock
 package-lock.json
 .vscode
 key.pub
+key.pem
+push.sh

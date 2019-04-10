@@ -16,9 +16,13 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '站点名',
+      title: '站点名称',
       dataIndex: 'name',
       key: 'name',
+    }, {
+      title: '站点地址',
+      dataIndex: 'address',
+      key: 'address',
     }, {
       title: '分派数量',
       dataIndex: 'fptotal',

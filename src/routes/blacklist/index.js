@@ -80,22 +80,19 @@ const Blacklist = ({ location, dispatch, blacklist, loading, app }) => {
         },
       }))
     },
-    onSearch(fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/blacklist',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/blacklist',
-      }))
-    },
     onAdd() {
       dispatch({
         type: 'blacklist/showModal',
         payload: {
           modalType: 'create',
+        },
+      })
+    },
+    onExport() {
+      dispatch({
+        type: 'blacklist/export',
+        payload: {
+          ...location.query,
         },
       })
     },

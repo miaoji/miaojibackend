@@ -4,18 +4,18 @@ import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
 import { NumberCard, User } from './components'
 import SimpleChartComponent from './components/Echart/SimpleChartComponent'
+import InterfaceCall from './components/Echart/InterfaceCall'
 import PieChart from './components/Echart/PieChart'
+import { isSuperAdmin } from '../../utils'
 
 function Dashboard({ dashboard, loading }) {
-  const { receviceData, sendData, income,
-    storeTotal, terminalTotal, user, trafficVolume } = dashboard
+  const { interfaceCallData, receviceData, sendData, income, storeTotal, terminalTotal, user, trafficVolume } = dashboard
 
   const munArr = [income, storeTotal, terminalTotal]
   const munLadings = [
     loading.effects['dashboard/getIncome'],
     loading.effects['dashboard/getStoreTotal'],
     loading.effects['dashboard/getTerminalTotal'],
-    // loading.effects['dashboard/getWeChatUser'],
   ]
   const numberCards = munArr.map((item, key) => {
     return (<Col key={key} lg={8} md={8}>
@@ -23,10 +23,16 @@ function Dashboard({ dashboard, loading }) {
     </Col>)
   })
 
-  const lineProps = {
+  const orderLineProps = {
     receviceData,
     sendData,
     loading: loading.effects['dashboard/query'],
+  }
+  const interfaceCallLineProps = {
+    interfaceCallData,
+    // sendData,
+    // interfaceCallData,
+    loading: loading.effects['dashboard/getInterfaceCall'],
   }
 
   const pieChartProps = {
@@ -39,9 +45,13 @@ function Dashboard({ dashboard, loading }) {
       {numberCards}
       <Col lg={24} md={24}>
         <Card>
-          <SimpleChartComponent {...lineProps} />
+          <SimpleChartComponent {...orderLineProps} />
         </Card>
-      </Col>
+      </Col>{isSuperAdmin() ? (<Col lg={24} md={24} style={{ marginTop: '24px' }}>
+        <Card>
+          <InterfaceCall {...interfaceCallLineProps} />
+        </Card>
+      </Col>) : ''}
       <Col lg={12} md={12} style={{ marginTop: '24px' }}>
         <Card>
           <PieChart {...pieChartProps} />

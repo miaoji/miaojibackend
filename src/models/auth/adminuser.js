@@ -6,6 +6,7 @@ import { query, create, update, remove } from '../../services/auth/adminuser'
 import { query as queryOrangeizeList } from '../../services/auth/org'
 import { pageModel } from '../system/common'
 import { getUserId, password } from '../../utils'
+import orgToTree from '../../utils/orgToTree'
 import { query as queryRoleList } from '../../services/auth/role'
 
 const { Option } = Select
@@ -96,7 +97,7 @@ export default modelExtend(pageModel, {
       payload.password = password(payload.password)
       delete payload.repass
       payload.roleId = payload.roleId.toString()
-      const data = yield call(create, { ...payload })
+      const data = yield call(create, { ...payload, orgId: payload.orgId[payload.orgId.length - 1] })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('新增成功')
@@ -155,6 +156,7 @@ export default modelExtend(pageModel, {
     *queryOrangeizeList(_, { call, put }) {
       const data = yield call(queryOrangeizeList, { page: 1, pageSize: 10000 })
       if (data.code === 200) {
+        const orgTree = orgToTree(data.obj)
         let option = []
         if (data.obj && data.obj.length > 0) {
           option = data.obj.map((item) => {
@@ -164,6 +166,7 @@ export default modelExtend(pageModel, {
         yield put({
           type: 'updateState',
           payload: {
+            orgTree,
             orangeizeList: option,
           },
         })

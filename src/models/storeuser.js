@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { config, initialCreateTime } from '../utils'
-import { query, updateFee, versionswitch, createAccount } from '../services/storeuser'
+import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList } from '../services/storeuser'
 import { pageModel } from './system/common'
 import { locationData } from '../utils/locationData'
 import { query as queryOrgList, getLocation } from '../services/auth/org'
@@ -21,9 +21,9 @@ export default modelExtend(pageModel, {
     columnslist: [],
     sonlist: [],
     orgTree: [],
+    monitorList: [],
     isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
     locationData: [],
-    locationList: [],
   },
 
   subscriptions: {
@@ -34,9 +34,9 @@ export default modelExtend(pageModel, {
             type: 'query',
             payload: location.query,
           })
-          dispatch({
-            type: 'queryLocation',
-          })
+          // dispatch({
+          //   type: 'queryLocation',
+          // })
         }
       })
     },
@@ -51,26 +51,25 @@ export default modelExtend(pageModel, {
       if (payload.name) {
         payload.name = payload.name.split('///')[1]
       }
+      const locationPayload = {}
       if (payload.location && payload.location.length > 0) {
-        let { location } = payload
-        if (!(location instanceof Array)) {
-          location = [location]
-        }
+        // 不要对传进来的payload直接修改,会直接影响原数据
+        let location = payload.location.split(',')
         switch (location.length) {
           case 1:
-            payload.province = location[0]
+            locationPayload.province = location[0]
             break
           case 2:
-            payload.city = location[1]
+            locationPayload.city = location[1]
             break
           case 3:
-            payload.district = location[2]
+            locationPayload.district = location[2]
             break
           default:
             break
         }
       }
-      const data = yield call(query, { ...payload, location: undefined })
+      const data = yield call(query, { ...payload, ...locationPayload, location: undefined })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -144,7 +143,7 @@ export default modelExtend(pageModel, {
       let registData = {
         org: payload.org,
         mobile: payload.siteMobile,
-        name: payload.siteName,
+        name: `妙寄${payload.siteName}店`,
         password: payload.password,
         locationId,
         dataSource,
@@ -161,7 +160,7 @@ export default modelExtend(pageModel, {
         yield put({ type: 'query' })
         yield put({ type: 'hideModal' })
       } else {
-        message.success(data.mess || '网络错误')
+        throw data.mess || '网络错误'
       }
     },
     /**
@@ -262,6 +261,7 @@ export default modelExtend(pageModel, {
      * [获取筛选地址的数据]
      */
     *queryLocation(_, { call, put }) {
+      // 已经没用了
       const data = yield call(getLocation)
       let option = []
       if (data.code === 200 && data.obj) {
@@ -274,6 +274,35 @@ export default modelExtend(pageModel, {
             locationList: option,
           },
         })
+      }
+    },
+    /**
+     * [添加监控设备信息到门店用户上]
+     */
+    *monitor({ payload = {} }, { call, select, put }) {
+      const idUser = yield select(({ storeuser }) => storeuser.currentItem.id)
+      const data = yield call(monitorAdd, { deviceSerial: payload.monitorItem, idUser })
+      if (data.code === 200) {
+        message.success('添加成功')
+        yield put({ type: 'queryMonitor', payload: { idUser } })
+      } else {
+        throw data.mess || '网络错误'
+      }
+    },
+    /**
+     * [查询监控设备信息]
+     */
+    *queryMonitor({ payload = {} }, { call, put }) {
+      const list = yield call(monitorList, { idUser: payload.idUser })
+      if (list.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            monitorList: list.obj,
+          },
+        })
+      } else {
+        throw new Error('列表更新失败')
       }
     },
 

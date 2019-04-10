@@ -8,9 +8,9 @@ import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import SonTable from './SonTable'
-import { isSuperAdmin } from '../../utils'
+import { isSuperAdmin, getOrgId, getUserId } from '../../utils'
 
-const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
+const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -18,6 +18,9 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         break
       case '2':
         onVersionSwitching(record)
+        break
+      case '3':
+        onMonitorClick(record)
         break
       default:
         break
@@ -38,7 +41,7 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
       dataIndex: 'mobile',
       key: 'mobile',
     }, {
-      title: '店铺名称',
+      title: '站点名称',
       dataIndex: 'name',
       key: 'name',
       width: 170,
@@ -46,12 +49,12 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '店铺地址',
+      title: '站点地址',
       dataIndex: 'address',
       key: 'address',
       width: 170,
       render: (_, record) => {
-        return <span>{`${record.province || ''}${record.city || ''}${record.district || '/'}`}</span>
+        return <span>{`${record.province || ''}/${record.city || ''}/${record.district || '/'}`}</span>
       },
     }, {
       title: '店铺级别',
@@ -88,8 +91,8 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
       width: 100,
       render: (text) => {
         const replText = {
-          0: '正式版',
-          1: '点货版',
+          0: '简化版',
+          1: '正式版',
         }
         return (<span>{replText[text]}</span>)
       },
@@ -109,9 +112,9 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
       width: 150,
       render: (text, record) => {
         if (filter.startTime) {
-          return <Link to={`/storeUserDetail?idUser=${record.id}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看操作人详情</Link>
+          return <Link to={`/storeUserDetail?idUser=${record.id}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看详情</Link>
         }
-        return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看操作人详情</Link>
+        return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看详情</Link>
       },
     },
   ]
@@ -122,7 +125,26 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
         key: 'operations',
         width: 100,
         render: (text, record) => {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改通讯费' }, { key: '2', name: '版本切换' }]} />
+          return (<DropOption onMenuClick={e => handleMenuClick(record, e)}
+            menuOptions={[
+              { key: '1', name: '修改通讯费' },
+              { key: '2', name: '版本切换' },
+              // { key: '3', name: '监控设备' },
+            ]}
+          />)
+        },
+      },
+    )
+  }
+
+  if (getOrgId() === 66 || getUserId() === 130) {
+    columns.push(
+      {
+        title: '操作',
+        key: 'operations',
+        width: 100,
+        render: (text, record) => {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '版本切换' }]} />
         },
       },
     )
@@ -173,10 +195,11 @@ const List = ({ filter, onDeleteItem, onVersionSwitching, columnslist, onEditIte
 List.propTypes = {
   onDeleteItem: PropTypes.func.isRequired,
   onEditItem: PropTypes.func.isRequired,
+  onVersionSwitching: PropTypes.func.isRequired,
+  onMonitorClick: PropTypes.func.isRequired,
   isMotion: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   columnslist: PropTypes.array.isRequired,
-  onVersionSwitching: PropTypes.func.isRequired,
   filter: PropTypes.object,
   sonlist: PropTypes.array,
   rowLoading: PropTypes.bool,

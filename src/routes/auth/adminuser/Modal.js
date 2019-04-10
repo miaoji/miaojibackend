@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Select } from 'antd'
+import { Form, Input, Modal, Select, Cascader } from 'antd'
 
 const FormItem = Form.Item
 const { TextArea } = Input
@@ -17,6 +17,7 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  orgTree,
   confirmDirty,
   onEditConfirmDirty,
   orangeizeList,
@@ -49,6 +50,13 @@ const modal = ({
   }
 
   const validateToNextPassword = (_, value, callback) => {
+    // let lv = 0
+    // if (value.match(/[a-z]/g)) { lv++ }
+    // if (value.match(/[0-9]/g)) { lv++ }
+    // if (value.match(/(.[^a-z0-9])/g)) { lv++ }
+    // if (value.length < 6) { lv = 0 }
+    // if (lv > 3) { lv = 3 }
+    // console.log('lv', lv)
     if (value && confirmDirty) {
       validateFields(['repass'], { force: true })
     }
@@ -68,6 +76,10 @@ const modal = ({
     onEditConfirmDirty({ confirmDirty: confirmDirty || !!value })
   }
 
+  const filterOrg = (inputValue, path) => {
+    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+  }
+
   if (type === 'resetPWD') {
     return (
       <Modal {...modalOpts} title="重置密码">
@@ -79,6 +91,10 @@ const modal = ({
                 {
                   required: true,
                   message: '请填写用户登陆密码!',
+                },
+                {
+                  pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./])[~!@#$%^&*()_+`\-={}:";'<>?,./0-9a-zA-Z\d]{8,30}$/,
+                  message: '密码长度要在8~30之间且至少包含一个大写字母一个小写字母一个数字一个特殊符号!',
                 },
                 {
                   validator: validateToNextPassword,
@@ -225,6 +241,10 @@ const modal = ({
                   message: '请填写用户登陆密码!',
                 },
                 {
+                  pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./])[~!@#$%^&*()_+`\-={}:";'<>?,./0-9a-zA-Z\d]{8,30}$/,
+                  message: '密码长度要在8~30之间且至少包含一个大写字母一个小写字母一个数字一个特殊符号!',
+                },
+                {
                   validator: validateToNextPassword,
                 },
               ],
@@ -251,9 +271,13 @@ const modal = ({
                   message: '请选择所属机构!',
                 },
               ],
-            })(<Select placeholder="请选择所属机构!">
-              {orangeizeList}
-            </Select>)}
+            })(<Cascader
+              options={orgTree}
+              placeholder="请选择所属机构"
+              showSearch={{ filterOrg }}
+              autocomplete="off"
+              changeOnSelect
+            />)}
           </FormItem>
           <FormItem label="角色信息" hasFeedback {...formItemLayout}>
             {getFieldDecorator('roleId', {
@@ -312,6 +336,7 @@ modal.propTypes = {
   onEditConfirmDirty: PropTypes.func,
   orangeizeList: PropTypes.array,
   roleList: PropTypes.array,
+  orgTree: PropTypes.array,
 }
 
 export default Form.create()(modal)

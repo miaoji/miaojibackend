@@ -53,7 +53,6 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload = {} }, { call, put }) {
-      console.log('pay', payload)
       const { idUser } = payload
       const data = yield call(add, {
         userId: idUser.split('///')[0],
@@ -89,8 +88,6 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload = {} }, { call, put }) {
-      console.log('pau', payload)
-      debugger
       const data = yield call(del, {
         id: payload.id,
       })

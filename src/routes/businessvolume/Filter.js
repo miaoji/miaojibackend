@@ -4,7 +4,7 @@ import {
   Form, Button, Row, Col, Input, Select, Modal,
 } from 'antd'
 import moment from 'moment'
-import { DateRange } from '../../components'
+import { DateRange, Location } from '../../components'
 import { handleFields, defaultTime } from '../../utils'
 
 const Search = Input.Search
@@ -72,6 +72,11 @@ const Filter = ({
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
+    if (key === 'location') {
+      setFieldsValue({
+        location: values,
+      })
+    }
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
@@ -81,7 +86,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name } = filter
+  let { name, location } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -116,6 +121,11 @@ const Filter = ({
           >
             {storeuserList}
           </Select>
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('location', { initialValue: location })(
+          <Location handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
       <div style={{ display: 'none' }}>

@@ -1,7 +1,7 @@
 // const APIV2 = '/api/v2'
 
 let APIV1
-let APIV3
+let APIV3 = 'http://106.14.212.146:8288'
 
 // 线上
 // 旧版
@@ -24,19 +24,28 @@ APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
 // APIV1 = 'http://192.168.231.239:8077'
 
 // 石金磊
-// APIV1 = 'http://192.168.231.125:8081'
-// APIV1 = 'http://192.168.231.231/quandiExpressSiteManager'
+// APIV1 = 'http://192.168.231.125:80'
+// APIV3 = 'http://192.168.231.125:80'
+
+APIV1 = '/api'
+
+// APIV1 = 'https://console.mijihome.cn/server/quandiExpressSiteManager'
+// APIV3 = 'https://console.mijihome.cn/server'
 
 // 莫畏
 // APIV1 = 'http://192.168.231.110:8080'
 
 // 生产环境时api固定为线上url
 if (process.env.NODE_ENV !== 'development') {
-  APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
-  APIV3 = 'http://106.14.212.146:8288'
+  // APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
+  // APIV3 = 'http://106.14.212.146:8288'
+  APIV1 = 'https://console.mijihome.cn/server/quandiExpressSiteManager'
+  APIV3 = 'https://console.mijihome.cn/server'
 }
 
-let APIV4 = 'http://main.mijihome.cn/WeChatService'
+// let APIV4 = 'http://main.mijihome.cn/WeChatService'
+let APIV4 = 'https://console.mijihome.cn/miaoji2/WeChatService'
+let APIV5 = 'https://console.mijihome.cn/miaoji1'
 
 module.exports = {
   APIV1,
@@ -58,9 +67,11 @@ module.exports = {
       // login: `${APIV1}/signIn`,
       login: `${APIV1}/selectRoleByUserId`,
       getMenus: `${APIV1}/selectRoleByUserId`,
+      imgCode: `${APIV1}/imageCode`,
     },
+    registerAPP: `${APIV5}/quandiExpressSiteSimple/StationUser/registerStationUser`,
     // registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
-    registerAPP: 'http://192.168.231.131:8080/quandiExpressSiteSimple/StationUser/registerStationUser',
+    // registerAPP: 'http://192.168.231.131:8080/quandiExpressSiteSimple/StationUser/registerStationUser',
     dashboard: {
       // 获取折线图数据
       echart: `${APIV1}/lineChart`,
@@ -78,6 +89,8 @@ module.exports = {
       businessRegist: `${APIV1}/stRegist`,
       // 获取业务量操作记录
       businessOperation: `${APIV1}/stOperation`,
+      // 获取接口调用折线图数据
+      interfaceCallList: `${APIV1}/stThirtyTime`,
     },
     wxuser: {
       list: `${APIV1}/wechatuser`, // 微信用户分页
@@ -87,6 +100,8 @@ module.exports = {
       list: `${APIV1}/store`, // 门店用户
       updateFee: `${APIV1}/updateFee`, // 修改门店用户通讯费
       versionswitch: `${APIV1}/updateVersion`, // app版本切换
+      monitorAdd: `${APIV1}/stMonitorAdd`, // 添加门店监控设备信息
+      monitorList: `${APIV1}/stMonitor`, // 查询门店监控设备信息
     },
     articles: {
       list: `${APIV1}/selectCollection`, // 文章分页数据
@@ -300,6 +315,19 @@ module.exports = {
       // update: `${APIV1}/deleteHxIPS`,
       delete: `${APIV1}/deleteHxIPS`,
       create: `${APIV1}/saveHxIPS`,
+    },
+    // 快递对接状态查询
+    docking: {
+      list: `${APIV1}/simpleRecordFirst`,
+      brandList: `${APIV1}/simpleRecordIndex`,
+      detail: `${APIV1}/simpleRecordList`,
+    },
+    // 品牌对接状态查询
+    brandDocking: {
+      list: `${APIV1}/stTactinnList`,
+    },
+    log: {
+      list: `${APIV1}/stTactinnList`,
     },
   },
   brand: {

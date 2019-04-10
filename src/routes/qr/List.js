@@ -37,9 +37,16 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
 
   const columns = [
     {
-      title: '门店名',
+      title: '站点名称',
       dataIndex: 'name',
       key: 'name',
+    }, {
+      title: '站点地址',
+      dataIndex: 'address',
+      key: 'address',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
       title: '扫描关注人数',
       dataIndex: 'sourceCount',

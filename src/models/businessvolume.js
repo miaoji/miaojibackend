@@ -37,7 +37,26 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload, true)
       filterStoreSelect(payload)
-      const data = yield call(query, { ...payload })
+
+      const locationPayload = {}
+      if (payload.location && payload.location.length > 0) {
+        // 不要对传进来的payload直接修改,会直接影响原数据
+        let location = payload.location.split(',')
+        switch (location.length) {
+          case 1:
+            locationPayload.province = location[0]
+            break
+          case 2:
+            locationPayload.city = location[1]
+            break
+          case 3:
+            locationPayload.district = location[2]
+            break
+          default:
+            break
+        }
+      }
+      const data = yield call(query, { ...payload, ...locationPayload, location: undefined })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -128,11 +147,30 @@ export default modelExtend(pageModel, {
         duration: 3,
       })
       payload = initialCreateTime(payload, true)
-      // filterStoreSelect(payload)
+      filterStoreSelect(payload)
+      const locationPayload = {}
+      if (payload.location && payload.location.length > 0) {
+        // 不要对传进来的payload直接修改,会直接影响原数据
+        let location = payload.location.split(',')
+        switch (location.length) {
+          case 1:
+            locationPayload.province = location[0]
+            break
+          case 2:
+            locationPayload.city = location[1]
+            break
+          case 3:
+            locationPayload.district = location[2]
+            break
+          default:
+            break
+        }
+      }
       const newpayload = {
         startTime: payload.startTime,
         endTime: payload.endTime,
-        // idUser: payload.idUser,
+        idUser: payload.idUser,
+        ...locationPayload,
       }
       const data = yield call(download, { ...newpayload })
       if (data.code === 200 && data.obj) {
@@ -157,10 +195,10 @@ export default modelExtend(pageModel, {
     },
 
     *downloadAllData({ payload = {} }, { call }) {
-      console.log('payload', payload)
       const data = yield call(downloadAllData, {
         endTime: 1541087999999,
         startTime: 1541001600000,
+        ...payload,
       })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj

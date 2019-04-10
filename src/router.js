@@ -473,6 +473,46 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 对接管理>品牌对接
+          path: 'branddocking',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/branddocking'))
+              cb(null, require('./routes/branddocking/'))
+            }, 'branddocking')
+          },
+        },
+        {
+          // 对接管理>快递对接
+          path: 'docking',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/docking'))
+              cb(null, require('./routes/docking/'))
+            }, 'docking')
+          },
+        },
+        {
+          // 快递对接-明细
+          path: 'dockingdetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/details/dockingdetail'))
+              cb(null, require('./routes/docking/detail/'))
+            }, 'dockingdetail')
+          },
+        },
+        {
+          // 审计-日志
+          path: 'log',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/log'))
+              cb(null, require('./routes/log/'))
+            }, 'log')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {

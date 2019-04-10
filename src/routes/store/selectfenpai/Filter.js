@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {
   Form, Button, Row, Col, Select,
 } from 'antd'
-import { DateRange } from '../../../components'
+import { DateRange, Location } from '../../../components'
 import { handleFields, defaultTime } from '../../../utils'
 
 const ColProps = {
@@ -67,6 +67,11 @@ const Filter = ({
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
+    if (key === 'location') {
+      setFieldsValue({
+        location: values,
+      })
+    }
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
@@ -76,7 +81,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name, createTime } = filter
+  let { name, createTime, location } = filter
 
   const nameChange = (key) => {
     handleChange('name', key)
@@ -96,6 +101,11 @@ const Filter = ({
           >
             {storeuserList}
           </Select>
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('location', { initialValue: location })(
+          <Location handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>

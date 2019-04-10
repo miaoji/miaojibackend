@@ -89,23 +89,20 @@ const Filter = ({
     handleChange('state', key)
   }
 
-
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>快递品牌 : </span>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Input onPressEnter={brandChange} size="large" style={{ width: '70%' }} placeholder="按品牌搜索" />
+          <Input onPressEnter={brandChange} size="large" style={{ width: '100%' }} placeholder="按快递品牌筛选" />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        <span>快递状态 : </span>
-        {getFieldDecorator('state', { initialValue: state || '0' })(
-          <Select onChange={stateChange} size="large" style={{ width: '70%' }} placeholder="按快递状态筛选">
-            <Option key="0">全部</Option>
+        {getFieldDecorator('state', { initialValue: state })(
+          <Select allowClear onChange={stateChange} size="large" style={{ width: '100%' }} placeholder="按快递状态筛选">
             <Option key="1">点单</Option>
             <Option key="101">上架</Option>
             {/* <Option key="103">分派</Option> */}
+            <Option key="104">入柜</Option>
             <Option key="305">签收</Option>
             <Option key="304">补签</Option>
           </Select>
