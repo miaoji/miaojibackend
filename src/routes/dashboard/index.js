@@ -6,7 +6,7 @@ import { NumberCard, User } from './components'
 import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 import InterfaceCall from './components/Echart/InterfaceCall'
 import PieChart from './components/Echart/PieChart'
-import { isSuperAdmin } from '../../utils'
+import { getUserId } from '../../utils'
 
 function Dashboard({ dashboard, loading }) {
   const { interfaceCallData, receviceData, sendData, income, storeTotal, terminalTotal, user, trafficVolume } = dashboard
@@ -39,7 +39,8 @@ function Dashboard({ dashboard, loading }) {
     data: trafficVolume,
     loading: loading.effects['dashboard/getbusinessvolumecount'],
   }
-
+  const userId = getUserId()
+  console.log('userId', userId)
   return (
     <Row gutter={24}>
       {numberCards}
@@ -47,7 +48,7 @@ function Dashboard({ dashboard, loading }) {
         <Card>
           <SimpleChartComponent {...orderLineProps} />
         </Card>
-      </Col>{isSuperAdmin() ? (<Col lg={24} md={24} style={{ marginTop: '24px' }}>
+      </Col>{(userId === 1 || userId === 101) ? (<Col lg={24} md={24} style={{ marginTop: '24px' }}>
         <Card>
           <InterfaceCall {...interfaceCallLineProps} />
         </Card>
