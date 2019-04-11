@@ -24,7 +24,6 @@ const Login = ({
   const { loginLoading,
     imgCode,
     loginErrorCount, prohibitloginStart } = login
-  console.log('loginErrorCount1', loginErrorCount)
 
   function handleOk() {
     validateFieldsAndScroll((errors, values) => {

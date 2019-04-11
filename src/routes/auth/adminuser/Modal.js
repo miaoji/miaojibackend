@@ -50,13 +50,6 @@ const modal = ({
   }
 
   const validateToNextPassword = (_, value, callback) => {
-    // let lv = 0
-    // if (value.match(/[a-z]/g)) { lv++ }
-    // if (value.match(/[0-9]/g)) { lv++ }
-    // if (value.match(/(.[^a-z0-9])/g)) { lv++ }
-    // if (value.length < 6) { lv = 0 }
-    // if (lv > 3) { lv = 3 }
-    // console.log('lv', lv)
     if (value && confirmDirty) {
       validateFields(['repass'], { force: true })
     }

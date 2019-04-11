@@ -40,7 +40,6 @@ function Dashboard({ dashboard, loading }) {
     loading: loading.effects['dashboard/getbusinessvolumecount'],
   }
   const userId = getUserId()
-  console.log('userId', userId)
   return (
     <Row gutter={24}>
       {numberCards}

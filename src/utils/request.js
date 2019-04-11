@@ -14,7 +14,6 @@ const fetch = (options) => {
     auth = true,
     token,
   } = options
-  console.log('token', token)
 
   const cloneData = lodash.cloneDeep(data)
 
@@ -74,10 +73,8 @@ export default function request(options) {
     if (response && response instanceof Object) {
       const { data, statusText } = response
       statusCode = response.status
-      console.log('statusCode', statusCode)
       msg = data.message || statusText
       if (statusCode === 401) {
-        console.log('123')
         storage({ type: 'clear' })
         window.location.href = '/login'
       }

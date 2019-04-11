@@ -22,7 +22,6 @@ class LoginButton extends Component {
   componentDidMount() {
     window.loginInterVal = setInterval(() => {
       const time = new Date().getTime() - this.props.prohibitloginStart
-      console.log('time', time)
       if (time > errorTime) {
         this.setState({
           disabled: false,

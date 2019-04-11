@@ -32,8 +32,6 @@ export function decryptData(data, type = 'normal') {
   })
   let parseData = CryptoJS.enc.Base64.stringify(decrypt)
   parseData = Base64.decode(parseData)
-  // parseData = parseData.replace(/| |||\|||||||ú||/ig, '')
-  // console.log('Base64 parseData STRING', parseData)
   if (parseData.indexOf('"obj":[') !== -1) {
     parseData = parseData.split(']}')[0]
     parseData += ']}'
@@ -47,8 +45,6 @@ export function decryptData(data, type = 'normal') {
     parseData = parseData.split('}')[0]
     parseData += '}'
   }
-  // console.log('Base64 parseData pure STRING', parseData)
   parseData = JSON.parse(parseData)
-  console.log('Base64 parseData JSON', parseData)
   return parseData
 }
