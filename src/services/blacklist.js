@@ -16,7 +16,7 @@ export async function create(params) {
   return request({
     url: blacklist.add,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
@@ -24,7 +24,7 @@ export async function update(params) {
   return request({
     url: blacklist.update,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
@@ -32,7 +32,7 @@ export async function remove(params) {
   return request({
     url: blacklist.update,
     method: 'post',
-    params,
+    data: params,
   })
 }
 

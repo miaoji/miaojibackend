@@ -3,7 +3,7 @@ import { request, config, pageParams } from '../utils'
 const { api } = config
 const { consume } = api
 
-export async function query (params) {
+export async function query(params) {
   const replParam = params
   params = { param: JSON.stringify(params) }
   params.page = replParam.page
@@ -12,6 +12,6 @@ export async function query (params) {
   return request({
     url: consume.list,
     method: 'post',
-    params: newparams,
+    data: newparams,
   })
 }

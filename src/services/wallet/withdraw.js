@@ -7,7 +7,7 @@ export async function query(params) {
   params = pageParams(params)
   return request({
     url: wallet.withdraw.list,
-    method: 'get',
+    method: 'post',
     data: params,
   })
 }
@@ -16,6 +16,6 @@ export async function cashWithdraw(params) {
   return request({
     url: wallet.withdraw.cashWithdraw,
     method: 'post',
-    params,
+    data: params,
   })
 }

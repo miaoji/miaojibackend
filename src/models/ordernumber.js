@@ -84,7 +84,6 @@ export default modelExtend(pageModel, {
         mailType: payload.mailType,
         length: payload.length,
       }
-      orderNumber = JSON.stringify(orderNumber)
       const data = yield call(update, orderNumber)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
@@ -100,7 +99,6 @@ export default modelExtend(pageModel, {
         id: payload,
         state: 2,
       }
-      orderNumber = JSON.stringify(orderNumber)
       const data = yield call(update, orderNumber)
       if (data.code === 200) {
         message.success('删除成功')

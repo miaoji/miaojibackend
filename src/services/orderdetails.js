@@ -16,6 +16,6 @@ export function orderInfo(params) {
   return request({
     url: order.orderInfo,
     method: 'post',
-    params,
+    data: params,
   })
 }

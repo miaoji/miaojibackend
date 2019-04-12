@@ -6,8 +6,7 @@ export async function query(params) {
   params = pageParams(params)
   return request({
     url: wallet.topup.list,
-    method: 'get',
-    fetchType: 'CORS',
+    method: 'post',
     data: params,
   })
 }

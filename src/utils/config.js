@@ -106,15 +106,19 @@ module.exports = {
     articles: {
       list: `${APIV1}/selectCollection`, // 文章分页数据
       publish: {
+        // 没有日志记录
         upload: `${APIV1}/upload`, // 图片上传接口
+        // 没有日志记录
         send: `${APIV1}/insertreleaseArticle`, // 文章发布接口
       },
     },
     storedata: { // 收支数据
       income: {
+        // 没有的接口
         list: `${APIV1}/income`, // 收入数据
       },
       expend: {
+        // 没有的接口
         list: `${APIV1}/expenditure`, // 支出数据
       },
     },
@@ -139,6 +143,7 @@ module.exports = {
       del: `${APIV4}/api/delQrById`,
     },
     consume: {
+      // 没有的接口
       list: `${APIV1}/paymentOrder`, // 充值消费
     },
     blacklist: {
@@ -148,10 +153,10 @@ module.exports = {
     },
     // 单号规则配置
     ordernumber: {
-      index: `${APIV1}/selectorderNumber`,
-      create: `${APIV1}/insertOrderNumber`,
-      update: `${APIV1}/updateOrderNumber`,
-      showBrandName: `${APIV1}/selectBrandId`,
+      index: `${APIV1}/selectorderNumber`, // 单号规则配置查询
+      create: `${APIV1}/insertOrderNumber`, // 单号规则新增
+      update: `${APIV1}/updateOrderNumber`, // 单号规则修改或删除
+      showBrandName: `${APIV1}/selectBrandId`, // 单号规则配置请求品牌信息
     },
     // 京东配置 接口
     jd: {
@@ -166,14 +171,17 @@ module.exports = {
     },
     // 黑名单详情
     backlistdetail: {
+      // 没有的接口
       all: `${APIV1}/blackListdetails`,
     },
     // 门店支付寄件汇总
     sendtotal: {
+      // 没有的接口
       all: `${APIV1}/orderState`,
     },
     // 查询寄件及金额
     mailprice: {
+      // 没有的接口
       all: `${APIV1}/mailprice`,
     },
     // 门店寄件金额
