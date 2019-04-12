@@ -1,4 +1,4 @@
-import { request, config } from 'utils'
+import { request, config, getUserId } from 'utils'
 
 const { api } = config
 const { userLogin } = api
@@ -15,7 +15,7 @@ export async function getMenus(params) {
   return request({
     url: userLogin.getMenus,
     method: 'post',
-    data: params,
+    data: { ...params, requestId: getUserId() },
   })
 }
 

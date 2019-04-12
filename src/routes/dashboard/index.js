@@ -7,9 +7,18 @@ import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 import InterfaceCall from './components/Echart/InterfaceCall'
 import PieChart from './components/Echart/PieChart'
 import { getUserId } from '../../utils'
+import styles from './index.less'
 
-function Dashboard({ dashboard, loading }) {
+function Dashboard({ dashboard, loading, app }) {
   const { interfaceCallData, receviceData, sendData, income, storeTotal, terminalTotal, user, trafficVolume } = dashboard
+  const { showDashboard } = app
+  if (!showDashboard) {
+    return (
+      <Card className={styles.noPage}>
+        <User {...{ ...user, avatar: '/logo.png' }} />
+      </Card>
+    )
+  }
 
   const munArr = [income, storeTotal, terminalTotal]
   const munLadings = [
@@ -66,7 +75,8 @@ function Dashboard({ dashboard, loading }) {
 
 Dashboard.propTypes = {
   dashboard: PropTypes.object,
+  app: PropTypes.object,
   loading: PropTypes.object,
 }
 
-export default connect(({ dashboard, loading }) => ({ dashboard, loading }))(Dashboard)
+export default connect(({ dashboard, loading, app }) => ({ dashboard, loading, app }))(Dashboard)

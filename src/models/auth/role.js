@@ -8,7 +8,7 @@ import {
   reloadItem, handleArrData, renderTreeNodes,
   filterRoleList, getMenuIds,
 } from '../../utils/processing'
-import { storage, isSuperAdmin, getRoleId, getUserId } from '../../utils'
+import { storage, getUserId } from '../../utils'
 
 const { Option } = Select
 
@@ -68,9 +68,9 @@ export default modelExtend(pageModel, {
         message.warn('还没有选择菜单呢')
         return
       }
-      if (!isSuperAdmin()) {
-        payload.parentRoleId = getRoleId()
-      }
+      // if (!isSuperAdmin()) {
+      //   payload.parentRoleId = getRoleId()
+      // }
       payload.createUserId = getUserId()
       const storageData = storage({ key: 'menuListSpare' })
       const menuList = JSON.parse(storageData)
@@ -151,8 +151,13 @@ export default modelExtend(pageModel, {
       const data = yield call(query, { page: 1, pageSize: 1000000 })
       let option = []
       if (data.code === 200 && data.obj) {
+        const userId = getUserId()
+        const list = data.obj.filter(i => (i.ID !== 1 || userId === 1))
+        console.log('payload.id', payload.id)
+        console.log('payload.parent_id', payload.parent_id)
         if (payload.id) {
-          const menus = data.obj.filter(item => item.ID === payload.parent_id)
+          const menus = list.filter(item => item.ID === payload.parent_id)
+          console.log('menus', menus)
           yield put({
             type: 'filterRoleList',
             payload: {
@@ -160,7 +165,7 @@ export default modelExtend(pageModel, {
             },
           })
         }
-        const newdata = data.obj.filter(item => !payload.id || item.ID !== payload.id)
+        const newdata = list.filter(item => !payload.id || item.ID !== payload.id)
         option = newdata.map((item) => {
           return <Option key={JSON.stringify(item)}>{item.ROLE_NAME}</Option>
         })
@@ -174,6 +179,7 @@ export default modelExtend(pageModel, {
     },
     // 手动过滤能显示的菜单信息
     *filterRoleList({ payload = {} }, { put }) {
+      console.log('payload', payload)
       const storageData = storage({ key: 'menuListSpare' })
       const menuListSpare = JSON.parse(storageData)
       let menuGroupID = []

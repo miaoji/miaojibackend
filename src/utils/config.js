@@ -54,7 +54,7 @@ module.exports = {
   title: '妙寄后台管理系统',
   prefix: 'antdAdmin',
   localPrefix: 'miaojipc_',
-  footerText: '妙寄后台 © 2018 妙寄科技',
+  footerText: '妙寄后台 © 2019 妙寄科技',
   logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
@@ -69,6 +69,7 @@ module.exports = {
       getMenus: `${APIV1}/selectRoleByUserId`,
       imgCode: `${APIV1}/imageCode`,
     },
+    // 注册app账号
     registerAPP: `${APIV5}/quandiExpressSiteSimple/StationUser/registerStationUser`,
     // registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
     // registerAPP: 'http://192.168.231.131:8080/quandiExpressSiteSimple/StationUser/registerStationUser',

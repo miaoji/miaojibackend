@@ -66,12 +66,6 @@ export default modelExtend(pageModel, {
             type: 'query',
             payload: location.query,
           })
-          dispatch({ type: 'getIncome' })
-          dispatch({ type: 'getStoreTotal' })
-          dispatch({ type: 'getWeChatUser' })
-          dispatch({ type: 'getTerminalTotal' })
-          dispatch({ type: 'getbusinessvolumecount' })
-          dispatch({ type: 'getInterfaceCall' })
         }
       })
     },
@@ -247,7 +241,17 @@ export default modelExtend(pageModel, {
         throw data.mess || '网络连接失败'
       }
     },
-    *query(_, { call, put }) {
+    *query(_, { call, put, select }) {
+      const showDashboard = yield select(({ app }) => app.showDashboard)
+      console.log('showDashboard', showDashboard)
+      if (showDashboard) {
+        yield put({ type: 'getIncome' })
+        yield put({ type: 'getStoreTotal' })
+        yield put({ type: 'getWeChatUser' })
+        yield put({ type: 'getTerminalTotal' })
+        yield put({ type: 'getbusinessvolumecount' })
+        yield put({ type: 'getInterfaceCall' })
+      }
       const storageData = JSON.parse(storage({ key: 'linedata' }))
       const todayStr = time.getToday(new Date().getTime())
       let receviceData = []

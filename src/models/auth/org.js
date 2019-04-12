@@ -198,7 +198,7 @@ export default modelExtend(pageModel, {
     },
 
     *initParentOrgList(_, { put, call }) {
-      const data = yield call(query, { page: 1, pageSize: 10000, orgId: getOrgId() })
+      const data = yield call(query, { page: 1, pageSize: 10000 })
       if (data.code === 200) {
         const option = data.obj.map((item) => {
           return <Option value={item.id}>{item.orgName}</Option>

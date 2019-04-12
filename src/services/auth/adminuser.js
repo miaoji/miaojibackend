@@ -9,10 +9,11 @@ export async function query(params) {
   params.orgId = getOrgId()
   params = pageParams(params)
   delete params.location
+  delete params.userId
   return request({
     url: adminuser.list,
     method: 'post',
-    data: params,
+    data: { ...params, requestId: getUserId() },
   })
 }
 

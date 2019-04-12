@@ -51,7 +51,9 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
+      console.log('payload', payload)
       payload = initialCreateTime(payload)
+      console.log('payload', payload)
       const data = yield call(query, payload)
       if (data.code === 200) {
         let list = []
@@ -156,6 +158,7 @@ export default modelExtend(pageModel, {
     *queryOrangeizeList(_, { call, put }) {
       const data = yield call(queryOrangeizeList, { page: 1, pageSize: 10000 })
       if (data.code === 200) {
+        console.log('data', data.obj)
         const orgTree = orgToTree(data.obj)
         let option = []
         if (data.obj && data.obj.length > 0) {
@@ -178,7 +181,11 @@ export default modelExtend(pageModel, {
     *queryRoleList(_, { call, put }) {
       const data = yield call(queryRoleList, { page: 1, pageSize: 1000000 })
       if (data.code === 200 && data.obj) {
-        const option = data.obj.map((item) => {
+        const list = data.obj.filter(i => i.ID !== 1)
+        // if (getUserId() !== 1) {
+        //   list = list.filter(i => i.ID !== 1)
+        // }
+        const option = list.map((item) => {
           return <Option key={item.ID}>{item.ROLE_NAME}</Option>
         })
         yield put({

@@ -72,6 +72,7 @@ const Modular = ({ location, dispatch, role, loading }) => {
           type: 'role/queryMenuList',
         })
       }
+      console.log('item1', item)
       dispatch({
         type: 'role/queryRoleList',
         payload: {

@@ -30,6 +30,7 @@ export default {
         router: '/dashboard',
       },
     ],
+    showDashboard: false,
     menuPopoverVisible: false,
     siderFold: localStorage.getItem(`${prefix}siderFold`) === 'true',
     darkTheme: localStorage.getItem(`${prefix}darkTheme`) === 'true',
@@ -56,6 +57,7 @@ export default {
       const loginTime = new Date().getTime() - storage({ key: 'loginTime' })
       const userInfo = storage({ key: 'user' })
       let user = null
+      let showDashboard = false
       try {
         user = JSON.parse(userInfo)
       } catch (e) {
@@ -82,6 +84,10 @@ export default {
         if (process.env.NODE_ENV !== 'text') {
           list = [...rebuildMenuData(menuList), ...hideMenus]
         }
+        // 限制首页的显示
+        if (list.filter(i => i.route === '/dashboard').toString()) {
+          showDashboard = true
+        }
         let permissions = {}
         permissions.role = 'admin'
         let menu = list
@@ -103,6 +109,7 @@ export default {
             user,
             permissions,
             menu,
+            showDashboard,
           },
         })
         if (location.pathname === '/login') {
