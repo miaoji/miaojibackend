@@ -129,7 +129,7 @@ const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, column
             menuOptions={[
               { key: '1', name: '修改通讯费' },
               { key: '2', name: '版本切换' },
-              // { key: '3', name: '监控设备' },
+              { key: '3', name: '监控设备' },
             ]}
           />)
         },

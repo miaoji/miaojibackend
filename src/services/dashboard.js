@@ -12,7 +12,7 @@ export async function getLineData(params = {}) {
   return request({
     url: dashboard.echart,
     method: 'post',
-    params,
+    data: params,
   })
 }
 /**

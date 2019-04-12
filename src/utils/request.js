@@ -1,6 +1,7 @@
 import axios from 'axios'
 import lodash from 'lodash'
 import { storage } from './storage'
+import { getUserId } from './getUserInfo'
 
 axios.defaults.withCredentials = true
 
@@ -14,6 +15,9 @@ const fetch = (options) => {
     auth = true,
     token,
   } = options
+
+  params = params ? { ...params, requestId: getUserId() } : undefined
+  data = data ? { ...data, requestId: getUserId() } : undefined
 
   const cloneData = lodash.cloneDeep(data)
 

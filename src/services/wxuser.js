@@ -7,15 +7,7 @@ export async function query (params) {
   delete params.location
   return request({
     url: wxuser.list,
-    method: 'get',
-    data: params,
-  })
-}
-
-export async function queryById (params) {
-  return request({
-    url: wxuser.getById,
-    method: 'get',
+    method: 'post',
     data: params,
   })
 }

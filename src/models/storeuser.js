@@ -88,9 +88,11 @@ export default modelExtend(pageModel, {
      * [修改通讯费]
      */
     *update({ payload }, { call, put, select }) {
-      payload.id = yield select(({ storeuser }) => storeuser.currentItem.id)
-
-      const data = yield call(updateFee, payload)
+      const id = yield select(({ storeuser }) => storeuser.currentItem.id)
+      const data = yield call(updateFee, {
+        id,
+        communicateFee: payload.fee,
+      })
       if (data.code === 200) {
         message.success('更新成功')
         yield put({ type: 'query' })

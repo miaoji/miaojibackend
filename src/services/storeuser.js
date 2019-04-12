@@ -22,7 +22,7 @@ export async function updateFee(params) {
   return request({
     url: storeuser.updateFee,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
@@ -30,7 +30,7 @@ export async function versionswitch(params) {
   return request({
     url: storeuser.versionswitch,
     method: 'post',
-    params,
+    data: params,
   })
 }
 
@@ -54,7 +54,7 @@ export function monitorAdd(params) {
 export function monitorList(params) {
   return request({
     url: storeuser.monitorList,
-    method: 'get',
-    params,
+    method: 'post',
+    data: params,
   })
 }

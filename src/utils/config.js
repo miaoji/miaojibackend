@@ -39,7 +39,8 @@ APIV1 = '/api'
 if (process.env.NODE_ENV !== 'development') {
   // APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
   // APIV3 = 'http://106.14.212.146:8288'
-  APIV1 = 'https://console.mijihome.cn/quandiExpressSiteManager'
+  APIV1 = 'https://console.winnerwly.top/quandiExpressSiteManager'
+  // APIV1 = 'https://console.mijihome.cn/quandiExpressSiteManager'
   APIV3 = 'http://106.14.212.146:8288'
 }
 
@@ -66,7 +67,6 @@ module.exports = {
     userLogin: {
       // login: `${APIV1}/signIn`,
       login: `${APIV1}/selectRoleByUserId`,
-      getMenus: `${APIV1}/selectRoleByUserId`,
       imgCode: `${APIV1}/imageCode`,
     },
     // 注册app账号
@@ -74,7 +74,7 @@ module.exports = {
     // registerAPP: 'http://main.mijihome.cn:8088/quandiExpressSiteSimple/StationUser/registerStationUser',
     // registerAPP: 'http://192.168.231.131:8080/quandiExpressSiteSimple/StationUser/registerStationUser',
     dashboard: {
-      // 获取折线图数据
+      // 获取揽派件统计折线图数据
       echart: `${APIV1}/lineChart`,
       // 获取微信用户数据
       weChatUser: `${APIV1}/homePageWechatUserTotal`,
@@ -95,7 +95,6 @@ module.exports = {
     },
     wxuser: {
       list: `${APIV1}/wechatuser`, // 微信用户分页
-      getById: `${APIV1}/received`, // 微信用户详细信息(没有的接口)
     },
     storeuser: {
       list: `${APIV1}/store`, // 门店用户
