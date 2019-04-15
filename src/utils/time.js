@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { APIV3 } from './config'
+// import { APIV3 } from './config'
 /**
  * [按照传入的参数生成一个时间粗数组]
  * @param {number} frontDay [从多少天以前开始,0代表昨天一天]
@@ -9,8 +9,8 @@ import { APIV3 } from './config'
 export function yesterTime(frontDay = 1, distance = 0, isInit = false) {
   const newfrontDay = frontDay - 1
   let dayCount = 1
-  const test = true
-  if (process.env.NODE_ENV !== 'development' || APIV3 === 'http://106.14.212.146:8288' || test) {
+  const test = false
+  if (process.env.NODE_ENV !== 'development' || !test) {
     dayCount = 1
     const date = new Date()
     const h = date.getHours()
@@ -32,8 +32,8 @@ export function yesterTime(frontDay = 1, distance = 0, isInit = false) {
   }
   if (isInit) {
     return {
-      startTime: 1541001600000 - 86400000 * newfrontDay,
-      endTime: 1541001600000 - 86400000 * (newfrontDay - distance),
+      startTime: 1551369600000 - 86400000 * newfrontDay,
+      endTime: 1554047999999 - 86400000 * (newfrontDay - distance),
     }
   }
   return {

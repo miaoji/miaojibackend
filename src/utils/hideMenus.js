@@ -5,6 +5,12 @@ export default [
     icon: 'laptop',
     name: '首页',
     route: '/',
+  }, {
+    id: '100011',
+    mpid: '-1',
+    icon: 'laptop',
+    name: '首页',
+    route: '/dashboard',
   },
   {
     id: '1002',

@@ -61,7 +61,7 @@ const modal = ({
     onRoldSelect(JSON.parse(key))
   }
 
-  const defaultCheckedKeys = item.MENU_ID ? eval(item.MENU_ID) : undefined
+  const defaultCheckedKeys = item.MENU_ID ? item.MENU_ID.split(',') : undefined
   const defaultRoleId = item.PARENT_ROLE_NAME
 
   if (type === 'readAuth') {

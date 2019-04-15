@@ -211,14 +211,17 @@ module.exports = {
     },
     // 门店派件金额
     assignFee: {
+      // 接口不存在
       all: `${APIV1}/selectpjjetotal`,
     },
     // 操作人派件金额
     operatorAssignFee: {
+      // 接口不存在
       all: `${APIV1}/selectpjjeDetails`,
     },
     // 门店签收信息汇总
     storeSign: {
+      // 接口不存在
       all: `${APIV1}/SignRate`,
     },
     // 门店分派
@@ -294,10 +297,15 @@ module.exports = {
     },
     // 业务量
     businessvolume: {
+      // 业务量报表数据查询
       list: `${APIV1}/getPortfolio`,
+      // 没有使用的接口
       detail: `${APIV1}/getOrderByBrand`,
+      // 获取快递品牌基础数据
       count: `${APIV1}/getPortfolioByBrand`,
+      // 下载业务量报表
       downloadExcel: `${APIV1}/downloadPortfolio`,
+      // 下载业务量明细数据
       downloadDetailExcel: `${APIV1}/downloadBusinessInfo`,
       downloadAllData: `${APIV1}/selectAllBusiness`, // 下载当日权限下所有门店数据(签收,操作,分派,业务量)
     },
@@ -330,7 +338,7 @@ module.exports = {
       brandList: `${APIV1}/simpleRecordIndex`,
       detail: `${APIV1}/simpleRecordList`,
     },
-    // 品牌对接状态查询
+    // 品牌对接查询
     brandDocking: {
       list: `${APIV1}/stTactinnList`,
     },

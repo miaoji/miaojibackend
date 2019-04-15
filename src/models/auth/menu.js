@@ -1,7 +1,7 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { initialCreateTime } from '../../utils'
+import { initialCreateTime, getUserId } from '../../utils'
 import { getMenuByParentId, query, create, update, remove } from '../../services/auth/menu'
 import { update as updateAdminMenus } from '../../services/auth/role'
 import { pageModel } from '../system/common'
@@ -84,7 +84,7 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      const data = yield call(create, { ...payload })
+      const data = yield call(create, { ...payload, createUserId: getUserId() })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -107,7 +107,7 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put }) {
-      const data = yield call(remove, [payload])
+      const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })

@@ -113,7 +113,7 @@ export default {
           },
         })
         if (location.pathname === '/login') {
-          yield put(routerRedux.push('/dashboard'))
+          yield put(routerRedux.push('/'))
         }
       } else {
         /* eslint no-lonely-if: "off" */

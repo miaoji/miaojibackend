@@ -40,7 +40,8 @@ export async function remove(params) {
 export async function getLocation() {
   return request({
     url: org.getLocation,
-    method: 'get',
+    method: 'post',
+    data: {},
   })
 }
 

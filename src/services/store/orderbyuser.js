@@ -13,6 +13,9 @@ export async function query(params) {
   })
 }
 
+/**
+ * [未使用的功能]
+ */
 export async function download(params) {
   params = pageParams(params)
   delete params.pagination

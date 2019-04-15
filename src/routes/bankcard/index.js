@@ -16,7 +16,7 @@ const PageIndex = ({ location, dispatch, bankcard, loading, app }) => {
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['bankcard/update'] || loading.effects['bankcard/create'],
-    title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
+    title: `${modalType === 'create' ? '新增环迅账号记录' : '修改环迅账号记录'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
     width: '700px',

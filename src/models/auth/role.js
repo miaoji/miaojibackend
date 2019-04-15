@@ -71,14 +71,21 @@ export default modelExtend(pageModel, {
       // if (!isSuperAdmin()) {
       //   payload.parentRoleId = getRoleId()
       // }
-      payload.createUserId = getUserId()
+      const createUserId = getUserId()
       const storageData = storage({ key: 'menuListSpare' })
       const menuList = JSON.parse(storageData)
-      payload.menuGroup = handleArrData({
+      const menuGroup = handleArrData({
         list: menuList,
         arr: payload.menus,
       })
-      const data = yield call(create, { ...payload, menuGroup: payload.menuGroup.toString() })
+      const data = yield call(create, {
+        parentRoleId: payload.parentRoleId,
+        roleName: payload.roleName,
+        description: payload.description,
+        menus: payload.menus.toString(),
+        createUserId,
+        menuGroup: menuGroup.toString(),
+      })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -101,7 +108,13 @@ export default modelExtend(pageModel, {
       if (payload.roleId === currentItem.PARENT_ROLE_NAME) {
         delete payload.roleId
       }
-      const data = yield call(update, { ...payload, id: currentItem.ID, menuGroup: payload.menuGroup ? payload.menuGroup.toString() : null })
+      const data = yield call(update, {
+        id: currentItem.ID,
+        menus: payload.menus ? payload.menus.toString() : undefined,
+        roleName: payload.roleName,
+        description: payload.description,
+        menuGroup: payload.menuGroup ? payload.menuGroup.toString() : undefined,
+      })
       if (data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('更新成功')
@@ -112,7 +125,7 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put }) {
-      const data = yield call(remove, [payload])
+      const data = yield call(remove, { ids: payload })
       if (data.code === 200) {
         message.success('删除成功')
         yield put({ type: 'query' })
@@ -220,7 +233,7 @@ export default modelExtend(pageModel, {
         const menuListSpare = getMenuIds(menusData.obj)
         const menus = menuListSpare.map(item => item.toString())
         const menuGroup = menus.toString()
-        const data = yield call(update, { id: 1, menuGroup, menus })
+        const data = yield call(update, { roleName: '超级管理员', id: 1, menuGroup, menus: menus.toString() })
         if (data.code === 200) {
           message.success('超级管理员权限已更新')
           yield put({

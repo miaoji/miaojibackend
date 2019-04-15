@@ -6,6 +6,7 @@ import moment from 'moment'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
+import { getUserId } from '../../../utils'
 
 const confirm = Modal.confirm
 
@@ -89,7 +90,13 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       key: 'operation',
       width: 100,
       render: (_, record) => {
-        if (record.userId === 1) {
+        if (record.userId === 1 && getUserId() === 1) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '重置密码' }]} />
+        }
+        if (record.userId === 1 && getUserId() !== 1) {
+          return <span>/</span>
+        }
+        if (record.createUserId !== getUserId()) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '重置密码' }]} />
         }
         return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '重置密码' }, { key: '2', name: '删除' }]} />

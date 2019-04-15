@@ -15,9 +15,7 @@ export function list(params) {
   return request({
     url: bankcard.list,
     method: 'post',
-    params: {
-      param: JSON.stringify(params),
-    },
+    data: params,
   })
 }
 /**
@@ -27,9 +25,7 @@ export function add(params) {
   return request({
     url: bankcard.create,
     method: 'post',
-    params: {
-      param: JSON.stringify(params),
-    },
+    data: params,
   })
 }
 /**
@@ -39,9 +35,7 @@ export function mod(params) {
   return request({
     url: bankcard.update,
     method: 'post',
-    params: {
-      param: JSON.stringify(params),
-    },
+    data: params,
   })
 }
 /**
@@ -51,8 +45,6 @@ export function del(params) {
   return request({
     url: bankcard.delete,
     method: 'post',
-    params: {
-      param: JSON.stringify(params),
-    },
+    data: params,
   })
 }
