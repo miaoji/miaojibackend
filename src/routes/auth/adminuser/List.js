@@ -11,6 +11,7 @@ import { getUserId } from '../../../utils'
 const confirm = Modal.confirm
 
 const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps }) => {
+  const userId = getUserId()
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -90,16 +91,19 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
       key: 'operation',
       width: 100,
       render: (_, record) => {
-        if (record.userId === 1 && getUserId() === 1) {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '重置密码' }]} />
+        if (record.userId !== 1 && userId === 1) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '重置密码' }, { key: '2', name: '删除' }]} />
         }
-        if (record.userId === 1 && getUserId() !== 1) {
+        if (record.userId === 1 && userId !== 1) {
           return <span>/</span>
         }
-        if (record.createUserId !== getUserId()) {
+        if (record.userId === 1 && userId === 1) {
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '重置密码' }]} />
         }
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '重置密码' }, { key: '2', name: '删除' }]} />
+        if (record.createUserId === userId) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '3', name: '重置密码' }, { key: '2', name: '删除' }]} />
+        }
+        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '3', name: '重置密码' }]} />
       },
     },
   ]

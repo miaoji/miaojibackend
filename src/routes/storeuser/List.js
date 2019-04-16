@@ -129,7 +129,7 @@ const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, column
             menuOptions={[
               { key: '1', name: '修改通讯费' },
               { key: '2', name: '版本切换' },
-              { key: '3', name: '监控设备' },
+              // { key: '3', name: '监控设备' },
             ]}
           />)
         },
@@ -143,8 +143,12 @@ const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, column
         title: '操作',
         key: 'operations',
         width: 100,
-        render: (text, record) => {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '版本切换' }]} />
+        render: (_, record) => {
+          const menuOptions = [{ key: '2', name: '版本切换' }]
+          if (getUserId() === 98) {
+            menuOptions.push({ key: '2', name: '版本切换' })
+          }
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />
         },
       },
     )

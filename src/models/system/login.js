@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router'
-import { queryURL, storage, password } from 'utils'
+import { storage, password } from 'utils'
 import { notification } from 'antd'
 import { login as signIn, imgCode } from '../../services/system/login'
 import { initUserInfo } from '../../utils/processing'
@@ -47,13 +47,8 @@ export default {
         storage({ type: 'set', key: 'token', val: data.obj.token })
         storage({ type: 'remove', key: 'loginErrorCount' })
         storage({ type: 'remove', key: 'prohibitloginStart' })
-        const from = queryURL('from')
+
         yield put({ type: 'app/query' })
-        if (from) {
-          yield put(routerRedux.push(from))
-        } else {
-          yield put(routerRedux.push('/dashboard'))
-        }
         yield put({
           type: 'setStates',
           payload: {
@@ -61,6 +56,7 @@ export default {
             prohibitloginStart: 0,
           },
         })
+        yield put(routerRedux.push('/'))
       } else if (data.mess === '用户名或密码错误' || data.mess === '账号不存在!' || data.mess === '账号与密码不匹配') {
         const loginErrorCount = (yield select(({ login }) => login.loginErrorCount)) + 1
         const prohibitloginStart = new Date().getTime()

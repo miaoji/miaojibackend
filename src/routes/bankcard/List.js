@@ -6,11 +6,12 @@ import classnames from 'classnames'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-// import { isSuperAdmin } from '../../utils'
+import { getUserId } from '../../utils'
 
 const confirm = Modal.confirm
 
 const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+  const userId = getUserId()
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -108,8 +109,11 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '操作',
       key: 'operation',
       width: 100,
-      render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '删除' }]} />
+      render: (_, record) => {
+        if (userId === 98) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '删除' }]} />
+        }
+        return <span>/</span>
       },
     },
   ]

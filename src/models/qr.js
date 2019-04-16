@@ -36,7 +36,7 @@ export default modelExtend(pageModel, {
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload)
       const data = yield call(query, payload)
-      if (data) {
+      if (data.code === 200) {
         const storeuserArr = storage({ key: 'storeuserArr', json: true })
         const list = data.obj.obj.map((i) => {
           const itemInfo = storeuserArr.find(k => +i.parameter && +i.parameter === k.idUser) || {}
@@ -56,6 +56,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || '当前网络无法使用'
       }
     },
 

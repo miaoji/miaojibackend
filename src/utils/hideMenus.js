@@ -5,13 +5,14 @@ export default [
     icon: 'laptop',
     name: '首页',
     route: '/',
-  }, {
-    id: '100011',
-    mpid: '-1',
-    icon: 'laptop',
-    name: '首页',
-    route: '/dashboard',
   },
+  // {
+  //   id: '100011',
+  //   mpid: '-1',
+  //   icon: 'laptop',
+  //   name: '首页',
+  //   route: '/dashboard',
+  // },
   {
     id: '1002',
     mpid: '-1',
@@ -86,19 +87,19 @@ export default [
     icon: 'message',
     route: '/dockingdetail',
   },
-  {
-    id: '1014',
-    mpid: '1',
-    name: '审计管理',
-    icon: 'message',
-  },
-  {
-    id: '101401',
-    mpid: '1014',
-    name: '日志记录',
-    icon: 'message',
-    route: '/log',
-  },
+  // {
+  //   id: '1014',
+  //   mpid: '1',
+  //   name: '审计管理',
+  //   icon: 'message',
+  // },
+  // {
+  //   id: '101401',
+  //   mpid: '1014',
+  //   name: '日志记录',
+  //   icon: 'message',
+  //   route: '/log',
+  // },
   // {
   //   id: '101402',
   //   mpid: '1014',

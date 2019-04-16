@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button, Row, Col, Input, Select } from 'antd'
 // import { isSuperAdmin } from '../../utils'
-// import { getUserId } from '../../utils/getUserInfo'
+import { getUserId } from '../../utils/getUserInfo'
 
-// const userId = getUserId()
 const Search = Input.Search
 
 const ColProps = {
@@ -31,6 +30,8 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
+  const userId = getUserId()
+
   const handleFields = (fields) => {
     const { createTime } = fields
     if (createTime && createTime.length && createTime[0] && createTime[1]) {
@@ -114,7 +115,7 @@ const Filter = ({
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
-          <div>
+          <div style={{ display: userId === 98 ? 'block' : 'none' }}>
             <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
           </div>
         </div>

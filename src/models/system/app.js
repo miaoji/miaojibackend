@@ -72,22 +72,22 @@ export default {
 
         if (user.userId === 98) {
           // if (user.userId === 1) {
-          hideMenus.push({
-            id: '1111',
-            mpid: 1,
-            name: '环迅账号管理',
-            icon: 'message',
-            route: '/bankcard',
-          })
+          // hideMenus.push({
+          //   id: '1111',
+          //   mpid: 1,
+          //   name: '环迅账号管理',
+          //   icon: 'message',
+          //   route: '/bankcard',
+          // })
         }
         let list = menus
         if (process.env.NODE_ENV !== 'text') {
           list = [...rebuildMenuData(menuList), ...hideMenus]
         }
-        // 限制首页的显示
-        if (list.filter(i => i.route === '/dashboard').toString()) {
+        if (list.filter(i => i.route === '/dashboard'.toString()).length) {
           showDashboard = true
         }
+        // 限制首页的显示
         let permissions = {}
         permissions.role = 'admin'
         let menu = list
