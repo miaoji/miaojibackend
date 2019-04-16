@@ -1,5 +1,4 @@
 import modelExtend from 'dva-model-extend'
-import { storage } from 'utils'
 import { query } from '../services/log'
 import { pageModel } from './system/common'
 
@@ -23,40 +22,18 @@ export default modelExtend(pageModel, {
 
   effects: {
     *query({ payload = {} }, { call, put }) {
-      let userIds
-      payload.name ? userIds = payload.name.split('///')[0] : undefined
-      const locationPayload = {}
-      if (payload.location && payload.location.length > 0) {
-        // 不要对传进来的payload直接修改,会直接影响原数据
-        let location = payload.location.split(',')
-        switch (location.length) {
-          case 1:
-            locationPayload.province = location[0]
-            break
-          case 2:
-            locationPayload.city = location[1]
-            break
-          case 3:
-            locationPayload.district = location[2]
-            break
-          default:
-            break
-        }
+      const record = { ...payload }
+      if (record.createTime && record.createTime.length === 2) {
+        record.startTime = `${record.createTime[0]} 00:00:00`
+        record.endTime = `${record.createTime[0]} 23:59:59`
       }
-      const data = yield call(query, { ...payload, ...locationPayload, userIds, location: undefined })
-      if (data) {
-        const storeuserArr = storage({ key: 'storeuserArr', json: true })
-        const list = data.obj.map((i) => {
-          const itemInfo = storeuserArr.find(k => +i.idUser && +i.idUser === k.idUser) || {}
-          return {
-            ...i,
-            address: itemInfo.address,
-          }
-        })
+      delete record.createTime
+      const data = yield call(query, { ...record })
+      if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list,
+            list: data.obj,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
@@ -64,6 +41,8 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data.mess || '当前网络无法使用'
       }
     },
   },

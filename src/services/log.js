@@ -5,7 +5,7 @@ const { log } = api
 
 export async function query(params) {
   params = pageParams(params)
-  delete params.name
+  delete params.userIds
   return request({
     url: log.list,
     method: 'post',

@@ -1,64 +1,74 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table } from 'antd'
+import { Table, Popover } from 'antd'
+import moment from 'moment'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 
-const replText = {
-  0: '成功',
-  1: '失败',
-  2: '未知',
-  3: '嘻嘻',
-}
-const color = {
-  0: '#DB9019',
-  1: '#62bd00',
-  2: '#FF534D',
-  3: '#25C6FC',
-}
-
-const Text = ({ state }) => {
-  return <span style={{ color: color[state] }}>{replText[state]}</span>
+const Text = ({ text, title = '信息' }) => {
+  const content = <div style={{ maxWidth: '450px', wordBreak: 'break-word' }}>{text}</div>
+  return (
+    <Popover placement="bottom" content={content} title={title} trigger="hover">
+      <span style={{ color: '#108ee9', cursor: 'pointer' }}>查看</span>
+    </Popover>
+  )
 }
 
 Text.propTypes = {
-  state: PropTypes.number,
+  text: PropTypes.string,
+  title: PropTypes.string,
 }
 
 const List = ({ location, ...tableProps }) => {
   const columns = [
     {
-      title: '用户ID',
-      dataIndex: 'idUser',
-      key: 'idUser',
-    }, {
       title: '用户名称',
       dataIndex: 'name',
       key: 'name',
-      render: () => {
-        return <span>张三</span>
+      render: (text) => {
+        return <span>{text}</span>
       },
     }, {
       title: '行为',
-      dataIndex: 'address',
-      key: 'address',
-      render: () => {
-        return <span>请求了首页</span>
+      dataIndex: 'peration',
+      key: 'peration',
+      render: (text) => {
+        return <span>{text}</span>
       },
     }, {
-      title: '操作状态',
-      dataIndex: 'state',
-      key: 'state',
-      render: () => {
-        const state = Math.floor(Math.random() * 4)
-        return <Text state={state} />
+      title: '状态',
+      dataIndex: 'operate_result',
+      key: 'operate_result',
+      render: (text) => {
+        return <span>{text}</span>
       },
     }, {
-      title: '操作时间',
-      dataIndex: 'ydDatastatus',
-      key: 'ydDatastatus',
-      render: () => {
-        return <span>2019-08-27 11:11:11</span>
+      title: '方法名称',
+      dataIndex: 'method',
+      key: 'method',
+      render: (text) => {
+        return <Text title="方法名称信息" text={text} />
+      },
+    }, {
+      title: 'IP',
+      dataIndex: 'ip',
+      key: 'ip',
+      render: (text) => {
+        return <span>{text}</span>
+      },
+    }, {
+      title: '请求参数',
+      dataIndex: 'params',
+      key: 'params',
+      render: (text) => {
+        return <Text title="请求参数信息" text={text} />
+      },
+    }, {
+      title: '访问时间',
+      dataIndex: 'create_date',
+      key: 'create_date',
+      render: (text) => {
+        return <span>{moment(text).format('YYYY-MM-DD HH:mm:ss')}</span>
       },
     },
   ]

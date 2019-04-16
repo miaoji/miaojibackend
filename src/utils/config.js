@@ -343,7 +343,7 @@ module.exports = {
       list: `${APIV1}/stTactinnList`,
     },
     log: {
-      list: `${APIV1}/stTactinnList`,
+      list: `${APIV1}/selectSysLog`,
     },
   },
   brand: {
