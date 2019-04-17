@@ -110,7 +110,9 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       render: (text) => {
         const newtext = {
           1: '点货',
+          100: '预约',
           101: '到件',
+          104: '入柜',
           102: '上架',
           103: '分派',
           201: '问题件',

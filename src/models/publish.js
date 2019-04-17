@@ -33,7 +33,7 @@ export default modelExtend(pageModel, {
 
     * query(_, { call, put }) {
       const data = yield call(query, {
-        current: 1,
+        page: 1,
         pageSize: 10000,
       })
       if (data.code === 200) {

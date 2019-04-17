@@ -28,6 +28,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       render: (text) => {
         const replText = {
           1: '点货',
+          100: '预约',
           101: '到件',
           102: '上架',
           103: '分派',

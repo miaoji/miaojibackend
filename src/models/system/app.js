@@ -5,8 +5,8 @@ import menus from 'utils/menus'
 import hideMenus from 'utils/hideMenus'
 import { storage } from 'utils'
 import { Select } from 'antd'
-import { query as queryStoreUser } from 'src/services/storeuser'
 import { rebuildMenuData } from 'src/utils/processing'
+import { query as queryStoreUser } from '../../services/storeuser'
 
 const { prefix } = config
 const { Option } = Select
@@ -140,7 +140,7 @@ export default {
 
     *queryStoreUser(_, { call, put }) {
       const data = yield call(queryStoreUser, {
-        current: 1,
+        page: 1,
         pageSize: 10000,
       })
       if (data.code === 200 && data.obj) {
