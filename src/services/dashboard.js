@@ -8,7 +8,7 @@ const { dashboard } = api
  * [获取首页折线图数据]
  */
 export async function getLineData(params = {}) {
-  params.userIds = getOrgIdUsers() || ''
+  params.userIds = getOrgIdUsers()
   return request({
     url: dashboard.echart,
     method: 'post',
