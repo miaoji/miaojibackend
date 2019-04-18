@@ -12,3 +12,13 @@ export async function query(params) {
     data: params,
   })
 }
+
+export function download(params = {}) {
+  delete params.page
+  delete params.pageSize
+  return request({
+    url: log.download,
+    method: 'post',
+    data: params,
+  })
+}

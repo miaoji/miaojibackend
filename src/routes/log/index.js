@@ -36,6 +36,15 @@ const IndexPage = ({ location, dispatch, log, loading, app }) => {
       ...location.query,
     },
     storeuserList,
+    downloadLoading: loading.effects['log/download'],
+    onDownLoad() {
+      dispatch({
+        type: 'log/download',
+        payload: {
+          ...location.query,
+        },
+      })
+    },
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,

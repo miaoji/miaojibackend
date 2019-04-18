@@ -21,6 +21,8 @@ const TwoColProps = {
 
 const Filter = ({
   onFilterChange,
+  onDownLoad,
+  downloadLoading,
   filter,
   form: {
     getFieldDecorator,
@@ -114,7 +116,8 @@ const Filter = ({
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+            <Button size="large" type="primary" onClick={onDownLoad} loading={downloadLoading}>下载</Button>
           </div>
         </div>
       </Col>
@@ -126,6 +129,8 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  onDownLoad: PropTypes.func,
+  downloadLoading: PropTypes.bool,
 }
 
 export default Form.create()(Filter)
