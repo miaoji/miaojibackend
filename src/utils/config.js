@@ -39,8 +39,8 @@ APIV1 = '/api'
 if (process.env.NODE_ENV !== 'development') {
   // APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
   // APIV3 = 'http://106.14.212.146:8288'
-  APIV1 = 'https://console.mijihome.cn/quandiExpressSiteManager'
-  // APIV1 = 'https://console.winnerwly.top/quandiExpressSiteManager'
+  // APIV1 = 'https://console.mijihome.cn/quandiExpressSiteManager'
+  APIV1 = 'https://console.winnerwly.top/quandiExpressSiteManager'
   APIV3 = 'http://106.14.212.146:8288'
 }
 
@@ -102,6 +102,7 @@ module.exports = {
       versionswitch: `${APIV1}/updateVersion`, // app版本切换
       monitorAdd: `${APIV1}/stMonitorAdd`, // 添加门店监控设备信息
       monitorList: `${APIV1}/stMonitor`, // 查询门店监控设备信息
+      del: `${APIV1}/delUser`, // 逻辑删除门店信息
     },
     articles: {
       list: `${APIV1}/selectCollection`, // 文章分页数据

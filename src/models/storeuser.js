@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import { config, initialCreateTime } from '../utils'
-import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList } from '../services/storeuser'
+import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList, storeDel } from '../services/storeuser'
 import { pageModel } from './system/common'
 import { locationData } from '../utils/locationData'
 import { query as queryOrgList, getLocation } from '../services/auth/org'
@@ -43,6 +43,19 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
+    /**
+     * [门店用户的逻辑删除]
+     */
+    *delete({ payload = {} }, { call, put }) {
+      console.log('payload', payload)
+      const data = yield call(storeDel, { userIds: payload.id })
+      if (data.code === 200) {
+        message.success('用户删除成功')
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess || '删除用户失败'
+      }
+    },
     /**
      * [获取门店用户列表数据]
      */

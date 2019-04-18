@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Spin } from 'antd'
+import { Table, Spin, Modal } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
 import { Link } from 'dva/router'
@@ -10,7 +10,9 @@ import { DropOption } from '../../components'
 import SonTable from './SonTable'
 import { isSuperAdmin, getOrgId, getUserId } from '../../utils'
 
-const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
+const confirm = Modal.confirm
+
+const List = ({ filter, onDeleteAppUser, onMonitorClick, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -21,6 +23,14 @@ const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, column
         break
       case '3':
         onMonitorClick(record)
+        break
+      case '4':
+        confirm({
+          title: <p>确定要删除<span style={{ color: 'red' }}>{record.name}</span>这个门店吗?</p>,
+          onOk() {
+            onDeleteAppUser(record.id)
+          },
+        })
         break
       default:
         break
@@ -130,6 +140,7 @@ const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, column
               { key: '1', name: '修改通讯费' },
               { key: '2', name: '版本切换' },
               // { key: '3', name: '监控设备' },
+              { key: '4', name: '删除用户' },
             ]}
           />)
         },
@@ -146,7 +157,7 @@ const List = ({ filter, onMonitorClick, onDeleteItem, onVersionSwitching, column
         render: (_, record) => {
           const menuOptions = [{ key: '2', name: '版本切换' }]
           if (getUserId() === 98) {
-            menuOptions.push({ key: '2', name: '版本切换' })
+            menuOptions.push({ key: '1', name: '修改通讯费' })
           }
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />
         },
@@ -201,6 +212,7 @@ List.propTypes = {
   onEditItem: PropTypes.func.isRequired,
   onVersionSwitching: PropTypes.func.isRequired,
   onMonitorClick: PropTypes.func.isRequired,
+  onDeleteAppUser: PropTypes.func.isRequired,
   isMotion: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   columnslist: PropTypes.array.isRequired,

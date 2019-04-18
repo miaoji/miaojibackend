@@ -58,3 +58,11 @@ export function monitorList(params) {
     data: params,
   })
 }
+
+export function storeDel(params) {
+  return request({
+    url: storeuser.del,
+    method: 'post',
+    data: params,
+  })
+}

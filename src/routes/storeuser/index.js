@@ -62,6 +62,14 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
     location,
     expandedRowKeys,
     isMotion,
+    onDeleteAppUser(id) {
+      dispatch({
+        type: 'storeuser/delete',
+        payload: {
+          id,
+        },
+      })
+    },
     onChange(page) {
       dispatch(routerRedux.push({
         pathname,
