@@ -23,8 +23,8 @@ const List = ({ location, ...tableProps }) => {
   const columns = [
     {
       title: '用户名称',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'userName',
+      key: 'userName',
       render: (text) => {
         return <span>{text}</span>
       },
@@ -37,8 +37,8 @@ const List = ({ location, ...tableProps }) => {
       },
     }, {
       title: '状态',
-      dataIndex: 'operate_result',
-      key: 'operate_result',
+      dataIndex: 'operateResult',
+      key: 'operateResult',
       render: (text) => {
         return <span>{text}</span>
       },
