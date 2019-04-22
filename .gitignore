@@ -10,3 +10,5 @@ package-lock.json
 key.pub
 key.pem
 push.sh
+test.sh
+testkey.pem
