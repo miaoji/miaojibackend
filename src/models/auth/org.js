@@ -45,25 +45,7 @@ export default modelExtend(pageModel, {
         })
       }
       payload = initialCreateTime(payload)
-      const locationPayload = {}
-      if (payload.location && payload.location.length > 0) {
-        // 不要对传进来的payload直接修改,会直接影响原数据
-        let location = payload.location.split(',')
-        switch (location.length) {
-          case 1:
-            locationPayload.province = location[0]
-            break
-          case 2:
-            locationPayload.city = location[1]
-            break
-          case 3:
-            locationPayload.district = location[2]
-            break
-          default:
-            break
-        }
-      }
-      const data = yield call(query, { ...payload, ...locationPayload })
+      const data = yield call(query, { ...payload, ...payload })
       if (data.code === 200 && data.obj) {
         yield put({
           type: 'querySuccess',
