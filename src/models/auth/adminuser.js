@@ -51,9 +51,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      console.log('payload', payload)
       payload = initialCreateTime(payload)
-      console.log('payload', payload)
       const data = yield call(query, payload)
       if (data.code === 200) {
         let list = []
@@ -83,23 +81,18 @@ export default modelExtend(pageModel, {
     },
 
     *create({ payload }, { call, put }) {
-      if (payload.idUser) {
-        payload.idUser = payload.idUser ? payload.idUser.split('///')[0] : undefined
+      const newPayload = {
+        accounts: payload.newAccounts,
+        createUserId: getUserId(),
+        mobile: payload.number,
+        name: payload.newName,
+        orgId: payload.orgId[payload.orgId.length - 1],
+        parentId: getUserId(),
+        password: password(payload.password),
+        remark: payload.remark,
+        roleId: payload.roleId.toString(),
       }
-      if (payload.username) {
-        payload.name = payload.username
-        delete payload.username
-      }
-      if (payload.number) {
-        payload.mobile = payload.number
-        delete payload.number
-      }
-      payload.parentId = getUserId()
-      payload.createUserId = getUserId()
-      payload.password = password(payload.password)
-      delete payload.repass
-      payload.roleId = payload.roleId.toString()
-      const data = yield call(create, { ...payload, orgId: payload.orgId[payload.orgId.length - 1] })
+      const data = yield call(create, newPayload)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success('新增成功')
@@ -158,7 +151,6 @@ export default modelExtend(pageModel, {
     *queryOrangeizeList(_, { call, put }) {
       const data = yield call(queryOrangeizeList, { page: 1, pageSize: 10000 })
       if (data.code === 200) {
-        console.log('data', data.obj)
         const orgTree = orgToTree(data.obj)
         let option = []
         if (data.obj && data.obj.length > 0) {

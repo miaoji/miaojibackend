@@ -153,9 +153,15 @@ const modal = ({
     return (
       <Modal {...modalOpts} title="妙寄APP注册">
         <Form layout="horizontal">
+          <div style={{ height: '0px', overflow: 'hidden' }}>
+            {/* 处理autocomplete属性失效不能阻止浏览器自动填充表单 */}
+            <FormItem label="处理浏览器表单自动填充" hasFeedback {...formItemLayout}>
+              {getFieldDecorator('useless', {
+              })(<Input type="password" />)}
+            </FormItem>
+          </div>
           <FormItem label="手机号" hasFeedback {...formItemLayout}>
             {getFieldDecorator('siteMobile', {
-              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -167,7 +173,6 @@ const modal = ({
           </FormItem>
           <FormItem label="站点名称" hasFeedback {...formItemLayout}>
             {getFieldDecorator('siteName', {
-              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -183,7 +188,6 @@ const modal = ({
           </FormItem>
           <FormItem label="所属机构" hasFeedback {...formItemLayout}>
             {getFieldDecorator('org', {
-              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -200,7 +204,6 @@ const modal = ({
           </FormItem>
           <FormItem label="省市区" hasFeedback {...formItemLayout}>
             {getFieldDecorator('address', {
-              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -216,7 +219,6 @@ const modal = ({
           </FormItem>
           <FormItem label="街道" hasFeedback {...formItemLayout}>
             {getFieldDecorator('street', {
-              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -224,12 +226,12 @@ const modal = ({
                 },
               ],
             })(<Input
+              autocomplete="off"
               placeholder="请输入街道名称!"
             />)}
           </FormItem>
           <FormItem label="详细地址" hasFeedback {...formItemLayout}>
             {getFieldDecorator('description', {
-              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -243,7 +245,6 @@ const modal = ({
           </FormItem>
           <FormItem label="密码" hasFeedback {...formItemLayout}>
             {getFieldDecorator('password', {
-              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -265,7 +266,6 @@ const modal = ({
           </FormItem>
           <FormItem label="确认密码" hasFeedback {...formItemLayout}>
             {getFieldDecorator('confirm', {
-              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -283,7 +283,7 @@ const modal = ({
           </FormItem>
           <FormItem label="版本" hasFeedback {...formItemLayout}>
             {getFieldDecorator('isBeta', {
-              initialValue: item.isBeta || 0,
+              initialValue: 0,
               rules: [
                 {
                   required: true,

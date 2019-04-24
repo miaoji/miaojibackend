@@ -243,7 +243,6 @@ export default modelExtend(pageModel, {
     },
     *query(_, { call, put, select }) {
       const showDashboard = yield select(({ app }) => app.showDashboard)
-      console.log('showDashboard', showDashboard)
       if (showDashboard) {
         yield put({ type: 'getIncome' })
         yield put({ type: 'getStoreTotal' })

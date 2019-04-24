@@ -47,7 +47,6 @@ export default modelExtend(pageModel, {
      * [门店用户的逻辑删除]
      */
     *delete({ payload = {} }, { call, put }) {
-      console.log('payload', payload)
       const data = yield call(storeDel, { userIds: payload.id })
       if (data.code === 200) {
         message.success('用户删除成功')

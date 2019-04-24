@@ -206,8 +206,15 @@ const modal = ({
     return (
       <Modal {...modalOpts}>
         <Form layout="horizontal">
+          <div style={{ height: '0px', overflow: 'hidden' }}>
+            {/* 处理autocomplete属性失效不能阻止浏览器自动填充表单 */}
+            <FormItem label="处理浏览器表单自动填充" hasFeedback {...formItemLayout}>
+              {getFieldDecorator('useless', {
+              })(<Input type="password" />)}
+            </FormItem>
+          </div>
           <FormItem label="姓名" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('username', {
+            {getFieldDecorator('newName', {
               rules: [
                 {
                   required: true,
@@ -217,7 +224,7 @@ const modal = ({
             })(<Input placeholder="请填写用户姓名!" />)}
           </FormItem>
           <FormItem label="登陆账号" hasFeedback {...formItemLayout}>
-            {getFieldDecorator('accounts', {
+            {getFieldDecorator('newAccounts', {
               rules: [
                 {
                   required: true,
