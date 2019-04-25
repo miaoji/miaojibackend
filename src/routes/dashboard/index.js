@@ -56,7 +56,7 @@ function Dashboard({ dashboard, loading, app }) {
         <Card>
           <SimpleChartComponent {...orderLineProps} />
         </Card>
-      </Col>{(userId === 1 || userId === 101) ? (<Col lg={24} md={24} style={{ marginTop: '24px' }}>
+      </Col>{(userId === 1 || userId === 101 || userId === 102) ? (<Col lg={24} md={24} style={{ marginTop: '24px' }}>
         <Card>
           <InterfaceCall {...interfaceCallLineProps} />
         </Card>

@@ -33,7 +33,7 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
     monitorAddLoading: loading.effects['storeuser/monitor'],
     visible: modalVisible,
     maskClosable: false,
-    confirmLoading: loading.effects['storeuser/update'],
+    confirmLoading: loading.effects['storeuser/update'] || loading.effects['storeuser/create'] || loading.effects['storeuser/monitor'] || loading.effects['storeuser/versionswitch'],
     title: `${modalType === 'create' ? '新建' : '修改门店用户的通讯费'}`,
     wrapClassName: 'vertical-center-modal',
     locationData,
