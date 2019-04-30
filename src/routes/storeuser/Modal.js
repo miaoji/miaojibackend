@@ -221,7 +221,7 @@ const modal = ({
             {getFieldDecorator('street', {
               rules: [
                 {
-                  required: true,
+                  required: false,
                   message: '请输入街道名称!',
                 },
               ],
