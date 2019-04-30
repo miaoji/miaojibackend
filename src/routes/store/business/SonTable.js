@@ -4,6 +4,7 @@ import { Link } from 'dva/router'
 import { Table } from 'antd'
 
 const SonTable = ({ record, list, filter }) => {
+  console.log('filter', filter)
   const columns = [
     {
       title: '操作人',
@@ -53,8 +54,8 @@ const SonTable = ({ record, list, filter }) => {
       key: 'option',
       width: 140,
       render: (text, info) => {
-        if (filter.startTime) {
-          return <Link to={`/orderbyuser?realName=${info.name}&mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&startTime=${filter.startTime}&endTime=${filter.endTime}`}>查看快件详情</Link>
+        if (filter.createTime && filter.createTime.length > 0) {
+          return <Link to={`/orderbyuser?realName=${info.name}&mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看快件详情</Link>
         }
         return <Link to={`/orderbyuser?realName=${info.name}&mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}`}>查看快件详情</Link>
       },

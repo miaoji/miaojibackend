@@ -43,6 +43,41 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         return <span>{replText[text]}</span>
       },
     }, {
+      title: '收款方式',
+      dataIndex: 'payType',
+      key: 'payType',
+      render: (text) => {
+        const realText = {
+          1: '支付宝支付',
+          2: '微信支付',
+          3: '余额支付',
+          4: '线下现金支付',
+        }
+        return <span>{text ? realText[text] : '暂无'}</span>
+      },
+    }, {
+      title: '收款金额',
+      dataIndex: 'fee',
+      key: 'fee',
+      render: (text) => {
+        return <span>{text ? `¥${text}` : '暂无'}</span>
+      },
+    }, {
+      title: '收款状态',
+      dataIndex: 'status',
+      key: 'status',
+      render: (text) => {
+        const realText = {
+          success: '成功',
+          wait: '等待',
+          cancel: '交易取消',
+          close: '交易关闭',
+          false: '交易失败',
+          refuse: '审核被拒绝',
+        }
+        return <span>{text ? realText[text] : '暂无'}</span>
+      },
+    }, {
       title: '创建时间',
       dataIndex: 'createTime',
       key: 'createTime',
