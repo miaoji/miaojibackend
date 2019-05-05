@@ -5,8 +5,9 @@ import { Table } from 'antd'
 import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 
-const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
-  const columns = [
+const List = ({ mailtype, filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
+  console.log('mailtype', mailtype)
+  let columns = [
     {
       title: '快递品牌',
       dataIndex: 'brand',
@@ -42,20 +43,11 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
         }
         return <span>{replText[text]}</span>
       },
-    }, {
-      title: '收款方式',
-      dataIndex: 'payType',
-      key: 'payType',
-      render: (text) => {
-        const realText = {
-          1: '支付宝支付',
-          2: '微信支付',
-          3: '余额支付',
-          4: '线下现金支付',
-        }
-        return <span>{text ? realText[text] : '暂无'}</span>
-      },
-    }, {
+    },
+  ]
+
+  if (mailtype === 3) {
+    columns = [...columns, {
       title: '收款金额',
       dataIndex: 'fee',
       key: 'fee',
@@ -84,8 +76,17 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
-    },
-  ]
+    }]
+  } else {
+    columns = [...columns, {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: (text) => {
+        return <span>{text || '暂无'}</span>
+      },
+    }]
+  }
 
   const getBodyWrapperProps = {
     page: location.query.page,
@@ -114,6 +115,7 @@ List.propTypes = {
   onEditItem: PropTypes.func,
   location: PropTypes.object,
   filter: PropTypes.object,
+  mailtype: PropTypes.number,
 }
 
 export default List

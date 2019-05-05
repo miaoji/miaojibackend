@@ -141,13 +141,13 @@ const Orderbyuser = ({ location, dispatch, orderbyuser, loading }) => {
       <Filter {...filterProps} />
       <Tabs activeKey={query.mailtype || '0'} onTabClick={handleTabClick}>
         <TabPane tab="普通件" key={0}>
-          <List {...listProps} />
+          <List {...listProps} mailtype={0} />
         </TabPane>
         <TabPane tab="到付件" key={1}>
-          <List {...listProps} />
+          <List {...listProps} mailtype={1} />
         </TabPane>
         <TabPane tab="代收货款" key={2}>
-          <List {...listProps} />
+          <List {...listProps} mailtype={2} />
         </TabPane>
       </Tabs>
       {modalVisible && <Modal {...modalProps} />}
