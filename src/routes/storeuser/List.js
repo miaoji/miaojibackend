@@ -8,11 +8,11 @@ import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import SonTable from './SonTable'
-import { isSuperAdmin, getOrgId, getUserId } from '../../utils'
+import { isSuperAdmin, getOrgId, getUserId, getRoleId } from '../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ filter, onDeleteAppUser, onMonitorClick, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
+const List = ({ onResetPWDClick, filter, onDeleteAppUser, onMonitorClick, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -31,6 +31,9 @@ const List = ({ filter, onDeleteAppUser, onMonitorClick, onDeleteItem, onVersion
             onDeleteAppUser(record.id)
           },
         })
+        break
+      case '5':
+        onResetPWDClick(record)
         break
       default:
         break
@@ -128,17 +131,35 @@ const List = ({ filter, onDeleteAppUser, onMonitorClick, onDeleteItem, onVersion
       },
     },
   ]
+
+  if (getRoleId() === 41) {
+    columns.push(
+      {
+        title: '操作',
+        key: 'operations',
+        width: 100,
+        render: (_, record) => {
+          return (<DropOption onMenuClick={e => handleMenuClick(record, e)}
+            menuOptions={[
+              { key: '5', name: '重置用户密码' },
+            ]}
+          />)
+        },
+      },
+    )
+  }
   if (isSuperAdmin()) {
     columns.push(
       {
         title: '操作',
         key: 'operations',
         width: 100,
-        render: (text, record) => {
+        render: (_, record) => {
           return (<DropOption onMenuClick={e => handleMenuClick(record, e)}
             menuOptions={[
               { key: '1', name: '修改通讯费' },
               { key: '2', name: '版本切换' },
+              { key: '5', name: '重置用户密码' },
               // { key: '3', name: '监控设备' },
               { key: '4', name: '删除用户' },
             ]}
@@ -212,6 +233,7 @@ List.propTypes = {
   onEditItem: PropTypes.func.isRequired,
   onVersionSwitching: PropTypes.func.isRequired,
   onMonitorClick: PropTypes.func.isRequired,
+  onResetPWDClick: PropTypes.func,
   onDeleteAppUser: PropTypes.func.isRequired,
   isMotion: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,

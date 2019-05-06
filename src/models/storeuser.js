@@ -1,7 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
+import md5 from 'js-md5'
 import { config, initialCreateTime } from '../utils'
-import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList, storeDel } from '../services/storeuser'
+import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList, storeDel, resetPass } from '../services/storeuser'
 import { pageModel } from './system/common'
 import { locationData } from '../utils/locationData'
 import { query as queryOrgList, getLocation } from '../services/auth/org'
@@ -319,7 +320,23 @@ export default modelExtend(pageModel, {
         throw new Error('列表更新失败')
       }
     },
-
+    /**
+     * [重置用户密码]
+     */
+    *resetPWD({ payload = {} }, { call, put, select }) {
+      const id = yield select(({ storeuser }) => storeuser.currentItem.id)
+      const data = yield call(resetPass, {
+        id,
+        password: md5(payload.password),
+      })
+      if (data.code === 200) {
+        message.success(data.mess)
+        yield put({ type: 'hideModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess || '修改失败'
+      }
+    },
   },
 
   reducers: {

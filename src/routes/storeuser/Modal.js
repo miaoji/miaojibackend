@@ -18,6 +18,8 @@ const formItemLayout = {
 const modal = ({
   item = {},
   onOk,
+  confirmDirty,
+  onEditConfirmDirty,
   form: {
     getFieldDecorator,
     validateFields,
@@ -302,6 +304,53 @@ const modal = ({
     )
   }
 
+  const handleConfirmBlur = (e) => {
+    const value = e.target.value
+    onEditConfirmDirty({ confirmDirty: confirmDirty || !!value })
+  }
+
+
+  if (modalProps.modalType === 'resetPWD') {
+    return (
+      <Modal {...modalOpts} title="重置密码">
+        <Form layout="horizontal">
+          <FormItem label="登陆密码" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('password', {
+              initialValue: item.password,
+              rules: [
+                {
+                  required: true,
+                  message: '请填写用户登陆密码!',
+                },
+                {
+                  pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./])[~!@#$%^&*()_+`\-={}:";'<>?,./0-9a-zA-Z\d]{8,30}$/,
+                  message: '密码长度要在8~30之间且至少包含一个大写字母一个小写字母一个数字一个特殊符号!',
+                },
+                {
+                  validator: validateToNextPassword,
+                },
+              ],
+            })(<Input type="password" placeholder="请填写用户登陆密码!" />)}
+          </FormItem>
+          <FormItem label="确认密码" hasFeedback {...formItemLayout}>
+            {getFieldDecorator('repass', {
+              initialValue: item.repass,
+              rules: [
+                {
+                  required: true,
+                  message: '请填写确认密码!',
+                },
+                {
+                  validator: compareToFirstPassword,
+                },
+              ],
+            })(<Input type="password" placeholder="请填写确认密码!" onBlur={handleConfirmBlur} />)}
+          </FormItem>
+        </Form>
+      </Modal>
+    )
+  }
+
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
@@ -331,6 +380,8 @@ modal.propTypes = {
   monitorList: PropTypes.array,
   contentLoading: PropTypes.bool,
   monitorAddLoading: PropTypes.bool,
+  confirmDirty: PropTypes.bool,
+  onEditConfirmDirty: PropTypes.func,
 }
 
 export default Form.create()(modal)

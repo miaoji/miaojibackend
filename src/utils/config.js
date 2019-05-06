@@ -103,6 +103,7 @@ module.exports = {
       monitorAdd: `${APIV1}/stMonitorAdd`, // 添加门店监控设备信息
       monitorList: `${APIV1}/stMonitor`, // 查询门店监控设备信息
       del: `${APIV1}/delUser`, // 逻辑删除门店信息
+      resetPass: `${APIV1}/updatePass`,
     },
     articles: {
       list: `${APIV1}/selectCollection`, // 文章分页数据

@@ -66,3 +66,11 @@ export function storeDel(params) {
     data: params,
   })
 }
+
+export function resetPass(params) {
+  return request({
+    url: storeuser.resetPass,
+    method: 'post',
+    data: params,
+  })
+}
