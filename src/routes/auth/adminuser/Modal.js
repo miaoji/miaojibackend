@@ -137,6 +137,10 @@ const modal = ({
               initialValue: item.accounts,
               rules: [
                 {
+                  pattern: /^[A-Za-z0-9]+$/,
+                  message: '账号为字母或者数字或两者的组合!',
+                },
+                {
                   required: true,
                   message: '请填写用户登陆账号!',
                 },
@@ -226,6 +230,10 @@ const modal = ({
           <FormItem label="登陆账号" hasFeedback {...formItemLayout}>
             {getFieldDecorator('newAccounts', {
               rules: [
+                {
+                  pattern: /^[A-Za-z0-9]+$/,
+                  message: '账号为字母或者数字或两者的组合!',
+                },
                 {
                   required: true,
                   message: '请填写用户登陆账号!',
