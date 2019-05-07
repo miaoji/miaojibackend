@@ -4,7 +4,7 @@ import { Form, Button, Row, Col, Select, Input } from 'antd'
 import { config } from 'utils'
 
 const { Option } = Select
-const { brand, orderTypeForBusiness } = config
+const { brand } = config
 const Search = Input.Search
 
 const ColProps = {
@@ -69,14 +69,23 @@ const Filter = ({
     }
   }
 
-  let typeList = []
-  for (let item in orderTypeForBusiness) {
-    if (Object.prototype.hasOwnProperty.call(orderTypeForBusiness, item)) {
-      let key = `${item}///${orderTypeForBusiness[item]}`
-      let optionItem = <Option key={key}>{orderTypeForBusiness[item]}</Option>
-      typeList.push(optionItem)
-    }
+  const typeArr = {
+    1: '点货数',
+    2: '入库数',
+    3: '签收数',
+    4: '补签数',
+    5: '退回数',
   }
+  const typeList = Object.keys(typeArr).map((i) => {
+    return <Option key={i}>{typeArr[i]}</Option>
+  })
+  // for (let item in orderTypeForBusiness) {
+  //   if (Object.prototype.hasOwnProperty.call(orderTypeForBusiness, item)) {
+  //     let key = `${item}///${orderTypeForBusiness[item]}`
+  //     let optionItem = <Option key={key}>{orderTypeForBusiness[item]}</Option>
+  //     typeList.push(optionItem)
+  //   }
+  // }
 
   const stateChange = (key) => {
     handleChange('state', key)

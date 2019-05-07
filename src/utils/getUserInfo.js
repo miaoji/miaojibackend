@@ -63,7 +63,7 @@ const getRoleId = () => {
   let roleId = ''
   try {
     const user = storage({ key: 'user' })
-    roleId = user ? JSON.parse(user).roleId : undefined
+    roleId = user ? JSON.parse(user).menuList.map(i => i.id) : undefined
   } catch (err) {
     console.info(err)
     roleId = undefined

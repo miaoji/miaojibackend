@@ -13,8 +13,8 @@ export default {
   "proxy": {
     "/api": {
       // "target": "https://console.mijihome.cn/server/quandiExpressSiteManager",
-      "target": "http://192.168.231.125:80",
-      // "target": "http://192.168.231.239:8077",
+      // "target": "http://192.168.231.125:80",
+      "target": "http://192.168.231.239:8066",
       "changeOrigin": true,
       "pathRewrite": { "^/api": "/" }
     },

@@ -13,27 +13,27 @@ const Tab = ({
     <Tabs defaultActiveKey="1" className={classnames({ [styles.tab]: true })}>
       <TabPane tab="点货数" key="1">
         <div>
-          {list.someCargo}
+          {list.someCargo.length > 0 ? list.someCargo : <span>暂无数据</span>}
         </div>
       </TabPane>
       <TabPane tab="入库数" key="2">
         <div>
-          {list.scheduledReceipt}
+          {list.scheduledReceipt.length > 0 ? list.scheduledReceipt : <span>暂无数据</span>}
         </div>
       </TabPane>
       <TabPane tab="签收数" key="3">
         <div>
-          {list.signingVolume}
+          {list.signingVolume.length > 0 ? list.signingVolume : <span>暂无数据</span>}
         </div>
       </TabPane>
-      <TabPane tab="补签数" key="5">
+      <TabPane tab="补签数" key="4">
         <div>
-          {list.retroactive}
+          {list.retroactive.length > 0 ? list.retroactive : <span>暂无数据</span>}
         </div>
       </TabPane>
-      <TabPane tab="退回数" key="4">
+      <TabPane tab="退回数" key="5">
         <div>
-          {list.returnAmount}
+          {list.returnAmount.length > 0 ? list.returnAmount : <span>暂无数据</span>}
         </div>
       </TabPane>
     </Tabs>

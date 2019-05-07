@@ -132,22 +132,6 @@ const List = ({ onResetPWDClick, filter, onDeleteAppUser, onMonitorClick, onDele
     },
   ]
 
-  if (getRoleId() === 41) {
-    columns.push(
-      {
-        title: '操作',
-        key: 'operations',
-        width: 100,
-        render: (_, record) => {
-          return (<DropOption onMenuClick={e => handleMenuClick(record, e)}
-            menuOptions={[
-              { key: '5', name: '重置用户密码' },
-            ]}
-          />)
-        },
-      },
-    )
-  }
   if (isSuperAdmin()) {
     columns.push(
       {
@@ -169,16 +153,23 @@ const List = ({ onResetPWDClick, filter, onDeleteAppUser, onMonitorClick, onDele
     )
   }
 
-  if (getOrgId() === 66 || getUserId() === 130) {
+  const testRole = getRoleId().indexOf(41) !== -1
+  if (getOrgId() === 66 || getUserId() === 130 || testRole) {
     columns.push(
       {
         title: '操作',
         key: 'operations',
         width: 100,
         render: (_, record) => {
-          const menuOptions = [{ key: '2', name: '版本切换' }]
+          const menuOptions = []
+          if (getOrgId() === 66 || getUserId() === 130) {
+            menuOptions.push({ key: '2', name: '版本切换' })
+          }
           if (getUserId() === 98) {
             menuOptions.push({ key: '1', name: '修改通讯费' })
+          }
+          if (testRole) {
+            menuOptions.push({ key: '5', name: '重置用户密码' })
           }
           return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />
         },
