@@ -24,8 +24,6 @@ const Filter = ({
   onAdd,
   onFilterChange,
   filter,
-  onUpdateAdminOrangeize,
-  updateLoading,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -101,9 +99,6 @@ const Filter = ({
         <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
         <Button size="large" type="primary" className="margin-right" onClick={onAdd}>新增菜单</Button>
       </Col>
-      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <Button style={{ display: 'none' }} loading={updateLoading} size="large" type="dashed" ghost onClick={onUpdateAdminOrangeize}>将新菜单同步到最高权限</Button>
-      </Col>
     </Row>
   )
 }
@@ -114,7 +109,6 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  onUpdateAdminOrangeize: PropTypes.func,
   updateLoading: PropTypes.bool,
 }
 

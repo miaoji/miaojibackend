@@ -21,6 +21,7 @@ export default modelExtend(pageModel, {
     modalType: 'create',
     menuList: [],
     roleList: [],
+    sourceMenuList: [],
   },
 
   subscriptions: {
@@ -137,26 +138,33 @@ export default modelExtend(pageModel, {
     *queryMenuList(_, { call, put }) {
       const data = yield call(queryMenu, { parentMenuId: 0, page: 1, pageSize: 10000 })
       if (data.code === 200 && data.obj) {
+        console.log('data', data.obj)
         storage({
           type: 'set',
           key: 'menuListSpare',
           val: JSON.stringify([].concat(data.obj)),
         })
-        if (process.env.NODE_ENV === 'test') {
-          let option = []
-          if (data.obj instanceof Array) {
-            option = data.obj.map((item) => {
-              return reloadItem(item)
-            })
-            option = renderTreeNodes(option)
-          }
-          yield put({
-            type: 'updateState',
-            payload: {
-              menuList: option,
-            },
-          })
-        }
+        yield put({
+          type: 'updateState',
+          payload: {
+            sourceMenuList: data.obj,
+          },
+        })
+        // if (process.env.NODE_ENV === 'test') {
+        //   let option = []
+        //   if (data.obj instanceof Array) {
+        //     option = data.obj.map((item) => {
+        //       return reloadItem(item)
+        //     })
+        //     option = renderTreeNodes(option)
+        //   }
+        //   yield put({
+        //     type: 'updateState',
+        //     payload: {
+        //       menuList: option,
+        //     },
+        //   })
+        // }
       }
     },
     // 获取全部角色信息

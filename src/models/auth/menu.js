@@ -83,8 +83,14 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *create({ payload }, { call, put }) {
-      const data = yield call(create, { ...payload, createUserId: getUserId() })
+    *create({ payload }, { call, put, select }) {
+      const currentItem = yield select(({ menu }) => menu.currentItem)
+      const data = yield call(create, {
+        ...payload,
+        menuLevel: (currentItem.menuLevel || 0) + 1,
+        parentMenuId: currentItem.id || 0,
+        createUserId: getUserId(),
+      })
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
         message.success(data.mess)
@@ -94,7 +100,36 @@ export default modelExtend(pageModel, {
       }
     },
 
+    *addbutton({ payload }, { call, put, select }) {
+      const currentItem = yield select(({ menu }) => menu.currentItem)
+      const data = yield call(create, {
+        ...payload,
+        menuLevel: (currentItem.menuLevel || 0) + 1,
+        parentMenuId: currentItem.id || 0,
+        menuType: 3,
+        createUserId: getUserId(),
+      })
+      if (data.success && data.code === 200) {
+        message.success(data.mess)
+        // yield put({ type: 'hideModal' })
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess === 'id或手机号已存在' ? '您输入输入的手机号已存在' : data.mess || data
+      }
+    },
+
     *update({ payload }, { select, call, put }) {
+      const id = yield select(({ menu }) => menu.currentItem.id)
+      const data = yield call(update, { ...payload, id })
+      if (data.code === 200) {
+        yield put({ type: 'hideModal' })
+        message.success('更新成功')
+        yield put({ type: 'query' })
+      } else {
+        throw data.mess || data
+      }
+    },
+    *modbutton({ payload }, { select, call, put }) {
       const id = yield select(({ menu }) => menu.currentItem.id)
       const data = yield call(update, { ...payload, id })
       if (data.code === 200) {

@@ -69,6 +69,7 @@ export default {
         })
 
         let menuList = user.userMenus
+        console.log('menuList', menuList)
 
         if (user.userId === 98) {
           // if (user.userId === 1) {

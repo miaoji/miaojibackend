@@ -6,9 +6,7 @@ import {
   Form, Button, Row, Col, Input, Select,
   // Cascader
 } from 'antd'
-import { getOrgIdUsers } from '../../utils/getUserInfo'
 
-const createUserDis = !(getOrgIdUsers())
 const Search = Input.Search
 
 const ColProps = {
@@ -29,6 +27,7 @@ const Filter = ({
   filter,
   storeuserList,
   handleCreate,
+  auth,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -130,7 +129,7 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>重置</Button>
-            {createUserDis ? <Button type="primary" size="large" onClick={handleCreate}>新建门店用户</Button> : ''}
+            {auth.add && <Button type="primary" size="large" onClick={handleCreate}>新建门店用户</Button>}
           </div>
         </div>
       </Col>
@@ -144,6 +143,7 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   storeuserList: PropTypes.array,
+  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

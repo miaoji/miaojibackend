@@ -23,7 +23,8 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
   } = storeuser
   const { pageSize } = pagination
   const { query, pathname } = location
-  const { storeuserList } = app
+  const { storeuserList, user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/storeuser'] || {}
 
   const modalProps = {
     modalType,
@@ -59,6 +60,7 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
 
   const listProps = {
     dataSource: list,
+    auth,
     columnslist,
     sonlist,
     filter: { ...location.query },
@@ -161,6 +163,7 @@ const Storeuser = ({ location, dispatch, storeuser, loading, app }) => {
   }
 
   const filterProps = {
+    auth,
     filter: {
       ...location.query,
     },

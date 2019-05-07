@@ -154,11 +154,33 @@ const onlyMenus = (list) => {
 }
 
 /**
+ * [对菜单数据进行转换,转换成适合页面获取按钮权限的数据]
+ */
+const filterButtonInfo = (arr) => {
+  const tmp = arr.filter(i => i.menuType === 2).map((i) => {
+    const tmpI = arr.filter(j => String(j.parentMenuId) === String(i.id))
+    const val = {}
+    tmpI.forEach((k) => { val[k.buttonType] = true })
+    return {
+      name: i.target,
+      val,
+    }
+  })
+
+  const R = {}
+  tmp.forEach((i) => { R[i.name] = i.val })
+  return R
+}
+
+/**
  * [对登录获取的用户信息处理,得到用户的一些角色信息]
  */
 export const initUserInfo = (userInfo) => {
   // 菜单列表信息
-  const menuList = onlyMenus(userInfo.menuList)
+  const source = onlyMenus(userInfo.menuList)
+  const menuList = source.filter(i => i.menuType !== 3)
+  const sourceMenuList = filterButtonInfo(source)
+
   // 角色ID
   const roleIds = userInfo.menuList.map((item) => {
     return item.id
@@ -176,6 +198,7 @@ export const initUserInfo = (userInfo) => {
     userMenus: menuList,
     roleIds,
     menuIds,
+    sourceMenuList,
     menuGroupIds,
   }
 }

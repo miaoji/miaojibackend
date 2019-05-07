@@ -9,7 +9,8 @@ import Modal from './Modal'
 const PageIndex = ({ location, dispatch, bankcard, loading, app }) => {
   const { list, pagination, currentItem, modalVisible, modalType } = bankcard
   const { pageSize } = pagination
-  const { storeuserList } = app
+  const { storeuserList, user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/bankcard'] || {}
 
   const modalProps = {
     type: modalType,
@@ -34,6 +35,7 @@ const PageIndex = ({ location, dispatch, bankcard, loading, app }) => {
   }
 
   const listProps = {
+    auth,
     dataSource: list,
     loading: loading.effects['bankcard/query'],
     pagination,
@@ -67,6 +69,7 @@ const PageIndex = ({ location, dispatch, bankcard, loading, app }) => {
   }
 
   const filterProps = {
+    auth,
     filter: {
       ...location.query,
     },

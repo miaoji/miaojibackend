@@ -8,11 +8,37 @@ import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
 import SonTable from './SonTable'
-import { isSuperAdmin, getOrgId, getUserId, getRoleId } from '../../utils'
+
+const initMenuOption = (auth) => {
+  const menuOptions = []
+  Object.keys(auth).forEach((i) => {
+    let tmp = null
+    switch (i) {
+      case 'del':
+        tmp = { key: '4', name: '删除用户' }
+        break
+      case 'resetPWD':
+        tmp = { key: '5', name: '重置用户密码' }
+        break
+      case 'update':
+        tmp = { key: '1', name: '修改通讯费' }
+        break
+      case 'version':
+        tmp = { key: '2', name: '版本切换' }
+        break
+      default:
+        break
+    }
+    if (tmp) {
+      menuOptions.push(tmp)
+    }
+  })
+  return menuOptions
+}
 
 const confirm = Modal.confirm
 
-const List = ({ onResetPWDClick, filter, onDeleteAppUser, onMonitorClick, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
+const List = ({ auth, onResetPWDClick, filter, onDeleteAppUser, onMonitorClick, onDeleteItem, onVersionSwitching, columnslist, onEditItem, sonlist, isMotion, location, rowLoading, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -130,52 +156,21 @@ const List = ({ onResetPWDClick, filter, onDeleteAppUser, onMonitorClick, onDele
         return <Link to={`/storeUserDetail?idUser=${record.id}`}>查看详情</Link>
       },
     },
-  ]
-
-  if (isSuperAdmin()) {
-    columns.push(
-      {
-        title: '操作',
-        key: 'operations',
-        width: 100,
-        render: (_, record) => {
+    {
+      title: '操作',
+      key: 'operations',
+      width: 100,
+      render: (_, record) => {
+        const menuOptions = initMenuOption(auth)
+        if (menuOptions.length) {
           return (<DropOption onMenuClick={e => handleMenuClick(record, e)}
-            menuOptions={[
-              { key: '1', name: '修改通讯费' },
-              { key: '2', name: '版本切换' },
-              { key: '5', name: '重置用户密码' },
-              // { key: '3', name: '监控设备' },
-              { key: '4', name: '删除用户' },
-            ]}
+            menuOptions={menuOptions}
           />)
-        },
+        }
+        return <span>/</span>
       },
-    )
-  }
-
-  const testRole = getRoleId().indexOf(41) !== -1
-  if (getOrgId() === 66 || getUserId() === 130 || testRole) {
-    columns.push(
-      {
-        title: '操作',
-        key: 'operations',
-        width: 100,
-        render: (_, record) => {
-          const menuOptions = []
-          if (getOrgId() === 66 || getUserId() === 130) {
-            menuOptions.push({ key: '2', name: '版本切换' })
-          }
-          if (getUserId() === 98) {
-            menuOptions.push({ key: '1', name: '修改通讯费' })
-          }
-          if (testRole) {
-            menuOptions.push({ key: '5', name: '重置用户密码' })
-          }
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={menuOptions} />
-        },
-      },
-    )
-  }
+    },
+  ]
 
   const getBodyWrapperProps = {
     page: location.query.page,
@@ -232,6 +227,7 @@ List.propTypes = {
   filter: PropTypes.object,
   sonlist: PropTypes.array,
   rowLoading: PropTypes.bool,
+  auth: PropTypes.object,
 }
 
 export default List

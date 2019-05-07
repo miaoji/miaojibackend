@@ -2,16 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Modal } from 'antd'
 import classnames from 'classnames'
-// import moment from 'moment'
 import styles from './List.less'
 import AnimTableBody from '../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../components'
-import { getUserId } from '../../utils'
 
 const confirm = Modal.confirm
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
-  const userId = getUserId()
+const List = ({ auth, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -110,10 +107,7 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (_, record) => {
-        if (userId === 98) {
-          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '删除' }]} />
-        }
-        return <span>/</span>
+        return auth.del ? <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '2', name: '删除' }]} /> : <span>/</span>
       },
     },
   ]
@@ -155,6 +149,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   location: PropTypes.object,
+  auth: PropTypes.object,
 }
 
 export default List

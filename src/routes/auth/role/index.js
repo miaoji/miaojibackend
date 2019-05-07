@@ -7,11 +7,12 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, role, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, menuList, roleList } = role
+  const { list, pagination, currentItem, modalVisible, modalType, menuList, roleList, sourceMenuList } = role
   const { pageSize } = pagination
 
   const modalProps = {
     type: modalType,
+    sourceMenuList,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['role/update'],

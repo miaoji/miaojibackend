@@ -1,5 +1,6 @@
 import {
-  request, config, pageParams, getRoleId,
+  request, config, pageParams,
+  //  getRoleId,
   isSuperAdmin,
   // getUserId,
 } from '../../utils'
@@ -7,7 +8,7 @@ import {
 const { api: { auth: { role } } } = config
 
 export async function query(params) {
-  params.roleId = getRoleId()
+  // params.roleId = getRoleId()
   if (!isSuperAdmin()) {
     // params.createUserId = getUserId()
   }

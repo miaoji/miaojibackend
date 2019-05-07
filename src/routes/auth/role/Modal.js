@@ -7,6 +7,18 @@ import './Modal.less'
 const FormItem = Form.Item
 const { TextArea } = Input
 
+// const untieArray = (arr = []) => {
+//   let tmp = []
+//   arr.forEach((i) => {
+//     if (i.children && i.children.length) {
+
+//       tmp =
+//     } else {
+//       tmp = [...tmp, i]
+//     }
+//   })
+// }
+
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -20,6 +32,7 @@ const modal = ({
   item = {},
   onOk,
   menuList,
+  sourceMenuList,
   roleList,
   onRoldSelect,
   form: {
@@ -44,6 +57,8 @@ const modal = ({
     })
   }
 
+  console.log('sourceMenuList', sourceMenuList)
+
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
@@ -51,7 +66,9 @@ const modal = ({
 
   const paramDisabled = type === 'update'
 
-  const handleCheck = (key) => {
+  const handleCheck = (key, a) => {
+    console.log('a', a)
+    console.log('key', key)
     setFieldsValue({
       menus: key,
     })
@@ -195,6 +212,7 @@ modal.propTypes = {
   menuList: PropTypes.array,
   roleList: PropTypes.array,
   onRoldSelect: PropTypes.func,
+  sourceMenuList: PropTypes.array,
 }
 
 export default Form.create()(modal)

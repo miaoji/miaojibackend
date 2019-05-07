@@ -6,12 +6,14 @@ import { NumberCard, User } from './components'
 import SimpleChartComponent from './components/Echart/SimpleChartComponent'
 import InterfaceCall from './components/Echart/InterfaceCall'
 import PieChart from './components/Echart/PieChart'
-import { getUserId } from '../../utils'
+// import { getUserId } from '../../utils'
 import styles from './index.less'
 
 function Dashboard({ dashboard, loading, app }) {
   const { interfaceCallData, receviceData, sendData, income, storeTotal, terminalTotal, user, trafficVolume } = dashboard
-  const { showDashboard } = app
+  const { showDashboard, user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/dashboard'] || {}
+
   if (!showDashboard) {
     return (
       <Card className={styles.noPage}>
@@ -48,7 +50,7 @@ function Dashboard({ dashboard, loading, app }) {
     data: trafficVolume,
     loading: loading.effects['dashboard/getbusinessvolumecount'],
   }
-  const userId = getUserId()
+
   return (
     <Row gutter={24}>
       {numberCards}
@@ -56,11 +58,12 @@ function Dashboard({ dashboard, loading, app }) {
         <Card>
           <SimpleChartComponent {...orderLineProps} />
         </Card>
-      </Col>{(userId === 1 || userId === 101 || userId === 102) ? (<Col lg={24} md={24} style={{ marginTop: '24px' }}>
+      </Col>
+      {auth.count && <Col lg={24} md={24} style={{ marginTop: '24px' }}>
         <Card>
           <InterfaceCall {...interfaceCallLineProps} />
         </Card>
-      </Col>) : ''}
+      </Col>}
       <Col lg={12} md={12} style={{ marginTop: '24px' }}>
         <Card>
           <PieChart {...pieChartProps} />

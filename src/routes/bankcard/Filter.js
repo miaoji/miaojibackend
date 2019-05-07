@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button, Row, Col, Input, Select } from 'antd'
-// import { isSuperAdmin } from '../../utils'
-import { getUserId } from '../../utils/getUserInfo'
 
 const Search = Input.Search
 
@@ -20,6 +18,7 @@ const TwoColProps = {
 }
 
 const Filter = ({
+  auth,
   onAdd,
   onFilterChange,
   storeuserList,
@@ -30,8 +29,6 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  const userId = getUserId()
-
   const handleFields = (fields) => {
     const { createTime } = fields
     if (createTime && createTime.length && createTime[0] && createTime[1]) {
@@ -113,10 +110,8 @@ const Filter = ({
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
-          </div>
-          <div style={{ display: userId === 98 ? 'block' : 'none' }}>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+            {auth.add && <Button size="large" type="ghost" onClick={onAdd}>新增</Button>}
           </div>
         </div>
       </Col>
@@ -131,6 +126,7 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   storeuserList: PropTypes.array,
+  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

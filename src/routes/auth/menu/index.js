@@ -7,12 +7,11 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const Modular = ({ location, dispatch, menu, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, modalMenuLevel, mpidOption } = menu
+  const { list, pagination, currentItem, modalVisible, modalType, mpidOption } = menu
   const { pageSize = 100 } = pagination
   const modalProps = {
     type: modalType,
-    modalMenuLevel,
-    item: modalType === 'create' ? {} : currentItem,
+    item: currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['menu/update'],
     title: `${modalType === 'create' ? '新增菜单信息' : '修改菜单信息'}`,
@@ -27,22 +26,6 @@ const Modular = ({ location, dispatch, menu, loading }) => {
     onCancel() {
       dispatch({
         type: 'menu/hideModal',
-      })
-    },
-    onUpdateState(payload) {
-      if (payload.modalMenuLevel === 2 || payload.modalMenuLevel === 3) {
-        dispatch({
-          type: 'menu/queryMPidOption',
-          payload: {
-            menuLevel: payload.modalMenuLevel - 1,
-          },
-        })
-      }
-      dispatch({
-        type: 'menu/updateState',
-        payload: {
-          ...payload,
-        },
       })
     },
   }
@@ -70,20 +53,40 @@ const Modular = ({ location, dispatch, menu, loading }) => {
       })
     },
     onEditItem(item) {
-      if (item.menuLevel === 2 || item.menuLevel === 3) {
-        dispatch({
-          type: 'menu/queryMPidOption',
-          payload: {
-            menuLevel: item.menuLevel - 1,
-          },
-        })
-      }
       dispatch({
         type: 'menu/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
-          modalMenuLevel: item.menuLevel || 1,
+        },
+      })
+    },
+    onAddAbilityClick(item) {
+      dispatch({
+        type: 'menu/showModal',
+        payload: {
+          modalType: 'addbutton',
+          currentItem: { id: item.id, menuLevel: item.menuLevel },
+        },
+      })
+    },
+    onAddMenuClick(item) {
+      console.log({ id: item.id, menuLevel: item.menuLevel })
+      dispatch({
+        type: 'menu/showModal',
+        payload: {
+          modalType: 'create',
+          currentItem: { id: item.id, menuLevel: item.menuLevel },
+        },
+      })
+    },
+    onModAbilityClick(item) {
+      console.log({ id: item.id, menuLevel: item.menuLevel })
+      dispatch({
+        type: 'menu/showModal',
+        payload: {
+          modalType: 'modbutton',
+          currentItem: item,
         },
       })
     },
@@ -93,7 +96,6 @@ const Modular = ({ location, dispatch, menu, loading }) => {
     filter: {
       ...location.query,
     },
-    updateLoading: loading.effects['menu/updateAdminOrangeize'],
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -109,13 +111,8 @@ const Modular = ({ location, dispatch, menu, loading }) => {
         type: 'menu/showModal',
         payload: {
           modalType: 'create',
-          modalMenuLevel: 1,
+          currentItem: {},
         },
-      })
-    },
-    onUpdateAdminOrangeize() {
-      dispatch({
-        type: 'menu/updateAdminOrangeize',
       })
     },
   }
