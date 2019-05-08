@@ -21,6 +21,7 @@ const TwoColProps = {
 
 const Filter = ({
   // onAdd,
+  auth,
   onDownLoad,
   onFilterChange,
   filter,
@@ -100,7 +101,7 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button className="margin-right" size="large" onClick={handleReset}>刷新</Button>
-            <Button type="primary" size="large" onClick={onDownLoad}>下载</Button>
+            {auth.downloadDetailExcel && <Button type="primary" size="large" onClick={onDownLoad}>下载</Button>}
           </div>
         </div>
       </Col>
@@ -115,6 +116,7 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   onDownLoad: PropTypes.func,
+  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

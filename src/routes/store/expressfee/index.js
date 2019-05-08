@@ -7,12 +7,15 @@ import Filter from './Filter'
 
 const Expressfee = ({ location, dispatch, expressfee, app, loading }) => {
   const { list, pagination } = expressfee
-  const { storeuserList } = app
+  const { storeuserList, user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/expressfee'] || {}
+  console.log('auth', auth)
 
   const listProps = {
     filter: {
       ...location.query,
     },
+    auth,
     dataSource: list,
     loading: loading.effects['expressfee/query'],
     pagination,
@@ -47,6 +50,7 @@ const Expressfee = ({ location, dispatch, expressfee, app, loading }) => {
     filter: {
       ...location.query,
     },
+    auth,
     storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({

@@ -11,6 +11,8 @@ const BusinessVolume = ({ location, dispatch, businessvolume, app, loading }) =>
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/businessvolume'] || {}
 
   const modalProps = {
     modalType,
@@ -100,6 +102,7 @@ const BusinessVolume = ({ location, dispatch, businessvolume, app, loading }) =>
   }
 
   const filterProps = {
+    auth,
     isMotion,
     storeuserList,
     filter: {

@@ -6,9 +6,11 @@ import List from './List'
 import Filter from './Filter'
 import { Page } from '../../../components'
 
-const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => {
+const Expressfeedetail = ({ app, location, dispatch, expressfeedetail, loading }) => {
   const { list, pagination } = expressfeedetail
   const { query, pathname } = location
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/expressfee'] || {}
 
   const listProps = {
     filter: {
@@ -55,6 +57,7 @@ const Expressfeedetail = ({ location, dispatch, expressfeedetail, loading }) => 
     filter: {
       ...location.query,
     },
+    auth,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -107,6 +110,7 @@ Expressfeedetail.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ expressfeedetail, loading }) => ({ expressfeedetail, loading }))(Expressfeedetail)
+export default connect(({ expressfeedetail, loading, app }) => ({ app, expressfeedetail, loading }))(Expressfeedetail)

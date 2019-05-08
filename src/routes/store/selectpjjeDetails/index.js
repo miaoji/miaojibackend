@@ -7,14 +7,17 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const SelectpjjeDetails = ({ location, dispatch, selectpjjeDetails, loading }) => {
+const SelectpjjeDetails = ({ app, location, dispatch, selectpjjeDetails, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = selectpjjeDetails
+
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/selectfenpai'] || {}
 
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
+    confirmLoading: loading.effects['selectpjjeDetails/update'],
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
     selectSiteName,
@@ -78,6 +81,7 @@ const SelectpjjeDetails = ({ location, dispatch, selectpjjeDetails, loading }) =
     filter: {
       ...location.query,
     },
+    auth,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -130,6 +134,7 @@ SelectpjjeDetails.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ selectpjjeDetails, loading }) => ({ selectpjjeDetails, loading }))(SelectpjjeDetails)
+export default connect(({ app, selectpjjeDetails, loading }) => ({ app, selectpjjeDetails, loading }))(SelectpjjeDetails)

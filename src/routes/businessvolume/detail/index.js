@@ -5,10 +5,13 @@ import { connect } from 'dva'
 import List from './List'
 import Filter from './Filter'
 
-const BusinessvolumeDetail = ({ location, dispatch, businessvolumeDetail, loading }) => {
+const BusinessvolumeDetail = ({ app, location, dispatch, businessvolumeDetail, loading }) => {
   const { list, pagination } = businessvolumeDetail
   const { query, pathname } = location
   const { pageSize } = pagination
+
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/businessvolume'] || {}
 
   const listProps = {
     dataSource: list,
@@ -31,6 +34,7 @@ const BusinessvolumeDetail = ({ location, dispatch, businessvolumeDetail, loadin
     filter: {
       ...location.query,
     },
+    auth,
     onDownLoad() {
       dispatch({
         type: 'businessvolumeDetail/download',
@@ -63,6 +67,7 @@ BusinessvolumeDetail.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ businessvolumeDetail, loading }) => ({ businessvolumeDetail, loading }))(BusinessvolumeDetail)
+export default connect(({ businessvolumeDetail, loading, app }) => ({ app, businessvolumeDetail, loading }))(BusinessvolumeDetail)

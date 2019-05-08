@@ -11,15 +11,18 @@ import { Page } from '../../../components'
 
 const { TabPane } = Tabs
 
-const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
+const Operatorbyname = ({ location, dispatch, operatorbyname, loading, app }) => {
   const { list, pagination, currentItem, modalVisible, modalType, selectSiteName } = operatorbyname
   const { query, pathname } = location
+
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/business'] || {}
 
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
+    confirmLoading: loading.effects['business/update'],
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
     selectSiteName,
@@ -82,6 +85,7 @@ const Operatorbyname = ({ location, dispatch, operatorbyname, loading }) => {
     filter: {
       ...location.query,
     },
+    auth,
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
@@ -149,6 +153,7 @@ Operatorbyname.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ operatorbyname, loading }) => ({ operatorbyname, loading }))(Operatorbyname)
+export default connect(({ operatorbyname, loading, app }) => ({ app, operatorbyname, loading }))(Operatorbyname)

@@ -10,6 +10,9 @@ const Selectfenpai = ({ location, dispatch, app, selectfenpai, loading }) => {
   const { pageSize } = pagination
   const { storeuserList } = app
 
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/selectfenpai'] || {}
+
   const listProps = {
     filter: {
       ...location.query,
@@ -57,6 +60,7 @@ const Selectfenpai = ({ location, dispatch, app, selectfenpai, loading }) => {
     filter: {
       ...location.query,
     },
+    auth,
     storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({

@@ -105,6 +105,13 @@ const List = ({ onModAbilityClick, onAddAbilityClick, onAddMenuClick, location, 
         return text ? <Icon type={text} /> : '无'
       },
     }, {
+      title: '按钮类型',
+      dataIndex: 'buttonType',
+      key: 'buttonType',
+      render: (text) => {
+        return text || '/'
+      },
+    }, {
       title: '排序',
       dataIndex: 'menuDesc',
       key: 'menuDesc',

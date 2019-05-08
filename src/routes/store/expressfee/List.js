@@ -7,7 +7,28 @@ import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 import { DropOption } from '../../../components'
 
-const List = ({ filter, location, onLink, ...tableProps }) => {
+const initMenuOption = (auth) => {
+  const menuOptions = []
+  Object.keys(auth).forEach((i) => {
+    let tmp = null
+    switch (i) {
+      case 'seeDetail':
+        tmp = { key: '1', name: '寄件详情' }
+        break
+      case 'seeOperatorDetail':
+        tmp = { key: '2', name: '操作人详情' }
+        break
+      default:
+        break
+    }
+    if (tmp) {
+      menuOptions.push(tmp)
+    }
+  })
+  return menuOptions
+}
+
+const List = ({ auth, filter, location, onLink, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -113,7 +134,13 @@ const List = ({ filter, location, onLink, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '寄件详情' }, { key: '2', name: '操作人详情' }]} />
+        const menuOptions = initMenuOption(auth)
+        if (menuOptions.length) {
+          return (<DropOption onMenuClick={e => handleMenuClick(record, e)}
+            menuOptions={menuOptions}
+          />)
+        }
+        return <span>/</span>
       },
     },
   ]
@@ -144,6 +171,7 @@ List.propTypes = {
   location: PropTypes.object,
   filter: PropTypes.object,
   onLink: PropTypes.func,
+  auth: PropTypes.object,
 }
 
 export default List
