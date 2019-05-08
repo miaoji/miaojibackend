@@ -26,7 +26,7 @@ const List = ({ auth, location, ...tableProps }) => {
       dataIndex: 'userName',
       key: 'userName',
       render: (text) => {
-        return <span>{text}</span>
+        return <span>{text || '/'}</span>
       },
     }, {
       title: '行为',
@@ -71,8 +71,8 @@ const List = ({ auth, location, ...tableProps }) => {
       },
     }, {
       title: '访问时间',
-      dataIndex: 'create_date',
-      key: 'create_date',
+      dataIndex: 'createDate',
+      key: 'createDate',
       render: (text) => {
         return <span>{moment(text).format('YYYY-MM-DD HH:mm:ss')}</span>
       },

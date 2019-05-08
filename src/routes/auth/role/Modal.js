@@ -38,7 +38,6 @@ const initMenus = (key, e, setFieldsValue, source) => {
         key.splice(index, 1)
       }
     })
-    key.shift()
   }
   setFieldsValue({
     menus: key.length ? key : undefined,
