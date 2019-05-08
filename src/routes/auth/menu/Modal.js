@@ -104,8 +104,8 @@ class modal extends Component {
               })(<Input placeholder="请输入排序" />)}
             </FormItem>
             <FormItem label="备注信息" hasFeedback {...formItemLayout}>
-              {getFieldDecorator('remark', {
-                initialValue: item.remark,
+              {getFieldDecorator('description', {
+                initialValue: item.description,
               })(<Input placeholder="请输入备注信息" />)}
             </FormItem>
           </Form>
