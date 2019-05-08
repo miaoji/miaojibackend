@@ -10,7 +10,7 @@ import { DropOption } from '../../components'
 const confirm = Modal.confirm
 // const wx_qr_prefix = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ auth, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -89,7 +89,10 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }]} />
+        if (auth.mod) {
+          return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '更新' }]} />
+        }
+        return '/'
       },
     },
   ]
@@ -121,6 +124,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   location: PropTypes.object,
+  auth: PropTypes.object,
 }
 
 export default List

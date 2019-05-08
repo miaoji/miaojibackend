@@ -6,9 +6,11 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const Qr = ({ location, dispatch, qr, loading }) => {
+const Qr = ({ app, location, dispatch, qr, loading }) => {
   const { list, parameterOption, pagination, currentItem, modalVisible, modalType } = qr
   const { pageSize } = pagination
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/qr'] || {}
 
   const modalProps = {
     type: modalType,
@@ -18,13 +20,13 @@ const Qr = ({ location, dispatch, qr, loading }) => {
     confirmLoading: loading.effects['boot/update'],
     title: `${modalType === 'create' ? '新增二维码' : '修改二维码'}`,
     wrapClassName: 'vertical-center-modal',
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `qr/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'qr/hideModal',
       })
@@ -36,7 +38,8 @@ const Qr = ({ location, dispatch, qr, loading }) => {
     loading: loading.effects['qr/query'],
     pagination,
     location,
-    onChange (page) {
+    auth,
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -47,13 +50,13 @@ const Qr = ({ location, dispatch, qr, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'qr/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'qr/showModal',
         payload: {
@@ -68,7 +71,8 @@ const Qr = ({ location, dispatch, qr, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    auth,
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -78,7 +82,7 @@ const Qr = ({ location, dispatch, qr, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/qr',
         query: {
@@ -89,7 +93,7 @@ const Qr = ({ location, dispatch, qr, loading }) => {
         pathname: '/qr',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'qr/showModal',
         payload: {
@@ -100,7 +104,7 @@ const Qr = ({ location, dispatch, qr, loading }) => {
         type: 'qr/getParameterOption',
       })
     },
-    switchIsMotion () {
+    switchIsMotion() {
       dispatch({ type: 'qr/switchIsMotion' })
     },
   }
@@ -119,6 +123,7 @@ Qr.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ qr, loading }) => ({ qr, loading }))(Qr)
+export default connect(({ app, qr, loading }) => ({ app, qr, loading }))(Qr)

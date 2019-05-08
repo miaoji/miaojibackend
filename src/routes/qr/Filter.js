@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Form, Button, Row, Col,
+import {
+  Form, Button, Row, Col,
   // Input
 } from 'antd'
 
@@ -22,6 +23,7 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
+  auth,
   onFilterChange,
   filter,
   form: {
@@ -73,18 +75,12 @@ const Filter = ({
 
   return (
     <Row gutter={24}>
-      {/* <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按门店名搜索" size="large" onSearch={handleSubmit} />)}
-      </Col> */}
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            {/* <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button> */}
             <Button className="hide" size="large" onClick={handleReset}>刷新</Button>
-            <Button type="primary" size="large" onClick={onAdd}>新增</Button>
+            {auth.add && <Button type="primary" size="large" onClick={onAdd}>新增</Button>}
           </div>
-          {/* <div>
-          </div> */}
         </div>
       </Col>
     </Row>
@@ -97,6 +93,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)
