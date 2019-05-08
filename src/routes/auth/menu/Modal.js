@@ -33,14 +33,12 @@ class modal extends Component {
   }
 
   handleCheck = (key) => {
-    console.log('key', key)
     this.props.form.setFieldsValue({
       menus: key,
     })
   }
 
   handleMenuTypeChange(e) {
-    console.log('e', e)
     const type = e.target.value
 
     this.setState({
@@ -116,10 +114,6 @@ class modal extends Component {
     const optionChildren = ['down-square', 'left-square', 'right-square', 'login', 'logout', 'menu-fold'].map((i) => {
       return <Option key={i}><Icon style={{ height: '100%' }} type={i} /><span> {i}</span></Option>
     })
-
-    console.log('123', ((item.menuLevel === 1 && type === 'update')))
-    console.log('444', (!item.menuLevel && type === 'create'))
-    console.log(item)
 
     return (
       <Modal {...modalOpts}>

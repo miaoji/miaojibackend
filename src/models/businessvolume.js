@@ -116,7 +116,6 @@ export default modelExtend(pageModel, {
           returnAmount: [], // 退回数
         }
         data.obj.forEach((item) => {
-          console.log('item', item)
           const brandName = item.brandName
           const brandData = `${brandReverse[brandName]}///${brandName}`
           item.someCargo && list.someCargo.push(<Tag color="#87d068">

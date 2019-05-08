@@ -71,7 +71,6 @@ const Modular = ({ location, dispatch, menu, loading }) => {
       })
     },
     onAddMenuClick(item) {
-      console.log({ id: item.id, menuLevel: item.menuLevel })
       dispatch({
         type: 'menu/showModal',
         payload: {
@@ -81,7 +80,6 @@ const Modular = ({ location, dispatch, menu, loading }) => {
       })
     },
     onModAbilityClick(item) {
-      console.log({ id: item.id, menuLevel: item.menuLevel })
       dispatch({
         type: 'menu/showModal',
         payload: {

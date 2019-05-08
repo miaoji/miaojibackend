@@ -11,6 +11,8 @@ const IndexPage = ({ location, dispatch, docking, app, loading }) => {
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/docking'] || {}
 
   const modalProps = {
     modalType,
@@ -101,6 +103,7 @@ const IndexPage = ({ location, dispatch, docking, app, loading }) => {
   }
 
   const filterProps = {
+    auth,
     isMotion,
     storeuserList,
     filter: {

@@ -63,24 +63,13 @@ export default {
       } catch (e) {
         user = null
       }
-      if (user && loginTime <= 21600000) {
+      if (user && user.sourceMenuList && loginTime <= 21600000) {
         yield put({
           type: 'queryStoreUser',
         })
 
         let menuList = user.userMenus
-        console.log('menuList', menuList)
 
-        if (user.userId === 98) {
-          // if (user.userId === 1) {
-          // hideMenus.push({
-          //   id: '1111',
-          //   mpid: 1,
-          //   name: '环迅账号管理',
-          //   icon: 'message',
-          //   route: '/bankcard',
-          // })
-        }
         let list = menus
         if (process.env.NODE_ENV !== 'text') {
           list = [...rebuildMenuData(menuList), ...hideMenus]

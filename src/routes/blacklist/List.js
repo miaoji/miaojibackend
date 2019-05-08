@@ -9,8 +9,29 @@ import { DropOption } from '../../components'
 import { isSuperAdmin } from '../../utils'
 
 const confirm = Modal.confirm
+// { key: '1', name: '修改' }, { key: '2', name: '删除' }
+const initMenuOption = (auth) => {
+  const menuOptions = []
+  Object.keys(auth).forEach((i) => {
+    let tmp = null
+    switch (i) {
+      case 'mod':
+        tmp = { key: '1', name: '修改' }
+        break
+      case 'del':
+        tmp = { key: '2', name: '删除' }
+        break
+      default:
+        break
+    }
+    if (tmp) {
+      menuOptions.push(tmp)
+    }
+  })
+  return menuOptions
+}
 
-const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
+const List = ({ auth, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const handleMenuClick = (record, e) => {
     switch (e.key) {
       case '1':
@@ -69,7 +90,13 @@ const List = ({ location, onEditItem, onDeleteItem, ...tableProps }) => {
       key: 'operation',
       width: 100,
       render: (text, record) => {
-        return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
+        const menuOptions = initMenuOption(auth)
+        if (menuOptions.length) {
+          return (<DropOption onMenuClick={e => handleMenuClick(record, e)}
+            menuOptions={menuOptions}
+          />)
+        }
+        return <span>/</span>
       },
     })
   }
@@ -101,6 +128,7 @@ List.propTypes = {
   onDeleteItem: PropTypes.func,
   onEditItem: PropTypes.func,
   location: PropTypes.object,
+  auth: PropTypes.object,
 }
 
 export default List

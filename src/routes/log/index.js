@@ -9,12 +9,15 @@ const IndexPage = ({ location, dispatch, log, loading, app }) => {
   const { list, pagination } = log
   const { pageSize } = pagination
   const { storeuserList } = app
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/log'] || {}
 
   const listProps = {
     dataSource: list,
     loading: loading.effects['log/query'],
     pagination,
     location,
+    auth,
     onChange(page, filters) {
       const filtersQuery = {}
       Object.keys(filters).forEach((i) => { filtersQuery[i] = filters[i][0] })
@@ -35,6 +38,7 @@ const IndexPage = ({ location, dispatch, log, loading, app }) => {
     filter: {
       ...location.query,
     },
+    auth,
     storeuserList,
     downloadLoading: loading.effects['log/download'],
     onDownLoad() {

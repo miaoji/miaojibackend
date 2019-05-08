@@ -21,6 +21,7 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
+  auth,
   onFilterChange,
   filter,
   form: {
@@ -112,7 +113,7 @@ const Filter = ({
             <Button size="large" onClick={handleReset}>刷新</Button>
           </div>
           <div>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+            {auth.add && <Button size="large" type="ghost" onClick={onAdd}>新增</Button>}
           </div>
         </div>
       </Col>
@@ -126,6 +127,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

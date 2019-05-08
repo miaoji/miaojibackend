@@ -6,9 +6,11 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
+const OrderNumber = ({ app, location, dispatch, ordernumber, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType, brandName } = ordernumber
   const { pageSize } = pagination
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/ordernumber'] || {}
 
   const modalProps = {
     type: modalType,
@@ -18,13 +20,13 @@ const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
     title: `${modalType === 'create' ? '新增单号规则' : '修改单号规则'}`,
     wrapClassName: 'vertical-center-modal',
     brandName,
-    onOk (data) {
+    onOk(data) {
       dispatch({
         type: `ordernumber/${modalType}`,
         payload: data,
       })
     },
-    onCancel () {
+    onCancel() {
       dispatch({
         type: 'ordernumber/hideModal',
       })
@@ -32,11 +34,12 @@ const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
   }
 
   const listProps = {
+    auth,
     dataSource: list,
     loading: loading.effects['ordernumber/query'],
     pagination,
     location,
-    onChange (page) {
+    onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
@@ -47,13 +50,13 @@ const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
         },
       }))
     },
-    onDeleteItem (id) {
+    onDeleteItem(id) {
       dispatch({
         type: 'ordernumber/delete',
         payload: id,
       })
     },
-    onEditItem (item) {
+    onEditItem(item) {
       dispatch({
         type: 'ordernumber/showModal',
         payload: {
@@ -68,7 +71,8 @@ const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
     filter: {
       ...location.query,
     },
-    onFilterChange (value) {
+    auth,
+    onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
@@ -78,7 +82,7 @@ const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+    onSearch(fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
         pathname: '/ordernumber',
         query: {
@@ -89,7 +93,7 @@ const OrderNumber = ({ location, dispatch, ordernumber, loading }) => {
         pathname: '/ordernumber',
       }))
     },
-    onAdd () {
+    onAdd() {
       dispatch({
         type: 'ordernumber/showModal',
         payload: {
@@ -116,6 +120,7 @@ OrderNumber.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ ordernumber, loading }) => ({ ordernumber, loading }))(OrderNumber)
+export default connect(({ app, ordernumber, loading }) => ({ app, ordernumber, loading }))(OrderNumber)

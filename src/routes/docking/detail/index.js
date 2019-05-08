@@ -5,10 +5,13 @@ import { connect } from 'dva'
 import List from './List'
 import Filter from './Filter'
 
-const Detail = ({ location, dispatch, dockingdetail, loading }) => {
+const Detail = ({ app, location, dispatch, dockingdetail, loading }) => {
   const { list, pagination } = dockingdetail
   const { query, pathname } = location
   const { pageSize } = pagination
+
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/docking'] || {}
 
   const listProps = {
     dataSource: list,
@@ -31,6 +34,7 @@ const Detail = ({ location, dispatch, dockingdetail, loading }) => {
     filter: {
       ...location.query,
     },
+    auth,
     onDownLoad() {
       dispatch({
         type: 'dockingdetail/download',
@@ -63,6 +67,7 @@ Detail.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ dockingdetail, loading }) => ({ dockingdetail, loading }))(Detail)
+export default connect(({ app, dockingdetail, loading }) => ({ app, dockingdetail, loading }))(Detail)

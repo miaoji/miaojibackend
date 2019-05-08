@@ -9,7 +9,6 @@ const Expressfee = ({ location, dispatch, expressfee, app, loading }) => {
   const { list, pagination } = expressfee
   const { storeuserList, user: { sourceMenuList } } = app
   const auth = sourceMenuList['/expressfee'] || {}
-  console.log('auth', auth)
 
   const listProps = {
     filter: {

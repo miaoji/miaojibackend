@@ -6,7 +6,6 @@ import styles from './List.less'
 import AnimTableBody from '../../../components/DataTable/AnimTableBody'
 
 const List = ({ mailtype, filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
-  console.log('mailtype', mailtype)
   let columns = [
     {
       title: '快递品牌',

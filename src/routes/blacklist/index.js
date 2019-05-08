@@ -10,12 +10,14 @@ const Blacklist = ({ location, dispatch, blacklist, loading, app }) => {
   const { list, pagination, currentItem, modalVisible, modalType } = blacklist
   const { pageSize } = pagination
   const { storeuserList } = app
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/blacklist'] || {}
 
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
+    confirmLoading: loading.effects['blacklist/update'] || loading.effects['blacklist/create'],
     title: `${modalType === 'create' ? '新增黑名单信息' : '修改黑名单信息'}`,
     wrapClassName: 'vertical-center-modal',
     storeuserList,
@@ -34,6 +36,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading, app }) => {
 
   const listProps = {
     dataSource: list,
+    auth,
     loading: loading.effects['blacklist/query'],
     pagination,
     location,
@@ -69,6 +72,7 @@ const Blacklist = ({ location, dispatch, blacklist, loading, app }) => {
     filter: {
       ...location.query,
     },
+    auth,
     storeuserList,
     onFilterChange(value) {
       dispatch(routerRedux.push({

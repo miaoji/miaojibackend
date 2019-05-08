@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input, Select } from 'antd'
 import { DateRange, Location } from '../../components'
-import { isSuperAdmin } from '../../utils'
 
 const Search = Input.Search
 
@@ -22,6 +21,7 @@ const TwoColProps = {
 
 const Filter = ({
   onAdd,
+  auth,
   onExport,
   onFilterChange,
   storeuserList,
@@ -136,10 +136,8 @@ const Filter = ({
           <div >
             <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            <Button type="primary" className="margin-right" size="large" onClick={onExport}>下载</Button>
-          </div>
-          <div style={{ display: isSuperAdmin() ? 'block' : 'none' }}>
-            <Button size="large" type="ghost" onClick={onAdd}>新增</Button>
+            {auth.download && <Button type="primary" className="margin-right" size="large" onClick={onExport}>下载</Button>}
+            {auth.add && <Button size="large" type="ghost" onClick={onAdd}>新增</Button>}
           </div>
         </div>
       </Col>
@@ -155,6 +153,7 @@ Filter.propTypes = {
   onFilterChange: PropTypes.func,
   storeuserList: PropTypes.array,
   onExport: PropTypes.func,
+  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

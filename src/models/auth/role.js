@@ -138,7 +138,6 @@ export default modelExtend(pageModel, {
     *queryMenuList(_, { call, put }) {
       const data = yield call(queryMenu, { parentMenuId: 0, page: 1, pageSize: 10000 })
       if (data.code === 200 && data.obj) {
-        console.log('data', data.obj)
         storage({
           type: 'set',
           key: 'menuListSpare',

@@ -22,6 +22,7 @@ const TwoColProps = {
 
 const Filter = ({
   filter,
+  auth,
   onFilterChange,
   onDownLoad,
   form: {
@@ -158,7 +159,7 @@ const Filter = ({
         </div>
       </Col>
       <Col>
-        <Button style={{ display: 'block' }} size="large" type="primary" onClick={onDownLoad}>下载</Button>
+        {auth.downloadDetail && <Button style={{ display: 'block' }} size="large" type="primary" onClick={onDownLoad}>下载</Button>}
       </Col>
     </Row>
   )
@@ -169,6 +170,7 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   onDownLoad: PropTypes.func,
+  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

@@ -6,15 +6,17 @@ import List from './List'
 import Filter from './Filter'
 import Modal from './Modal'
 
-const WithDraw = ({ location, dispatch, withdraw, loading }) => {
+const WithDraw = ({ app, location, dispatch, withdraw, loading }) => {
   const { list, pagination, currentItem, modalVisible, modalType } = withdraw
   const { pageSize } = pagination
+  const { user: { sourceMenuList } } = app
+  const auth = sourceMenuList['/withdraw'] || {}
 
   const modalProps = {
     type: modalType,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
-    confirmLoading: loading.effects['boot/update'],
+    confirmLoading: loading.effects['withdraw/update'],
     title: `${modalType === 'create' ? '提现审核' : '提现审核'}`,
     wrapClassName: 'vertical-center-modal',
     onOk(data) {
@@ -35,6 +37,7 @@ const WithDraw = ({ location, dispatch, withdraw, loading }) => {
     loading: loading.effects['withdraw/query'],
     pagination,
     location,
+    auth,
     onChange(page) {
       const { query, pathname } = location
       dispatch(routerRedux.push({
@@ -98,6 +101,7 @@ WithDraw.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
+  app: PropTypes.object,
 }
 
-export default connect(({ withdraw, loading }) => ({ withdraw, loading }))(WithDraw)
+export default connect(({ app, withdraw, loading }) => ({ app, withdraw, loading }))(WithDraw)

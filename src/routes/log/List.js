@@ -19,7 +19,7 @@ Text.propTypes = {
   title: PropTypes.string,
 }
 
-const List = ({ location, ...tableProps }) => {
+const List = ({ auth, location, ...tableProps }) => {
   const columns = [
     {
       title: '用户名称',
@@ -47,7 +47,10 @@ const List = ({ location, ...tableProps }) => {
       dataIndex: 'method',
       key: 'method',
       render: (text) => {
-        return <Text title="方法名称信息" text={text} />
+        if (auth.seeFunction) {
+          return <Text title="方法名称信息" text={text} />
+        }
+        return '/'
       },
     }, {
       title: 'IP',
@@ -61,7 +64,10 @@ const List = ({ location, ...tableProps }) => {
       dataIndex: 'params',
       key: 'params',
       render: (text) => {
-        return <Text title="请求参数信息" text={text} />
+        if (auth.seeParams) {
+          return <Text title="请求参数信息" text={text} />
+        }
+        return '/'
       },
     }, {
       title: '访问时间',
@@ -97,9 +103,8 @@ const List = ({ location, ...tableProps }) => {
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func,
-  onEditItem: PropTypes.func,
   location: PropTypes.object,
+  auth: PropTypes.object,
 }
 
 export default List
