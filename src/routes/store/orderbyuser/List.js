@@ -45,7 +45,7 @@ const List = ({ mailtype, filter, location, onEditItem, onDeleteItem, ...tablePr
     },
   ]
 
-  if (mailtype === 3) {
+  if (mailtype === 2) {
     columns = [...columns, {
       title: '收款金额',
       dataIndex: 'fee',
