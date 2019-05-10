@@ -60,7 +60,7 @@ export default modelExtend(pageModel, {
         length: payload.length,
         mailType: payload.mailType,
       }
-      newOrderNumber = JSON.stringify(newOrderNumber)
+      // newOrderNumber = JSON.stringify(newOrderNumber)
       const data = yield call(create, newOrderNumber)
       if (data.success && data.code === 200) {
         yield put({ type: 'hideModal' })
