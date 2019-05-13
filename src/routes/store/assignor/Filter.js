@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input, Select,
+  Form, Button, Row, Col,
 } from 'antd'
 import moment from 'moment'
 import { DateRange } from '../../../components'
 import { handleFields, defaultTime } from '../../../utils'
 
-const Search = Input.Search
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -26,7 +25,6 @@ const Filter = ({
   onFilterChange,
   onDownLoad,
   filter,
-  storeuserList,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -77,8 +75,6 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name } = filter
-
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
     initialCreateTime[0] = moment(filter.createTime[0])
@@ -86,32 +82,9 @@ const Filter = ({
   if (filter.createTime && filter.createTime[1]) {
     initialCreateTime[1] = moment(filter.createTime[1])
   }
-  const nameChange = (key) => {
-    handleChange('name', key)
-  }
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(
-          <Select
-            showSearch
-            style={{ width: '100%' }}
-            onSelect={nameChange}
-            placeholder="按店铺名称搜索"
-
-          >
-            {storeuserList}
-          </Select>
-        )}
-      </Col>
-      <div style={{ display: 'none' }}>
-        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('name', { initialValue: name })(
-            <Search onPressEnter={nameChange} placeholder="按店铺名称搜索" onSearch={handleSubmit} />
-          )}
-        </Col>
-      </div>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange onChange={handleChange.bind(null, 'createTime')} />
@@ -137,7 +110,6 @@ Filter.propTypes = {
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   onDownLoad: PropTypes.func,
-  storeuserList: PropTypes.array,
 }
 
 export default Form.create()(Filter)

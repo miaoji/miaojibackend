@@ -75,7 +75,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { orgName, roleName, location } = filter
+  const { orgName, location } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -97,14 +97,15 @@ const Filter = ({
   }
 
   const initLocation = location ? location.split(',') : undefined
-
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
+  }
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('orgName', { initialValue: orgName })(<Search placeholder="按机构名称搜索" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('roleName', { initialValue: roleName })(<Search placeholder="按角色名称搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('orgName', { initialValue: orgName })(<Search onChange={e => inputClear(e, 'orgName')} allowClear placeholder="按机构名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
         {getFieldDecorator('location', { initialValue: initLocation })(

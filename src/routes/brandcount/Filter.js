@@ -84,6 +84,11 @@ const Filter = ({
     handleChange('name', key)
   }
 
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
+  }
 
   return (
     <Row gutter={24}>
@@ -92,16 +97,16 @@ const Filter = ({
           <Select
             showSearch
             style={{ width: '100%' }}
-            onSelect={nameChange}
+            onChange={nameChange}
             placeholder="按店铺名称搜索"
-
+            allowClear
           >
             {storeuserList}
           </Select>
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }}>
-        {getFieldDecorator('brand', { initialValue: brand })(<Search placeholder="按名称搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('brand', { initialValue: brand })(<Search onChange={e => inputClear(e, 'brand')} allowClear placeholder="按名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps}>
         <FilterItem>

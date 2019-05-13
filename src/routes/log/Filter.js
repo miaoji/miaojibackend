@@ -86,7 +86,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name, peration, ip } = filter
+  const { userName, peration, ip } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -95,18 +95,22 @@ const Filter = ({
   if (filter.createTime && filter.createTime[1]) {
     initialCreateTime[1] = moment(filter.createTime[1])
   }
-
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
+  }
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按用户名称搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('userName', { initialValue: userName })(<Search onChange={e => inputClear(e, 'userName')} allowClear placeholder="按用户名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('peration', { initialValue: peration })(<Search placeholder="按行为名称搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('peration', { initialValue: peration })(<Search onChange={e => inputClear(e, 'peration')} allowClear placeholder="按行为名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('ip', { initialValue: ip })(<Search placeholder="按IP搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('ip', { initialValue: ip })(<Search onChange={e => inputClear(e, 'ip')} allowClear placeholder="按IP搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(

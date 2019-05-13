@@ -95,11 +95,16 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
+  }
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('brand', { initialValue: brand })(<Search placeholder="按快递品牌搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('brand', { initialValue: brand })(<Search onChange={e => inputClear(e, 'brand')} allowClear placeholder="按快递品牌搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(

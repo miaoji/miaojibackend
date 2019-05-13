@@ -60,6 +60,7 @@ export default modelExtend(pageModel, {
      * [获取门店用户列表数据]
      */
     *query({ payload = {} }, { call, put }) {
+      if (!payload.mobile) payload.mobile = undefined
       payload = initialCreateTime(payload)
       if (payload.name) {
         payload.name = payload.name.split('///')[1]

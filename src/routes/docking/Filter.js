@@ -132,9 +132,9 @@ const Filter = ({
           <Select
             showSearch
             style={{ width: '100%' }}
-            onSelect={nameChange}
+            onChange={nameChange}
             placeholder="按店铺名称搜索"
-
+            allowClear
           >
             {storeuserList}
           </Select>
@@ -142,13 +142,13 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('location', { initialValue: location })(
-          <Location handleChange={handleChange.bind(null, 'location')} />
+          <Location allowClear handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
       <div style={{ display: 'none' }}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
           {getFieldDecorator('name', { initialValue: name })(
-            <Search onPressEnter={nameChange} placeholder="按店铺名称搜索" onSearch={handleSubmit} />
+            <Search allowClear onPressEnter={nameChange} placeholder="按店铺名称搜索" onSearch={handleSubmit} />
           )}
         </Col>
       </div>
@@ -160,7 +160,6 @@ const Filter = ({
             style={{ width: '100%' }}
             onChange={brandChange}
             placeholder="按快递品牌搜索"
-
           >
             {brandList}
           </Select>

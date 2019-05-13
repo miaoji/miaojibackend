@@ -84,10 +84,18 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
+
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
+  }
+
+
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('menuName', { initialValue: menuName })(<Search placeholder="按菜单名称搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('menuName', { initialValue: menuName })(<Search onChange={e => inputClear(e, 'menuName')} allowClear placeholder="按菜单名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(

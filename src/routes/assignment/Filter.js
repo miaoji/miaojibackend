@@ -44,6 +44,12 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
+  }
+
   return (
     <div>
       <div className={styles.filter} >
@@ -59,7 +65,7 @@ const Filter = ({
         <div className="input">
           {getFieldDecorator('name', {
             initialValue: name,
-          })(<Search onSearch={handleSubmit} className={styles.filter_input} placeholder="按分派人姓名或id搜索" onPressEnter={handleSubmit} />)}
+          })(<Search onChange={e => inputClear(e, 'name')} allowClear onSearch={handleSubmit} className={styles.filter_input} placeholder="按分派人姓名或id搜索" onPressEnter={handleSubmit} />)}
         </div>
 
         <div style={{ marginLeft: '20px' }}>

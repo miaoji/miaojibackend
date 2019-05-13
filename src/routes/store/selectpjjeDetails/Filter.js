@@ -6,6 +6,8 @@ import {
 import { DateRange } from '../../../components'
 import { handleFields, defaultTime } from '../../../utils'
 
+const { Search } = Input
+
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -78,17 +80,17 @@ const Filter = ({
   }
 
   let { brand, createTime } = filter
-
-  const brandChange = (key) => {
-    handleChange('brand', key.target.value)
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
   }
-
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Input disabled={filter.idBrand} onPressEnter={brandChange} style={{ width: '100%' }} placeholder="按快递品牌赛选" />
+          <Search onChange={e => inputClear(e, 'brand')} allowClear disabled={filter.idBrand} onSearch={handleSubmit} style={{ width: '100%' }} placeholder="按快递品牌赛选" />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>

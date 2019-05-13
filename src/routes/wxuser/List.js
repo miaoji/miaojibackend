@@ -49,11 +49,11 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '关注状态',
       dataIndex: 'subscribe',
       key: 'subscribe',
-      filters: [
-        { text: '关注', value: '1' },
-        { text: '取消关注', value: '0' },
-      ],
-      filterMultiple: false,
+      // filters: [
+      //   { text: '关注', value: '1' },
+      //   { text: '取消关注', value: '0' },
+      // ],
+      // filterMultiple: false,
       // onFilter: (value, record) => Number(record.subscribe) === Number(value),
       render: (text) => {
         const realtext = {

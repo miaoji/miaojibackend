@@ -105,25 +105,31 @@ const Filter = ({
     handleChange('name', key)
   }
 
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
+  }
+
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按手机号搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('mobile', { initialValue: mobile })(<Search onChange={e => inputClear(e, 'mobile')} allowClear placeholder="按手机号搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(
           <Select
             showSearch
             style={{ width: '100%' }}
-            onSelect={nameChange}
+            onChange={nameChange}
             placeholder="按站点名称搜索"
-
+            allowClear
           >{storeuserList}</Select>
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('location', { initialValue: location })(
-          <Location handleChange={handleChange.bind(null, 'location')} />
+          <Location allowClear handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>

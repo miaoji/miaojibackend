@@ -6,6 +6,7 @@ import {
 import { DateRange } from '../../../components'
 import { handleFields, defaultTime } from '../../../utils'
 
+const { Search } = Input
 const { Option } = Select
 const ColProps = {
   xs: 24,
@@ -96,21 +97,25 @@ const Filter = ({
   const statusChange = (key) => {
     handleChange('status', key)
   }
-  const brandChange = (key) => {
-    handleChange('brand', key.target.value.trim())
+  // const brandChange = (key) => {
+  //   handleChange('brand', key.target.value.trim())
+  // }
+  const inputClear = (e, key) => {
+    if (Object.keys(e).length === 0) {
+      handleChange(key, '')
+    }
   }
-
 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Input onPressEnter={brandChange} style={{ width: '100%' }} placeholder="按快递品牌筛选" />
+          <Search allowClear onChange={e => inputClear(e, 'brand')} onSearch={handleSubmit} style={{ width: '100%' }} placeholder="按快递品牌筛选" />
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+      <Col {...ColProps} xl={{ span: 3 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('payType', { initialValue: payType || '0' })(
-          <Select onChange={payTypeChange} style={{ width: '100%' }} placeholder="按收款筛选">
+          <Select onChange={payTypeChange} allowClear style={{ width: '100%' }} placeholder="按收款筛选">
             <Option key="0">全部</Option>
             <Option key="1">支付宝</Option>
             <Option key="2">微信</Option>
@@ -119,9 +124,9 @@ const Filter = ({
           </Select>
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+      <Col {...ColProps} xl={{ span: 3 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('status', { initialValue: status || '0' })(
-          <Select onChange={statusChange} style={{ width: '100%' }} placeholder="按完成状态筛选">
+          <Select onChange={statusChange} allowClear style={{ width: '100%' }} placeholder="按完成状态筛选">
             <Option key="0">全部</Option>
             <Option key="success">成功</Option>
             <Option key="wait">等待</Option>

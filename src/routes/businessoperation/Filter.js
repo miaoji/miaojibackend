@@ -101,8 +101,9 @@ const Filter = ({
           <Select
             showSearch
             style={{ width: '100%' }}
-            onSelect={brandChange}
+            onChange={brandChange}
             placeholder="按按快递品牌搜索"
+            allowClear
           >{options}</Select>
         )}
       </Col>

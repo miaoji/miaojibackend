@@ -96,9 +96,9 @@ const Filter = ({
           <Select
             showSearch
             style={{ width: '100%' }}
-            onSelect={nameChange}
+            onChange={nameChange}
             placeholder="按店铺名称搜索"
-
+            allowClear
           >
             {storeuserList}
           </Select>
@@ -106,7 +106,7 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('location', { initialValue: location })(
-          <Location handleChange={handleChange.bind(null, 'location')} />
+          <Location allowClear handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
