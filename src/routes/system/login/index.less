@@ -6,12 +6,20 @@
   width: 320px;
   height: 320px;
   padding: 36px;
-  background-color: rgba(0,0,0,.3);
-  box-shadow: 0 0 100px rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, .3);
+  box-shadow: 0 0 100px rgba(0, 0, 0, .2);
 
   :global {
     .ant-form-explain {
       text-align: left;
+    }
+
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+
+    .ant-input {
+      font-size: 12px;
     }
   }
 
@@ -57,6 +65,7 @@
 .ant-spin-nested-loading {
   height: 100%;
 }
+
 /* 
     HEY!
     Check my new pen "Amazing Perspective Walking Background"
@@ -74,7 +83,7 @@
   height: 100vh;
   position: relative;
   overflow: hidden;
-    // background: #111111 url(https://semantic-ui.com/images/bg-sky.jpg);
+  // background: #111111 url(https://semantic-ui.com/images/bg-sky.jpg);
   background-size: cover;
   text-align: center;
   padding: 0em;
@@ -82,16 +91,12 @@
   margin-bottom: 0px;
   border-bottom: none;
   background-color: #00B5AD;
-  background-image: -webkit-radial-gradient(
-    farthest-corner,
+  background-image: -webkit-radial-gradient(farthest-corner,
     rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.95)
-  );
-  background-image: radial-gradient(
-    farthest-corner,
+    rgba(0, 0, 0, 0.95));
+  background-image: radial-gradient(farthest-corner,
     rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.95)
-  );
+    rgba(0, 0, 0, 0.95));
 }
 
 .text {
@@ -119,7 +124,8 @@
   padding: 15rem 0em;
 }
 
-.following.bar, .background {
+.following.bar,
+.background {
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   -o-transform-style: preserve-3d;
@@ -143,13 +149,15 @@
   margin-top: 0px;
 }
 
-.pushed .background, .pushed .following.bar {
+.pushed .background,
+.pushed .following.bar {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
-.colored.following.bar, .background.colored {
+.colored.following.bar,
+.background.colored {
   -webkit-animation-name: colors;
   -moz-animation-name: colors;
   -o-animation-name: colors;
@@ -180,7 +188,7 @@
 
 .background:after {
   position: absolute;
-  z-index:-14;
+  z-index: -14;
   width: 135%;
   height: 135%;
   top: 18%;
@@ -222,24 +230,9 @@
   -ms-animation-iteration-count: infinite;
   -o-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
-  -webkit-transform: rotateX(50deg)
-    rotateZ(0deg)
-    rotateY(0deg)
-    translateY(-14%)
-    translateX(-14%)
-    translateZ(370px);
-  -moz-transform: rotateX(50deg)
-    rotateZ(0deg)
-    rotateY(0deg)
-    translateY(-14%)
-    translateX(-14%)
-    translateZ(370px);
-  transform: rotateX(50deg)
-    rotateZ(0deg)
-    rotateY(0deg)
-    translateY(-14%)
-    translateX(-14%)
-    translateZ(370px);
+  -webkit-transform: rotateX(50deg) rotateZ(0deg) rotateY(0deg) translateY(-14%) translateX(-14%) translateZ(370px);
+  -moz-transform: rotateX(50deg) rotateZ(0deg) rotateY(0deg) translateY(-14%) translateX(-14%) translateZ(370px);
+  transform: rotateX(50deg) rotateZ(0deg) rotateY(0deg) translateY(-14%) translateX(-14%) translateZ(370px);
 }
 
 .fixed.following.bar {
@@ -263,6 +256,7 @@
   0% {
     background-position: 0% 0%;
   }
+
   100% {
     background-position: 0% -475px;
   }
@@ -272,6 +266,7 @@
   0% {
     background-position: 0% 0%;
   }
+
   100% {
     background-position: 0% -475px;
   }
@@ -281,6 +276,7 @@
   0% {
     background-position: 0% 0%;
   }
+
   100% {
     background-position: 0% -475px;
   }
@@ -290,6 +286,7 @@
   0% {
     background-position: 0% 0%;
   }
+
   100% {
     background-position: 0% -475px;
   }
@@ -299,6 +296,7 @@
   0% {
     background-position: 0% 0%;
   }
+
   100% {
     background-position: 0% -475px;
   }
@@ -308,27 +306,35 @@
   0% {
     background-color: #00B5AD;
   }
+
   12% {
     background-color: #3B83C0;
   }
+
   25% {
     background-color: #E07B53;
   }
+
   37% {
     background-color: #D9499A;
   }
+
   50% {
     background-color: #564F8A;
   }
+
   62% {
     background-color: #F2C61F;
   }
+
   75% {
     background-color: #D95C5C;
   }
+
   87% {
     background-color: #5BBD72;
   }
+
   100% {
     background-color: #F2C61F;
   }
@@ -338,27 +344,35 @@
   0% {
     background-color: #00B5AD;
   }
+
   12% {
     background-color: #3B83C0;
   }
+
   25% {
     background-color: #E07B53;
   }
+
   37% {
     background-color: #D9499A;
   }
+
   50% {
     background-color: #564F8A;
   }
+
   62% {
     background-color: #F2C61F;
   }
+
   75% {
     background-color: #D95C5C;
   }
+
   87% {
     background-color: #5BBD72;
   }
+
   100% {
     background-color: #F2C61F;
   }
@@ -368,27 +382,35 @@
   0% {
     background-color: #00B5AD;
   }
+
   12% {
     background-color: #3B83C0;
   }
+
   25% {
     background-color: #E07B53;
   }
+
   37% {
     background-color: #D9499A;
   }
+
   50% {
     background-color: #564F8A;
   }
+
   62% {
     background-color: #F2C61F;
   }
+
   75% {
     background-color: #D95C5C;
   }
+
   87% {
     background-color: #5BBD72;
   }
+
   100% {
     background-color: #F2C61F;
   }
@@ -398,27 +420,35 @@
   0% {
     background-color: #00B5AD;
   }
+
   12% {
     background-color: #3B83C0;
   }
+
   25% {
     background-color: #E07B53;
   }
+
   37% {
     background-color: #D9499A;
   }
+
   50% {
     background-color: #564F8A;
   }
+
   62% {
     background-color: #F2C61F;
   }
+
   75% {
     background-color: #D95C5C;
   }
+
   87% {
     background-color: #5BBD72;
   }
+
   100% {
     background-color: #F2C61F;
   }
@@ -428,27 +458,35 @@
   0% {
     background-color: #00B5AD;
   }
+
   12% {
     background-color: #3B83C0;
   }
+
   25% {
     background-color: #E07B53;
   }
+
   37% {
     background-color: #D9499A;
   }
+
   50% {
     background-color: #564F8A;
   }
+
   62% {
     background-color: #F2C61F;
   }
+
   75% {
     background-color: #D95C5C;
   }
+
   87% {
     background-color: #5BBD72;
   }
+
   100% {
     background-color: #F2C61F;
   }

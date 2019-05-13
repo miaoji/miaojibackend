@@ -134,7 +134,7 @@ const Filter = ({
             style={{ width: '100%' }}
             onSelect={nameChange}
             placeholder="按店铺名称搜索"
-            size="large"
+
           >
             {storeuserList}
           </Select>
@@ -148,7 +148,7 @@ const Filter = ({
       <div style={{ display: 'none' }}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
           {getFieldDecorator('name', { initialValue: name })(
-            <Search onPressEnter={nameChange} placeholder="按店铺名称搜索" size="large" onSearch={handleSubmit} />
+            <Search onPressEnter={nameChange} placeholder="按店铺名称搜索" onSearch={handleSubmit} />
           )}
         </Col>
       </div>
@@ -160,7 +160,7 @@ const Filter = ({
             style={{ width: '100%' }}
             onChange={brandChange}
             placeholder="按快递品牌搜索"
-            size="large"
+
           >
             {brandList}
           </Select>
@@ -168,20 +168,20 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            {auth.download && <Button type="primary" size="large" loading={downloadLoading} className="margin-right" onClick={onDownLoad}>下载Excel</Button>}
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>刷新</Button>
+            {auth.download && <Button type="primary" loading={downloadLoading} className="margin-right" onClick={onDownLoad}>下载Excel</Button>}
           </div>
         </div>
       </Col>
       <Col>
-        <Button className="hide" type="primary" size="large" loading={downloadAllLoading} onClick={handleDownloadAll}>下载当日所有门店数据</Button>
+        <Button className="hide" type="primary" loading={downloadAllLoading} onClick={handleDownloadAll}>下载当日所有门店数据</Button>
       </Col>
     </Row>
   )

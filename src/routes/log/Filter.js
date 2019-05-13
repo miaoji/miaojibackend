@@ -100,25 +100,25 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按用户名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按用户名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('peration', { initialValue: peration })(<Search placeholder="按行为名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('peration', { initialValue: peration })(<Search placeholder="按行为名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('ip', { initialValue: ip })(<Search placeholder="按IP搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('ip', { initialValue: ip })(<Search placeholder="按IP搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            {auth.download && <Button size="large" type="primary" onClick={onDownLoad} loading={downloadLoading}>下载</Button>}
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>刷新</Button>
+            {auth.download && <Button type="primary" onClick={onDownLoad} loading={downloadLoading}>下载</Button>}
           </div>
         </div>
       </Col>

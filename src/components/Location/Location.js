@@ -23,7 +23,6 @@ const Location = ({ handleChange, ...props }) => {
   return (<Cascader
     {...props}
     showSearch={{ filterLocation }}
-    size="large"
     value={value}
     // defaultValue={value}
     style={{ width: '100%' }}

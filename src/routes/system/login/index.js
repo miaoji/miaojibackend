@@ -53,7 +53,9 @@ const Login = ({
           <div>
             <div className={styles.form}>
               <div className={styles.logo}>
-                <img alt={'logo'} src={config.logo} />
+                <span>
+                  <img style={{ float: 'left' }} alt={'logo'} src={config.logo} />
+                </span>
                 <span>{config.name}</span>
               </div>
               <form>
@@ -65,7 +67,7 @@ const Login = ({
                         message: '请输入用户名',
                       },
                     ],
-                  })(<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.5)' }} />} size="large" onPressEnter={handleOk} placeholder="用户名" />)}
+                  })(<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.5)' }} />} onPressEnter={handleOk} placeholder="用户名" />)}
                 </FormItem>
                 <FormItem hasFeedback>
                   {getFieldDecorator('password', {
@@ -77,7 +79,6 @@ const Login = ({
                     ],
                   })(<Input
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.5)' }} />}
-                    size="large"
                     type="password"
                     onPressEnter={handleOk}
                     placeholder="密码"
@@ -95,7 +96,7 @@ const Login = ({
                         ],
                       })(<Input
                         prefix={<Icon type="qrcode" style={{ color: 'rgba(0,0,0,.5)' }} />}
-                        size="large"
+
                         onPressEnter={handleOk}
                         placeholder="验证码"
                       />)}
@@ -103,7 +104,7 @@ const Login = ({
                   </Col>
                   <Col span={8}>
                     <Tooltip placement="right" title="看不清,点击换一张">
-                      <div onClick={onUpdateImgCode} style={{ height: '32px', width: '75px', marginLeft: '7px', overflow: 'hidden' }}>
+                      <div onClick={onUpdateImgCode} style={{ height: '40px', marginTop: 4, width: '75px', marginLeft: '7px', overflow: 'hidden' }}>
                         {loading.effects['login/initImgCode']
                           ? <Spin />
                           : <img src={imgCode} alt="验证码" style={{ height: '32px', cursor: 'pointer' }} />
@@ -113,7 +114,7 @@ const Login = ({
                   </Col>
                 </Row>
                 <Row>
-                  {/* <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
+                  {/* <Button type="primary"  onClick={handleOk} loading={loginLoading}>
                     登录
                   </Button> */}
                   <LoginButton {...LoginButtonProps} />

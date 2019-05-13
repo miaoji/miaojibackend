@@ -79,23 +79,23 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按姓名搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按姓名搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <FilterItem label="创建时间">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange style={{ width: '100%' }} onChange={handleChange.bind(null, 'createTime')} />
           )}
         </FilterItem>
       </Col>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>重置</Button>
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button onClick={handleReset}>重置</Button>
           </div>
           <div>
-            <Button size="large" type="ghost" onClick={onAdd}>发布新信息</Button>
+            <Button type="ghost" onClick={onAdd}>发布新信息</Button>
           </div>
         </div>
       </Col>

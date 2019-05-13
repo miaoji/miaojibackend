@@ -1,7 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Router } from 'dva/router'
+import zhCN from 'antd/lib/locale-provider/zh_CN'
+import { LocaleProvider } from 'antd'
 import App from './routes/app'
+
+const Root = (props) => {
+  return (
+    <LocaleProvider locale={zhCN}>
+      <App {...props} />
+    </LocaleProvider>
+  )
+}
 
 const registerModel = (app, model) => {
   if (!(app._models.filter(m => m.namespace === model.namespace).length === 1)) {
@@ -13,7 +23,7 @@ const Routers = function ({ history, app }) {
   const routes = [
     {
       path: '/',
-      component: App,
+      component: Root,
       // 默认渲染首页
       getIndexRoute(nextState, cb) {
         require.ensure([], (require) => {

@@ -78,8 +78,8 @@ const Filter = ({
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button className="hide" size="large" onClick={handleReset}>刷新</Button>
-            {auth.add && <Button type="primary" size="large" onClick={onAdd}>新增</Button>}
+            <Button className="hide" onClick={handleReset}>刷新</Button>
+            {auth.add && <Button type="primary" onClick={onAdd}>新增</Button>}
           </div>
         </div>
       </Col>

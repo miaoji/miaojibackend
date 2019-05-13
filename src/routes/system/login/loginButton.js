@@ -50,7 +50,7 @@ class LoginButton extends Component {
     const { loginLoading, handleOk } = this.props
     const { disabled, num } = this.state
     return (
-      <Button disabled={disabled} type="primary" size="large" onClick={handleOk} loading={loginLoading}>
+      <Button disabled={disabled} type="primary" onClick={handleOk} loading={loginLoading}>
         {disabled ? `登录锁定,${((errorTime - num) / 1000).toFixed(0)}秒后解锁` : '登录'}
       </Button>
     )

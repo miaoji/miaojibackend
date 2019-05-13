@@ -6,7 +6,9 @@ const DropOption = ({ onMenuClick, menuOptions = [], buttonStyle, dropdownProps 
   const menu = menuOptions.map(item => <Menu.Item key={item.key}>{item.name}</Menu.Item>)
   return (<Dropdown
     overlay={<Menu onClick={onMenuClick}>{menu}</Menu>}
+    trigger={['click']}
     {...dropdownProps}
+    size="small"
   >
     <Button style={{ border: 'none', ...buttonStyle }}>
       <Icon style={{ marginRight: 2 }} type="bars" />

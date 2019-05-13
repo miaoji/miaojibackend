@@ -86,7 +86,7 @@ const Filter = ({
             style={{ width: '100%' }}
             onSelect={nameChange}
             placeholder="按站点名称搜索"
-            size="large"
+
           >{storeuserList}</Select>
         )}
       </Col>
@@ -98,8 +98,8 @@ const Filter = ({
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>刷新</Button>
           </div>
         </div>
       </Col>

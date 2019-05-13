@@ -91,20 +91,20 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('roleName', { initialValue: roleName })(<Search placeholder="按角色名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('roleName', { initialValue: roleName })(<Search placeholder="按角色名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-        <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-        <Button size="large" type="primary" className="margin-right" onClick={onAdd}>新增角色</Button>
+        <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+        <Button className="margin-right" onClick={handleReset}>刷新</Button>
+        <Button type="primary" className="margin-right" onClick={onAdd}>新增角色</Button>
       </Col>
       <Col style={{ display: userId === 1 ? 'block' : 'none' }}>
-        <Button size="large" type="primary" className="margin-right" onClick={onUpdateAdminRole}>更新权限</Button>
+        <Button type="primary" className="margin-right" onClick={onUpdateAdminRole}>更新权限</Button>
       </Col>
     </Row>
   )

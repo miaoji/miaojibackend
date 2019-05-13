@@ -17,13 +17,15 @@ const Sider = ({ siderFold, darkTheme, location, changeTheme, navOpenKeys, chang
   return (
     <div>
       <div className={styles.logo}>
-        <img alt={'logo'} src={config.logo} />
+        <span>
+          <img style={{ float: 'left' }} alt={'logo'} src={config.logo} />
+        </span>
         {siderFold ? '' : <span>{config.name}</span>}
       </div>
       <Menus {...menusProps} />
       {!siderFold ? <div className={styles.switchtheme}>
         <span><Icon type="bulb" />菜单主题</span>
-        <Switch onChange={changeTheme} defaultChecked={darkTheme} checkedChildren="白天" unCheckedChildren="夜间" />
+        <Switch style={{ fontSize: '12px' }} onChange={changeTheme} defaultChecked={darkTheme} checkedChildren="白天" unCheckedChildren="夜间" />
       </div> : ''}
     </div>
   )

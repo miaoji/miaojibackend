@@ -88,23 +88,23 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按姓名搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search allowClear placeholder="按姓名搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('accounts', { initialValue: accounts })(<Search placeholder="按账号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('accounts', { initialValue: accounts })(<Search placeholder="按账号搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('orgName', { initialValue: orgName })(<Search placeholder="按所属机构搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('orgName', { initialValue: orgName })(<Search placeholder="按所属机构搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-        <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-        <Button size="large" type="primary" className="margin-right" onClick={onAdd}>注册用户</Button>
+        <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+        <Button className="margin-right" onClick={handleReset}>刷新</Button>
+        <Button type="primary" className="margin-right" onClick={onAdd}>注册用户</Button>
       </Col>
     </Row>
   )

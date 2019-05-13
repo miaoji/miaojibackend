@@ -93,7 +93,7 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('stationMobile', { initialValue: stationMobile })(<Search placeholder="按站点手机号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('stationMobile', { initialValue: stationMobile })(<Search placeholder="按站点手机号搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(
@@ -102,16 +102,16 @@ const Filter = ({
             style={{ width: '100%' }}
             onSelect={nameChange}
             placeholder="按站点名称搜索"
-            size="large"
+
           >{storeuserList}</Select>
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            {auth.add && <Button size="large" type="ghost" onClick={onAdd}>新增</Button>}
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>刷新</Button>
+            {auth.add && <Button type="ghost" onClick={onAdd}>新增</Button>}
           </div>
         </div>
       </Col>

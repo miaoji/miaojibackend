@@ -67,7 +67,7 @@ const List = ({ auth, location, onEditItem, onDeleteItem, ...tableProps }) => {
       title: '复制图片路径',
       key: 'copy',
       render: (text, record) => {
-        return <Button type="primary" size="large" onClick={e => copyUrl(record, e)}>复制到剪切板</Button>
+        return <Button type="primary" onClick={e => copyUrl(record, e)}>复制到剪切板</Button>
       },
     }, {
       title: '备注',

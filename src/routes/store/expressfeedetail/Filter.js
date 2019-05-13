@@ -105,12 +105,12 @@ const Filter = ({
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Input onPressEnter={brandChange} size="large" style={{ width: '100%' }} placeholder="按快递品牌筛选" />
+          <Input onPressEnter={brandChange} style={{ width: '100%' }} placeholder="按快递品牌筛选" />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('payType', { initialValue: payType || '0' })(
-          <Select onChange={payTypeChange} size="large" style={{ width: '100%' }} placeholder="按收款筛选">
+          <Select onChange={payTypeChange} style={{ width: '100%' }} placeholder="按收款筛选">
             <Option key="0">全部</Option>
             <Option key="1">支付宝</Option>
             <Option key="2">微信</Option>
@@ -121,7 +121,7 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('status', { initialValue: status || '0' })(
-          <Select onChange={statusChange} size="large" style={{ width: '100%' }} placeholder="按完成状态筛选">
+          <Select onChange={statusChange} style={{ width: '100%' }} placeholder="按完成状态筛选">
             <Option key="0">全部</Option>
             <Option key="success">成功</Option>
             <Option key="wait">等待</Option>
@@ -131,15 +131,15 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: createTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            {auth.downloadExcel && <Button type="primary" size="large" onClick={onDownLoad}>下载为Excel</Button>}
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>刷新</Button>
+            {auth.downloadExcel && <Button type="primary" onClick={onDownLoad}>下载为Excel</Button>}
           </div>
         </div>
       </Col>

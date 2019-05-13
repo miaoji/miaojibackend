@@ -107,7 +107,7 @@ const TopUp = ({ location, dispatch, topup, loading }) => {
           <Col>
             {`选中 ${selectedRowKeys.length} 个微信用户 `}
             <Popconfirm title={'确定将这些用户打入黑名单吗?'} placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" size="large" style={{ marginLeft: 8 }}>标记黑名单</Button>
+              <Button type="primary" style={{ marginLeft: 8 }}>标记黑名单</Button>
             </Popconfirm>
           </Col>
         </Row>

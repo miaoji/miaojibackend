@@ -88,20 +88,20 @@ const Filter = ({
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Input disabled={filter.idBrand} onPressEnter={brandChange} size="large" style={{ width: '100%' }} placeholder="按快递品牌赛选" />
+          <Input disabled={filter.idBrand} onPressEnter={brandChange} style={{ width: '100%' }} placeholder="按快递品牌赛选" />
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: createTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button className="margin-right" size="large" onClick={handleReset}>刷新</Button>
-            {auth.downloadDetailExcel && <Button type="primary" size="large" onClick={onDownLoad}>下载</Button>}
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>刷新</Button>
+            {auth.downloadDetailExcel && <Button type="primary" onClick={onDownLoad}>下载</Button>}
           </div>
         </div>
       </Col>

@@ -84,14 +84,14 @@ const Filter = ({
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('brand', { initialValue: brand })(
-          <Input onPressEnter={brandChange} size="large" placeholder="按品牌搜索" />
+          <Input onPressEnter={brandChange} placeholder="按品牌搜索" />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>刷新</Button>
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button onClick={handleReset}>刷新</Button>
           </div>
         </div>
       </Col>

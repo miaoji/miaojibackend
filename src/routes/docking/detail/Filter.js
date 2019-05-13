@@ -111,7 +111,7 @@ const Filter = ({
             style={{ width: '100%' }}
             onChange={brandChange}
             placeholder="按快递品牌搜索"
-            size="large"
+
           >
             {brandList}
           </Select>
@@ -125,7 +125,7 @@ const Filter = ({
             style={{ width: '100%' }}
             onChange={typeChange}
             placeholder="按快递状态筛选"
-            size="large"
+
           >
             {typeList}
           </Select>
@@ -139,7 +139,7 @@ const Filter = ({
             style={{ width: '100%' }}
             onChange={joinChange}
             placeholder="按对接状态筛选"
-            size="large"
+
           >
             {joinList}
           </Select>
@@ -147,19 +147,19 @@ const Filter = ({
       </Col>
       <div style={{ display: 'none' }}>
         <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('orderSn', { initialValue: orderSn })(<Search placeholder="按单号搜索" size="large" onSearch={handleSubmit} />)}
+          {getFieldDecorator('orderSn', { initialValue: orderSn })(<Search placeholder="按单号搜索" onSearch={handleSubmit} />)}
         </Col>
       </div>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>刷新</Button>
           </div>
         </div>
       </Col>
       <Col>
-        {auth.downloadDetail && <Button style={{ display: 'block' }} size="large" type="primary" onClick={onDownLoad}>下载</Button>}
+        {auth.downloadDetail && <Button style={{ display: 'block' }} type="primary" onClick={onDownLoad}>下载</Button>}
       </Col>
     </Row>
   )

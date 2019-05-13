@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem, DateRange } from 'components'
-import { Form, Button, Row, Col,
+import {
+  Form, Button, Row, Col,
   // DatePicker,
-  Input, Cascader, Switch } from 'antd'
+  Input, Cascader, Switch,
+} from 'antd'
 import city from '../../utils/city'
 
 const Search = Input.Search
@@ -85,12 +87,12 @@ const Filter = ({
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按微信名搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="按微信名搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
         {getFieldDecorator('address', { initialValue: address })(
           <Cascader
-            size="large"
+
             style={{ width: '100%' }}
             options={city}
             placeholder="按地址搜索"
@@ -100,20 +102,20 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <FilterItem label="">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
-            // <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange style={{ width: '100%' }} onChange={handleChange.bind(null, 'createTime')} />
+            // <RangePicker style={{ width: '100%' }}  onChange={handleChange.bind(null, 'createTime')} />
           )}
         </FilterItem>
       </Col>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>重置</Button>
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button onClick={handleReset}>重置</Button>
           </div>
           <div>
-            <Switch style={{ marginRight: 16 }} size="large" defaultChecked={isMotion} onChange={switchIsMotion} checkedChildren={'动态'} unCheckedChildren={'Motion'} />
-            <Button size="large" type="ghost" onClick={onAdd}>创建</Button>
+            <Switch style={{ marginRight: 16 }} defaultChecked={isMotion} onChange={switchIsMotion} checkedChildren={'动态'} unCheckedChildren={'Motion'} />
+            <Button type="ghost" onClick={onAdd}>创建</Button>
           </div>
         </div>
       </Col>

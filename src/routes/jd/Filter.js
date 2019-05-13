@@ -28,13 +28,13 @@ const Filter = ({
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
-            <Button size="large" type="primary" onClick={onAdd}>填充单号池</Button>
+            <Button type="primary" onClick={onAdd}>填充单号池</Button>
           </div>
           <div>
-            <Button size="large" type="primary" onClick={onSetJdConfig}>设置京东分配比例</Button>
+            <Button type="primary" onClick={onSetJdConfig}>设置京东分配比例</Button>
           </div>
           <div>
-            <Button size="large" type="primary" onClick={onRefresh}>刷新</Button>
+            <Button type="primary" onClick={onRefresh}>刷新</Button>
           </div>
         </div>
       </Col>

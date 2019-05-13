@@ -132,7 +132,7 @@ const Wxuser = ({ location, dispatch, wxuser, loading }) => {
           <Col>
             {`Selected ${selectedRowKeys.length} items `}
             <Popconfirm title={'Are you sure delete these items?'} placement="left" onConfirm={handleDeleteItems}>
-              <Button type="primary" size="large" style={{ marginLeft: 8 }}>Remove</Button>
+              <Button type="primary" style={{ marginLeft: 8 }}>Remove</Button>
             </Popconfirm>
           </Col>
         </Row>

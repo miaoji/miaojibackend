@@ -58,7 +58,7 @@ const Bread = ({ menu }) => {
 
   return (
     <div className={styles.bread}>
-      <Breadcrumb>
+      <Breadcrumb style={{ padding: '21px 0' }}>
         {breads}
       </Breadcrumb>
     </div>

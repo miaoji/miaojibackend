@@ -75,7 +75,7 @@ class DateRange extends React.Component {
               locale={locale}
               format="YYYY-MM-DD"
               value={startValue}
-              allowClear={false}
+              allowClear
               placeholder="开始时间"
               showToday={false}
               style={{ width: '100%' }}
@@ -90,7 +90,7 @@ class DateRange extends React.Component {
               locale={locale}
               showToday={false}
               style={{ width: '100%' }}
-              allowClear={false}
+              allowClear
               format="YYYY-MM-DD"
               value={endValue}
               placeholder="结束时间"

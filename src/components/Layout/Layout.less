@@ -26,7 +26,7 @@
           width: 100%;
           overflow: visible;
 
-          & > .ant-menu-item {
+          &>.ant-menu-item {
             padding: 0;
             text-align: center;
 
@@ -36,8 +36,8 @@
             }
           }
 
-          & > .ant-menu-submenu {
-            & > .ant-menu-submenu-title {
+          &>.ant-menu-submenu {
+            &>.ant-menu-submenu-title {
               padding: 0;
               text-align: center;
 
@@ -75,6 +75,7 @@
       background: #fff;
 
       .switchtheme {
+        font-size: 12px;
         background: #fff;
         border-top: solid 1px #f8f8f8;
       }
@@ -135,6 +136,7 @@
     }
 
     :global {
+
       .ant-menu-dark,
       .ant-menu-dark .ant-menu-sub {
         color: #999;
@@ -232,11 +234,11 @@
 
   .ant-menu-item,
   .ant-menu-submenu-title {
-    & > a {
+    &>a {
       color: #999;
     }
 
-    &:hover > a {
+    &:hover>a {
       color: @primary-color;
     }
   }
@@ -251,7 +253,7 @@
     color: @primary-color;
     background-color: @dark-half;
 
-    & > a {
+    &>a {
       color: @primary-color;
     }
 
@@ -266,6 +268,7 @@
     height: 100vh;
   }
 }
+
 @media (max-width: 767px) {
   .layout {
     .main {

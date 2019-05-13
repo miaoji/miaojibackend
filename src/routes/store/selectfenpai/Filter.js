@@ -98,7 +98,7 @@ const Filter = ({
             style={{ width: '100%' }}
             onSelect={nameChange}
             placeholder="按店铺名称搜索"
-            size="large"
+
           >
             {storeuserList}
           </Select>
@@ -111,15 +111,15 @@ const Filter = ({
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: createTime })(
-          <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+          <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
       <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" className="margin-right" onClick={handleReset}>刷新</Button>
-            {auth.downloadExcel && <Button type="primary" size="large" onClick={onDownLoad}>下载为Excel</Button>}
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>刷新</Button>
+            {auth.downloadExcel && <Button type="primary" onClick={onDownLoad}>下载为Excel</Button>}
           </div>
         </div>
       </Col>

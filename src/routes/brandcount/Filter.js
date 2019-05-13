@@ -94,30 +94,30 @@ const Filter = ({
             style={{ width: '100%' }}
             onSelect={nameChange}
             placeholder="按店铺名称搜索"
-            size="large"
+
           >
             {storeuserList}
           </Select>
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }}>
-        {getFieldDecorator('brand', { initialValue: brand })(<Search placeholder="按名称搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('brand', { initialValue: brand })(<Search placeholder="按名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps}>
         <FilterItem>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange style={{ width: '100%' }} onChange={handleChange.bind(null, 'createTime')} />
           )}
         </FilterItem>
       </Col>
       <Col {...ColProps}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" onClick={handleReset}>重置</Button>
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button onClick={handleReset}>重置</Button>
           </div>
           <div>
-            <Button className="hide" size="large" type="primary" onClick={() => { onEchartShowChange(!echartShow) }}>{echartShow ? '列表查看' : '饼状图查看'}</Button>
+            <Button className="hide" type="primary" onClick={() => { onEchartShowChange(!echartShow) }}>{echartShow ? '列表查看' : '饼状图查看'}</Button>
           </div>
         </div>
       </Col>

@@ -50,7 +50,7 @@ const Filter = ({
         <div className={styles.filter_title}><span className="icon_line" />时间筛选 : </div>
         <div style={{ width: '400px', marginLeft: '40px' }}>
           {getFieldDecorator('createTime', { initialValue: createTime })(
-            <DateRange size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange onChange={handleChange.bind(null, 'createTime')} />
           )}
         </div>
       </div>
@@ -59,11 +59,11 @@ const Filter = ({
         <div className="input">
           {getFieldDecorator('name', {
             initialValue: name,
-          })(<Search onSearch={handleSubmit} className={styles.filter_input} placeholder="按分派人姓名或id搜索" size="large" onPressEnter={handleSubmit} />)}
+          })(<Search onSearch={handleSubmit} className={styles.filter_input} placeholder="按分派人姓名或id搜索" onPressEnter={handleSubmit} />)}
         </div>
 
         <div style={{ marginLeft: '20px' }}>
-          <Button className={styles.filter_button} loading={buttonLoading} type="primary" size="large" onClick={handleSubmit}>搜索</Button>
+          <Button className={styles.filter_button} loading={buttonLoading} type="primary" onClick={handleSubmit}>搜索</Button>
         </div>
       </div>
     </div>

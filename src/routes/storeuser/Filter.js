@@ -103,14 +103,14 @@ const Filter = ({
             style={{ width: '100%' }}
             onSelect={nameChange}
             placeholder="按站点名称搜索"
-            size="large"
+
           >
             {storeuserList}
           </Select>
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按账号搜索" size="large" onSearch={handleSubmit} />)}
+        {getFieldDecorator('mobile', { initialValue: mobile })(<Search placeholder="按账号搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('location', { initialValue: location })(
@@ -120,16 +120,16 @@ const Filter = ({
       <Col {...ColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 12 }}>
         <FilterItem label="">
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
-            <DateRange style={{ width: '100%' }} size="large" onChange={handleChange.bind(null, 'createTime')} />
+            <DateRange style={{ width: '100%' }} onChange={handleChange.bind(null, 'createTime')} />
           )}
         </FilterItem>
       </Col>
       <Col {...TwoColProps} xl={{ span: 10 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div >
-            <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button size="large" className="margin-right" onClick={handleReset}>重置</Button>
-            {auth.add && <Button type="primary" size="large" onClick={handleCreate}>新建门店用户</Button>}
+            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+            <Button className="margin-right" onClick={handleReset}>重置</Button>
+            {auth.add && <Button type="primary" onClick={handleCreate}>新建门店用户</Button>}
           </div>
         </div>
       </Col>

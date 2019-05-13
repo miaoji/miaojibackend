@@ -27,10 +27,10 @@ const Filter = ({
       <div className="input" style={{ marginLeft: '20px' }}>
         {getFieldDecorator('serialNumber', {
           initialValue: serialNumber,
-        })(<Input className={styles.filter_input} placeholder="按订单号或手机号搜索订单" size="large" onPressEnter={handleSubmit} />)}
+        })(<Input className={styles.filter_input} placeholder="按订单号或手机号搜索订单" onPressEnter={handleSubmit} />)}
       </div>
       <div style={{ marginLeft: '20px' }}>
-        <Button className={styles.filter_button} loading={buttonLoading} type="primary" size="large" onClick={handleSubmit}>搜索</Button>
+        <Button className={styles.filter_button} loading={buttonLoading} type="primary" onClick={handleSubmit}>搜索</Button>
       </div>
     </div>
   )

@@ -45,7 +45,7 @@ function User({ avatar, name, email, sales, sold }) {
       </div>
     </div>
     <div className={styles.footer}>
-      <Button type="ghost" size="large" onClick={handleSelfPage}>官网主页</Button>
+      <Button type="ghost" onClick={handleSelfPage}>官网主页</Button>
     </div>
   </div>)
 }
