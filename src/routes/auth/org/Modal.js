@@ -101,8 +101,6 @@ class TransferModal extends React.Component {
         location: key,
       })
     }
-    const disabled = true
-
     return (
       <Modal {...modalOpts} className={styles.modal} >
         <Form layout="horizontal">
@@ -175,7 +173,7 @@ class TransferModal extends React.Component {
                 },
               ],
             })(<Transfer
-              disabled={disabled}
+              disabled={transferDisabled}
               className={styles.transfer}
               listStyle={{ width: '45%' }}
               dataSource={idUsers}
