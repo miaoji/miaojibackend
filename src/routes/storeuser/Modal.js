@@ -132,7 +132,7 @@ const modal = ({
                 },
               ],
             })(
-              <RadioGroup>
+              <RadioGroup style={{ width: '100%' }}>
                 <Radio value={1}>正式版</Radio>
                 <Radio value={0}>简化版</Radio>
               </RadioGroup>
