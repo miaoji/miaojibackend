@@ -85,7 +85,9 @@ const Filter = ({
   }
 
   const inputClear = (e, key) => {
-    if (Object.keys(e).length === 0) {
+    console.log('e', e)
+    console.log('key', key)
+    if (e && e.target && !e.target.value) {
       handleChange(key, '')
     }
   }

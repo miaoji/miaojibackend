@@ -81,7 +81,7 @@ const Filter = ({
 
   let { brand, createTime } = filter
   const inputClear = (e, key) => {
-    if (Object.keys(e).length === 0) {
+    if (e && e.target && !e.target.value) {
       handleChange(key, '')
     }
   }
