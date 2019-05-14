@@ -33,10 +33,12 @@ const initMenus = (key, e, setFieldsValue, source) => {
   if (tmpSource && tmpSource.menuType === 3 && tmpSource.buttonType === 'list' && !e.checked) {
     const tmpSourceBrother = source.filter(i => i.parentMenuId === tmpSource.parentMenuId).map(i => i.id)
     const ids = [...tmpSourceBrother, tmpSource.parentMenuId]
-    key.forEach((i, index) => {
-      if (ids.some(k => Number(i) === Number(k))) {
-        key.splice(index, 1)
-      }
+    ids.forEach((i) => {
+      key.forEach((k, index) => {
+        if (Number(i) === Number(k)) {
+          key.splice(index, 1)
+        }
+      })
     })
   }
   setFieldsValue({
