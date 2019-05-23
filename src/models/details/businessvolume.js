@@ -44,7 +44,9 @@ export default modelExtend(pageModel, {
         newpayload.idUser = payload.idUser.split('///')[0]
       }
       if (payload.state) {
-        newpayload.state = payload.state.split('///')[0]
+        newpayload.state = payload.state
+      } else {
+        newpayload.state = '0'
       }
       if (!payload.orderSn) {
         delete newpayload.orderSn

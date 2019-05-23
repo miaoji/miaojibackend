@@ -134,7 +134,7 @@ const Filter = ({
           </div>
         </div>
       </Col>
-      <Col>
+      <Col {...TwoColProps} xl={{ span: 3 }} md={{ span: 3 }} sm={{ span: 3 }}>
         {auth.downloadDetailExcel && <Button style={{ display: 'block' }} type="primary" onClick={onDownLoad}>下载</Button>}
       </Col>
     </Row>

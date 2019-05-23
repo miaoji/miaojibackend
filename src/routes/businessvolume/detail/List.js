@@ -11,21 +11,30 @@ const List = ({ location, ...tableProps }) => {
       title: '快递品牌',
       dataIndex: 'brand',
       key: 'brand',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
       title: '操作人',
       dataIndex: 'operator',
       key: 'operator',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
       title: '快递状态',
       dataIndex: 'state',
       key: 'state',
       render: (text) => {
-        return <span>{orderTypeForBusiness[text]}</span>
+        return <span>{text ? orderTypeForBusiness[text] : '/'}</span>
       },
     }, {
       title: '快递单号',
       dataIndex: 'orderSn',
       key: 'orderSn',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     },
   ]
 
