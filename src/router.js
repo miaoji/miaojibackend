@@ -523,6 +523,26 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 短信状态查询
+          path: 'messagearrive',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/messagearrive'))
+              cb(null, require('./routes/messagearrive/'))
+            }, 'messagearrive')
+          },
+        },
+        {
+          // 通讯费账单报表
+          path: 'communicationbill',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/communicationbill'))
+              cb(null, require('./routes/communicationbill/'))
+            }, 'communicationbill')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {
