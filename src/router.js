@@ -533,6 +533,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 短信状态查询-明细
+          path: 'messagearrivedetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/messagearrivedetail'))
+              cb(null, require('./routes/messagearrivedetail/'))
+            }, 'messagearrivedetail')
+          },
+        },
+        {
           // 通讯费账单报表
           path: 'communicationbill',
           getComponent(nextState, cb) {

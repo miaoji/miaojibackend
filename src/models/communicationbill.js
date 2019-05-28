@@ -55,25 +55,12 @@ export default modelExtend(pageModel, {
         ...payload,
         ...locationPayload,
         location: undefined,
-        userId: 2778,
-        startTime: 1550806200000,
-        endTime: 1550806260000,
       })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            // list: data.obj || [],
-            list: [
-              {
-                id: 2778,
-                name: '妙寄美林小城社区门店',
-                communicateNum: 452,
-                province: '安徽省',
-                city: '安庆市',
-                district: '太湖县',
-              },
-            ],
+            list: data.obj || [],
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,

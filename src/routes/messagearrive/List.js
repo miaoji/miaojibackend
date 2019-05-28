@@ -5,6 +5,30 @@ import { Link } from 'dva/router'
 import classnames from 'classnames'
 import styles from './List.less'
 
+const channelContrast = [
+  {
+    name: '快宝',
+    key: 1,
+    successKey: 'KSucceeCount',
+    errorKey: 'KErrorCount',
+  }, {
+    name: '富媒体',
+    key: 2,
+    successKey: 'FSucceeCount',
+    errorKey: 'FErrorCount',
+  }, {
+    name: '欣易辰',
+    key: 3,
+    successKey: 'XSucceeCount',
+    errorKey: 'XErrorCount',
+  }, {
+    name: '海雕',
+    key: 4,
+    successKey: 'HSucceeCount',
+    errorKey: 'HErrorCount',
+  },
+]
+
 const Text = ({ children, color }) => {
   return <span style={{ color: color || '#333' }}>{children}</span>
 }
@@ -14,7 +38,8 @@ Text.propTypes = {
   color: PropTypes.string,
 }
 
-const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, rowExpandList, ...tableProps }) => {
+const List = ({ expandedLoading, expandedRowKeys, location, rowExpandList, ...tableProps }) => {
+  const optionPosition = expandedRowKeys.length === 0
   const filter = location.query
   const timeParams = filter.createTime && filter.createTime.length > 0 ? `&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}` : ''
   const columns = [
@@ -23,14 +48,13 @@ const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, ro
       dataIndex: 'id',
       key: 'id',
       width: 100,
-      render: (text) => {
-        return <Link to={`/dockingdetail?idUser=${text}${timeParams}`}>{text}</Link>
+      render: (text, record) => {
+        return <Link to={`/messagearrivedetail?name=${`${record.id}///${record.name}`}${timeParams}`}>{text}</Link>
       },
     }, {
       title: '站点名称',
       dataIndex: 'name',
       key: 'name',
-      width: 170,
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
@@ -38,34 +62,39 @@ const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, ro
       title: '站点地址',
       dataIndex: 'address',
       key: 'address',
-      width: 170,
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '到达数',
+      title: '发送成功',
       dataIndex: 'a',
       key: 'a',
-      width: 100,
       render: (text) => {
         return <Text color="#67C23A">{text}</Text>
       },
     }, {
-      title: '未到达数',
+      title: '发送失败',
       dataIndex: 'b',
       key: 'b',
-      width: 100,
       render: (text) => {
         return <Text color="#F56C6C">{text}</Text>
       },
     }, {
-      title: '发出数',
+      title: '发送总计',
       dataIndex: 'pourOut',
       key: 'pourOut',
-      width: 100,
       render: (_, record) => {
         const { a, b } = record
         return (<Text color="#409EFF">{a + b}</Text>)
+      },
+    }, {
+      title: '查看明细',
+      dataIndex: 'option',
+      key: 'option',
+      width: 120,
+      fixed: optionPosition ? 'right' : undefined,
+      render: (_, record) => {
+        return <Link to={`/messagearrivedetail?name=${`${record.id}///${record.name}`}${timeParams}`}>查看</Link>
       },
     },
   ]
@@ -73,34 +102,37 @@ const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, ro
   return (
     <div>
       <Table
-        {...tableProps}
+        {...{ ...tableProps, expandedRowKeys }}
         className={classnames({ [styles.table]: true, [styles.motion]: false })}
         bordered
         scroll={{ x: 1250 }}
         columns={columns}
         simple
         rowKey={record => record.id}
-        expandedRowRender={() => {
+        expandedRowRender={(record) => {
           if (expandedLoading) {
             return <Spin />
           }
-          if (rowExpandList.length === 0) {
+          if (Object.keys(rowExpandList).length === 0) {
             return <span>暂无数据</span>
           }
-          return (<div className={styles.rowRender}>
-            {
-              rowExpandList.map((item) => {
-                return (<div>
-                  <p>快递品牌:<span>{item.brand}</span></p>
-                  <p>对接入库数:<span>{item.pourIn}</span></p>
-                  <p>未对接入库数:<span>{item.noPourIn}</span></p>
-                  <p>对接出库数:<span>{item.pourOut}</span></p>
-                  <p>未对接出库数:<span>{item.noPourOut}</span></p>
-                  <p><Link to={`/dockingdetail?idBrand=${item.idBrand}&idUser=${item.id}${timeParams}`}>查看明细</Link></p>
-                </div>)
-              })
-            }
-          </div>)
+          return (
+            <div className={styles.rowRender}>
+              {channelContrast.map((i, key) => {
+                return (
+                  <div key={key}>
+                    <p>
+                      <span>{i.name}:</span>
+                      <span>发送成功 : {rowExpandList[i.successKey]}</span>
+                      <span>发送失败 : {rowExpandList[i.errorKey]}</span>
+                      <span>发送共计 : {rowExpandList[i.successKey] + rowExpandList[i.errorKey]}</span>
+                      <span><Link to={`/messagearrivedetail?key=${i.key}&name=${`${record.id}///${record.name}`}${timeParams}`}>查看明细</Link></span>
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+          )
         }}
       />
     </div>
@@ -108,12 +140,10 @@ const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, ro
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func.isRequired,
-  onEditItem: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  sonlist: PropTypes.array,
   expandedLoading: PropTypes.bool,
-  rowExpandList: PropTypes.array,
+  rowExpandList: PropTypes.object,
+  expandedRowKeys: PropTypes.array,
 }
 
 export default List

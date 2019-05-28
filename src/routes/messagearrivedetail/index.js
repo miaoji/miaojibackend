@@ -5,24 +5,28 @@ import { connect } from 'dva'
 import List from './List'
 import Filter from './Filter'
 
-const Detail = ({ app, location, dispatch, dockingdetail, loading }) => {
-  const { list, pagination } = dockingdetail
-  const { query, pathname } = location
+const IndexPage = ({ location, dispatch, messagearrivedetail, loading, app }) => {
+  const { list, pagination } = messagearrivedetail
   const { pageSize } = pagination
-
+  const { storeuserList } = app
   const { user: { sourceMenuList } } = app
-  const auth = sourceMenuList['/docking'] || {}
+  const auth = sourceMenuList['/messagearrive'] || {}
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['dockingdetail/query'],
+    loading: loading.effects['messagearrivedetail/query'],
     pagination,
     location,
-    onChange(page) {
+    auth,
+    onChange(page, filters) {
+      const filtersQuery = {}
+      Object.keys(filters).forEach((i) => { filtersQuery[i] = filters[i][0] })
+      const { query, pathname } = location
       dispatch(routerRedux.push({
         pathname,
         query: {
           ...query,
+          ...filtersQuery,
           page: page.current,
           pageSize: page.pageSize,
         },
@@ -35,17 +39,20 @@ const Detail = ({ app, location, dispatch, dockingdetail, loading }) => {
       ...location.query,
     },
     auth,
+    storeuserList,
+    downloadLoading: loading.effects['messagearrivedetail/download'],
     onDownLoad() {
       dispatch({
-        type: 'dockingdetail/download',
-        payload: { ...location.query },
+        type: 'messagearrivedetail/download',
+        payload: {
+          ...location.query,
+        },
       })
     },
     onFilterChange(value) {
       dispatch(routerRedux.push({
         pathname: location.pathname,
         query: {
-          ...location.query,
           ...value,
           page: 1,
           pageSize,
@@ -62,12 +69,12 @@ const Detail = ({ app, location, dispatch, dockingdetail, loading }) => {
   )
 }
 
-Detail.propTypes = {
-  dockingdetail: PropTypes.object,
+IndexPage.propTypes = {
+  messagearrivedetail: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,
   app: PropTypes.object,
 }
 
-export default connect(({ app, dockingdetail, loading }) => ({ app, dockingdetail, loading }))(Detail)
+export default connect(({ messagearrivedetail, loading, app }) => ({ messagearrivedetail, loading, app }))(IndexPage)

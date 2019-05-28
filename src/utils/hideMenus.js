@@ -114,4 +114,11 @@ export default [
     icon: 'message',
     route: '/communicationbilldetail',
   },
+  {
+    id: '101404',
+    mpid: '-1',
+    name: '通讯费账单明细',
+    icon: 'message',
+    route: '/messagearrivedetail',
+  },
 ]

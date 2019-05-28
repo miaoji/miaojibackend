@@ -4,45 +4,25 @@ import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
 import List from './List'
 import Filter from './Filter'
-import Modal from './Modal'
+import { defaultTime } from '../../utils'
 
 const IndexPage = ({ location, dispatch, messagearrive, app, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType, sonlist, expandedRowKeys, rowExpandList } = messagearrive
+  const { list, pagination, expandedRowKeys, rowExpandList } = messagearrive
   const { pageSize } = pagination
   const { query, pathname } = location
   const { storeuserList } = app
   const { user: { sourceMenuList } } = app
   const auth = sourceMenuList['/messagearrive'] || {}
-
-  const modalProps = {
-    modalType,
-    item: modalType === 'create' ? {} : currentItem,
-    visible: modalVisible,
-    maskClosable: false,
-    confirmLoading: loading.effects['messagearrive/update'],
-    title: `${modalType === 'create' ? '新建' : '修改门店用户的通讯费'}`,
-    wrapClassName: 'vertical-center-modal',
-    onOk(data) {
-      dispatch({
-        type: `messagearrive/${modalType}`,
-        payload: data,
-      })
-    },
-    onCancel() {
-      dispatch({
-        type: 'messagearrive/hideModal',
-      })
-    },
-  }
+  const filter = defaultTime({ ...location.query })
 
   const listProps = {
     dataSource: list,
+    filter,
     loading: loading.effects['messagearrive/query'],
     pagination,
     location,
-    sonlist,
     rowExpandList,
-    expandedLoading: loading.effects['messagearrive/querybrandlist'],
+    expandedLoading: loading.effects['messagearrive/expand'],
     expandedRowKeys,
     onChange(page) {
       if (query.createTime && query.createTime.length > 0) {
@@ -57,21 +37,6 @@ const IndexPage = ({ location, dispatch, messagearrive, app, loading }) => {
           pageSize: page.pageSize,
         },
       }))
-    },
-    onDeleteItem(id) {
-      dispatch({
-        type: 'messagearrive/delete',
-        payload: { id, query },
-      })
-    },
-    onEditItem(item) {
-      dispatch({
-        type: 'messagearrive/showModal',
-        payload: {
-          modalType: 'update',
-          currentItem: item,
-        },
-      })
     },
     // 控制可展开的行-执行展开操作但是不执行 原先的效果
     onExpand(onOff, record) {
@@ -92,21 +57,19 @@ const IndexPage = ({ location, dispatch, messagearrive, app, loading }) => {
         },
       })
       dispatch({
-        type: 'messagearrive/querybrandlist',
+        type: 'messagearrive/expand',
         payload: {
           ...location.query,
-          userIds: record.id,
+          idUser: record.id,
         },
       })
     },
   }
 
   const filterProps = {
+    filter,
     auth,
     storeuserList,
-    filter: {
-      ...location.query,
-    },
     downloadLoading: loading.effects['messagearrive/download'],
     onDownLoad() {
       dispatch({
@@ -138,7 +101,6 @@ const IndexPage = ({ location, dispatch, messagearrive, app, loading }) => {
     <div className="content-inner">
       <Filter {...filterProps} />
       <List {...listProps} />
-      {modalVisible && <Modal {...modalProps} />}
     </div>
   )
 }
