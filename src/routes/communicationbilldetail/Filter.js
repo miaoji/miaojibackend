@@ -1,13 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Form, Button, Row, Col, Input, Select,
-} from 'antd'
 import moment from 'moment'
-import { DateRange, Location } from '../../components'
-import { handleFields } from '../../utils'
-
-const Search = Input.Search
+import { Form, Button, Row, Col, Select } from 'antd'
+import { DateRange } from '../../components'
 
 const ColProps = {
   xs: 24,
@@ -25,16 +20,26 @@ const TwoColProps = {
 const Filter = ({
   auth,
   onFilterChange,
-  onDownLoad,
-  filter,
   storeuserList,
+  onDownLoad,
   downloadLoading,
+  filter,
   form: {
     getFieldDecorator,
     getFieldsValue,
     setFieldsValue,
   },
 }) => {
+  const handleFields = (fields) => {
+    const { createTime } = fields
+    if (createTime && createTime.length && createTime[0] && createTime[1]) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    } else {
+      delete fields.createTime
+    }
+    return fields
+  }
+
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
@@ -45,7 +50,7 @@ const Filter = ({
         fields[item] = undefined
       }
     }
-    onFilterChange({ ...filter, ...fields })
+    onFilterChange({ ...fields })
   }
 
   const handleReset = () => {
@@ -53,14 +58,15 @@ const Filter = ({
     for (let item in fields) {
       if ({}.hasOwnProperty.call(fields, item)) {
         if (fields[item] instanceof Array) {
-          // fields[item] = []
-        } else {
+          fields[item] = []
+        } else if (item !== 'name') {
           fields[item] = undefined
         }
       }
     }
-    filter.createTime = []
     setFieldsValue(fields)
+    filter.endTime = undefined
+    filter.startTime = undefined
     filter.page = undefined
     filter.pageSize = undefined
     handleSubmit()
@@ -70,21 +76,16 @@ const Filter = ({
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
-    if (key === 'location') {
-      setFieldsValue({
-        location: values,
-      })
-    }
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
         fields[item] = undefined
       }
     }
-    onFilterChange({ ...filter, ...fields })
+    onFilterChange({ ...fields })
   }
 
-  let { name, location } = filter
+  const { name } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -96,7 +97,6 @@ const Filter = ({
   const nameChange = (key) => {
     handleChange('name', key)
   }
-
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
@@ -104,37 +104,24 @@ const Filter = ({
           <Select
             showSearch
             style={{ width: '100%' }}
-            onSelect={nameChange}
+            onChange={nameChange}
             placeholder="按店铺名称搜索"
-            allowClear
           >
             {storeuserList}
           </Select>
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('location', { initialValue: location })(
-          <Location allowClear handleChange={handleChange.bind(null, 'location')} />
-        )}
-      </Col>
-      <div style={{ display: 'none' }}>
-        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('name', { initialValue: name })(
-            <Search allowClear onPressEnter={nameChange} placeholder="按店铺名称搜索" onSearch={handleSubmit} />
-          )}
-        </Col>
-      </div>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button className="margin-right" onClick={handleReset}>刷新</Button>
-            {!auth.download && <Button type="primary" loading={downloadLoading} className="margin-right" onClick={onDownLoad}>下载Excel</Button>}
+            {!auth.download && <Button type="primary" onClick={onDownLoad} loading={downloadLoading}>下载</Button>}
           </div>
         </div>
       </Col>
@@ -143,13 +130,13 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  auth: PropTypes.object,
-  storeuserList: PropTypes.array,
-  filter: PropTypes.object,
   form: PropTypes.object,
+  filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  storeuserList: PropTypes.array,
   onDownLoad: PropTypes.func,
   downloadLoading: PropTypes.bool,
+  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

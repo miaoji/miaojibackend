@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Spin } from 'antd'
+import { Table } from 'antd'
 import { Link } from 'dva/router'
 import classnames from 'classnames'
 import styles from './List.less'
@@ -14,9 +14,8 @@ Text.propTypes = {
   color: PropTypes.string,
 }
 
-const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, rowExpandList, ...tableProps }) => {
-  const filter = location.query
-  const timeParams = filter.createTime && filter.createTime.length > 0 ? `&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}` : ''
+const List = ({ location, filter, ...tableProps }) => {
+  const timeParams = filter.createTime && filter.createTime.length > 0 ? `&createTime=${filter.createTime[0].format('YYYY-MM-DD')}&createTime=${filter.createTime[1].format('YYYY-MM-DD')}` : ''
   const columns = [
     {
       title: '站点ID',
@@ -24,13 +23,12 @@ const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, ro
       key: 'id',
       width: 100,
       render: (text) => {
-        return <Link to={`/dockingdetail?idUser=${text}${timeParams}`}>{text}</Link>
+        return <Text>{text}</Text>
       },
     }, {
       title: '站点名称',
       dataIndex: 'name',
       key: 'name',
-      width: 170,
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
@@ -38,25 +36,31 @@ const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, ro
       title: '站点地址',
       dataIndex: 'address',
       key: 'address',
-      width: 170,
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
+      render: (_, record) => {
+        return <Text>{record.province ? `${record.province}/${record.city}/${record.district}` : '暂无'}</Text>
       },
     }, {
       title: '发送短信条数',
-      dataIndex: 'a',
-      key: 'a',
-      width: 100,
+      dataIndex: 'communicateNum',
+      key: 'communicateNum',
       render: (text) => {
         return <Text color="#67C23A">{text}</Text>
       },
     }, {
       title: '总计消费通讯费',
-      dataIndex: 'b',
-      key: 'b',
-      width: 100,
-      render: (text) => {
-        return <Text color="#333">{text * 0.035}</Text>
+      dataIndex: 'money',
+      key: 'money',
+      render: (_, record) => {
+        return <Text color="#67C23A">{record.communicateNum ? (record.communicateNum * 0.035).toFixed(3) : '0'}</Text>
+      },
+    }, {
+      title: '查看明细',
+      dataIndex: 'option',
+      key: 'option',
+      fixed: 'right',
+      width: 120,
+      render: (_, record) => {
+        return <Link to={`/communicationbilldetail?name=${record.id}///${record.name}${timeParams}`}>查看</Link>
       },
     },
   ]
@@ -71,40 +75,14 @@ const List = ({ onDeleteItem, expandedLoading, onEditItem, sonlist, location, ro
         columns={columns}
         simple
         rowKey={record => record.id}
-        expandedRowRender={() => {
-          if (expandedLoading) {
-            return <Spin />
-          }
-          if (rowExpandList.length === 0) {
-            return <span>暂无数据</span>
-          }
-          return (<div className={styles.rowRender}>
-            {
-              rowExpandList.map((item) => {
-                return (<div>
-                  <p>快递品牌:<span>{item.brand}</span></p>
-                  <p>对接入库数:<span>{item.pourIn}</span></p>
-                  <p>未对接入库数:<span>{item.noPourIn}</span></p>
-                  <p>对接出库数:<span>{item.pourOut}</span></p>
-                  <p>未对接出库数:<span>{item.noPourOut}</span></p>
-                  <p><Link to={`/dockingdetail?idBrand=${item.idBrand}&idUser=${item.id}${timeParams}`}>查看明细</Link></p>
-                </div>)
-              })
-            }
-          </div>)
-        }}
       />
     </div>
   )
 }
 
 List.propTypes = {
-  onDeleteItem: PropTypes.func.isRequired,
-  onEditItem: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  sonlist: PropTypes.array,
-  expandedLoading: PropTypes.bool,
-  rowExpandList: PropTypes.array,
+  filter: PropTypes.object,
 }
 
 export default List

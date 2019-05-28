@@ -107,4 +107,11 @@ export default [
     icon: 'message',
     route: '/communicationbill',
   },
+  {
+    id: '101403',
+    mpid: '-1',
+    name: '通讯费账单明细',
+    icon: 'message',
+    route: '/communicationbilldetail',
+  },
 ]

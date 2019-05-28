@@ -14,10 +14,11 @@ export default {
     "/api": {
       // "target": "https://console.mijihome.cn",
       // "target": "http://192.168.231.125:80",
-      // "target": "http://192.168.231.239:8066",
-      "target": "http://192.168.231.113:80",
+      "target": "http://192.168.231.239:8066",
+      // "target": "http://192.168.231.113:80",
       "changeOrigin": true,
-      "pathRewrite": { "^/api": "/quandiExpressSiteManager" }
+      "pathRewrite": { "^/api": "/" }
+      // "pathRewrite": { "^/api": "/quandiExpressSiteManager" }
     },
     // "/api/v2": {
     //   "target": "http://192.168.0.110",

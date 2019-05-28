@@ -1,24 +1,15 @@
-import React from 'react'
-import { message, notification, Tag } from 'antd'
+import { message, notification } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime, filterStoreSelect } from '../utils'
-import { query, detail, count, download, brandList } from '../services/communicationbill'
+import { query, download } from '../services/communicationbill'
 import { pageModel } from './system/common'
 
-const { prefix, APIV3, brandReverse } = config
+const { APIV3 } = config
 
 export default modelExtend(pageModel, {
   namespace: 'communicationbill',
 
-  state: {
-    currentItem: {},
-    modalVisible: false,
-    modalType: 'create',
-    isMotion: localStorage.getItem(`${prefix}userIsMotion`) === 'true',
-    expandedRowKeys: [],
-    sonlist: {},
-    rowExpandList: [],
-  },
+  state: {},
 
   subscriptions: {
     setup({ dispatch, history }) {
@@ -60,83 +51,34 @@ export default modelExtend(pageModel, {
             break
         }
       }
-      const data = yield call(query, { ...payload, ...locationPayload, location: undefined })
+      const data = yield call(query, {
+        ...payload,
+        ...locationPayload,
+        location: undefined,
+        userId: 2778,
+        startTime: 1550806200000,
+        endTime: 1550806260000,
+      })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.obj || [],
+            // list: data.obj || [],
+            list: [
+              {
+                id: 2778,
+                name: '妙寄美林小城社区门店',
+                communicateNum: 452,
+                province: '安徽省',
+                city: '安庆市',
+                district: '太湖县',
+              },
+            ],
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
               total: data.total,
             },
-          },
-        })
-      } else {
-        message.error(data.mess || '网络错误')
-      }
-    },
-
-    // 根据门店账号查询单号详细信息
-    *infoId({ payload }, { call, put }) {
-      payload = initialCreateTime(payload, true)
-      const { idUser, startTime, endTime } = payload
-      const data = yield call(detail, {
-        idUser, startTime, endTime,
-      })
-      if (data.code === 200) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            sonlist: data.obj,
-            expandedRowKeys: [payload.idUser],
-          },
-        })
-      } else {
-        message.error(data.mess || '网络错误')
-      }
-    },
-
-    // 根据门店账号查询 按快递品牌分类的统计信息
-    *countInfo({ payload }, { call, put }) {
-      yield put({
-        type: 'updateState',
-        payload: {
-          sonlist: {},
-        },
-      })
-      payload = initialCreateTime(payload, true)
-      let { startTime, endTime, idUser } = payload
-      const data = yield call(count, {
-        idUser, startTime, endTime,
-      })
-      if (data.code === 200) {
-        let list = {
-          returnAmount: [], // 退回数
-          scheduledReceipt: [], // 入库数
-          signingVolume: [], // 签收
-          someCargo: [], // 点货数
-          retroactive: [], // 补签数
-        }
-        data.obj.forEach((item) => {
-          const brandName = item.brandName
-          const brandData = `${brandReverse[brandName]}///${brandName}`
-          list.someCargo.push(<Tag color="#87d068"><a rel="noopener noreferrer" target="_blank" href={`/dockingDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=1///点货`}>{brandName}:{item.someCargo}</a></Tag>)
-          list.scheduledReceipt.push(<Tag color="#2db7f5"><a rel="noopener noreferrer" target="_blank" href={`/dockingDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=101///入库`}>{brandName}:{item.scheduledReceipt}</a></Tag>)
-          list.signingVolume.push(<Tag color="#108ee9"><a rel="noopener noreferrer" target="_blank" href={`/dockingDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=305///签收`}>{brandName}:{item.signingVolume}</a></Tag>)
-          list.returnAmount.push(
-            <Tag color="#f50">
-              <a rel="noopener noreferrer" target="_blank" href={`/dockingDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=303///退回`}>{brandName}:{item.returnAmount}</a>
-            </Tag>
-          )
-          list.retroactive.push(<Tag color="#03a9f4"><a rel="noopener noreferrer" target="_blank" href={`/dockingDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=303///退回`}>{brandName}:{item.retroactive || 0}</a></Tag>)
-        })
-        yield put({
-          type: 'updateState',
-          payload: {
-            sonlist: list,
-            expandedRowKeys: [payload.idUser],
           },
         })
       } else {
@@ -200,31 +142,6 @@ export default modelExtend(pageModel, {
           })
         }
       } else {
-        throw data.mess || '无法跟服务器建立有效连接'
-      }
-    },
-
-    *querybrandlist({ payload = {} }, { call, put }) {
-      payload = initialCreateTime(payload, true)
-      const data = yield call(brandList, {
-        ...payload,
-        page: 1,
-        pageSize: 10000,
-      })
-      if (data.code === 200) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            rowExpandList: data.obj,
-          },
-        })
-      } else {
-        yield put({
-          type: 'updateState',
-          payload: {
-            rowExpandList: [],
-          },
-        })
         throw data.mess || '无法跟服务器建立有效连接'
       }
     },

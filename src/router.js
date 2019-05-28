@@ -543,6 +543,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 通讯费账单报表-明细
+          path: 'communicationbilldetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./models/communicationbilldetail'))
+              cb(null, require('./routes/communicationbilldetail/'))
+            }, 'communicationbilldetail')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {

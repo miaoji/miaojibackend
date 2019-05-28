@@ -344,9 +344,15 @@ module.exports = {
     brandDocking: {
       list: `${APIV1}/stTactinnList`,
     },
+    //  日志
     log: {
       list: `${APIV1}/selectSysLog`, // 日志的查询
       download: `${APIV1}/downloadSysLog`, // 日志的下载
+    },
+    // 通讯费
+    communicationbill: {
+      list: `${APIV1}/selectCommunicate`,
+      detail: `${APIV1}/selectCommunicateInfo`,
     },
   },
   brand: {
