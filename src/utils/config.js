@@ -97,6 +97,7 @@ module.exports = {
       list: `${APIV1}/wechatuser`, // 微信用户分页
     },
     storeuser: {
+      conciseStores: `${APIV1}/conciseStores`, // 简版门店用户用于生成select表单
       list: `${APIV1}/store`, // 门店用户
       updateFee: `${APIV1}/updateFee`, // 修改门店用户通讯费
       versionswitch: `${APIV1}/updateVersion`, // app版本切换

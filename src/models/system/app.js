@@ -6,7 +6,7 @@ import hideMenus from 'utils/hideMenus'
 import { storage } from 'utils'
 import { Select } from 'antd'
 import { rebuildMenuData } from 'src/utils/processing'
-import { query as queryStoreUser } from '../../services/storeuser'
+import { queryStoreUser } from '../../services/system/app'
 
 const { prefix } = config
 const { Option } = Select
