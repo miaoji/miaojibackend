@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Table, Spin } from 'antd'
 import { Link } from 'dva/router'
 import classnames from 'classnames'
-import moment from 'moment'
 import styles from './List.less'
 
 const channelContrast = [
@@ -40,15 +39,8 @@ Text.propTypes = {
 }
 
 const List = ({ expandedLoading, expandedRowKeys, filter, location, rowExpandList, ...tableProps }) => {
-  const initialCreateTime = []
-  if (filter.createTime && filter.createTime[0]) {
-    initialCreateTime[0] = moment(filter.createTime[0]).format('YYYY-MM-DD')
-  }
-  if (filter.createTime && filter.createTime[1]) {
-    initialCreateTime[1] = moment(filter.createTime[1]).format('YYYY-MM-DD')
-  }
   const optionPosition = expandedRowKeys.length === 0
-  const timeParams = initialCreateTime && initialCreateTime.length > 0 ? `&createTime=${initialCreateTime[0]}&createTime=${initialCreateTime[1]}` : ''
+  const timeParams = `&createTime=${filter.startTime}&createTime=${filter.endTime}`
   const columns = [
     {
       title: '站点ID',

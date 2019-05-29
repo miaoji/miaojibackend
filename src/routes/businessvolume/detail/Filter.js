@@ -123,19 +123,13 @@ const Filter = ({
           </Select>
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('orderSn', { initialValue: orderSn })(<Search placeholder="按单号搜索" onSearch={handleSubmit} />)}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div >
-            <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
-            <Button className="margin-right" onClick={handleReset}>刷新</Button>
-          </div>
-        </div>
-      </Col>
-      <Col {...TwoColProps} xl={{ span: 3 }} md={{ span: 3 }} sm={{ span: 3 }}>
-        {auth.downloadDetailExcel && <Button style={{ display: 'block' }} type="primary" onClick={onDownLoad}>下载</Button>}
+      <Col {...TwoColProps} xl={{ span: 6 }} lg={{ span: 12 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
+        <Button className="margin-right" onClick={handleReset}>刷新</Button>
+        {auth.downloadDetailExcel && <Button type="primary" onClick={onDownLoad}>下载</Button>}
       </Col>
     </Row>
   )

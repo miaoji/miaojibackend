@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Button, Row, Col, Select, Input } from 'antd'
+import { Form, Button, Row, Col, Select } from 'antd'
 import { config } from 'utils'
 
 const { Option } = Select
 const { brand } = config
-const Search = Input.Search
 
 const ColProps = {
   xs: 24,
@@ -100,7 +99,7 @@ const Filter = ({
     handleChange('join', key)
   }
 
-  const { idBrand, type, orderSn, join } = filter
+  const { idBrand, type, join } = filter
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
@@ -145,21 +144,14 @@ const Filter = ({
           </Select>
         )}
       </Col>
-      <div style={{ display: 'none' }}>
-        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('orderSn', { initialValue: orderSn })(<Search placeholder="按单号搜索" onSearch={handleSubmit} />)}
-        </Col>
-      </div>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 8 }}>
+      <Col {...TwoColProps} xl={{ span: 6 }} lg={{ span: 12 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button className="margin-right" onClick={handleReset}>刷新</Button>
+            {auth.downloadDetail && <Button className="margin-right" type="primary" onClick={onDownLoad}>下载</Button>}
           </div>
         </div>
-      </Col>
-      <Col>
-        {auth.downloadDetail && <Button style={{ display: 'block' }} type="primary" onClick={onDownLoad}>下载</Button>}
       </Col>
     </Row>
   )

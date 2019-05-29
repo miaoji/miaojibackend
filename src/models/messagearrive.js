@@ -1,5 +1,6 @@
 import { message, notification } from 'antd'
 import modelExtend from 'dva-model-extend'
+import moment from 'moment'
 import { config, initialCreateTime, filterStoreSelect } from '../utils'
 import { query, download, expandQuery } from '../services/messagearrive'
 import { pageModel } from './system/common'
@@ -62,10 +63,6 @@ export default modelExtend(pageModel, {
         ...payload,
         ...locationPayload,
         location: undefined,
-        // startTime: record.startTime,
-        // endTime: record.endTime,
-        // startTime: 1548740039000,
-        // endTime: 1548747239000,
       })
       if (data.code === 200) {
         yield put({
@@ -147,11 +144,13 @@ export default modelExtend(pageModel, {
     },
 
     *expand({ payload = {} }, { call, put }) {
-      console.log('payload', payload)
+      const record = JSON.parse(JSON.stringify(payload))
+      record.startTime = `${moment(`${record.startTime} 00:00:00`).unix()}000` / 1
+      record.endTime = `${moment(`${record.endTime} 23:59:59`).unix()}999` / 1
       const data = yield call(expandQuery, {
         idUser: payload.idUser,
-        startTime: 1548740039000,
-        endTime: 1548747239000,
+        startTime: record.startTime,
+        endTime: record.endTime,
       })
       if (data.code === 200) {
         yield put({

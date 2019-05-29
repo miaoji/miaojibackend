@@ -7,16 +7,18 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 const WithDraw = ({ app, location, dispatch, withdraw, loading }) => {
-  const { list, pagination, currentItem, modalVisible, modalType } = withdraw
+  const { list, pagination, currentItem, modalVisible, modalType, examineBalance } = withdraw
   const { pageSize } = pagination
   const { user: { sourceMenuList } } = app
   const auth = sourceMenuList['/withdraw'] || {}
 
   const modalProps = {
     type: modalType,
+    examineBalance,
     item: modalType === 'create' ? {} : currentItem,
     visible: modalVisible,
     confirmLoading: loading.effects['withdraw/update'],
+    examineBalanceLoading: loading.effects['withdraw/showBalance'],
     title: `${modalType === 'create' ? '提现审核' : '提现审核'}`,
     wrapClassName: 'vertical-center-modal',
     onOk(data) {
@@ -51,6 +53,12 @@ const WithDraw = ({ app, location, dispatch, withdraw, loading }) => {
     },
     onWithdrawalClick(record) {
       dispatch({
+        type: 'withdraw/showBalance',
+        payload: {
+          name: record.name,
+        },
+      })
+      dispatch({
         type: 'withdraw/showModal',
         payload: {
           modalType: 'cashWithdraw',
@@ -72,17 +80,6 @@ const WithDraw = ({ app, location, dispatch, withdraw, loading }) => {
           page: 1,
           pageSize,
         },
-      }))
-    },
-    onSearch(fieldsValue) {
-      fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/withdraw',
-        query: {
-          field: fieldsValue.field,
-          keyword: fieldsValue.keyword,
-        },
-      })) : dispatch(routerRedux.push({
-        pathname: '/withdraw',
       }))
     },
   }

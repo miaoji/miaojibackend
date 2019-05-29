@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
+import moment from 'moment'
 import List from './List'
 import Filter from './Filter'
 import { defaultTime } from '../../utils'
@@ -13,7 +14,11 @@ const IndexPage = ({ location, dispatch, messagearrive, app, loading }) => {
   const { storeuserList } = app
   const { user: { sourceMenuList } } = app
   const auth = sourceMenuList['/messagearrive'] || {}
-  const filter = defaultTime({ ...location.query })
+  const filter = { ...defaultTime({ ...location.query }) }
+  if (filter.createTime && filter.createTime.length === 2) {
+    filter.startTime = `${moment(filter.createTime[0]).format('YYYY-MM-DD')}`
+    filter.endTime = `${moment(filter.createTime[1]).format('YYYY-MM-DD')}`
+  }
 
   const listProps = {
     dataSource: list,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Modal, Radio } from 'antd'
+import { Form, Input, Modal, Radio, Spin } from 'antd'
 
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
@@ -27,6 +27,8 @@ class modal extends Component {
       item = {},
       onOk,
       storeuserList,
+      examineBalance,
+      examineBalanceLoading,
       form: {
         getFieldDecorator,
         validateFields,
@@ -69,10 +71,13 @@ class modal extends Component {
     return (
       <Modal {...modalOpts}>
         <Form layout="horizontal">
+          <FormItem label="账户余额" hasFeedback {...formItemLayout}>
+            {examineBalanceLoading ? <Spin /> : <span>{examineBalance}元</span>}
+          </FormItem>
           <FormItem label="提现账号" hasFeedback {...formItemLayout}>
             {getFieldDecorator('alipayaccount', {
               initialValue: item.alipayaccount,
-            })(<Input disabled />)}
+            })(<Input placeholder="当前提现账号为空!" disabled />)}
           </FormItem>
           <FormItem label="提现金额(元)" hasFeedback {...formItemLayout}>
             {getFieldDecorator('price', {
@@ -95,7 +100,7 @@ class modal extends Component {
                 },
               ],
             })(
-              <RadioGroup onChange={onStatusChonge}>
+              <RadioGroup style={{ width: '100%' }} onChange={onStatusChonge}>
                 <Radio value="success">通过</Radio>
                 <Radio value="refuse">拒绝</Radio>
                 {/* <Radio value="wait">等待</Radio> */}
@@ -127,7 +132,9 @@ modal.propTypes = {
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
+  examineBalance: PropTypes.number,
   storeuserList: PropTypes.array,
+  examineBalanceLoading: PropTypes.bool,
 }
 
 export default Form.create()(modal)

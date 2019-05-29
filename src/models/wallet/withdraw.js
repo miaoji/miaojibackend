@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { query, cashWithdraw } from 'src/services/wallet/withdraw'
+import { query as storeuserQuery } from 'src/services/storeuser'
 import { initialCreateTime } from 'utils'
 import { pageModel } from '../system/common'
 
@@ -11,6 +12,7 @@ export default modelExtend(pageModel, {
     selectedRowKeys: [],
     modalVisible: false,
     modalType: 'create',
+    examineBalance: 0,
   },
 
   subscriptions: {
@@ -64,6 +66,21 @@ export default modelExtend(pageModel, {
         yield put({ type: 'hideModal' })
       } else {
         throw data.mess || '网络不行了!!!'
+      }
+    },
+
+    *showBalance({ payload = {} }, { call, put }) {
+      const data = yield call(storeuserQuery, { name: payload.name })
+      console.log('data', data)
+      if (data.code === 200) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            examineBalance: data.obj[0].communicateFee,
+          },
+        })
+      } else {
+        throw data.mess || '门店余额获取异常'
       }
     },
 
