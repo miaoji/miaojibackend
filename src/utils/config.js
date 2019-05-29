@@ -355,6 +355,13 @@ module.exports = {
       list: `${APIV1}/selectCommunicate`,
       detail: `${APIV1}/selectCommunicateInfo`,
     },
+    messagearrive: {
+      list: `${APIV1}/simpleMessageRecordList`,
+      download: `${APIV1}/simpleMessageRecordListdownLoad`,
+      expand: `${APIV1}/simpleMessageRecordEveryList`,
+      detailList: `${APIV1}/simpleMessageRecordDetailList`,
+      detailDownload: `${APIV1}/simpleMessageRecordDetailListDownLoad`,
+    },
   },
   brand: {
     2: '优速',

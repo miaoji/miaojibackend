@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { FilterItem, DateRange } from 'components'
-import { Form, Button, Row, Col, Input } from 'antd'
+import { Form, Button, Row, Col, Input, Select } from 'antd'
 
 const Search = Input.Search
+const { Option } = Select
 
 const ColProps = {
   xs: 24,
@@ -65,7 +66,8 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name } = filter
+  const { name, state } = filter
+
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
     initialCreateTime[0] = moment(filter.createTime[0])
@@ -80,10 +82,27 @@ const Filter = ({
     }
   }
 
+  const stateChange = (key) => {
+    handleChange('state', key)
+  }
+
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
         {getFieldDecorator('name', { initialValue: name })(<Search onChange={e => inputClear(e, 'name')} allowClear placeholder="按充值人搜索" onSearch={handleSubmit} />)}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
+        {getFieldDecorator('state', { initialValue: state })(
+          <Select
+            style={{ width: '100%' }}
+            allowClear
+            placeholder="按充值状态筛选"
+            onChange={stateChange}
+          >
+            <Option key={1}>成功</Option>
+            <Option key={0}>失败</Option>
+          </Select>
+        )}
       </Col>
       <Col {...ColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <FilterItem>

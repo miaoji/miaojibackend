@@ -1,3 +1,4 @@
+import md5 from 'js-md5'
 import { request, config } from '../utils'
 import { getOrgIdUsers } from '../utils/getUserInfo'
 
@@ -64,7 +65,10 @@ export function businessvolumecount(params = {}) {
   return request({
     url: dashboard.businessvolumecount,
     method: 'post',
-    data: params,
+    data: {
+      ...params,
+      cacheKey: md5(`${JSON.stringify(params)}businessvolumecount`),
+    },
   })
 }
 /**

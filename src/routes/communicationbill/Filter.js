@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Input, Select,
+  Form, Button, Row, Col, Select,
 } from 'antd'
 import moment from 'moment'
 import { DateRange, Location } from '../../components'
 import { handleFields } from '../../utils'
-
-const Search = Input.Search
 
 const ColProps = {
   xs: 24,
@@ -94,6 +92,7 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
   const nameChange = (key) => {
+    console.log('ke', key)
     handleChange('name', key)
   }
 
@@ -104,7 +103,7 @@ const Filter = ({
           <Select
             showSearch
             style={{ width: '100%' }}
-            onSelect={nameChange}
+            onChange={nameChange}
             placeholder="按店铺名称搜索"
             allowClear
           >
@@ -117,13 +116,6 @@ const Filter = ({
           <Location allowClear handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
-      <div style={{ display: 'none' }}>
-        <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-          {getFieldDecorator('name', { initialValue: name })(
-            <Search allowClear onPressEnter={nameChange} placeholder="按店铺名称搜索" onSearch={handleSubmit} />
-          )}
-        </Col>
-      </div>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange onChange={handleChange.bind(null, 'createTime')} />

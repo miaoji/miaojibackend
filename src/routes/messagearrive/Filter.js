@@ -139,7 +139,7 @@ const Filter = ({
           <div >
             <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button className="margin-right" onClick={handleReset}>刷新</Button>
-            {auth.download && <Button type="primary" loading={downloadLoading} className="margin-right" onClick={onDownLoad}>下载Excel</Button>}
+            {!auth.download && <Button type="primary" loading={downloadLoading} className="margin-right" onClick={onDownLoad}>下载Excel</Button>}
           </div>
         </div>
       </Col>

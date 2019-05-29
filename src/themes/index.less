@@ -1,10 +1,28 @@
 @import "./vars.less";
 
+@font-face {
+  font-family: 'webfont';
+  src: url('//at.alicdn.com/t/webfont_8il196hdyxk.eot');
+  /* IE9*/
+  src: url('//at.alicdn.com/t/webfont_8il196hdyxk.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('//at.alicdn.com/t/webfont_8il196hdyxk.woff') format('woff'),
+    /* chrome、firefox */
+    url('//at.alicdn.com/t/webfont_8il196hdyxk.ttf') format('truetype'),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('//at.alicdn.com/t/webfont_8il196hdyxk.svg#AlibabaPuHuiTiL') format('svg');
+  /* iOS 4.1- */
+}
+
+* {
+  font-family: 'webfont', '宋体', monospace !important;
+}
+
 body {
   height: 100%;
   overflow-y: hidden;
   background-color: #f8f8f8;
-  font-family: '微软雅黑', '宋体', monospace;
+  font-family: 'webfont', '宋体', monospace;
 }
 
 ::-webkit-scrollbar-thumb {

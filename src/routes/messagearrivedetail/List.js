@@ -18,14 +18,14 @@ Text.propTypes = {
   title: PropTypes.string,
 }
 const List = ({ auth, location, ...tableProps }) => {
-  const name = location.query.name ? location.query.name.split('///')[1] : '/'
+  const name = location.query.name ? location.query.name.split('///') : undefined
   const columns = [
     {
       title: '门店ID',
       dataIndex: 'userId',
       key: 'userId',
-      render: (text) => {
-        return <span>{text || '/'}</span>
+      render: () => {
+        return <span>{name ? name[0] : '/'}</span>
       },
     },
     {
@@ -33,40 +33,40 @@ const List = ({ auth, location, ...tableProps }) => {
       dataIndex: 'userName',
       key: 'userName',
       render: () => {
-        return <span>{name}</span>
+        return <span>{name ? name[1] : '/'}</span>
       },
     }, {
       title: '订单编号',
-      dataIndex: 'communicatea',
-      key: 'communicatea',
+      dataIndex: 'orderSn',
+      key: 'orderSn',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
       title: '接收手机号',
-      dataIndex: 'communicateb',
-      key: 'communicateb',
+      dataIndex: 'callee',
+      key: 'callee',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
       title: '发送状态',
-      dataIndex: 'communicate',
-      key: 'communicate',
+      dataIndex: 'state',
+      key: 'state',
       render: (text) => {
         return <span>{text || '成功'}</span>
       },
     }, {
       title: '通道',
-      dataIndex: 'mesCount',
-      key: 'mesCount',
+      dataIndex: 'brand',
+      key: 'brand',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
     }, {
       title: '操作人',
-      dataIndex: 'communicatec',
-      key: 'communicatec',
+      dataIndex: 'operator',
+      key: 'operator',
       render: (text) => {
         return <span>{text || '/'}</span>
       },
@@ -90,8 +90,8 @@ const List = ({ auth, location, ...tableProps }) => {
         columns={columns}
         simple
         rowKey={record => record.id}
-        expandedRowRender={() => {
-          return <p className={styles.expanded}>失败原因: 暂无</p>
+        expandedRowRender={(record) => {
+          return <p className={styles.expanded}>失败原因: {record.errorMessage || '暂无'}</p>
         }}
       />
     </div>

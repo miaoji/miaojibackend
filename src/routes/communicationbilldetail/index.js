@@ -10,7 +10,7 @@ const IndexPage = ({ location, dispatch, communicationbilldetail, loading, app }
   const { pageSize } = pagination
   const { storeuserList } = app
   const { user: { sourceMenuList } } = app
-  const auth = sourceMenuList['/log'] || {}
+  const auth = sourceMenuList['/communicationbill'] || {}
 
   const listProps = {
     dataSource: list,

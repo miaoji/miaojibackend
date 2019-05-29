@@ -58,7 +58,15 @@ export default modelExtend(pageModel, {
             break
         }
       }
-      const data = yield call(query, { ...payload, ...locationPayload, location: undefined })
+      const data = yield call(query, {
+        ...payload,
+        ...locationPayload,
+        location: undefined,
+        // startTime: record.startTime,
+        // endTime: record.endTime,
+        // startTime: 1548740039000,
+        // endTime: 1548747239000,
+      })
       if (data.code === 200) {
         yield put({
           type: 'querySuccess',
@@ -113,6 +121,8 @@ export default modelExtend(pageModel, {
         userIds: payload.userIds,
         idBrand: payload.idBrand,
         ...locationPayload,
+        // startTime: 1548740039000,
+        // endTime: 1548747239000,
       }
       const data = yield call(download, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {
@@ -137,7 +147,12 @@ export default modelExtend(pageModel, {
     },
 
     *expand({ payload = {} }, { call, put }) {
-      const data = yield call(expandQuery, payload)
+      console.log('payload', payload)
+      const data = yield call(expandQuery, {
+        idUser: payload.idUser,
+        startTime: 1548740039000,
+        endTime: 1548747239000,
+      })
       if (data.code === 200) {
         yield put({
           type: 'updateState',

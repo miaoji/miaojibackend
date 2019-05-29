@@ -55,6 +55,7 @@ export default modelExtend(pageModel, {
         userId: record.name ? record.name.split('///')[0] : undefined,
         page: record.page,
         pageSize: record.pageSize,
+        isDownload: 0,
       }
       const data = yield call(detailQuery, params)
       if (data.code === 200) {
@@ -75,13 +76,28 @@ export default modelExtend(pageModel, {
     },
 
     *download({ payload = {} }, { call }) {
+      console.log('payload', payload)
+      const userId = payload.name && payload.name.split('///')[0]
+      console.log('user', userId)
+
+      if (!userId) {
+        throw new Error('没有指定需要下载数据的门店')
+      }
       const record = { ...payload }
       if (record.createTime && record.createTime.length === 2) {
-        record.startTime = `${record.createTime[0]} 00:00:00`
-        record.endTime = `${record.createTime[0]} 23:59:59`
+        console.log('createTime', record.createTime)
+        record.startTime = `${moment(`${record.createTime[0]} 00:00:00`).unix()}000` / 1
+        record.endTime = `${moment(`${record.createTime[1]} 23:59:59`).unix()}999` / 1
       }
-      delete record.createTime
-      const data = yield call(detailDownload, { ...record })
+      const params = {
+        startTime: record.startTime,
+        endTime: record.endTime,
+        userId: record.name ? record.name.split('///')[0] : undefined,
+        page: record.page,
+        pageSize: record.pageSize,
+        isDownload: 1,
+      }
+      const data = yield call(detailDownload, { ...params })
       if (data.code === 200) {
         const url = APIV3 + data.obj
         const openUrl = window.open(url)

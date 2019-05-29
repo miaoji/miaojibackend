@@ -33,6 +33,8 @@ export function detailQuery(params) {
 
 export function detailDownload(params) {
   params = pageParams(params)
+  delete params.pagination
+  delete params.rownum
   return request({
     url: communicationbill.detail,
     method: 'post',

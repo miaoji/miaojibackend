@@ -4,6 +4,8 @@ import moment from 'moment'
 import { Form, Button, Row, Col, Select } from 'antd'
 import { DateRange } from '../../components'
 
+const { Option } = Select
+
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -85,7 +87,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name } = filter
+  const { name, state } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -96,6 +98,9 @@ const Filter = ({
   }
   const nameChange = (key) => {
     handleChange('name', key)
+  }
+  const stateChange = (key) => {
+    handleChange('state', key)
   }
   return (
     <Row gutter={24}>
@@ -108,6 +113,20 @@ const Filter = ({
             placeholder="按店铺名称搜索"
           >
             {storeuserList}
+          </Select>
+        )}
+      </Col>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('state', { initialValue: state })(
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            onChange={stateChange}
+            placeholder="按发送状态筛选"
+            allowClear
+          >
+            <Option key={1}>成功</Option>
+            <Option key={2}>失败</Option>
           </Select>
         )}
       </Col>

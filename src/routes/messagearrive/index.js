@@ -45,7 +45,6 @@ const IndexPage = ({ location, dispatch, messagearrive, app, loading }) => {
           type: 'messagearrive/updateState',
           payload: {
             expandedRowKeys: [],
-            sonlist: {},
           },
         })
         return
@@ -54,12 +53,13 @@ const IndexPage = ({ location, dispatch, messagearrive, app, loading }) => {
         type: 'messagearrive/updateState',
         payload: {
           expandedRowKeys: [record.id],
+          rowExpandList: {},
         },
       })
       dispatch({
         type: 'messagearrive/expand',
         payload: {
-          ...location.query,
+          ...filter,
           idUser: record.id,
         },
       })

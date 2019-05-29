@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Spin } from 'antd'
 import { Link } from 'dva/router'
 import classnames from 'classnames'
+import moment from 'moment'
 import styles from './List.less'
 
 const channelContrast = [
@@ -38,10 +39,16 @@ Text.propTypes = {
   color: PropTypes.string,
 }
 
-const List = ({ expandedLoading, expandedRowKeys, location, rowExpandList, ...tableProps }) => {
+const List = ({ expandedLoading, expandedRowKeys, filter, location, rowExpandList, ...tableProps }) => {
+  const initialCreateTime = []
+  if (filter.createTime && filter.createTime[0]) {
+    initialCreateTime[0] = moment(filter.createTime[0]).format('YYYY-MM-DD')
+  }
+  if (filter.createTime && filter.createTime[1]) {
+    initialCreateTime[1] = moment(filter.createTime[1]).format('YYYY-MM-DD')
+  }
   const optionPosition = expandedRowKeys.length === 0
-  const filter = location.query
-  const timeParams = filter.createTime && filter.createTime.length > 0 ? `&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}` : ''
+  const timeParams = initialCreateTime && initialCreateTime.length > 0 ? `&createTime=${initialCreateTime[0]}&createTime=${initialCreateTime[1]}` : ''
   const columns = [
     {
       title: '站点ID',
@@ -62,20 +69,21 @@ const List = ({ expandedLoading, expandedRowKeys, location, rowExpandList, ...ta
       title: '站点地址',
       dataIndex: 'address',
       key: 'address',
-      render: (text) => {
-        return <span>{text || '暂无'}</span>
+      render: (_, record) => {
+        const { province, city, district } = record
+        return <span>{province ? `${province}/${city}/${district}` : '暂无'}</span>
       },
     }, {
       title: '发送成功',
-      dataIndex: 'a',
-      key: 'a',
+      dataIndex: 'succeeCount',
+      key: 'succeeCount',
       render: (text) => {
         return <Text color="#67C23A">{text}</Text>
       },
     }, {
       title: '发送失败',
-      dataIndex: 'b',
-      key: 'b',
+      dataIndex: 'errorCount',
+      key: 'errorCount',
       render: (text) => {
         return <Text color="#F56C6C">{text}</Text>
       },
@@ -84,8 +92,8 @@ const List = ({ expandedLoading, expandedRowKeys, location, rowExpandList, ...ta
       dataIndex: 'pourOut',
       key: 'pourOut',
       render: (_, record) => {
-        const { a, b } = record
-        return (<Text color="#409EFF">{a + b}</Text>)
+        const { succeeCount, errorCount } = record
+        return (<Text color="#409EFF">{succeeCount + errorCount}</Text>)
       },
     }, {
       title: '查看明细',
@@ -122,10 +130,10 @@ const List = ({ expandedLoading, expandedRowKeys, location, rowExpandList, ...ta
                 return (
                   <div key={key}>
                     <p>
-                      <span>{i.name}:</span>
-                      <span>发送成功 : {rowExpandList[i.successKey]}</span>
-                      <span>发送失败 : {rowExpandList[i.errorKey]}</span>
-                      <span>发送共计 : {rowExpandList[i.successKey] + rowExpandList[i.errorKey]}</span>
+                      <span style={{ color: '#333' }}>{i.name}:</span>
+                      <span style={{ color: '#67C23A' }}>发送成功 : {rowExpandList[i.successKey]}</span>
+                      <span style={{ color: '#F56C6C' }}>发送失败 : {rowExpandList[i.errorKey]}</span>
+                      <span style={{ color: '#333' }}>发送共计 : {rowExpandList[i.successKey] + rowExpandList[i.errorKey]}</span>
                       <span><Link to={`/messagearrivedetail?key=${i.key}&name=${`${record.id}///${record.name}`}${timeParams}`}>查看明细</Link></span>
                     </p>
                   </div>
@@ -144,6 +152,7 @@ List.propTypes = {
   expandedLoading: PropTypes.bool,
   rowExpandList: PropTypes.object,
   expandedRowKeys: PropTypes.array,
+  filter: PropTypes.object,
 }
 
 export default List

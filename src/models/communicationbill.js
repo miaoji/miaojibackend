@@ -27,33 +27,35 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      payload = initialCreateTime(payload, true)
-      filterStoreSelect(payload)
-      if (payload.idUser) {
-        payload.userIds = String(payload.idUser)
-        delete payload.idUser
+      let record = { ...payload }
+      record = initialCreateTime(record, true)
+      filterStoreSelect(record)
+      if (record.name) {
+        record.idUser = record.name.split('///')[0]
+        delete record.name
       }
-      const locationPayload = {}
-      if (payload.location && payload.location.length > 0) {
-        // 不要对传进来的payload直接修改,会直接影响原数据
-        let location = payload.location.split(',')
+      const locationrecord = {}
+      if (record.location && record.location.length > 0) {
+        // 不要对传进来的record直接修改,会直接影响原数据
+        let location = record.location.split(',')
         switch (location.length) {
           case 1:
-            locationPayload.province = location[0]
+            locationrecord.province = location[0]
             break
           case 2:
-            locationPayload.city = location[1]
+            locationrecord.city = location[1]
             break
           case 3:
-            locationPayload.district = location[2]
+            locationrecord.district = location[2]
             break
           default:
             break
         }
       }
       const data = yield call(query, {
-        ...payload,
-        ...locationPayload,
+        ...record,
+        ...locationrecord,
+        isDownload: 0,
         location: undefined,
       })
       if (data.code === 200) {
@@ -109,6 +111,7 @@ export default modelExtend(pageModel, {
         endTime: payload.endTime,
         userIds: payload.userIds,
         idBrand: payload.idBrand,
+        isDownload: 1,
         ...locationPayload,
       }
       const data = yield call(download, { ...newpayload, download: 1 })

@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { query as queryStoreUser } from 'src/services/storeuser'
+import md5 from 'js-md5'
 import { pageModel } from './system/common'
 import { color } from '../utils/theme'
 import { storage, time, isSuperAdmin, getOrgIdUsers } from '../utils'
@@ -71,7 +72,12 @@ export default modelExtend(pageModel, {
     },
   },
   effects: {
-    *getInterfaceCall(_, { call, put }) {
+    *getInterfaceCall(_, { call, put, select }) {
+      const authStorage = yield select(({ app }) => app.user.sourceMenuList['/dashboard'])
+      console.log('authStorage', authStorage)
+      if (!authStorage.count) {
+        return
+      }
       const storageData = JSON.parse(storage({ key: 'interfaceCallData' }))
       const todayStr = time.getToday(new Date().getTime())
       if (storageData && todayStr === storageData.time) {
@@ -88,7 +94,7 @@ export default modelExtend(pageModel, {
         return
       }
 
-      const data = yield call(interfaceCallList)
+      const data = yield call(interfaceCallList, { cacheKey: md5(`api-stThirtyTime-${todayStr}`) })
       // qsId 签收次数
       // rkId 入库次数
       if (data.code === 200) {
@@ -255,7 +261,7 @@ export default modelExtend(pageModel, {
       const todayStr = time.getToday(new Date().getTime())
       let receviceData = []
       let sendData = []
-
+      console.log('todayStr', todayStr)
       if (storageData && todayStr === storageData.time) {
         yield put({
           type: 'setStates',
@@ -266,7 +272,7 @@ export default modelExtend(pageModel, {
         })
         return
       }
-      const data = yield call(getLineData)
+      const data = yield call(getLineData, { cacheKey: md5(`api-lineChart-${todayStr}`) })
       if (data.code === 200) {
         const recevice = data.obj.recevice
         const send = data.obj.send
