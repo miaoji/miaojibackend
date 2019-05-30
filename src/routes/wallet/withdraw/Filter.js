@@ -86,7 +86,7 @@ const Filter = ({
         {getFieldDecorator('name', { initialValue: name })(<Search onChange={e => inputClear(e, 'name')} allowClear placeholder="按提现人/账号搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
-        <FilterItem label="创建时间">
+        <FilterItem>
           {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
             <DateRange style={{ width: '100%' }} onChange={handleChange.bind(null, 'createTime')} />
           )}

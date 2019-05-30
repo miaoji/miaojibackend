@@ -53,7 +53,10 @@ const List = ({ auth, location, ...tableProps }) => {
       title: '发送状态',
       dataIndex: 'state',
       key: 'state',
-      render: (text) => {
+      render: (text, record) => {
+        if (text === '失败') {
+          return <Text title="错误原因" text={record.errorMessage} />
+        }
         return <span>{text || '成功'}</span>
       },
     }, {

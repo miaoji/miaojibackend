@@ -66,7 +66,7 @@ const Filter = ({
     fields = handleFields(fields)
     onFilterChange(fields)
   }
-  const { name, state } = filter
+  const { name, status } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -82,9 +82,19 @@ const Filter = ({
     }
   }
 
-  const stateChange = (key) => {
-    handleChange('state', key)
+  const statusChange = (key) => {
+    handleChange('status', key)
   }
+
+  const statusOptionArr = [
+    { key: 'success', text: '成功' },
+    { key: 'wait', text: '等待' },
+    { key: 'cancel', text: '交易取消' },
+    { key: ' close', text: '交易关闭' },
+    { key: 'false', text: '交易失败' },
+  ].map((i) => {
+    return <Option key={i.key}>{i.text}</Option>
+  })
 
   return (
     <Row gutter={24}>
@@ -92,15 +102,14 @@ const Filter = ({
         {getFieldDecorator('name', { initialValue: name })(<Search onChange={e => inputClear(e, 'name')} allowClear placeholder="按充值人搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 12 }}>
-        {getFieldDecorator('state', { initialValue: state })(
+        {getFieldDecorator('status', { initialValue: status })(
           <Select
             style={{ width: '100%' }}
             allowClear
             placeholder="按充值状态筛选"
-            onChange={stateChange}
+            onChange={statusChange}
           >
-            <Option key={1}>成功</Option>
-            <Option key={0}>失败</Option>
+            {statusOptionArr}
           </Select>
         )}
       </Col>

@@ -33,11 +33,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       title: '充值状态',
       dataIndex: 'status',
       key: 'status',
-      // filters: [
-      //   { text: '失败', value: '0' },
-      //   { text: '成功', value: '1' },
-      // ],
-      // onFilter: (value, record) => Number(record.status) === Number(value),
       render: (text) => {
         const replTexy = {
           success: '成功',
@@ -46,6 +41,17 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
           close: '交易关闭',
         }
         return (<span>{replTexy[text]}</span>)
+      },
+    }, {
+      title: '充值类型',
+      dataIndex: 'dealInfo',
+      key: 'dealInfo',
+      render: (text) => {
+        const replTexy = {
+          4: '购买通讯费',
+          6: '购买通讯费',
+        }
+        return (<span>{replTexy[text] || '暂无'}</span>)
       },
     }, {
       title: '充值时间',

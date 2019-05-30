@@ -110,14 +110,14 @@ export default [
   {
     id: '101403',
     mpid: '-1',
-    name: '通讯费账单明细',
+    name: '通讯费消费账单明细',
     icon: 'message',
     route: '/communicationbilldetail',
   },
   {
     id: '101404',
     mpid: '-1',
-    name: '通讯费账单明细',
+    name: '短信状态明细查询',
     icon: 'message',
     route: '/messagearrivedetail',
   },
