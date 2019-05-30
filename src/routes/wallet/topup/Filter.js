@@ -90,7 +90,7 @@ const Filter = ({
     { key: 'success', text: '成功' },
     { key: 'wait', text: '等待' },
     { key: 'cancel', text: '交易取消' },
-    { key: ' close', text: '交易关闭' },
+    { key: 'close', text: '交易关闭' },
     { key: 'false', text: '交易失败' },
   ].map((i) => {
     return <Option key={i.key}>{i.text}</Option>
