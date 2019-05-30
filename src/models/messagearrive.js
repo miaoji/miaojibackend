@@ -1,7 +1,7 @@
 import { message, notification } from 'antd'
 import modelExtend from 'dva-model-extend'
 import moment from 'moment'
-import { config, initialCreateTime, filterStoreSelect } from '../utils'
+import { config, initialCreateTime } from '../utils'
 import { query, download, expandQuery } from '../services/messagearrive'
 import { pageModel } from './system/common'
 
@@ -36,10 +36,9 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload, true)
-      filterStoreSelect(payload)
-      if (payload.idUser) {
-        payload.userIds = String(payload.idUser)
-        delete payload.idUser
+      if (payload.name) {
+        payload.userIds = payload.name.split('///')[0]
+        delete payload.name
       }
       const locationPayload = {}
       if (payload.location && payload.location.length > 0) {
@@ -89,10 +88,9 @@ export default modelExtend(pageModel, {
         duration: 3,
       })
       payload = initialCreateTime(payload, true)
-      filterStoreSelect(payload)
-      if (payload.idUser) {
-        payload.userIds = String(payload.idUser)
-        delete payload.idUser
+      if (payload.name) {
+        payload.userIds = payload.name.split('///')[0]
+        delete payload.name
       }
       const locationPayload = {}
       if (payload.location && payload.location.length > 0) {
@@ -113,13 +111,9 @@ export default modelExtend(pageModel, {
         }
       }
       const newpayload = {
-        startTime: payload.startTime,
-        endTime: payload.endTime,
-        userIds: payload.userIds,
-        idBrand: payload.idBrand,
+        ...payload,
         ...locationPayload,
-        // startTime: 1548740039000,
-        // endTime: 1548747239000,
+        location: undefined,
       }
       const data = yield call(download, { ...newpayload, download: 1 })
       if (data.code === 200 && data.obj) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Select,
+  Form, Button, Row, Col, Select, Input,
 } from 'antd'
 import moment from 'moment'
 import { DateRange, Location } from '../../components'
@@ -9,6 +9,8 @@ import { handleFields, defaultTime, config } from '../../utils'
 
 const { Option } = Select
 const { brand } = config
+const Search = Input.Search
+
 
 const ColProps = {
   xs: 24,
@@ -96,7 +98,7 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name, location } = filter
+  let { name, location, callee } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -109,8 +111,17 @@ const Filter = ({
     handleChange('name', key)
   }
 
+  const inputClear = (e, key) => {
+    if (e && e.target && !e.target.value) {
+      handleChange(key, '')
+    }
+  }
+
   return (
     <Row gutter={24}>
+      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+        {getFieldDecorator('callee', { initialValue: callee })(<Search onChange={e => inputClear(e, 'callee')} allowClear placeholder="按手机号筛选" onSearch={handleSubmit} />)}
+      </Col>
       <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
         {getFieldDecorator('name', { initialValue: name })(
           <Select
@@ -129,12 +140,12 @@ const Filter = ({
           <Location allowClear handleChange={handleChange.bind(null, 'location')} />
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+      <Col {...ColProps} xl={{ span: 6 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>

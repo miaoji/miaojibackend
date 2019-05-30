@@ -4,11 +4,11 @@ import { Table, Popover } from 'antd'
 import moment from 'moment'
 import styles from './List.less'
 
-const Text = ({ text, title = '信息' }) => {
+const Text = ({ text, title = '信息', buttonText = '查看' }) => {
   const content = <div style={{ maxWidth: '450px', wordBreak: 'break-word' }}>{text}</div>
   return (
     <Popover placement="bottom" content={content} title={title} trigger="hover">
-      <span style={{ color: '#108ee9', cursor: 'pointer' }}>查看</span>
+      <span style={{ color: '#108ee9', cursor: 'pointer' }}>{buttonText}</span>
     </Popover>
   )
 }
@@ -16,6 +16,7 @@ const Text = ({ text, title = '信息' }) => {
 Text.propTypes = {
   text: PropTypes.string,
   title: PropTypes.string,
+  buttonText: PropTypes.string,
 }
 const List = ({ auth, location, ...tableProps }) => {
   const name = location.query.name ? location.query.name.split('///') : undefined
@@ -55,7 +56,7 @@ const List = ({ auth, location, ...tableProps }) => {
       key: 'state',
       render: (text, record) => {
         if (text === '失败') {
-          return <Text title="错误原因" text={record.errorMessage} />
+          return <Text buttonText="失败" title="错误原因" text={record.errorMessage} />
         }
         return <span>{text || '成功'}</span>
       },
@@ -93,9 +94,6 @@ const List = ({ auth, location, ...tableProps }) => {
         columns={columns}
         simple
         rowKey={record => record.id}
-        expandedRowRender={(record) => {
-          return <p className={styles.expanded}>失败原因: {record.errorMessage || '暂无'}</p>
-        }}
       />
     </div>
   )
