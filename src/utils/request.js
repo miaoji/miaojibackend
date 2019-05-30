@@ -80,7 +80,7 @@ export default function request(options) {
       msg = data.message || statusText
       if (statusCode === 401) {
         storage({ type: 'clear' })
-        // window.location.href = '/login'
+        window.location.href = '/login'
       }
     } else {
       statusCode = 600

@@ -70,6 +70,16 @@ const List = ({ auth, location, ...tableProps }) => {
         return '/'
       },
     }, {
+      title: '错误日志',
+      dataIndex: 'abnormity',
+      key: 'abnormity',
+      render: (text) => {
+        if (auth.seeParams && text) {
+          return <Text title="错误日志" text={text} />
+        }
+        return '/'
+      },
+    }, {
       title: '访问时间',
       dataIndex: 'createDate',
       key: 'createDate',

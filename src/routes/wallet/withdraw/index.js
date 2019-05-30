@@ -56,6 +56,7 @@ const WithDraw = ({ app, location, dispatch, withdraw, loading }) => {
         type: 'withdraw/showBalance',
         payload: {
           name: record.name,
+          id: record.userId,
         },
       })
       dispatch({

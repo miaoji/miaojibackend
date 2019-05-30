@@ -78,23 +78,23 @@ export default modelExtend(pageModel, {
       if (!authStorage.count) {
         return
       }
-      const storageData = JSON.parse(storage({ key: 'interfaceCallData' }))
+      // const storageData = JSON.parse(storage({ key: 'interfaceCallData' }))
       const todayStr = time.getToday(new Date().getTime())
-      if (storageData && todayStr === storageData.time) {
-        const { qsArr, rkArr } = storageData
-        yield put({
-          type: 'setStates',
-          payload: {
-            interfaceCallData: {
-              qsArr,
-              rkArr,
-            },
-          },
-        })
-        return
-      }
+      // if (storageData && todayStr === storageData.time) {
+      //   const { qsArr, rkArr } = storageData
+      //   yield put({
+      //     type: 'setStates',
+      //     payload: {
+      //       interfaceCallData: {
+      //         qsArr,
+      //         rkArr,
+      //       },
+      //     },
+      //   })
+      //   return
+      // }
 
-      const data = yield call(interfaceCallList, { cacheKey: md5(`api-stThirtyTime-${todayStr}`) })
+      const data = yield call(interfaceCallList, { cacheKey: `api-stThirtyTime-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
       // qsId 签收次数
       // rkId 入库次数
       if (data.code === 200) {
@@ -110,15 +110,15 @@ export default modelExtend(pageModel, {
             },
           },
         })
-        storage({
-          type: 'set',
-          key: 'interfaceCallData',
-          val: JSON.stringify({
-            time: todayStr,
-            qsArr,
-            rkArr,
-          }),
-        })
+        // storage({
+        //   type: 'set',
+        //   key: 'interfaceCallData',
+        //   val: JSON.stringify({
+        //     time: todayStr,
+        //     qsArr,
+        //     rkArr,
+        //   }),
+        // })
       } else {
         throw new Error('开发平台接口调用统计数据获取失败')
       }
@@ -257,22 +257,23 @@ export default modelExtend(pageModel, {
         yield put({ type: 'getbusinessvolumecount' })
         yield put({ type: 'getInterfaceCall' })
       }
-      const storageData = JSON.parse(storage({ key: 'linedata' }))
+      // const storageData = JSON.parse(storage({ key: 'linedata' }))
       const todayStr = time.getToday(new Date().getTime())
       let receviceData = []
       let sendData = []
       console.log('todayStr', todayStr)
-      if (storageData && todayStr === storageData.time) {
-        yield put({
-          type: 'setStates',
-          payload: {
-            receviceData: storageData.receviceData,
-            sendData: storageData.sendData,
-          },
-        })
-        return
-      }
-      const data = yield call(getLineData, { cacheKey: md5(`api-lineChart-${todayStr}`) })
+      // if (storageData && todayStr === storageData.time) {
+      //   yield put({
+      //     type: 'setStates',
+      //     payload: {
+      //       receviceData: storageData.receviceData,
+      //       sendData: storageData.sendData,
+      //     },
+      //   })
+      //   return
+      // }
+      console.log('getOrgIdUsers', getOrgIdUsers())
+      const data = yield call(getLineData, { cacheKey: `api-lineChart-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
       if (data.code === 200) {
         const recevice = data.obj.recevice
         const send = data.obj.send
@@ -283,15 +284,15 @@ export default modelExtend(pageModel, {
           sendData.push([item.createTime, item.count])
         })
 
-        storage({
-          type: 'set',
-          key: 'linedata',
-          val: JSON.stringify({
-            time: todayStr,
-            receviceData,
-            sendData,
-          }),
-        })
+        // storage({
+        //   type: 'set',
+        //   key: 'linedata',
+        //   val: JSON.stringify({
+        //     time: todayStr,
+        //     receviceData,
+        //     sendData,
+        //   }),
+        // })
 
         yield put({
           type: 'setStates',
