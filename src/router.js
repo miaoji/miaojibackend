@@ -208,7 +208,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/expressfee'))
-              cb(null, require('./routes/store/expressfee/'))
+              cb(null, require('./routes/expressfee/'))
             }, 'expressfee')
           },
         },
@@ -218,7 +218,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/expressfeedetail'))
-              cb(null, require('./routes/store/expressfeedetail/'))
+              cb(null, require('./routes/expressfeedetail/'))
             }, 'expressfeedetail')
           },
         },
@@ -228,7 +228,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/business'))
-              cb(null, require('./routes/store/business/'))
+              cb(null, require('./routes/business/'))
             }, 'business')
           },
         },
@@ -238,7 +238,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/operatorbyname'))
-              cb(null, require('./routes/store/operatorbyname/'))
+              cb(null, require('./routes/operatorbyname/'))
             }, 'operatorbyname')
           },
         },
@@ -248,7 +248,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/orderbyuser'))
-              cb(null, require('./routes/store/orderbyuser/'))
+              cb(null, require('./routes/orderbyuser/'))
             }, 'orderbyuser')
           },
         },
@@ -258,7 +258,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/storeSign'))
-              cb(null, require('./routes/store/storeSign/'))
+              cb(null, require('./routes/storeSign/'))
             }, 'storeSign')
           },
         },
@@ -268,7 +268,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/storeSignDetail'))
-              cb(null, require('./routes/store/storeSignDetail/'))
+              cb(null, require('./routes/storeSignDetail/'))
             }, 'storeSignDetail')
           },
         },
@@ -278,7 +278,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/selectfenpai'))
-              cb(null, require('./routes/store/selectfenpai/'))
+              cb(null, require('./routes/selectfenpai/'))
             }, 'selectfenpai')
           },
         },
@@ -288,7 +288,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/assignor'))
-              cb(null, require('./routes/store/assignor/'))
+              cb(null, require('./routes/assignor/'))
             }, 'assignor')
           },
         },
@@ -298,7 +298,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/selectpjjeDetails'))
-              cb(null, require('./routes/store/selectpjjeDetails/'))
+              cb(null, require('./routes/selectpjjeDetails/'))
             }, 'selectpjjeDetails')
           },
         },
@@ -308,7 +308,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/problem'))
-              cb(null, require('./routes/store/problem/'))
+              cb(null, require('./routes/problem/'))
             }, 'problem')
           },
         },
@@ -318,7 +318,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/problemdetail'))
-              cb(null, require('./routes/store/problemdetail/'))
+              cb(null, require('./routes/problemdetail/'))
             }, 'problemdetail')
           },
         },
@@ -328,7 +328,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/store/blacklistdetail'))
-              cb(null, require('./routes/store/blacklistdetail/'))
+              cb(null, require('./routes/blacklistdetail/'))
             }, 'blacklistdetail')
           },
         },
