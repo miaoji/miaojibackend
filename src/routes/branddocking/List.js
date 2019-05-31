@@ -18,12 +18,28 @@ const color = {
 }
 
 const filtersTest = Object.values(replText).map((i, index) => ({ text: i, value: index }))
-const Text = ({ children }) => {
-  return <span style={{ color: color[children] }}>{replText[children]}</span>
+
+const handleTextClick = (brand, rowData, state) => {
+  if (state !== 1) return
+  console.log('brand', brand)
+  console.log('rowData', rowData)
+}
+const Text = ({ children, brand, rowData }) => {
+  return (
+    <span
+      className={children === 1 ? styles.text : undefined}
+      onClick={() => { handleTextClick(brand, rowData, children) }}
+      style={{ color: color[children] }}
+    >
+      {replText[children] || '暂无'}
+    </span>
+  )
 }
 
 Text.propTypes = {
   children: PropTypes.string,
+  brand: PropTypes.string,
+  rowData: PropTypes.object,
 }
 
 const List = ({ location, ...tableProps }) => {
@@ -49,8 +65,8 @@ const List = ({ location, ...tableProps }) => {
       filters: filtersTest,
       filterMultiple: false,
       filteredValue: stoDatastatus ? [stoDatastatus] : [],
-      render: (text) => {
-        return <Text>{text}</Text>
+      render: (text, record) => {
+        return <Text rowData={record} brand="圆通">{text}</Text>
       },
     }, {
       title: '中通',
@@ -59,8 +75,8 @@ const List = ({ location, ...tableProps }) => {
       filters: filtersTest,
       filterMultiple: false,
       filteredValue: ztoDatastatus ? [ztoDatastatus] : [],
-      render: (text) => {
-        return <Text>{text}</Text>
+      render: (text, record) => {
+        return <Text rowData={record} brand="中通">{text}</Text>
       },
     }, {
       title: '申通',
@@ -69,8 +85,8 @@ const List = ({ location, ...tableProps }) => {
       filters: filtersTest,
       filterMultiple: false,
       filteredValue: ytoDatastatus ? [ytoDatastatus] : [],
-      render: (text) => {
-        return <Text>{text}</Text>
+      render: (text, record) => {
+        return <Text rowData={record} brand="申通">{text}</Text>
       },
     }, {
       title: '百世汇通',
@@ -79,8 +95,8 @@ const List = ({ location, ...tableProps }) => {
       filters: filtersTest,
       filterMultiple: false,
       filteredValue: beDatastatus ? [beDatastatus] : [],
-      render: (text) => {
-        return <Text>{text}</Text>
+      render: (text, record) => {
+        return <Text rowData={record} brand="百世汇通">{text}</Text>
       },
     }, {
       title: '韵达',
@@ -89,8 +105,8 @@ const List = ({ location, ...tableProps }) => {
       filters: filtersTest,
       filterMultiple: false,
       filteredValue: ydDatastatus ? [ydDatastatus] : [],
-      render: (text) => {
-        return <Text>{text}</Text>
+      render: (text, record) => {
+        return <Text rowData={record} brand="韵达">{text}</Text>
       },
     },
   ]

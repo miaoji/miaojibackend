@@ -4,7 +4,6 @@ import mainRequest from '../utils/mainRequest'
 const { storeuser, registerAPP } = api
 
 export async function query(params) {
-  console.log('params', params)
   params = pageParams(params)
   // if (params.rownum === 10000) {
   //   delete params.location

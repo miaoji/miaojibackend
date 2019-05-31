@@ -10,7 +10,6 @@ const { dashboard } = api
  */
 export async function getLineData(params = {}) {
   params.userIds = getOrgIdUsers()
-  console.log('params', params)
   return request({
     url: dashboard.echart,
     method: 'post',

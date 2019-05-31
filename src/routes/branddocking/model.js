@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { storage, pageModel } from '../../utils'
-import { query } from '../../services/branddocking'
+import { query } from './service'
 
 export default modelExtend(pageModel, {
   namespace: 'branddocking',

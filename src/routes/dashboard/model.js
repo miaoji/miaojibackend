@@ -73,7 +73,6 @@ export default modelExtend(pageModel, {
   effects: {
     *getInterfaceCall(_, { call, put, select }) {
       const authStorage = yield select(({ app }) => app.user.sourceMenuList['/dashboard'])
-      console.log('authStorage', authStorage)
       if (!authStorage.count) {
         return
       }
@@ -250,7 +249,6 @@ export default modelExtend(pageModel, {
       const todayStr = time.getToday(new Date().getTime())
       let receviceData = []
       let sendData = []
-      console.log('todayStr', todayStr)
       // if (storageData && todayStr === storageData.time) {
       //   yield put({
       //     type: 'setStates',
@@ -261,7 +259,6 @@ export default modelExtend(pageModel, {
       //   })
       //   return
       // }
-      console.log('getOrgIdUsers', getOrgIdUsers())
       const data = yield call(getLineData, { cacheKey: `api-lineChart1-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
       if (data.code === 200) {
         const recevice = data.obj.recevice

@@ -54,7 +54,6 @@ export async function getIdUsers(data) {
 }
 
 export function queryStoreUser(params) {
-  console.log('params', params)
   params = pageParams(params)
   // if (params.rownum === 10000) {
   //   delete params.location

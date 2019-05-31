@@ -70,7 +70,6 @@ export default modelExtend(pageModel, {
 
     *showBalance({ payload = {} }, { call, put }) {
       const data = yield call(storeuserQuery, { id: payload.id })
-      console.log('data', data)
       if (data.code === 200) {
         yield put({
           type: 'updateState',
