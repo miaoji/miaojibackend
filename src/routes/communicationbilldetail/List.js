@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, Popover } from 'antd'
-import moment from 'moment'
 import styles from './List.less'
 
 const Text = ({ text, title = '信息' }) => {
@@ -55,7 +54,7 @@ const List = ({ auth, location, ...tableProps }) => {
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        return <span>{text ? moment(text / 1).format('YYYY-MM-DD HH:mm:ss') : '暂无'}</span>
+        return <span>{text || '暂无'}</span>
       },
     },
   ]
