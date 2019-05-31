@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { query, gitBrandByIdUser } from '../../services/store/problem'
+import { query, gitBrandByIdUser } from './service'
 import { time, initialCreateTime, filterStoreSelect, storage, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

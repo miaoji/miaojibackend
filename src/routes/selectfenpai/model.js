@@ -1,8 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
-import { query } from '../../services/store/selectfenpai'
+import { query } from './service'
 import { APIV3, time, initialCreateTime, filterStoreSelect, storage, pageModel } from '../../utils'
-import { download } from '../../services/store/selectpjjeDetails'
+import { download } from '../selectpjjeDetails/service'
 
 export default modelExtend(pageModel, {
   namespace: 'selectfenpai',

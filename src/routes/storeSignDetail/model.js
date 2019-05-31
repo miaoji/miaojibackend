@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { detailquery } from '../../services/store/storeSign'
+import { detailquery } from '../storeSign/service'
 import { time, initialCreateTime, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

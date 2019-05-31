@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { query } from '../../services/store/blacklistdetail'
+import { query } from './service'
 import { time, initialCreateTime, filterStoreSelect, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

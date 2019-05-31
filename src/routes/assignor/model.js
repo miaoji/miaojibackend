@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { query, expanded } from '../../services/store/assignor'
+import { query, expanded } from './service'
 import { initialCreateTime, time, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

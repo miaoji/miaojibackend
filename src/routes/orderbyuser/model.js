@@ -1,6 +1,6 @@
 import { notification } from 'antd'
 import modelExtend from 'dva-model-extend'
-import { query, download } from '../../services/store/orderbyuser'
+import { query, download } from './service'
 import { APIV3, time, initialCreateTime, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

@@ -1,8 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
-import { query } from '../../services/store/operatorbyname'
+import { query } from './service'
 import { APIV3, time, initialCreateTime, pageModel } from '../../utils'
-import { download } from '../../services/store/expressfeedetail'
+import { download } from '../expressfeedetail/service'
 
 export default modelExtend(pageModel, {
   namespace: 'operatorbyname',

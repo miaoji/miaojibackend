@@ -1,9 +1,9 @@
 import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
-import { query } from '../../services/store/business'
 import { APIV3, time, initialCreateTime, filterStoreSelect, pageModel } from '../../utils'
-import { query as queryOperator } from '../../services/store/operatorbyname'
-import { download } from '../../services/store/expressfeedetail'
+import { query as queryOperator } from '../operatorbyname/service'
+import { download } from '../expressfeedetail/service'
+import { query } from './service'
 
 
 export default modelExtend(pageModel, {

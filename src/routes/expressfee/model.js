@@ -1,8 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
-import { query } from '../../services/store/expressfee'
 import { APIV3, time, initialCreateTime, filterStoreSelect, pageModel } from '../../utils'
-import { download } from '../../services/store/expressfeedetail'
+import { query } from './service'
+import { download } from '../expressfeedetail/service'
 
 export default modelExtend(pageModel, {
   namespace: 'expressfee',
