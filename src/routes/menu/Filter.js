@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
-import { DateRange } from '../../../components'
-import { handleFields } from '../../../utils'
+import { DateRange } from '../../components'
+import { handleFields } from '../../utils'
 
 const Search = Input.Search
 
@@ -74,7 +74,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { name, accounts, orgName } = filter
+  const { menuName } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -84,24 +84,18 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
+
   const inputClear = (e, key) => {
-    console.log('e', e)
-    console.log('key', key)
     if (e && e.target && !e.target.value) {
       handleChange(key, '')
     }
   }
 
+
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search onChange={e => inputClear(e, 'name')} allowClear placeholder="按姓名搜索" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('accounts', { initialValue: accounts })(<Search onChange={e => inputClear(e, 'accounts')} allowClear placeholder="按账号搜索" onSearch={handleSubmit} />)}
-      </Col>
-      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('orgName', { initialValue: orgName })(<Search onChange={e => inputClear(e, 'orgName')} allowClear placeholder="按所属机构搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('menuName', { initialValue: menuName })(<Search onChange={e => inputClear(e, 'menuName')} allowClear placeholder="按菜单名称搜索" onSearch={handleSubmit} />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
@@ -111,7 +105,7 @@ const Filter = ({
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
         <Button className="margin-right" onClick={handleReset}>刷新</Button>
-        <Button type="primary" className="margin-right" onClick={onAdd}>注册用户</Button>
+        <Button type="primary" className="margin-right" onClick={onAdd}>新增菜单</Button>
       </Col>
     </Row>
   )
@@ -123,6 +117,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
+  updateLoading: PropTypes.bool,
 }
 
 export default Form.create()(Filter)

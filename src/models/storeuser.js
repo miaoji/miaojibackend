@@ -1,11 +1,11 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import md5 from 'js-md5'
+import { query as queryOrgList, getLocation } from 'src/routes/org/service'
 import { config, initialCreateTime } from '../utils'
 import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList, storeDel, resetPass } from '../services/storeuser'
 import { pageModel } from './system/common'
 import { locationData } from '../utils/locationData'
-import { query as queryOrgList, getLocation } from '../services/auth/org'
 import orgToTree from '../utils/orgToTree'
 import { storeuserEditLocation } from '../utils/processing'
 

@@ -1,6 +1,6 @@
 import { request, config, pageParams } from '../../utils'
 
-const { api: { auth: { org } } } = config
+const { api: { auth: { org } }, storeuser } = config
 
 export async function query(params) {
   // params.orgId = getOrgId()
@@ -50,5 +50,21 @@ export async function getIdUsers(data) {
     url: org.getIdUsers,
     method: 'post',
     data,
+  })
+}
+
+export function queryStoreUser(params) {
+  console.log('params', params)
+  params = pageParams(params)
+  // if (params.rownum === 10000) {
+  //   delete params.location
+  // }
+  if (!params.userIds && !params.superId) {
+    params.superId = -1
+  }
+  return request({
+    url: storeuser.list,
+    method: 'post',
+    data: params,
   })
 }

@@ -1,14 +1,12 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { initialCreateTime } from 'utils'
+import { initialCreateTime, pageModel, storage, getUserId } from 'utils'
 import { message, Select } from 'antd'
-import { query, create, update, remove, queryMenu } from '../../services/auth/role'
-import { pageModel } from '../system/common'
+import { query, create, update, remove, queryMenu } from './service'
 import {
   reloadItem, handleArrData, renderTreeNodes,
   filterRoleList, getMenuIds,
 } from '../../utils/processing'
-import { storage, getUserId } from '../../utils'
 
 const { Option } = Select
 

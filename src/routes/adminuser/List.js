@@ -4,9 +4,8 @@ import { Table, Modal } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
 import styles from './List.less'
-import AnimTableBody from '../../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../../components'
-import { getUserId } from '../../../utils'
+import { DropOption } from '../../components'
+import { getUserId } from '../../utils'
 
 const confirm = Modal.confirm
 
@@ -108,13 +107,6 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
     },
   ]
 
-  const getBodyWrapperProps = {
-    page: location.query.page,
-    rows: tableProps.pagination.rows,
-  }
-
-  const getBodyWrapper = (body) => { return <AnimTableBody {...getBodyWrapperProps} body={body} /> }
-
   return (
     <div>
       <Table
@@ -125,7 +117,6 @@ const List = ({ location, onEditItem, onResetPWD, onDeleteItem, ...tableProps })
         columns={columns}
         simple
         rowKey={record => record.userId}
-        getBodyWrapper={getBodyWrapper}
         expandedRowRender={(record) => {
           let texts
           if (!record.role) {

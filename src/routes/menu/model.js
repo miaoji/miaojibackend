@@ -1,10 +1,9 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { initialCreateTime, getUserId } from '../../utils'
-import { getMenuByParentId, query, create, update, remove } from '../../services/auth/menu'
-import { update as updateAdminMenus } from '../../services/auth/role'
-import { pageModel } from '../system/common'
+import { initialCreateTime, getUserId, pageModel } from '../../utils'
+import { getMenuByParentId, query, create, update, remove } from './service'
+import { update as updateAdminMenus } from '../role/service'
 
 const { Option } = Select
 const reloadItem = (item) => {

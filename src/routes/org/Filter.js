@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Form, Button, Row, Col, Input } from 'antd'
-import { DateRange } from '../../../components'
-import { handleFields } from '../../../utils'
+import { Form, Button, Row, Col, Input, Cascader } from 'antd'
+import { DateRange } from '../../components'
+import { handleFields } from '../../utils'
 
 const Search = Input.Search
 
@@ -23,6 +23,7 @@ const TwoColProps = {
 const Filter = ({
   onAdd,
   onFilterChange,
+  locationList,
   filter,
   form: {
     getFieldDecorator,
@@ -74,7 +75,7 @@ const Filter = ({
     onFilterChange({ ...fields })
   }
 
-  const { menuName } = filter
+  const { orgName, location } = filter
 
   let initialCreateTime = []
   if (filter.createTime && filter.createTime[0]) {
@@ -84,18 +85,40 @@ const Filter = ({
     initialCreateTime[1] = moment(filter.createTime[1])
   }
 
+  const filterLocation = (inputValue, path) => {
+    return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
+  }
 
+  const handleLocationChange = (key) => {
+    handleChange('location', key)
+    setFieldsValue({
+      location: key,
+    })
+  }
+
+  const initLocation = location ? location.split(',') : undefined
   const inputClear = (e, key) => {
     if (e && e.target && !e.target.value) {
       handleChange(key, '')
     }
   }
-
-
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
-        {getFieldDecorator('menuName', { initialValue: menuName })(<Search onChange={e => inputClear(e, 'menuName')} allowClear placeholder="按菜单名称搜索" onSearch={handleSubmit} />)}
+        {getFieldDecorator('orgName', { initialValue: orgName })(<Search onChange={e => inputClear(e, 'orgName')} allowClear placeholder="按机构名称搜索" onSearch={handleSubmit} />)}
+      </Col>
+      <Col {...ColProps} xl={{ span: 3 }} md={{ span: 8 }}>
+        {getFieldDecorator('location', { initialValue: initLocation })(
+          <Cascader
+            showSearch={{ filterLocation }}
+            options={locationList}
+            onChange={handleLocationChange}
+            placeholder="请输入地区信息"
+            changeOnSelect
+            allowClear
+            expandTrigger="hover"
+          />
+        )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
         {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
@@ -105,7 +128,7 @@ const Filter = ({
       <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
         <Button className="margin-right" onClick={handleReset}>刷新</Button>
-        <Button type="primary" className="margin-right" onClick={onAdd}>新增菜单</Button>
+        <Button type="primary" className="margin-right" onClick={onAdd}>新增机构</Button>
       </Col>
     </Row>
   )
@@ -117,7 +140,7 @@ Filter.propTypes = {
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
-  updateLoading: PropTypes.bool,
+  locationList: PropTypes.array,
 }
 
 export default Form.create()(Filter)

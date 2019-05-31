@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, Input } from 'antd'
-import { DateRange } from '../../../components'
-import { handleFields } from '../../../utils'
-import { getUserId } from '../../../utils/getUserInfo'
+import { DateRange } from '../../components'
+import { handleFields } from '../../utils'
+import { getUserId } from '../../utils/getUserInfo'
 
 
 const Search = Input.Search

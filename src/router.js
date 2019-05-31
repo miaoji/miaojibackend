@@ -377,8 +377,8 @@ const Routers = function ({ history, app }) {
           path: 'adminuser',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/auth/adminuser'))
-              cb(null, require('./routes/auth/adminuser/'))
+              registerModel(app, require('./routes/adminuser/model'))
+              cb(null, require('./routes/adminuser/'))
             }, 'adminuser')
           },
         },
@@ -387,8 +387,8 @@ const Routers = function ({ history, app }) {
           path: 'role',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/auth/role'))
-              cb(null, require('./routes/auth/role/'))
+              registerModel(app, require('./routes/role/model'))
+              cb(null, require('./routes/role/'))
             }, 'role')
           },
         },
@@ -397,8 +397,8 @@ const Routers = function ({ history, app }) {
           path: 'menu',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/auth/menu'))
-              cb(null, require('./routes/auth/menu/'))
+              registerModel(app, require('./routes/menu/model'))
+              cb(null, require('./routes/menu/'))
             }, 'menu')
           },
         },
@@ -407,8 +407,8 @@ const Routers = function ({ history, app }) {
           path: 'org',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/auth/org'))
-              cb(null, require('./routes/auth/org/'))
+              registerModel(app, require('./routes/org/model'))
+              cb(null, require('./routes/org/'))
             }, 'org')
           },
         },

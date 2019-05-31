@@ -1,13 +1,12 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
-import { initialCreateTime } from 'utils'
+import { initialCreateTime, pageModel } from 'utils'
 import { message, Select } from 'antd'
-import { query, create, update, remove } from '../../services/auth/adminuser'
-import { query as queryOrangeizeList } from '../../services/auth/org'
-import { pageModel } from '../system/common'
+import { query, create, update, remove } from './service'
+import { query as queryOrangeizeList } from '../org/service'
 import { getUserId, password } from '../../utils'
 import orgToTree from '../../utils/orgToTree'
-import { query as queryRoleList } from '../../services/auth/role'
+import { query as queryRoleList } from '../role/service'
 
 const { Option } = Select
 let count = 1

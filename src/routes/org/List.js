@@ -4,9 +4,9 @@ import { Table, Modal } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
 import styles from './index.less'
-import AnimTableBody from '../../../components/DataTable/AnimTableBody'
-import { DropOption } from '../../../components'
-import { getUserId } from '../../../utils/getUserInfo'
+import AnimTableBody from '../../components/DataTable/AnimTableBody'
+import { DropOption } from '../../components'
+import { getUserId } from '../../utils/getUserInfo'
 
 const userId = getUserId()
 const confirm = Modal.confirm
