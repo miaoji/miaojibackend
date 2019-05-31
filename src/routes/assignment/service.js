@@ -1,4 +1,4 @@
-import { request, api, pageParams } from 'utils'
+import { request, api, pageParams } from '../../utils'
 
 const { assignment } = api
 

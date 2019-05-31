@@ -1,5 +1,5 @@
-import { config, pageParams } from '../utils'
-import request from '../utils/request'
+import { config, pageParams } from '../../utils'
+import request from '../../utils/request'
 
 const { api } = config
 const { bankcard } = api

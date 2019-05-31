@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { list, add, mod, del } from '../../services/bankcard'
+import { list, add, mod, del } from './service'
 import { pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

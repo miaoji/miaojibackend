@@ -2,7 +2,7 @@ import React from 'react'
 import { message, notification, Tag } from 'antd'
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime, filterStoreSelect, pageModel } from '../../utils'
-import { query, detail, count, downloadExcel as download, downloadAllData } from '../../services/businessvolume'
+import { query, detail, count, downloadExcel as download, downloadAllData } from './service'
 
 const { prefix, APIV3, brandReverse } = config
 

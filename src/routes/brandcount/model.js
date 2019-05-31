@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime } from 'utils'
 import { routerRedux } from 'dva/router'
-import { query } from '../../services/brandcount'
+import { query } from './service'
 import { time, pageModel } from '../../utils'
 
 const yesterTime = time.getToday(new Date().getTime() - 86400000)

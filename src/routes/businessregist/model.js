@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime, pageModel } from '../../utils'
-import { query } from '../../services/businessregist'
+import { query } from './service'
 
 const { prefix } = config
 export default modelExtend(pageModel, {

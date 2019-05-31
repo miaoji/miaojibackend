@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { config, initialCreateTime, pageModel } from '../../utils'
-import { query } from '../../services/wallet/topup'
+import { query } from './service'
 
 const { prefix } = config
 

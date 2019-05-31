@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
 import { initialCreateTime, APIV3, storage, pageModel } from '../../utils'
-import { query, create, update, remove, download } from '../../services/blacklist'
+import { query, create, update, remove, download } from './service'
 
 
 export default modelExtend(pageModel, {
