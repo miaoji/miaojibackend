@@ -1,8 +1,7 @@
 import { message, notification } from 'antd'
 import modelExtend from 'dva-model-extend'
-import { config, initialCreateTime, filterStoreSelect } from '../utils'
-import { query, download } from '../services/communicationbill'
-import { pageModel } from './system/common'
+import { config, initialCreateTime, filterStoreSelect, pageModel } from '../../utils'
+import { query, download } from './service'
 
 const { APIV3 } = config
 

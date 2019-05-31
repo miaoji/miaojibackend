@@ -1,9 +1,8 @@
 import { message, notification } from 'antd'
 import modelExtend from 'dva-model-extend'
 import moment from 'moment'
-import { config, initialCreateTime } from '../utils'
-import { query, download, expandQuery } from '../services/messagearrive'
-import { pageModel } from './system/common'
+import { config, initialCreateTime, pageModel } from '../../utils'
+import { query, download, expandQuery } from './service'
 
 const { prefix, APIV3 } = config
 

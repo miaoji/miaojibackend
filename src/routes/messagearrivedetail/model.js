@@ -1,9 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
 import moment from 'moment'
-import { detailQuery, detailDownload } from '../services/messagearrive'
-import { pageModel } from './system/common'
-import { APIV3 } from '../utils'
+import { detailQuery, detailDownload } from '../messagearrive/service'
+import { APIV3, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'messagearrivedetail',

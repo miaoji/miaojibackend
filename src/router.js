@@ -527,7 +527,7 @@ const Routers = function ({ history, app }) {
           path: 'messagearrive',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/messagearrive'))
+              registerModel(app, require('./routes/messagearrive/model'))
               cb(null, require('./routes/messagearrive/'))
             }, 'messagearrive')
           },
@@ -537,7 +537,7 @@ const Routers = function ({ history, app }) {
           path: 'messagearrivedetail',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/messagearrivedetail'))
+              registerModel(app, require('./routes/messagearrivedetail/model'))
               cb(null, require('./routes/messagearrivedetail/'))
             }, 'messagearrivedetail')
           },
@@ -547,7 +547,7 @@ const Routers = function ({ history, app }) {
           path: 'communicationbill',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/communicationbill'))
+              registerModel(app, require('./routes/communicationbill/model'))
               cb(null, require('./routes/communicationbill/'))
             }, 'communicationbill')
           },
@@ -557,7 +557,7 @@ const Routers = function ({ history, app }) {
           path: 'communicationbilldetail',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/communicationbilldetail'))
+              registerModel(app, require('./routes/communicationbilldetail/model'))
               cb(null, require('./routes/communicationbilldetail/'))
             }, 'communicationbilldetail')
           },
