@@ -2,8 +2,8 @@ import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
 import { initialCreateTime, storage, pageModel } from 'utils'
-import { query, create, update, remove } from '../../services/qr'
-import { query as queryParameterOption } from '../../services/storeuser'
+import { query, create, update, remove } from './service'
+import { query as queryParameterOption } from '../storeuser/service'
 
 const { Option } = Select
 

@@ -1,5 +1,5 @@
 /* 京东单号管理 */
-import { request, config } from '../utils'
+import { request, config } from '../../utils'
 
 const { api } = config
 const { jd } = api

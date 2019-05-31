@@ -2,8 +2,8 @@ import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
 import { storage, pageModel } from 'utils'
-import { create } from 'src/services/publish'
-import { query } from 'src/services/storeuser'
+import { create } from './service'
+import { query } from '../storeuser/service'
 
 const { Option } = Select
 export default modelExtend(pageModel, {

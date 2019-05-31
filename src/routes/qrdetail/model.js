@@ -1,4 +1,4 @@
-import { querydetail } from '../../services/qr'
+import { querydetail } from '../qr/service'
 import { queryURL } from '../../utils'
 
 export default {

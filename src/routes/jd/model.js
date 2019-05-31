@@ -1,7 +1,7 @@
 /* 京东单号管理 */
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
-import { findOrderSheetCount, setJDConfig, orderSheet, getJDConfig } from '../../services/jd'
+import { findOrderSheetCount, setJDConfig, orderSheet, getJDConfig } from './service'
 import { pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

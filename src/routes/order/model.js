@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { query } from 'src/services/order'
+import { query } from './service'
 import { config, initialCreateTime, time, storage, pageModel } from '../../utils'
 
 const { prefix } = config

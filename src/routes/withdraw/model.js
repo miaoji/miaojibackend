@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { query, cashWithdraw } from 'src/services/wallet/withdraw'
-import { query as storeuserQuery } from 'src/services/storeuser'
+import { query as storeuserQuery } from '../storeuser/service'
 import { initialCreateTime, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

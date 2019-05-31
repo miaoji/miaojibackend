@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
-import { detail as query, downloadDetailExcel } from '../../services/docking'
+import { detail as query, downloadDetailExcel } from '../docking/service'
 import { time, initialCreateTime, APIV3, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {

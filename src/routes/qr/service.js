@@ -1,5 +1,5 @@
-import { config } from '../utils'
-import mainRequest from '../utils/mainRequest'
+import { config } from '../../utils'
+import mainRequest from '../../utils/mainRequest'
 
 const { qr } = config.api
 const pageParams = function (params) {

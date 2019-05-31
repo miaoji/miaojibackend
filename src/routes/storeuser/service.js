@@ -1,5 +1,5 @@
-import { request, api, pageParams } from '../utils'
-import mainRequest from '../utils/mainRequest'
+import { request, api, pageParams } from '../../utils'
+import mainRequest from '../../utils/mainRequest'
 
 const { storeuser, registerAPP } = api
 

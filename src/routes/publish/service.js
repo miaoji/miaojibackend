@@ -1,4 +1,4 @@
-import { request, api } from '../utils'
+import { request, api } from '../../utils'
 
 const { articles } = api
 

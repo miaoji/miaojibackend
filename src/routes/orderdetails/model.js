@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
-import { query, orderInfo } from 'src/services/orderdetails'
 import { message } from 'antd'
 import { storage, pageModel } from '../../utils'
+import { query, orderInfo } from './service'
 import key from '../../utils/key'
 
 export default modelExtend(pageModel, {

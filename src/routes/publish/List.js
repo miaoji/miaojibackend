@@ -3,7 +3,7 @@ import BraftEditor from 'braft-editor'
 import PropTypes from 'prop-types'
 import 'braft-editor/dist/braft.css'
 import { Form, Input, Modal, notification, Select, Row, Col } from 'antd'
-import { upload } from '../../services/publish'
+import { upload } from './service'
 import { APIV3 } from '../../utils'
 
 
