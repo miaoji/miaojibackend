@@ -57,7 +57,7 @@ const Routers = function ({ history, app }) {
           path: 'storeuser',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/storeuser'))
+              registerModel(app, require('./routes/storeuser/model'))
               cb(null, require('./routes/storeuser/'))
             }, 'storeuser')
           },
@@ -67,7 +67,7 @@ const Routers = function ({ history, app }) {
           path: 'wxuser',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/wxuser'))
+              registerModel(app, require('./routes/wxuser/model'))
               cb(null, require('./routes/wxuser/'))
             }, 'wxuser')
           },
@@ -97,7 +97,7 @@ const Routers = function ({ history, app }) {
           path: 'publish',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/publish'))
+              registerModel(app, require('./routes/publish/model'))
               cb(null, require('./routes/publish/'))
             }, 'publish')
           },
@@ -137,7 +137,7 @@ const Routers = function ({ history, app }) {
           path: 'qr',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/qr'))
+              registerModel(app, require('./routes/qr/model'))
               cb(null, require('./routes/qr/'))
             }, 'qr')
           },
@@ -187,7 +187,7 @@ const Routers = function ({ history, app }) {
           path: 'ordernumber',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/ordernumber'))
+              registerModel(app, require('./routes/ordernumber/model'))
               cb(null, require('./routes/ordernumber/'))
             }, 'ordernumber')
           },

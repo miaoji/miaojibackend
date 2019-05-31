@@ -1,7 +1,6 @@
 import modelExtend from 'dva-model-extend'
-import { config, initialCreateTime } from 'utils'
-import { query } from '../services/wxuser'
-import { pageModel } from './system/common'
+import { config, initialCreateTime, pageModel } from 'utils'
+import { query } from '../../services/wxuser'
 
 const { prefix } = config
 export default modelExtend(pageModel, {

@@ -1,13 +1,12 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import md5 from 'js-md5'
-import { query as queryOrgList, getLocation } from 'src/routes/org/service'
-import { config, initialCreateTime } from '../utils'
-import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList, storeDel, resetPass } from '../services/storeuser'
-import { pageModel } from './system/common'
-import { locationData } from '../utils/locationData'
-import orgToTree from '../utils/orgToTree'
-import { storeuserEditLocation } from '../utils/processing'
+import { query as queryOrgList, getLocation } from '../org/service'
+import { config, initialCreateTime, pageModel } from '../../utils'
+import { query, updateFee, versionswitch, createAccount, monitorAdd, monitorList, storeDel, resetPass } from '../../services/storeuser'
+import { locationData } from '../../utils/locationData'
+import orgToTree from '../../utils/orgToTree'
+import { storeuserEditLocation } from '../../utils/processing'
 
 const { prefix } = config
 

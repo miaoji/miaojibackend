@@ -1,9 +1,8 @@
 import React from 'react'
 import modelExtend from 'dva-model-extend'
 import { message, Select } from 'antd'
-import { initialCreateTime } from 'utils'
-import { query, create, update, showBrandName } from '../services/ordernumber'
-import { pageModel } from './system/common'
+import { initialCreateTime, pageModel } from 'utils'
+import { query, create, update, showBrandName } from '../../services/ordernumber'
 
 const { Option } = Select
 
