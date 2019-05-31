@@ -273,7 +273,7 @@ export default modelExtend(pageModel, {
       //   return
       // }
       console.log('getOrgIdUsers', getOrgIdUsers())
-      const data = yield call(getLineData, { cacheKey: `api-lineChart-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
+      const data = yield call(getLineData, { cacheKey: `api-lineChart1-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
       if (data.code === 200) {
         const recevice = data.obj.recevice
         const send = data.obj.send
