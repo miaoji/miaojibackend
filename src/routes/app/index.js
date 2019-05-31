@@ -6,9 +6,9 @@ import { Layout, Loader } from 'components'
 import { classnames, config } from 'utils'
 import { Helmet } from 'react-helmet'
 import NProgress from 'nprogress'
-import '../themes/index.less'
-import './app.less'
-import Error from './error'
+import '../../themes/index.less'
+import './index.less'
+import Error from '../error'
 
 const { prefix, openPages, title } = config
 
