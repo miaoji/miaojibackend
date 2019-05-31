@@ -1,8 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
-import { query, download } from '../services/log'
-import { pageModel } from './system/common'
-import { APIV3 } from '../utils'
+import { query, download } from './service'
+import { APIV3, pageModel } from '../../utils'
 
 export default modelExtend(pageModel, {
   namespace: 'log',

@@ -53,26 +53,6 @@ const Routers = function ({ history, app }) {
           },
         },
         {
-          // 演示页面
-          path: 'user',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/user'))
-              cb(null, require('./routes/user/'))
-            }, 'user')
-          },
-        },
-        {
-          // 测试页面子页
-          path: 'user/:id',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/details/userdetail'))
-              cb(null, require('./routes/user/detail/'))
-            }, 'user-detail')
-          },
-        },
-        {
           // 门店用户
           path: 'storeuser',
           getComponent(nextState, cb) {
@@ -100,26 +80,6 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./models/details/wxuserdetail'))
               cb(null, require('./routes/wxuser/detail/'))
             }, 'wxuser-detail')
-          },
-        },
-        {
-          // 收支数据>收入
-          path: 'income',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/storedata/income'))
-              cb(null, require('./routes/storedata/income/'))
-            }, 'income')
-          },
-        },
-        {
-          // 收支数据>支出
-          path: 'expend',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('./models/storedata/expend'))
-              cb(null, require('./routes/storedata/expend/'))
-            }, 'expend')
           },
         },
         {
@@ -517,7 +477,7 @@ const Routers = function ({ history, app }) {
           path: 'log',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/log'))
+              registerModel(app, require('./routes/log/model'))
               cb(null, require('./routes/log/'))
             }, 'log')
           },
@@ -567,7 +527,7 @@ const Routers = function ({ history, app }) {
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              cb(null, require('./routes/system/error/'))
+              cb(null, require('./routes/error/'))
             }, 'error')
           },
         },

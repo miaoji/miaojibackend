@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet'
 import NProgress from 'nprogress'
 import '../themes/index.less'
 import './app.less'
-import Error from './system/error'
+import Error from './error'
 
 const { prefix, openPages, title } = config
 
