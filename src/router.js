@@ -78,7 +78,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/details/wxuserdetail'))
-              cb(null, require('./routes/wxuser/detail/'))
+              cb(null, require('./routes/wxuserdetail/'))
             }, 'wxuser-detail')
           },
         },
@@ -108,7 +108,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/wallet/topup'))
-              cb(null, require('./routes/wallet/topup/'))
+              cb(null, require('./routes/topup/'))
             }, 'topup')
           },
         },
@@ -118,7 +118,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/wallet/withdraw'))
-              cb(null, require('./routes/wallet/withdraw/'))
+              cb(null, require('./routes/withdraw/'))
             }, 'withdraw')
           },
         },
@@ -148,7 +148,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/details/qrdetail'))
-              cb(null, require('./routes/qr/detail/'))
+              cb(null, require('./routes/qrdetail/'))
             }, 'qrdetail')
           },
         },
@@ -198,7 +198,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/details/storeuserdetail'))
-              cb(null, require('./routes/storeuser/detail/'))
+              cb(null, require('./routes/storeuserdetail/'))
             }, 'storeuser-detail')
           },
         },
@@ -388,7 +388,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/details/businessvolume'))
-              cb(null, require('./routes/businessvolume/detail/'))
+              cb(null, require('./routes/businessvolumedetail/'))
             }, 'businessvolume-detail')
           },
         },
@@ -468,7 +468,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('./models/details/dockingdetail'))
-              cb(null, require('./routes/docking/detail/'))
+              cb(null, require('./routes/dockingdetail/'))
             }, 'dockingdetail')
           },
         },

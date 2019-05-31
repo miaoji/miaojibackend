@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col } from 'antd'
-import NumberCard from './item/numberCard'
+import NumberCard from './components/numberCard'
 import { color } from '../../utils/theme'
 
 const List = ({ list }) => {

@@ -4,7 +4,7 @@ import { Table } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
 import styles from './List.less'
-import { DropOption } from '../../../components'
+import { DropOption } from '../../components'
 
 const List = ({ auth, onWithdrawalClick, ...tableProps }) => {
   const handleMenuClick = (record, e) => {

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col } from 'antd'
-import { DateRange } from '../../../components'
-import { defaultTime, handleFields } from '../../../utils'
+import { DateRange } from '../../components'
+import { defaultTime, handleFields } from '../../utils'
 
 const ColProps = {
   xs: 24,
