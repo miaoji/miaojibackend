@@ -1,9 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { query as queryStoreUser } from 'src/services/storeuser'
 import md5 from 'js-md5'
-import { pageModel } from 'src/models/system/common'
-import { storage, time, isSuperAdmin, getOrgIdUsers } from 'utils'
 import { color } from 'utils/theme'
+import { storage, time, isSuperAdmin, getOrgIdUsers, pageModel } from '../../utils'
 import { getLineData, weChatUser, income, terminalTotal, businessvolumecount, interfaceCallList } from './service'
 
 export default modelExtend(pageModel, {
