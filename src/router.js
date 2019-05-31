@@ -27,7 +27,7 @@ const Routers = function ({ history, app }) {
       // 默认渲染首页
       getIndexRoute(nextState, cb) {
         require.ensure([], (require) => {
-          registerModel(app, require('./models/dashboard'))
+          registerModel(app, require('./routes/dashboard/model'))
           cb(null, { component: require('./routes/dashboard/') })
         }, 'dashboard')
       },
@@ -37,8 +37,8 @@ const Routers = function ({ history, app }) {
           path: 'login',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/system/login'))
-              cb(null, require('./routes/system/login/'))
+              registerModel(app, require('./routes/login/model'))
+              cb(null, require('./routes/login/'))
             }, 'login')
           },
         },
@@ -47,7 +47,7 @@ const Routers = function ({ history, app }) {
           path: 'dashboard',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/dashboard'))
+              registerModel(app, require('./routes/dashboard/model'))
               cb(null, require('./routes/dashboard/'))
             }, 'dashboard')
           },
@@ -127,7 +127,7 @@ const Routers = function ({ history, app }) {
           path: 'articles',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('./models/articles'))
+              registerModel(app, require('./routes/articles/model'))
               cb(null, require('./routes/articles/'))
             }, 'articles')
           },

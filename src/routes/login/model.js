@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router'
 import { storage, password } from 'utils'
 import { notification } from 'antd'
-import { login as signIn, imgCode } from '../../services/system/login'
+import { login as signIn, imgCode } from './service'
 import { initUserInfo } from '../../utils/processing'
 
 let count = storage({ key: 'loginErrorCount' })

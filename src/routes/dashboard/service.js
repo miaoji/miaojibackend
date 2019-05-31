@@ -1,6 +1,6 @@
 import md5 from 'js-md5'
-import { request, config } from '../utils'
-import { getOrgIdUsers } from '../utils/getUserInfo'
+import { request, config } from 'utils'
+import { getOrgIdUsers } from 'utils/getUserInfo'
 
 const { api } = config
 const { dashboard } = api
@@ -10,6 +10,7 @@ const { dashboard } = api
  */
 export async function getLineData(params = {}) {
   params.userIds = getOrgIdUsers()
+  console.log('params', params)
   return request({
     url: dashboard.echart,
     method: 'post',

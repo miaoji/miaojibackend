@@ -1,10 +1,10 @@
 import modelExtend from 'dva-model-extend'
 import { query as queryStoreUser } from 'src/services/storeuser'
 import md5 from 'js-md5'
-import { pageModel } from './system/common'
-import { color } from '../utils/theme'
-import { storage, time, isSuperAdmin, getOrgIdUsers } from '../utils'
-import { getLineData, weChatUser, income, terminalTotal, businessvolumecount, interfaceCallList } from '../services/dashboard'
+import { pageModel } from 'src/models/system/common'
+import { storage, time, isSuperAdmin, getOrgIdUsers } from 'utils'
+import { color } from 'utils/theme'
+import { getLineData, weChatUser, income, terminalTotal, businessvolumecount, interfaceCallList } from './service'
 
 export default modelExtend(pageModel, {
   namespace: 'dashboard',
@@ -80,21 +80,11 @@ export default modelExtend(pageModel, {
       }
       // const storageData = JSON.parse(storage({ key: 'interfaceCallData' }))
       const todayStr = time.getToday(new Date().getTime())
-      // if (storageData && todayStr === storageData.time) {
-      //   const { qsArr, rkArr } = storageData
-      //   yield put({
-      //     type: 'setStates',
-      //     payload: {
-      //       interfaceCallData: {
-      //         qsArr,
-      //         rkArr,
-      //       },
-      //     },
-      //   })
-      //   return
-      // }
 
-      const data = yield call(interfaceCallList, { cacheKey: `api-stThirtyTime-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
+      const data = yield call(interfaceCallList, {
+        // times: time.getLineTime().join(','),
+        cacheKey: `api-stThirtyTime1-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}`,
+      })
       // qsId 签收次数
       // rkId 入库次数
       if (data.code === 200) {

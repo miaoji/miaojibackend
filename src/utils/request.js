@@ -20,7 +20,7 @@ const fetch = (options) => {
   data = data ? { ...data, requestId: getUserId() } : undefined
 
   const cloneData = lodash.cloneDeep(data)
-
+  console.log('cloneData', cloneData)
   switch (method.toLowerCase()) {
     case 'get':
       return axios({

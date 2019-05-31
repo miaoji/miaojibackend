@@ -14,8 +14,10 @@ import {
 import { pageParams, queryURL, queryArray, arrayToTree } from './toolkit'
 import password from './password'
 import { storage } from './storage'
+import { pageModel } from './pageModel'
 
 module.exports = {
+  pageModel,
   config,
   password,
   request,
