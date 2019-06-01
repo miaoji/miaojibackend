@@ -12,6 +12,7 @@
     "echarts-for-react": "^2.0.0",
     "echarts-gl": "^1.0.0-beta.5",
     "echarts-liquidfill": "^1.1.0",
+    "fastclick": "^1.0.6",
     "js-base64": "^2.5.1",
     "lodash": "^4.17.4",
     "nprogress": "^0.2.0",

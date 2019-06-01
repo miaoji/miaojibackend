@@ -32,7 +32,14 @@ const Header = ({ message, user, logout, switchSider, siderFold, isNavbar, menuP
   return (
     <div className={styles.header}>
       {isNavbar
-        ? <Popover placement="bottomLeft" onVisibleChange={switchMenuPopover} visible={menuPopoverVisible} overlayClassName={styles.popovermenu} trigger="click" content={<Menus {...menusProps} />}>
+        ? <Popover
+          placement="bottomLeft"
+          onVisibleChange={switchMenuPopover}
+          visible={menuPopoverVisible}
+          overlayClassName={styles.popovermenu}
+          trigger="click"
+          content={<div className={styles.mobilepopovermenu}><Menus {...menusProps} /></div>}
+        >
           <div className={styles.button}>
             <Icon type="bars" />
           </div>

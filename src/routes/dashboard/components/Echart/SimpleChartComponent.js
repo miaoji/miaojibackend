@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Spin } from 'antd'
 import './theme/macarons.js'
 import { time } from '../../../../utils'
+import styles from './styles.less'
 
 const SimpleChartComponent = ({ receviceData, sendData, loading }) => {
   const dataname = time.getLineTime()
@@ -79,12 +80,12 @@ const SimpleChartComponent = ({ receviceData, sendData, loading }) => {
     ],
   }
   return (
-    <div className="examples">
+    <div className={styles.examples}>
       <div className="parent" style={{ minWidth: '1200px' }}>
         <Spin spinning={loading} tip="数据加载中,请稍等...">
           <ReactEcharts
             option={option}
-            style={{ height: '350px', width: '100%' }}
+            style={{ height: '350px', minWidth: '1200px' }}
             className="react_for_echarts"
             theme="default"
           />
