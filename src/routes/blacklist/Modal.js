@@ -7,10 +7,16 @@ const { TextArea } = Input
 
 const formItemLayout = {
   labelCol: {
-    span: 6,
+    sm: 6,
+    xs: {
+      span: 24,
+    },
   },
   wrapperCol: {
-    span: 14,
+    sm: 14,
+    xs: {
+      span: 24,
+    },
   },
 }
 
@@ -58,7 +64,7 @@ const modal = ({
                 message: '选择站点!',
               },
             ],
-          })(<Select showSearch disabled={paramDisabled} placeholder="输入站点名称或者IdUser可搜索" defaultValue="" style={{ width: 286 }}>{storeuserList}</Select>)}
+          })(<Select showSearch disabled={paramDisabled} placeholder="输入站点名称或者IdUser可搜索" defaultValue="" style={{ width: '100%' }}>{storeuserList}</Select>)}
         </FormItem>
         <FormItem label="手机号/单号" hasFeedback {...formItemLayout}>
           {getFieldDecorator('mobile', {

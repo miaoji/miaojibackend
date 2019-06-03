@@ -39,8 +39,8 @@ APIV1 = '/api'
 if (process.env.NODE_ENV !== 'development') {
   // APIV1 = 'http://106.14.212.146:8288/quandiExpressSiteManager'
   // APIV3 = 'http://106.14.212.146:8288'
-  APIV1 = 'https://console.mijihome.cn/quandiExpressSiteManager'
-  // APIV1 = 'https://console.winnerwly.top/quandiExpressSiteManager'
+  APIV1 = 'https://console.winnerwly.top/quandiExpressSiteManager'
+  // APIV1 = 'https://console.mijihome.cn/quandiExpressSiteManager'
   APIV3 = 'http://106.14.212.146:8288'
 }
 
