@@ -4,8 +4,8 @@ import { Table, Modal } from 'antd'
 import classnames from 'classnames'
 import moment from 'moment'
 import styles from './List.less'
-import { DropOption } from '../../components'
-import { getUserId } from '../../utils'
+import { DropOption } from '../../../components'
+import { getUserId } from '../../../utils'
 
 const confirm = Modal.confirm
 

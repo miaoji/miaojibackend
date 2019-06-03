@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { routerRedux } from 'dva/router'
 import { connect } from 'dva'
-import List from './List'
-import Filter from './Filter'
-import Modal from './Modal'
+import List from './components/List'
+import Filter from './components/Filter'
+import Modal from './components/Modal'
 
 const Modular = ({ location, dispatch, adminuser, loading }) => {
   const { orgTree, list, pagination, currentItem, modalVisible, modalType, confirmDirty, orangeizeList, roleList } = adminuser

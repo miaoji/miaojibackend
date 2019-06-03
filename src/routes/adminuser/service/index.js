@@ -1,4 +1,4 @@
-import { request, config, pageParams, getUserId, getOrgId, isSuperAdmin } from '../../utils'
+import { request, config, pageParams, getUserId, getOrgId, isSuperAdmin } from '../../../utils'
 
 const isSuperRole = isSuperAdmin()
 
