@@ -80,8 +80,8 @@ export default modelExtend(pageModel, {
       const todayStr = time.getToday(new Date().getTime())
 
       const data = yield call(interfaceCallList, {
-        // times: time.getLineTime().join(','),
-        cacheKey: `api-stThirtyTime1-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}`,
+        times: time.getLineTime().join(','),
+        cacheKey: `api-stThirtyTime1-${todayStr}-${md5(`${todayStr}-${getOrgIdUsers() || '/'}`)}`,
       })
       // qsId 签收次数
       // rkId 入库次数
@@ -259,7 +259,7 @@ export default modelExtend(pageModel, {
       //   })
       //   return
       // }
-      const data = yield call(getLineData, { cacheKey: `api-lineChart1-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
+      const data = yield call(getLineData, { cacheKey: `api-lineChart1-${todayStr}-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
       if (data.code === 200) {
         const recevice = data.obj.recevice
         const send = data.obj.send
