@@ -259,7 +259,7 @@ export default modelExtend(pageModel, {
       //   })
       //   return
       // }
-      const data = yield call(getLineData, { cacheKey: `api-lineChart1-${todayStr}-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
+      const data = yield call(getLineData, { cacheKey: `api-lineChart-${todayStr}-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
       if (data.code === 200) {
         const recevice = data.obj.recevice
         const send = data.obj.send
