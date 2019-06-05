@@ -142,18 +142,22 @@ const List = ({ rowData, rowLoading, ...tableProps }) => {
         columns={columns}
         simple
         rowKey={record => record.key}
-        expandedRowRender={() => (
-          <div>
-            {rowLoading ? <Spin /> : rowData.map(item => (
+        expandedRowRender={() => {
+          if (rowLoading) {
+            return <Spin />
+          }
+          if (rowData && rowData.length) {
+            return rowData.map(item => (
               <div className={styles.flex}>
                 <p>操作人: <span>{item.operator}</span></p>
                 <p>快件状态: <span>{replState[item.state]}</span></p>
                 <p>货架号: <span>{item.code || '/'}</span></p>
                 <p>操作时间: <span>{moment(item.createTime / 1).format('YYYY-MM-DD HH:mm:ss')}</span></p>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          }
+          return <span>暂无数据</span>
+        }}
       />
     </div>
   )
