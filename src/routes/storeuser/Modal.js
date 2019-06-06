@@ -142,7 +142,6 @@ const modal = ({
       </Modal>
     )
   }
-
   const filterLocation = (inputValue, path) => {
     return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))
   }
@@ -199,7 +198,7 @@ const modal = ({
             })(<Cascader
               options={orgTree}
               placeholder="请选择所属机构"
-              showSearch={{ filterOrg }}
+              showSearch={{ filter: filterOrg, limit: 100 }}
               autocomplete="off"
               changeOnSelect
             />)}
@@ -215,7 +214,7 @@ const modal = ({
             })(<Cascader
               options={locationData}
               placeholder="请选择省市区"
-              showSearch={{ filterLocation }}
+              showSearch={{ filter: filterLocation, limit: 1000 }}
               autocomplete="off"
             />)}
           </FormItem>
