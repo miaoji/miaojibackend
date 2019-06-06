@@ -115,7 +115,7 @@ const List = ({ rowData, rowLoading, ...tableProps }) => {
         return <span>{replExpresStype[text]}</span>
       },
     }, {
-      title: '点货时间',
+      title: '最新操作时间',
       dataIndex: 'time',
       key: 'time',
       render: (text) => {
