@@ -2,6 +2,7 @@ import axios from 'axios'
 import lodash from 'lodash'
 import { storage } from './storage'
 import { getUserId } from './getUserInfo'
+import { initCacheKey } from './cache'
 
 axios.defaults.withCredentials = true
 
@@ -14,10 +15,18 @@ const fetch = (options) => {
     url,
     auth = true,
     token,
+    cache = false,
   } = options
 
   params = params ? { ...params, requestId: getUserId() } : undefined
   data = data ? { ...data, requestId: getUserId() } : undefined
+
+  if (cache) {
+    data = {
+      ...data,
+      cacheKey: initCacheKey(data),
+    }
+  }
 
   const cloneData = lodash.cloneDeep(data)
   switch (method.toLowerCase()) {

@@ -1,5 +1,4 @@
 import modelExtend from 'dva-model-extend'
-import md5 from 'js-md5'
 import { color } from 'utils/theme'
 import { query as queryStoreUser } from '../storeuser/service'
 import { storage, time, isSuperAdmin, getOrgIdUsers, pageModel } from '../../utils'
@@ -76,12 +75,8 @@ export default modelExtend(pageModel, {
       if (!authStorage.count) {
         return
       }
-      // const storageData = JSON.parse(storage({ key: 'interfaceCallData' }))
-      const todayStr = time.getToday(new Date().getTime())
-
       const data = yield call(interfaceCallList, {
         times: time.getLineTime().join(','),
-        cacheKey: `api-stThirtyTime1-${todayStr}-${md5(`${todayStr}-${getOrgIdUsers() || '/'}`)}`,
       })
       // qsId 签收次数
       // rkId 入库次数
@@ -98,15 +93,6 @@ export default modelExtend(pageModel, {
             },
           },
         })
-        // storage({
-        //   type: 'set',
-        //   key: 'interfaceCallData',
-        //   val: JSON.stringify({
-        //     time: todayStr,
-        //     qsArr,
-        //     rkArr,
-        //   }),
-        // })
       } else {
         throw new Error('开发平台接口调用统计数据获取失败')
       }
@@ -245,21 +231,9 @@ export default modelExtend(pageModel, {
         yield put({ type: 'getbusinessvolumecount' })
         yield put({ type: 'getInterfaceCall' })
       }
-      // const storageData = JSON.parse(storage({ key: 'linedata' }))
-      const todayStr = time.getToday(new Date().getTime())
       let receviceData = []
       let sendData = []
-      // if (storageData && todayStr === storageData.time) {
-      //   yield put({
-      //     type: 'setStates',
-      //     payload: {
-      //       receviceData: storageData.receviceData,
-      //       sendData: storageData.sendData,
-      //     },
-      //   })
-      //   return
-      // }
-      const data = yield call(getLineData, { cacheKey: `api-lineChart-${todayStr}-${md5(`${todayStr}${getOrgIdUsers() || '/'}`)}` })
+      const data = yield call(getLineData)
       if (data.code === 200) {
         const recevice = data.obj.recevice
         const send = data.obj.send
@@ -269,16 +243,6 @@ export default modelExtend(pageModel, {
         send.forEach((item) => {
           sendData.push([item.createTime, item.count])
         })
-
-        // storage({
-        //   type: 'set',
-        //   key: 'linedata',
-        //   val: JSON.stringify({
-        //     time: todayStr,
-        //     receviceData,
-        //     sendData,
-        //   }),
-        // })
 
         yield put({
           type: 'setStates',

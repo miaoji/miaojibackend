@@ -14,6 +14,7 @@ export async function getLineData(params = {}) {
     url: dashboard.echart,
     method: 'post',
     data: params,
+    cache: true,
   })
 }
 /**
@@ -100,5 +101,6 @@ export function interfaceCallList(params = {}) {
     url: dashboard.interfaceCallList,
     method: 'post',
     data: params,
+    cache: true,
   })
 }
