@@ -34,7 +34,7 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      payload = initialCreateTime(payload, true)
+      payload = initialCreateTime(payload, true, true)
       filterStoreSelect(payload)
 
       const locationPayload = {}
@@ -75,7 +75,7 @@ export default modelExtend(pageModel, {
 
     // 根据门店账号查询单号详细信息
     *infoId({ payload }, { call, put }) {
-      payload = initialCreateTime(payload, true)
+      payload = initialCreateTime(payload, true, true)
       const { idUser, startTime, endTime } = payload
       const data = yield call(detail, {
         idUser, startTime, endTime,
@@ -101,7 +101,7 @@ export default modelExtend(pageModel, {
           sonlist: {},
         },
       })
-      payload = initialCreateTime(payload, true)
+      payload = initialCreateTime(payload, true, true)
       let { startTime, endTime, idUser } = payload
       const data = yield call(count, {
         idUser, startTime, endTime,
@@ -118,23 +118,23 @@ export default modelExtend(pageModel, {
           const brandName = item.brandName
           const brandData = `${brandReverse[brandName]}///${brandName}`
           item.someCargo && list.someCargo.push(<Tag color="#87d068">
-            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=1`}>{brandName}:{item.someCargo}</a>
+            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumedetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=1`}>{brandName}:{item.someCargo}</a>
           </Tag>)
 
           item.scheduledReceipt && list.scheduledReceipt.push(<Tag color="#2db7f5">
-            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=2`}>{brandName}:{item.scheduledReceipt}</a>
+            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumedetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=2`}>{brandName}:{item.scheduledReceipt}</a>
           </Tag>)
 
           item.signingVolume && list.signingVolume.push(<Tag color="#108ee9">
-            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=3`}>{brandName}:{item.signingVolume}</a>
+            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumedetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=3`}>{brandName}:{item.signingVolume}</a>
           </Tag>)
 
           item.retroactive && list.retroactive.push(<Tag color="#03a9f4">
-            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=4`}>{brandName}:{item.retroactive || 0}</a>
+            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumedetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=4`}>{brandName}:{item.retroactive || 0}</a>
           </Tag>)
 
           item.returnAmount && list.returnAmount.push(<Tag color="#f50">
-            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumeDetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=5`}>{brandName}:{item.returnAmount}</a>
+            <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumedetail?idUser=${idUser}&idBrand=${brandData}&startTime=${startTime}&endTime=${endTime}&state=5`}>{brandName}:{item.returnAmount}</a>
           </Tag>)
         })
         yield put({
@@ -155,7 +155,7 @@ export default modelExtend(pageModel, {
         description: '正在为您准备资源,请稍等!!!',
         duration: 3,
       })
-      payload = initialCreateTime(payload, true)
+      payload = initialCreateTime(payload, true, true)
       filterStoreSelect(payload)
       const locationPayload = {}
       if (payload.location && payload.location.length > 0) {

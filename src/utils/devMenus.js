@@ -54,6 +54,11 @@ export default [
     name: '门店业务量历史数据查询',
     route: '/backupbusinessvolume',
   }, {
+    id: '100150401',
+    mpid: '-1',
+    name: '业务量-订单明细',
+    route: '/backupbusinessvolumedetail',
+  }, {
     id: '1001505',
     mpid: '10015',
     name: '门店运单管理历史数据查询',

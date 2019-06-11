@@ -17,10 +17,10 @@ const List = ({ onDeleteItem, tabLoading, onEditItem, sonlist, isMotion, locatio
       width: 100,
       render: (text) => {
         if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/businessvolumeDetail?idUser=${text}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
+          return <Link to={`/backupbusinessvolumedetail?idUser=${text}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
         }
-        return <Link to={`/businessvolumeDetail?idUser=${text}`}>{text}</Link>
-        // return <a rel="noopener noreferrer" target="_blank" href={`/businessvolumeDetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
+        return <Link to={`/backupbusinessvolumedetail?idUser=${text}`}>{text}</Link>
+        // return <a rel="noopener noreferrer" target="_blank" href={`/backupbusinessvolumedetail?idUser=${text}&createTime=${createTime[0]}&createTime=${createTime[1]}`}>{text}</a>
       },
     }, {
       title: '站点名称',

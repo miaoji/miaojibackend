@@ -8,6 +8,7 @@ export async function query(params) {
     url: businessvolume.list,
     method: 'post',
     data: { ...params, isHistory: 1 },
+    cache: true,
   })
 }
 

@@ -11,5 +11,6 @@ export async function query(params) {
     url: business.all,
     method: 'post',
     data: { ...params, isHistory },
+    cache: true,
   })
 }

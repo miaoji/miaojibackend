@@ -37,7 +37,7 @@ const Filter = ({
     setFieldsValue,
   },
 }) => {
-  filter = defaultTime(filter)
+  filter = defaultTime(filter, 1, 0, true)
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)

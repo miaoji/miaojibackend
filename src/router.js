@@ -633,6 +633,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 门店业务量历史数据查询
+          path: 'backupbusinessvolumedetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupbusinessvolumedetail/model'))
+              cb(null, require('./routes/backupbusinessvolumedetail/'))
+            }, 'backupbusinessvolumedetail')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {

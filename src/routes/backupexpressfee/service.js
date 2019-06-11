@@ -11,5 +11,6 @@ export async function query(params) {
     url: expressfee.all,
     method: 'post',
     data: { ...params, isHistory },
+    cache: true,
   })
 }

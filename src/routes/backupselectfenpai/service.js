@@ -10,5 +10,6 @@ export async function query(params) {
     url: selectfenpai.all,
     method: 'post',
     data: { ...params, isHistory: 1 },
+    cache: true,
   })
 }

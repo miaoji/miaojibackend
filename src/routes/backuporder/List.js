@@ -70,6 +70,9 @@ const List = ({ rowData, rowLoading, ...tableProps }) => {
       title: '站点名称',
       dataIndex: 'name',
       key: 'name',
+      render: (text) => {
+        return <span>{text || '/'}</span>
+      },
     }, {
       title: '站点地址',
       dataIndex: 'address',
