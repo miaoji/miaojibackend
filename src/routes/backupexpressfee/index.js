@@ -8,7 +8,7 @@ import Filter from './Filter'
 const IndexPage = ({ location, dispatch, backupexpressfee, app, loading }) => {
   const { list, pagination } = backupexpressfee
   const { storeuserList, user: { sourceMenuList } } = app
-  const auth = sourceMenuList['/backupexpressfee'] || {}
+  const auth = sourceMenuList['/backupexpressfee'] || { seeDetail: true, seeOperatorDetail: true }
 
   const listProps = {
     filter: {

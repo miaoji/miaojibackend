@@ -34,7 +34,7 @@ const List = ({ auth, filter, location, onLink, ...tableProps }) => {
       case '1':
         if (filter.createTime && filter.createTime.length > 0) {
           onLink({
-            path: '/expressfeedetail',
+            path: '/backupexpressfeedetail',
             payload: {
               showName: record.name,
               idUser: record.idUser,
@@ -43,7 +43,7 @@ const List = ({ auth, filter, location, onLink, ...tableProps }) => {
           })
         } else {
           onLink({
-            path: '/expressfeedetail',
+            path: '/backupexpressfeedetail',
             payload: {
               showName: record.name,
               idUser: record.idUser,
@@ -54,7 +54,7 @@ const List = ({ auth, filter, location, onLink, ...tableProps }) => {
       case '2':
         if (filter.createTime && filter.createTime.length > 0) {
           onLink({
-            path: '/storeUserDetail',
+            path: '/backupstoreuserdetail',
             payload: {
               idUser: record.idUser,
               showName: record.name,
@@ -63,7 +63,7 @@ const List = ({ auth, filter, location, onLink, ...tableProps }) => {
           })
         } else {
           onLink({
-            path: '/storeUserDetail',
+            path: '/backupstoreuserdetail',
             payload: {
               showName: record.name,
               idUser: record.idUser,
@@ -82,9 +82,9 @@ const List = ({ auth, filter, location, onLink, ...tableProps }) => {
       key: 'name',
       render: (text, record) => {
         if (filter.createTime && filter.createTime.length > 0) {
-          return <Link title="查看寄件详情" to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text || '暂无'}</Link>
+          return <Link title="查看寄件详情" to={`/backupexpressfeedetail?showName=${record.name}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text || '暂无'}</Link>
         }
-        return <Link title="查看寄件详情" to={`/expressfeedetail?showName=${record.name}&idUser=${record.idUser}`}>{text || '暂无'}</Link>
+        return <Link title="查看寄件详情" to={`/backupexpressfeedetail?showName=${record.name}&idUser=${record.idUser}`}>{text || '暂无'}</Link>
       },
     }, {
       title: '站点地址',

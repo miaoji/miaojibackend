@@ -14,6 +14,11 @@ export default [
     name: '门店寄件历史数据明细查询',
     route: '/backupexpressfeedetail',
   }, {
+    id: '100150102',
+    mpid: '-1',
+    name: '门店寄件历史数据明细查询',
+    route: '/backupstoreuserdetail',
+  }, {
     id: '1001502',
     mpid: '10015',
     name: '门店操作历史数据查询',

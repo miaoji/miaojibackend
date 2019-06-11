@@ -73,7 +73,7 @@ export default modelExtend(pageModel, {
       } else {
         newpayload = { ...payload }
       }
-      const data = yield call(download, { ...newpayload, tc: 'maild', download: 1 })
+      const data = yield call(download, { ...newpayload, tc: 'maild', download: 1, showName: undefined })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
         const openUrl = window.open(url)

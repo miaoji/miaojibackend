@@ -2,7 +2,7 @@ import { request, config, pageParams } from '../../utils'
 
 const { api } = config
 const { expressfeedetail } = api
-const isHistory = undefined
+const isHistory = 1
 
 export async function query(params) {
   params = pageParams(params)

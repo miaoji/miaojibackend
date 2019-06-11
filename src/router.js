@@ -543,6 +543,16 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 门店操作人历史数据详情
+          path: 'backupstoreuserdetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupstoreuserdetail/model'))
+              cb(null, require('./routes/backupstoreuserdetail/'))
+            }, 'backupstoreuserdetail')
+          },
+        },
+        {
           // 门店操作历史数据查询
           path: 'backupbusiness',
           getComponent(nextState, cb) {

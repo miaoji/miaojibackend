@@ -21,7 +21,7 @@ const fetch = (options) => {
   params = params ? { ...params, requestId: getUserId() } : undefined
   data = data ? { ...data, requestId: getUserId() } : undefined
 
-  if (cache) {
+  if (cache && (!data.endTime || (data.endTime < new Date().getTodayStartTime()))) {
     data = {
       ...data,
       cacheKey: initCacheKey(data),

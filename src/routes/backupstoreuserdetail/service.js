@@ -1,15 +1,18 @@
 import { request, config, pageParams } from '../../utils'
 
 const { api } = config
-const { expressfee } = api
-const isHistory = 1
+const { storeUserDetail } = api
 
 export async function query(params) {
   params = pageParams(params)
   delete params.download
+  delete params.pagination
+  delete params.rownum
+  delete params.showName
+  delete params.location
   return request({
-    url: expressfee.all,
+    url: storeUserDetail.all,
     method: 'post',
-    data: { ...params, isHistory },
+    data: params,
   })
 }
