@@ -1,10 +1,11 @@
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
-import { query, download } from './service'
+import { query } from './service'
 import { APIV3, initialCreateTime, pageModel } from '../../utils'
+import { download } from '../backupexpressfeedetail/service'
 
 export default modelExtend(pageModel, {
-  namespace: 'backupexpressfeedetail',
+  namespace: 'backupoperatorbyname',
 
   state: {
     currentItem: {},
@@ -15,7 +16,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/backupexpressfeedetail') {
+        if (location.pathname === '/backupoperatorbyname') {
           dispatch({
             type: 'query',
             payload: location.query,
@@ -29,14 +30,8 @@ export default modelExtend(pageModel, {
 
     *query({ payload = {} }, { call, put }) {
       payload = initialCreateTime(payload, true, true)
-      yield put({
-        type: 'setStates',
-        payload: {
-          list: [],
-        },
-      })
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      const data = yield call(query, { ...payload, download: 0, showName: undefined })
+      const data = yield call(query, { mailtype: 0, ...payload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -59,7 +54,7 @@ export default modelExtend(pageModel, {
         description: '正在为您准备资源,请稍等!!!',
         duration: 3,
       })
-      const data = yield call(download, { ...payload, tc: 'maild', download: 1, showName: undefined })
+      const data = yield call(download, { ...payload, tc: 'operation', download: 1 })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
         const openUrl = window.open(url)
@@ -83,4 +78,19 @@ export default modelExtend(pageModel, {
 
   },
 
+  reducers: {
+
+    setSiteName(state, { payload }) {
+      return { ...state, ...payload }
+    },
+
+    showModal(state, { payload }) {
+      return { ...state, ...payload, modalVisible: true }
+    },
+
+    hideModal(state) {
+      return { ...state, modalVisible: false }
+    },
+
+  },
 })

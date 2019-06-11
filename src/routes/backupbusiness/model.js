@@ -1,8 +1,8 @@
 import modelExtend from 'dva-model-extend'
 import { message, notification } from 'antd'
-import { APIV3, time, initialCreateTime, filterStoreSelect, pageModel } from '../../utils'
-import { query as queryOperator } from '../operatorbyname/service'
-import { download } from '../expressfeedetail/service'
+import { APIV3, initialCreateTime, filterStoreSelect, pageModel } from '../../utils'
+import { query as queryOperator } from '../backupoperatorbyname/service'
+import { download } from '../backupexpressfeedetail/service'
 import { query } from './service'
 
 
@@ -34,18 +34,13 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      payload = initialCreateTime(payload)
+      payload = initialCreateTime(payload, true, true)
       filterStoreSelect(payload)
       if (Number(payload.mailtype) === 9) {
         payload.mailtype = undefined
       }
-      let newpayload = {}
-      if (!payload.startTime) {
-        const times = time.yesterTime()
-        newpayload = { ...times, ...payload }
-      } else {
-        newpayload = { ...payload }
-      }
+
+      const newpayload = { ...payload }
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
       const locationPayload = {}
       if (newpayload.location && newpayload.location.length > 0) {
@@ -95,15 +90,9 @@ export default modelExtend(pageModel, {
         duration: 3,
       })
       delete payload.name
-      payload = initialCreateTime(payload)
+      payload = initialCreateTime(payload, true, true)
       filterStoreSelect(payload)
-      let newpayload = {}
-      if (!payload.startTime) {
-        const times = time.yesterTime()
-        newpayload = { ...times, ...payload }
-      } else {
-        newpayload = { ...payload }
-      }
+      const newpayload = { ...payload }
       const data = yield call(download, { ...newpayload, tc: 'operation', download: 1 })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
@@ -131,14 +120,7 @@ export default modelExtend(pageModel, {
       if (payload.idUser === idusers || payload.idUser === undefined) {
         return
       }
-      let newpayload = {}
-      payload = initialCreateTime(payload)
-      if (!payload.startTime) {
-        const times = time.yesterTime()
-        newpayload = { ...times, ...payload }
-      } else {
-        newpayload = { ...payload }
-      }
+      const newpayload = initialCreateTime(payload, true, true)
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
       const data = yield call(queryOperator, { mailtype: 0, ...newpayload, download: 0 })
       if (data.code === 200) {

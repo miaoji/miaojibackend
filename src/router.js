@@ -563,6 +563,26 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 门店操作-操作人历史数据查询
+          path: 'backupoperatorbyname',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupoperatorbyname/model'))
+              cb(null, require('./routes/backupoperatorbyname/'))
+            }, 'backupoperatorbyname')
+          },
+        },
+        {
+          // 门店操作-订单汇总详情
+          path: 'backuporderbyuser',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backuporderbyuser/model'))
+              cb(null, require('./routes/backuporderbyuser/'))
+            }, 'backuporderbyuser')
+          },
+        },
+        {
           // 门店分派历史数据查询
           path: 'backupselectfenpai',
           getComponent(nextState, cb) {
@@ -570,6 +590,26 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('./routes/backupselectfenpai/model'))
               cb(null, require('./routes/backupselectfenpai/'))
             }, 'backupselectfenpai')
+          },
+        },
+        {
+          // 门店分派历史数据查询-操作人
+          path: 'backupassignor',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupassignor/model'))
+              cb(null, require('./routes/backupassignor/'))
+            }, 'backupassignor')
+          },
+        },
+        {
+          // 门店分派历史数据查询-订单明细
+          path: 'backupselectpjjeDetails',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupselectpjjeDetails/model'))
+              cb(null, require('./routes/backupselectpjjeDetails/'))
+            }, 'backupselectpjjeDetails')
           },
         },
         {

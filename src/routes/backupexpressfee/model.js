@@ -1,8 +1,10 @@
 import modelExtend from 'dva-model-extend'
 import { notification } from 'antd'
-import { APIV3, time, initialCreateTime, filterStoreSelect, pageModel } from '../../utils'
+import { APIV3, initialCreateTime, filterStoreSelect, pageModel, config } from '../../utils'
 import { query } from './service'
 import { download } from '../expressfeedetail/service'
+
+const { backupDataEndTime } = config
 
 export default modelExtend(pageModel, {
   namespace: 'backupexpressfee',
@@ -29,17 +31,11 @@ export default modelExtend(pageModel, {
   effects: {
 
     *query({ payload = {} }, { call, put }) {
-      payload = initialCreateTime(payload)
+      payload = initialCreateTime(payload, true, true)
       filterStoreSelect(payload)
-      let newpayload = {}
-      if (!payload.startTime) {
-        const times = time.yesterTime()
-        newpayload = { ...times, ...payload }
-      } else {
-        newpayload = { ...payload }
-      }
+      console.log('payload', payload)
       // download是否下载 0表示不下载,进行的是分页查询1表示的是按当前的筛选下载全部数据
-      const data = yield call(query, { ...newpayload, download: 0 })
+      const data = yield call(query, { ...payload, download: 0 })
       if (data.obj) {
         yield put({
           type: 'querySuccess',
@@ -56,21 +52,14 @@ export default modelExtend(pageModel, {
     },
 
     *download({ payload }, { call }) {
-      payload = initialCreateTime(payload)
+      payload = initialCreateTime(payload, true, backupDataEndTime)
       filterStoreSelect(payload)
       notification.success({
         message: '准备中...',
         description: '正在为您准备资源,请稍等!!!',
         duration: 3,
       })
-      let newpayload = {}
-      if (!payload.startTime) {
-        const times = time.yesterTime()
-        newpayload = { ...times, ...payload }
-      } else {
-        newpayload = { ...payload }
-      }
-      const data = yield call(download, { ...newpayload, tc: 'maild', download: 1 })
+      const data = yield call(download, { ...payload, tc: 'maild', download: 1 })
       if (data.code === 200 && data.obj) {
         const url = APIV3 + data.obj
         const openUrl = window.open(url)
@@ -94,19 +83,4 @@ export default modelExtend(pageModel, {
 
   },
 
-  reducers: {
-
-    setSiteName(state, { payload }) {
-      return { ...state, ...payload }
-    },
-
-    showModal(state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
-    },
-
-    hideModal(state) {
-      return { ...state, modalVisible: false }
-    },
-
-  },
 })

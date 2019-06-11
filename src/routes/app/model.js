@@ -80,8 +80,6 @@ export default {
           list = [...devMenuList, ...rebuildMenuData(menuList), ...hideMenus]
         }
 
-        console.log('sili', list)
-
         if (list.filter(i => i.route === '/dashboard'.toString()).length) {
           showDashboard = true
         }

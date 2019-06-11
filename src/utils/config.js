@@ -49,6 +49,8 @@ let APIV4 = 'https://console.mijihome.cn/miaoji2/WeChatService'
 let APIV5 = 'https://console.mijihome.cn/miaoji1'
 
 module.exports = {
+  backupDataStartTime: '2018-01-01',
+  backupDataEndTime: '2018-12-01',
   APIV1,
   APIV3,
   name: '妙寄后台管理系统',

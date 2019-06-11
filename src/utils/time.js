@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { backupDataEndTime } from './config'
 // import { APIV3 } from './config'
 /**
  * [按照传入的参数生成一个时间粗数组]
@@ -45,9 +46,10 @@ export function yesterTime(frontDay = 1, distance = 0, isInit = false) {
  * [将时间选择器选择得到的时间字符串转换成时间戳]
  * @param {object} payload [需要过滤的对象]
  * @param {boolean} isInit [是否对没有传入时间的对象经行初始化]
+ * @param {string} initTime [时间字符串,需要初始化的时间如2019-01-01]
  * @return {object}        [过滤后的对象]
  */
-export function initialCreateTime(payload, isInit = false) {
+export function initialCreateTime(payload, isInit = false, isBackup) {
   payload = { ...payload }
   const { createTime } = payload
   if (createTime && createTime.length && createTime[0] && createTime[1]) {
@@ -70,6 +72,11 @@ export function initialCreateTime(payload, isInit = false) {
   }
   if (!payload.startTime && isInit) {
     const times = yesterTime()
+    if (isBackup) {
+      const initTime = backupDataEndTime
+      times.startTime = new Date(initTime).getTodayStartTime()
+      times.endTime = new Date(initTime).getTodayEndTime()
+    }
     payload = { ...times, ...payload }
   } else {
     payload = { ...payload }
@@ -136,18 +143,42 @@ export function handleFields(fields) {
  * @param {Number} distance [时间间隔]
  * @return {Object}            [加上初始化时间的过滤对象]
  */
-export function defaultTime(filters, frontDay = 1, distance = 0) {
+export function defaultTime(filters, frontDay = 1, distance = 0, isBackup) {
   filters = { ...filters }
-  const times = yesterTime(frontDay, distance, true)
   if (!filters.createTime) {
     filters.createTime = []
-    filters.createTime[0] = moment(times.startTime)
-    filters.createTime[1] = moment(times.endTime)
+    if (isBackup) {
+      const time = backupDataEndTime
+      const startTime = new Date(time).getTodayStartTime()
+      const endTime = new Date(time).getTodayEndTime()
+      filters.createTime[0] = moment(startTime)
+      filters.createTime[1] = moment(endTime)
+    } else {
+      const times = yesterTime(frontDay, distance, true)
+      filters.createTime[0] = moment(times.startTime)
+      filters.createTime[1] = moment(times.endTime)
+    }
   } else {
     filters.createTime[0] = moment(filters.createTime[0])
     filters.createTime[1] = moment(filters.createTime[1])
   }
-  return filters
+  return { ...filters }
+}
+
+export function initBackupFilterTime(record) {
+  const filters = JSON.parse(JSON.stringify(record))
+  const time = backupDataEndTime
+  if (!filters.createTime) {
+    filters.createTime = []
+    const startTime = new Date(time).getTodayStartTime()
+    const endTime = new Date(time).getTodayEndTime()
+    filters.createTime[0] = moment(startTime)
+    filters.createTime[1] = moment(endTime)
+  } else {
+    filters.createTime[0] = moment(filters.createTime[0])
+    filters.createTime[1] = moment(filters.createTime[1])
+  }
+  return { ...filters }
 }
 
 /**

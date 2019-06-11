@@ -9,36 +9,46 @@ import AnimTableBody from '../../components/DataTable/AnimTableBody'
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点ID',
-      dataIndex: 'idUser',
-      key: 'idUser',
+      title: '操作人',
+      dataIndex: 'name',
+      key: 'name',
       render: (text) => {
         return <span>{text || '暂无'}</span>
       },
     }, {
-      title: '站点名称',
-      dataIndex: 'name',
-      key: 'name',
+      title: '点货数量',
+      dataIndex: 'ddtotal',
+      key: 'ddtotal',
+      render: (text) => {
+        return <span>{text}</span>
+      },
     }, {
-      title: '站点地址',
-      dataIndex: 'address',
-      key: 'address',
+      title: '上架数量',
+      dataIndex: 'sjtotal',
+      key: 'sjtotal',
+      render: (text) => {
+        return <span>{text}</span>
+      },
     }, {
-      title: '分派数量',
-      dataIndex: 'fptotal',
-      key: 'fptotal',
+      title: '入柜数量',
+      dataIndex: 'enterTank',
+      key: 'enterTank',
       render: (text) => {
         return <span>{text || 0}</span>
       },
     }, {
-      title: '操作',
-      dataIndex: 'op',
-      key: 'op',
-      render: (text, record) => {
-        if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/backupassignor?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>操作人明细</Link>
-        }
-        return <Link to={`/backupassignor?idUser=${record.idUser}`}>操作人明细</Link>
+      title: '签收数量',
+      dataIndex: 'qstotal',
+      key: 'qstotal',
+      render: (text) => {
+        return <span>{text}</span>
+      },
+    }, {
+      title: '补签数量',
+      dataIndex: 'retroactive',
+      key: 'retroactive',
+      render: (text) => {
+        return <span>{text || 0}</span>
       },
     }, {
       title: '操作',
@@ -47,9 +57,9 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       width: 140,
       render: (text, record) => {
         if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/backupselectpjjeDetails?idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看操作人派件金额</Link>
+          return <Link to={`/backuporderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看快件详情</Link>
         }
-        return <Link to={`/backupselectpjjeDetails?idUser=${record.idUser}`}>订单明细</Link>
+        return <Link to={`/backuporderbyuser?realName=${record.name}&mailtype=${filter.mailtype || '0'}&idUser=${filter.idUser}`}>查看快件详情</Link>
       },
     },
   ]

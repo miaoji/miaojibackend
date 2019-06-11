@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Select,
+  Form, Button, Row, Col,
 } from 'antd'
-import { DateRange, Location } from '../../components'
+import moment from 'moment'
+import { DateRange } from '../../components'
 import { handleFields, defaultTime } from '../../utils'
 
 const ColProps = {
@@ -20,8 +21,7 @@ const TwoColProps = {
 }
 
 const Filter = ({
-  auth,
-  storeuserList,
+  // onAdd,
   onFilterChange,
   onDownLoad,
   filter,
@@ -57,8 +57,6 @@ const Filter = ({
       }
     }
     setFieldsValue(fields)
-    filter.endTime = undefined
-    filter.startTime = undefined
     filter.page = undefined
     filter.pageSize = undefined
     handleSubmit()
@@ -68,11 +66,6 @@ const Filter = ({
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
-    if (key === 'location') {
-      setFieldsValue({
-        location: values,
-      })
-    }
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
@@ -82,35 +75,18 @@ const Filter = ({
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name, createTime, location } = filter
-
-  const nameChange = (key) => {
-    handleChange('name', key)
+  let initialCreateTime = []
+  if (filter.createTime && filter.createTime[0]) {
+    initialCreateTime[0] = moment(filter.createTime[0])
   }
-
+  if (filter.createTime && filter.createTime[1]) {
+    initialCreateTime[1] = moment(filter.createTime[1])
+  }
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(
-          <Select
-            showSearch
-            style={{ width: '100%' }}
-            onChange={nameChange}
-            placeholder="按店铺名称搜索"
-            allowClear
-          >
-            {storeuserList}
-          </Select>
-        )}
-      </Col>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('location', { initialValue: location })(
-          <Location allowClear handleChange={handleChange.bind(null, 'location')} />
-        )}
-      </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
-        {getFieldDecorator('createTime', { initialValue: createTime })(
+        {getFieldDecorator('createTime', { initialValue: initialCreateTime })(
           <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
@@ -119,7 +95,7 @@ const Filter = ({
           <div >
             <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button className="margin-right" onClick={handleReset}>刷新</Button>
-            {auth.downloadExcel && <Button type="primary" onClick={onDownLoad}>下载为Excel</Button>}
+            <Button className="hide" type="primary" onClick={onDownLoad}>下载门店寄件详细信息</Button>
           </div>
         </div>
       </Col>
@@ -128,12 +104,12 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  storeuserList: PropTypes.array,
+  onAdd: PropTypes.func,
+  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   onDownLoad: PropTypes.func,
-  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

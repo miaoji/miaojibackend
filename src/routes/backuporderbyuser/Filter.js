@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Form, Button, Row, Col, Select,
+  Form, Button, Row, Col, Input, Select,
 } from 'antd'
-import { DateRange, Location } from '../../components'
+import { DateRange } from '../../components'
 import { handleFields, defaultTime } from '../../utils'
 
+const { Search } = Input
+const { Option } = Select
 const ColProps = {
   xs: 24,
   sm: 12,
@@ -20,10 +22,9 @@ const TwoColProps = {
 }
 
 const Filter = ({
-  auth,
-  storeuserList,
+  // onAdd,
   onFilterChange,
-  onDownLoad,
+  // onDownLoad,
   filter,
   form: {
     getFieldDecorator,
@@ -68,45 +69,47 @@ const Filter = ({
   const handleChange = (key, values) => {
     let fields = getFieldsValue()
     fields[key] = values
-    if (key === 'location') {
-      setFieldsValue({
-        location: values,
-      })
-    }
     fields = handleFields(fields)
     for (let item in fields) {
       if (/^\s*$/g.test(fields[item])) {
         fields[item] = undefined
       }
     }
+    if (fields.state === '0') {
+      fields.state = undefined
+    }
     onFilterChange({ ...filter, ...fields })
   }
 
-  let { name, createTime, location } = filter
+  let { brand, state, createTime } = filter
 
-  const nameChange = (key) => {
-    handleChange('name', key)
+  const stateChange = (key) => {
+    handleChange('state', key)
   }
 
+  const inputClear = (e, key) => {
+    if (e && e.target && !e.target.value) {
+      handleChange(key, '')
+    }
+  }
 
   return (
     <Row gutter={24}>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(
-          <Select
-            showSearch
-            style={{ width: '100%' }}
-            onChange={nameChange}
-            placeholder="按店铺名称搜索"
-            allowClear
-          >
-            {storeuserList}
-          </Select>
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        {getFieldDecorator('brand', { initialValue: brand })(
+          <Search onChange={e => inputClear(e, 'brand')} allowClear onSearch={handleSubmit} style={{ width: '100%' }} placeholder="按快递品牌筛选" />
         )}
       </Col>
-      <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
-        {getFieldDecorator('location', { initialValue: location })(
-          <Location allowClear handleChange={handleChange.bind(null, 'location')} />
+      <Col {...ColProps} xl={{ span: 4 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
+        {getFieldDecorator('state', { initialValue: state })(
+          <Select allowClear onChange={stateChange} style={{ width: '100%' }} placeholder="按快递状态筛选">
+            <Option key="1">点单</Option>
+            <Option key="101">上架</Option>
+            {/* <Option key="103">分派</Option> */}
+            <Option key="104">入柜</Option>
+            <Option key="305">签收</Option>
+            <Option key="304">补签</Option>
+          </Select>
         )}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 16 }} sx={{ span: 24 }}>
@@ -114,12 +117,12 @@ const Filter = ({
           <DateRange onChange={handleChange.bind(null, 'createTime')} />
         )}
       </Col>
-      <Col {...TwoColProps} xl={{ span: 8 }} md={{ span: 24 }} sm={{ span: 24 }}>
+      <Col {...TwoColProps} xl={{ span: 6 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div >
             <Button type="primary" className="margin-right" onClick={handleSubmit}>搜索</Button>
             <Button className="margin-right" onClick={handleReset}>刷新</Button>
-            {auth.downloadExcel && <Button type="primary" onClick={onDownLoad}>下载为Excel</Button>}
+            {/* <Button type="primary" onClick={onDownLoad}>下载</Button> */}
           </div>
         </div>
       </Col>
@@ -128,12 +131,12 @@ const Filter = ({
 }
 
 Filter.propTypes = {
-  storeuserList: PropTypes.array,
+  onAdd: PropTypes.func,
+  switchIsMotion: PropTypes.func,
   form: PropTypes.object,
   filter: PropTypes.object,
   onFilterChange: PropTypes.func,
   onDownLoad: PropTypes.func,
-  auth: PropTypes.object,
 }
 
 export default Form.create()(Filter)

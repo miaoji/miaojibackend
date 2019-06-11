@@ -14,9 +14,9 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading,
       key: 'name',
       render: (text, record) => {
         if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
+          return <Link to={`/backupoperatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>{text}</Link>
         }
-        return <Link to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>{text}</Link>
+        return <Link to={`/backupoperatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>{text}</Link>
       },
     }, {
       title: '站点地址',
@@ -70,9 +70,9 @@ const List = ({ filter, location, sonlist, onEditItem, onDeleteItem, rowLoading,
           return <span>该站点无法操作</span>
         }
         if (filter.createTime && filter.createTime.length > 0) {
-          return <Link to={`/operatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看操作人详情</Link>
+          return <Link to={`/backupoperatorbyname?mailtype=${filter.mailtype || '0'}&idUser=${record.idUser}&createTime=${filter.createTime[0]._i}&createTime=${filter.createTime[1]._i}`}>查看操作人详情</Link>
         }
-        return <Link to={`/operatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
+        return <Link to={`/backupoperatorbyname?idUser=${record.idUser}&mailtype=${filter.mailtype || '0'}`}>查看操作人详情</Link>
       },
     },
   ]

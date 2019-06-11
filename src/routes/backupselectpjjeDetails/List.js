@@ -8,21 +8,7 @@ import AnimTableBody from '../../components/DataTable/AnimTableBody'
 const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => {
   const columns = [
     {
-      title: '站点地区',
-      dataIndex: 'city',
-      key: 'city',
-      render: (text, record) => {
-        return <span>{record.province ? `${record.province}/${record.city}/${record.district}` : '暂无'}</span>
-      },
-    }, {
-      title: '站点名',
-      dataIndex: 'showName',
-      key: 'showName',
-      render: () => {
-        return <span>{filter.showName}</span>
-      },
-    }, {
-      title: '快递品牌',
+      title: '品牌',
       dataIndex: 'brand',
       key: 'brand',
       render: (text) => {
@@ -33,39 +19,14 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'orderSn',
       key: 'orderSn',
       render: (text) => {
+        return <span>{text || 0}</span>
+      },
+    }, {
+      title: '操作人',
+      dataIndex: 'cname',
+      key: 'cname',
+      render: (text) => {
         return <span>{text || '暂无'}</span>
-      },
-    }, {
-      title: '收款方式',
-      dataIndex: 'payType',
-      key: 'payType',
-      render: (text) => {
-        const replText = {
-          1: '支付宝',
-          2: '微信',
-          3: '余额',
-          4: '现金',
-        }
-        return <span>{text ? replText[text] : '暂无'}</span>
-      },
-    }, {
-      title: '完成状态',
-      dataIndex: 'status',
-      key: 'status',
-      render: (text) => {
-        const replText = {
-          success: '成功',
-          wait: '等待',
-          close: '关闭',
-        }
-        return <span>{text ? replText[text] : '暂无'}</span>
-      },
-    }, {
-      title: '金额',
-      dataIndex: 'fee',
-      key: 'fee',
-      render: (text) => {
-        return <span>{text || '0'}元</span>
       },
     }, {
       title: '创建时间',

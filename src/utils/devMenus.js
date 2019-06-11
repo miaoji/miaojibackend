@@ -24,10 +24,30 @@ export default [
     name: '门店操作历史数据查询',
     route: '/backupbusiness',
   }, {
+    id: '100150201',
+    mpid: '-1',
+    name: '操作人历史数据查询',
+    route: '/backupoperatorbyname',
+  }, {
+    id: '100150202',
+    mpid: '-1',
+    name: '门店操作单号历史数据查询',
+    route: '/backuporderbyuser',
+  }, {
     id: '1001503',
     mpid: '10015',
     name: '门店分派历史数据查询',
     route: '/backupselectfenpai',
+  }, {
+    id: '100150301',
+    mpid: '-1',
+    name: '门店分派-操作',
+    route: '/backupassignor',
+  }, {
+    id: '100150301',
+    mpid: '-1',
+    name: '门店分派-订单明细',
+    route: '/backupselectpjjeDetails',
   }, {
     id: '1001504',
     mpid: '10015',
