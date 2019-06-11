@@ -3,6 +3,7 @@ import { routerRedux } from 'dva/router'
 import config from 'config'
 import menus from 'utils/menus'
 import hideMenus from 'utils/hideMenus'
+import devMenus from 'utils/devMenus'
 import { storage } from 'utils'
 import { Select } from 'antd'
 import { rebuildMenuData } from 'src/utils/processing'
@@ -71,9 +72,16 @@ export default {
         let menuList = user.userMenus
 
         let list = menus
-        if (process.env.NODE_ENV !== 'text') {
-          list = [...rebuildMenuData(menuList), ...hideMenus]
+        let devMenuList = []
+        if (process.env.NODE_ENV === 'development') {
+          devMenuList = devMenus
         }
+        if (process.env.NODE_ENV !== 'text') {
+          list = [...devMenuList, ...rebuildMenuData(menuList), ...hideMenus]
+        }
+
+        console.log('sili', list)
+
         if (list.filter(i => i.route === '/dashboard'.toString()).length) {
           showDashboard = true
         }

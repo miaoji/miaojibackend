@@ -523,6 +523,66 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          // 门店寄件历史数据查询
+          path: 'backupexpressfee',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupexpressfee/model'))
+              cb(null, require('./routes/backupexpressfee/'))
+            }, 'backupexpressfee')
+          },
+        },
+        {
+          // 门店寄件历史数据查询-明细
+          path: 'backupexpressfeedetail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupexpressfeedetail/model'))
+              cb(null, require('./routes/backupexpressfeedetail/'))
+            }, 'backupexpressfeedetail')
+          },
+        },
+        {
+          // 门店操作历史数据查询
+          path: 'backupbusiness',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupbusiness/model'))
+              cb(null, require('./routes/backupbusiness/'))
+            }, 'backupbusiness')
+          },
+        },
+        {
+          // 门店分派历史数据查询
+          path: 'backupselectfenpai',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupselectfenpai/model'))
+              cb(null, require('./routes/backupselectfenpai/'))
+            }, 'backupselectfenpai')
+          },
+        },
+        {
+          // 门店运单管理历史数据查询
+          path: 'backuporder',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backuporder/model'))
+              cb(null, require('./routes/backuporder/'))
+            }, 'backuporder')
+          },
+        },
+        {
+          // 门店业务量历史数据查询
+          path: 'backupbusinessvolume',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('./routes/backupbusinessvolume/model'))
+              cb(null, require('./routes/backupbusinessvolume/'))
+            }, 'backupbusinessvolume')
+          },
+        },
+        {
           path: '*',
           // 没有路由匹配的页面 渲染404
           getComponent(nextState, cb) {
