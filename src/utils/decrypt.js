@@ -6,7 +6,6 @@ import CryptoJS from 'crypto-js'
  * @return {[string]}        [description]
  */
 export function decryptData(data, type = 'normal') {
-  debugger
   let decData = ''
   if (type === 'str') {
     decData = data

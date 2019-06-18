@@ -21,8 +21,8 @@ const filtersTest = Object.values(replText).map((i, index) => ({ text: i, value:
 
 const handleTextClick = (brand, rowData, state) => {
   if (state !== 1) return
-  console.log('brand', brand)
-  console.log('rowData', rowData)
+  console.info('brand', brand)
+  console.info('rowData', rowData)
 }
 const Text = ({ children, brand, rowData }) => {
   return (

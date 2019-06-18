@@ -13,6 +13,7 @@ const app = dva({
   }),
   history: browserHistory,
   onError (error) {
+    console.info(error)
     message.error(error.message)
   },
 })

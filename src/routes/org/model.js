@@ -68,7 +68,6 @@ export default modelExtend(pageModel, {
       if (!payload.parentId) {
         payload.parentId = getOrgId()
       }
-      debugger
       payload.location = payload.location.toString()
       payload.createUserId = getUserId()
       const data = yield call(create, { ...payload })
@@ -117,7 +116,7 @@ export default modelExtend(pageModel, {
       }
     },
 
-    *queryStoreUser(_, { call, put }) {
+    *orgQueryStoreUser(_, { call, put }) {
       const data = yield call(queryStoreUser, {
         page: 1,
         pageSize: 10000,

@@ -30,7 +30,6 @@ export default modelExtend(pageModel, {
 
   effects: {
     *getOrderInfo({ payload = {} }, { call, put }) {
-      console.log('data', payload)
       const data = yield call(orderInfo, { orderSn: payload.serialNumber, idUser: payload.idUser })
       if (data.code === 200) {
         yield put({

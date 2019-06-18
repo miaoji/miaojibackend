@@ -1,6 +1,6 @@
 import { request, config, pageParams } from '../../utils'
 
-const { api: { auth: { org } }, storeuser } = config
+const { api: { auth: { org }, storeuser } } = config
 
 export async function query(params) {
   // params.orgId = getOrgId()

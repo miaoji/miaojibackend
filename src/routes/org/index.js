@@ -71,13 +71,6 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
     },
     onEditItem(item) {
       item.locationType = item.location ? item.location.split(',').length : 4
-      dispatch({ type: 'org/initParentOrgList' })
-      dispatch({
-        type: 'org/queryRoleList',
-      })
-      dispatch({
-        type: 'org/queryStoreUser',
-      })
       dispatch({
         type: 'org/showModal',
         payload: {
@@ -85,6 +78,13 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
           currentItem: item,
           modalorgLevel: item.orgLevel || 1,
         },
+      })
+      dispatch({ type: 'org/initParentOrgList' })
+      // dispatch({
+      //   type: 'org/queryRoleList',
+      // })
+      dispatch({
+        type: 'org/orgQueryStoreUser',
       })
     },
   }
@@ -105,15 +105,15 @@ const Modular = ({ location, dispatch, org, loading, app }) => {
       }))
     },
     onAdd() {
-      dispatch({ type: 'org/initParentOrgList' })
-      dispatch({
-        type: 'org/queryStoreUser',
-      })
       dispatch({
         type: 'org/showModal',
         payload: {
           modalType: 'create',
         },
+      })
+      dispatch({ type: 'org/initParentOrgList' })
+      dispatch({
+        type: 'org/orgQueryStoreUser',
       })
     },
   }
