@@ -12,7 +12,7 @@ const List = ({ filter, location, onEditItem, onDeleteItem, ...tableProps }) => 
       dataIndex: 'city',
       key: 'city',
       render: (text, record) => {
-        return <span>{`${record.province}/${record.city}/${record.district}`}</span>
+        return <span>{record.province ? `${record.province}/${record.city}/${record.district}` : '暂无'}</span>
       },
     }, {
       title: '站点名',
