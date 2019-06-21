@@ -1,7 +1,7 @@
 import md5 from 'js-md5'
 import { getToday } from './time'
 
-export const initCacheKey = (params = {}) => {
+export const initCacheKey = ({ url, ...params } = {}) => {
   const todayStr = getToday(new Date().getTime())
-  return `api-1-${location.pathname.replace(/[/]/, '') || 'dashboard'}-${todayStr}-${md5(`${todayStr}-${JSON.stringify(params || {})}`)}`
+  return `api-${url}-${location.pathname.replace(/[/]/, '') || 'dashboard'}-${todayStr}-${md5(JSON.stringify(params || {}))}`
 }

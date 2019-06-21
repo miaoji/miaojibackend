@@ -1,6 +1,7 @@
-import md5 from 'js-md5'
+// import md5 from 'js-md5'
 import { request, config } from 'utils'
 import { getOrgIdUsers } from 'utils/getUserInfo'
+import { initCacheKey } from '../../utils/cache'
 
 const { api } = config
 const { dashboard } = api
@@ -13,8 +14,8 @@ export async function getLineData(params = {}) {
   return request({
     url: dashboard.echart,
     method: 'post',
-    data: params,
-    cache: true,
+    data: { ...params, cacheKeys: initCacheKey({ url: 'getLineData', ...params }) },
+    // cache: true,
   })
 }
 /**
@@ -66,10 +67,7 @@ export function businessvolumecount(params = {}) {
   return request({
     url: dashboard.businessvolumecount,
     method: 'post',
-    data: {
-      ...params,
-      cacheKey: md5(`${JSON.stringify(params)}businessvolumecount`),
-    },
+    data: { ...params, cacheKeys: initCacheKey({ url: 'businessvolumecount', ...params }) },
   })
 }
 /**
@@ -100,7 +98,6 @@ export function interfaceCallList(params = {}) {
   return request({
     url: dashboard.interfaceCallList,
     method: 'post',
-    data: params,
-    cache: true,
+    data: { ...params, cacheKeys: initCacheKey({ url: 'interfaceCallList', ...params }) },
   })
 }

@@ -111,7 +111,7 @@ class modal extends Component {
       )
     }
 
-    const optionChildren = ['down-square', 'left-square', 'right-square', 'login', 'logout', 'menu-fold'].map((i) => {
+    const optionChildren = ['down-square', 'left-square', 'right-square', 'login', 'logout', 'menu-fold', 'message'].map((i) => {
       return <Option key={i}><Icon style={{ height: '100%' }} type={i} /><span> {i}</span></Option>
     })
 

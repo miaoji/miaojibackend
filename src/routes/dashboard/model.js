@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend'
 import { color } from 'utils/theme'
 import { query as queryStoreUser } from '../storeuser/service'
-import { storage, time, isSuperAdmin, getOrgIdUsers, pageModel } from '../../utils'
+import { time, isSuperAdmin, getOrgIdUsers, pageModel } from '../../utils'
 import { getLineData, weChatUser, income, terminalTotal, businessvolumecount, interfaceCallList } from './service'
 
 export default modelExtend(pageModel, {
@@ -98,20 +98,20 @@ export default modelExtend(pageModel, {
       }
     },
     *getbusinessvolumecount(_, { call, put }) {
-      const todayStr = time.getToday(new Date().getTime())
-      let cacheDate = storage({ key: 'trafficVolume' })
-      if (cacheDate) {
-        cacheDate = JSON.parse(cacheDate)
-        if (cacheDate.time === todayStr) {
-          yield put({
-            type: 'setStates',
-            payload: {
-              trafficVolume: { ...cacheDate },
-            },
-          })
-          return
-        }
-      }
+      // const todayStr = time.getToday(new Date().getTime())
+      // let cacheDate = storage({ key: 'trafficVolume' })
+      // if (cacheDate) {
+      //   cacheDate = JSON.parse(cacheDate)
+      //   if (cacheDate.time === todayStr) {
+      //     yield put({
+      //       type: 'setStates',
+      //       payload: {
+      //         trafficVolume: { ...cacheDate },
+      //       },
+      //     })
+      //     return
+      //   }
+      // }
       const times = time.yesterTime()
 
       const data = yield call(businessvolumecount, { ...times })
@@ -121,7 +121,7 @@ export default modelExtend(pageModel, {
           scheduledReceipt: data.obj[0].scheduledReceipt,
           signingVolume: data.obj[0].signingVolume,
         }
-        storage({ type: 'set', key: 'trafficVolume', val: JSON.stringify({ ...trafficVolume, time: todayStr }) })
+        // storage({ type: 'set', key: 'trafficVolume', val: JSON.stringify({ ...trafficVolume, time: todayStr }) })
         yield put({
           type: 'setStates',
           payload: {

@@ -94,4 +94,41 @@ export default [
     icon: 'message',
     route: '/messagearrivedetail',
   },
+
+  {
+    id: '100150101',
+    mpid: '-1',
+    name: '门店寄件历史数据明细查询',
+    route: '/backupexpressfeedetail',
+  }, {
+    id: '100150102',
+    mpid: '-1',
+    name: '门店寄件历史数据明细查询',
+    route: '/backupstoreuserdetail',
+  }, {
+    id: '100150201',
+    mpid: '-1',
+    name: '操作人历史数据查询',
+    route: '/backupoperatorbyname',
+  }, {
+    id: '100150202',
+    mpid: '-1',
+    name: '门店操作单号历史数据查询',
+    route: '/backuporderbyuser',
+  }, {
+    id: '100150301',
+    mpid: '-1',
+    name: '门店分派-操作',
+    route: '/backupassignor',
+  }, {
+    id: '100150301',
+    mpid: '-1',
+    name: '门店分派-订单明细',
+    route: '/backupselectpjjeDetails',
+  }, {
+    id: '100150401',
+    mpid: '-1',
+    name: '业务量-订单明细',
+    route: '/backupbusinessvolumedetail',
+  },
 ]

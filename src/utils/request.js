@@ -22,9 +22,10 @@ const fetch = (options) => {
   data = data ? { ...data, requestId: getUserId() } : undefined
 
   if (cache && (!data.endTime || (data.endTime < new Date().getTodayStartTime()))) {
+    const api = url.split('/')
     data = {
       ...data,
-      cacheKey: initCacheKey(data),
+      cacheKey: initCacheKey({ ...data, url: api[api.length - 1] }),
     }
   }
 
