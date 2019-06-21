@@ -84,8 +84,8 @@ const List = ({ rowData, rowLoading, ...tableProps }) => {
       },
     }, {
       title: '手机号',
-      dataIndex: 'mobile',
-      key: 'mobile',
+      dataIndex: 'callee',
+      key: 'callee',
       render: (text) => {
         return <span>{text || '手机号暂无'}</span>
       },

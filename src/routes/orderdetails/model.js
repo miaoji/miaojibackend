@@ -52,7 +52,7 @@ export default modelExtend(pageModel, {
       let data = yield call(query, { page: 1, pageSize: 10, ...payload })
       if (data.code === 200) {
         const storeuserArr = storage({ key: 'storeuserArr', json: true })
-        const list = data.obj.map((i) => {
+        let list = data.obj && data.obj.length !== 0 && data.obj.map((i) => {
           const itemInfo = storeuserArr.find(k => +i.idUser && +i.idUser === k.idUser) || {}
           return {
             ...i,
@@ -60,8 +60,9 @@ export default modelExtend(pageModel, {
             key: key(),
           }
         })
-        if (data.obj.length === 0) {
+        if (data.obj && data.obj.length === 0) {
           message.warning('没有查询到相关数据')
+          list = []
         }
         yield put({
           type: 'querySuccess',
@@ -70,22 +71,11 @@ export default modelExtend(pageModel, {
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
+              total: data.total || 0,
             },
           },
         })
       } else {
-        yield put({
-          type: 'querySuccess',
-          payload: {
-            list: [{ id: 1 }, { id: 2 }],
-            pagination: {
-              current: Number(payload.page) || 1,
-              pageSize: Number(payload.pageSize) || 10,
-              total: 20,
-            },
-          },
-        })
         throw data.mess || '网络不行了!!!'
       }
     },
