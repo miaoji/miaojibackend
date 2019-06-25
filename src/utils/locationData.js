@@ -13747,6 +13747,13 @@ const locationData = [{
         "parent_level": "2"
     },
     {
+        "code": "440311",
+        "level": "3",
+        "name": "光明区",
+        "parent_code": "440300",
+        "parent_level": "2"
+    },
+    {
         "code": "440304",
         "level": "3",
         "name": "福田区",
