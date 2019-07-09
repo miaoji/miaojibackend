@@ -43,7 +43,7 @@ Text.propTypes = {
 }
 
 const List = ({ location, ...tableProps }) => {
-  const { stoDatastatus, ztoDatastatus, ytoDatastatus, beDatastatus, ydDatastatus } = location.query
+  const { stoStatus, ztoStatus, ytoStatus, beStatus, ydStatus } = location.query
   const columns = [
     {
       title: '站点ID',
@@ -60,51 +60,51 @@ const List = ({ location, ...tableProps }) => {
       key: 'address',
     }, {
       title: '圆通',
-      dataIndex: 'stoDatastatus',
-      key: 'stoDatastatus',
+      dataIndex: 'stoStatus',
+      key: 'stoStatus',
       filters: filtersTest,
       filterMultiple: false,
-      filteredValue: stoDatastatus ? [stoDatastatus] : [],
+      filteredValue: stoStatus ? [stoStatus] : [],
       render: (text, record) => {
         return <Text rowData={record} brand="圆通">{text}</Text>
       },
     }, {
       title: '中通',
-      dataIndex: 'ztoDatastatus',
-      key: 'ztoDatastatus',
+      dataIndex: 'ztoStatus',
+      key: 'ztoStatus',
       filters: filtersTest,
       filterMultiple: false,
-      filteredValue: ztoDatastatus ? [ztoDatastatus] : [],
+      filteredValue: ztoStatus ? [ztoStatus] : [],
       render: (text, record) => {
         return <Text rowData={record} brand="中通">{text}</Text>
       },
     }, {
       title: '申通',
-      dataIndex: 'ytoDatastatus',
-      key: 'ytoDatastatus',
+      dataIndex: 'ytoStatus',
+      key: 'ytoStatus',
       filters: filtersTest,
       filterMultiple: false,
-      filteredValue: ytoDatastatus ? [ytoDatastatus] : [],
+      filteredValue: ytoStatus ? [ytoStatus] : [],
       render: (text, record) => {
         return <Text rowData={record} brand="申通">{text}</Text>
       },
     }, {
       title: '百世汇通',
-      dataIndex: 'beDatastatus',
-      key: 'beDatastatus',
+      dataIndex: 'beStatus',
+      key: 'beStatus',
       filters: filtersTest,
       filterMultiple: false,
-      filteredValue: beDatastatus ? [beDatastatus] : [],
+      filteredValue: beStatus ? [beStatus] : [],
       render: (text, record) => {
         return <Text rowData={record} brand="百世汇通">{text}</Text>
       },
     }, {
       title: '韵达',
-      dataIndex: 'ydDatastatus',
-      key: 'ydDatastatus',
+      dataIndex: 'ydStatus',
+      key: 'ydStatus',
       filters: filtersTest,
       filterMultiple: false,
-      filteredValue: ydDatastatus ? [ydDatastatus] : [],
+      filteredValue: ydStatus ? [ydStatus] : [],
       render: (text, record) => {
         return <Text rowData={record} brand="韵达">{text}</Text>
       },

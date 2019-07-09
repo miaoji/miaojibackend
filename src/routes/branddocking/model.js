@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { storage, pageModel } from '../../utils'
+import { pageModel } from '../../utils'
 import { query } from './service'
 
 export default modelExtend(pageModel, {
@@ -44,12 +44,10 @@ export default modelExtend(pageModel, {
       }
       const data = yield call(query, { ...payload, ...locationPayload, userIds, location: undefined })
       if (data) {
-        const storeuserArr = storage({ key: 'storeuserArr', json: true })
         const list = data.obj.map((i) => {
-          const itemInfo = storeuserArr.find(k => +i.idUser && +i.idUser === k.idUser) || {}
           return {
             ...i,
-            address: itemInfo.address,
+            address: i.province ? `${i.province}/${i.city}/${i.district}` : '暂无地址信息',
           }
         })
         yield put({

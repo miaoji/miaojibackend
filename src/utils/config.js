@@ -345,7 +345,8 @@ module.exports = {
     },
     // 品牌对接查询
     brandDocking: {
-      list: `${APIV1}/stTactinnList`,
+      // list: `${APIV1}/stTactinnList`,
+      list: `${APIV1}/stExpressMainList`,
     },
     //  日志
     log: {
